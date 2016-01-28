@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Note.App.Editor", "Applications\Editor\Cube.Note.App.Editor.csproj", "{C9274EC3-94BC-47DD-AA63-9925A6F142B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Note", "Libraries\Cube.Note.csproj", "{9F978A54-6EA5-465D-BD06-58D1B720F804}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C9274EC3-94BC-47DD-AA63-9925A6F142B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9274EC3-94BC-47DD-AA63-9925A6F142B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9274EC3-94BC-47DD-AA63-9925A6F142B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F978A54-6EA5-465D-BD06-58D1B720F804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F978A54-6EA5-465D-BD06-58D1B720F804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F978A54-6EA5-465D-BD06-58D1B720F804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F978A54-6EA5-465D-BD06-58D1B720F804}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
