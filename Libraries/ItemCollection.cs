@@ -96,9 +96,40 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public string Directory { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileType
+        ///
+        /// <summary>
+        /// 設定ファイルのファイル形式を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Cube.Settings.FileType FileType
+        {
+            get { return Settings.FileType.Json; }
+        }
+
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewItem
+        ///
+        /// <summary>
+        /// 新しいノートを先頭に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void NewItem()
+        {
+            var item = new Item();
+            while (IoEx.File.Exists(GetPath(item))) item.Creation.AddMilliseconds(1);
+            using (var obj = IoEx.File.Create(GetPath(item))) { /* close immediately */ }
+            Insert(0, item);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -111,15 +142,13 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public void Load(string filename)
         {
-            var def = IoEx.Path.Combine(Directory, filename);
+            var def = GetPath(filename);
             if (!IoEx.File.Exists(def)) return;
 
-            var items = Cube.Settings.Load<List<Item>>(def, Cube.Settings.FileType.Json);
+            var items = Cube.Settings.Load<List<Item>>(def, FileType);
             foreach (var item in items)
             {
-                var name = item.Creation.ToString("yyyyMMddHHmmssfff");
-                var path = IoEx.Path.Combine(Directory, name);
-                if (!IoEx.File.Exists(path)) continue;
+                if (!IoEx.File.Exists(GetPath(item))) continue;
                 Add(item);
             }
         }
@@ -136,8 +165,39 @@ namespace Cube.Note
         public void Save(string filename)
         {
             if (!IoEx.Directory.Exists(Directory)) IoEx.Directory.CreateDirectory(Directory);
-            var dest = IoEx.Path.Combine(Directory, filename);
-            Cube.Settings.Save(this.ToList(), dest, Settings.FileType.Json);
+            Cube.Settings.Save(this.ToList(), GetPath(filename), FileType);
+        }
+
+        #endregion
+
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPath
+        ///
+        /// <summary>
+        /// 指定されたオブジェクトに対応するパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetPath(Item item)
+        {
+            return GetPath(item.FileName);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPath
+        ///
+        /// <summary>
+        /// 指定されたファイル名に対応するパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetPath(string filename)
+        {
+            return IoEx.Path.Combine(Directory, filename);
         }
 
         #endregion
