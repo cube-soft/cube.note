@@ -46,7 +46,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string Abstract { get; set; }
+        public string Abstract { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -58,7 +58,21 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public DateTime Creation { get; set; }
+        public DateTime Creation { get; set; } = DateTime.Now;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileName
+        ///
+        /// <summary>
+        /// ファイル名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string FileName
+        {
+            get { return Creation.ToString("yyyyMMddHHmmssfff"); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
