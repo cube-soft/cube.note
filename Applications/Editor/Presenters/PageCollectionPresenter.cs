@@ -50,11 +50,10 @@ namespace Cube.Note.App.Editor
         {
             View.NewPageRequired += (s, e) => Model.NewPage();
             View.Removed += (s, e) => Model.RemoveAt(e.Value);
+            View.FindForm().Shown += View_Shown;
             View.FindForm().FormClosing += View_Closing;
 
             Model.CollectionChanged += Model_CollectionChanged;
-
-            var _ = InitializeAsync();
         }
 
         #endregion
@@ -62,6 +61,24 @@ namespace Cube.Note.App.Editor
         #region Event handlers
 
         #region View
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Shown
+        /// 
+        /// <summary>
+        /// フォーム閉じる時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Shown(object sender, System.EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                Model.Load(Properties.Resources.OrderFileName);
+                if (Model.Count <= 0) Model.NewPage();
+            });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,28 +125,6 @@ namespace Cube.Note.App.Editor
         }
 
         #endregion
-
-        #endregion
-
-        #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeAsync
-        /// 
-        /// <summary>
-        /// View および Model を非同期で初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Task InitializeAsync()
-        {
-            return Task.Run(() =>
-            {
-                Model.Load(Properties.Resources.OrderFileName);
-                if (Model.Count <= 0) Model.NewPage();
-            });
-        }
 
         #endregion
     }

@@ -18,8 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
-using System.Drawing;
-using System.Windows.Forms;
 using System;
 
 namespace Cube.Note.App.Editor
@@ -67,7 +65,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            FontMenuItem.Click    += (s, e) => ChangeFont();
+            FontMenuItem.Click    += (s, e) => TextEditControl.SelectFont();
             VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
             NewPageMenuItem.Click += (s, e) => PageCollectionControl.NewPage();
             RemoveMenuItem.Click  += (s, e) =>
@@ -75,25 +73,6 @@ namespace Cube.Note.App.Editor
                 var index = PageCollectionControl.SelectedIndex;
                 PageCollectionControl.Remove(index);
             };
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeColorScheme
-        ///
-        /// <summary>
-        /// テキストエディタ部の色を初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeColorScheme()
-        {
-            var colors = TextEditor.ColorScheme;
-            colors.LineNumberBack = SystemColors.Control;
-            colors.LineNumberFore = SystemColors.ControlDark;
-            colors.SelectionBack  = SystemColors.Highlight;
-            colors.SelectionFore  = SystemColors.HighlightText;
-            colors.EolColor       = colors.WhiteSpaceColor;
         }
 
         /* ----------------------------------------------------------------- */
@@ -127,35 +106,29 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
 
-            InitializeColorScheme();
             InitializeEvents();
             InitializePresenters();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnShown
+        ///
+        /// <summary>
+        /// フォームが表示された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnShown(EventArgs e)
+        {
+            TextEditControl.Focus();
+            Refresh();
+            base.OnShown(e);
         }
 
         #endregion
 
         #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ChangeFont
-        ///
-        /// <summary>
-        /// 使用するフォントを変更します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ChangeFont()
-        {
-            var dialog = new FontDialog();
-            dialog.Font = TextEditor.Font;
-            dialog.Color = TextEditor.ForeColor;
-            dialog.ShowEffects = false;
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            TextEditor.Font = dialog.Font;
-            TextEditor.ForeColor = dialog.Color;
-        }
 
         /* ----------------------------------------------------------------- */
         ///

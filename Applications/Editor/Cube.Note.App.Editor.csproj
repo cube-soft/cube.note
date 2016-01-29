@@ -79,8 +79,15 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
+    <Compile Include="Presenters\TextEditPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextEditControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextEditControl.Designer.cs">
+      <DependentUpon>TextEditControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="PageCollectionControl.resx">
       <DependentUpon>PageCollectionControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,6 +104,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TextEditControl.resx">
+      <DependentUpon>TextEditControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.manifest" />
     <None Include="Packages.config" />
     <None Include="Properties\Settings.settings">

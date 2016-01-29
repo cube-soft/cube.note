@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Sgry.Azuki.FontInfo fontInfo1 = new Sgry.Azuki.FontInfo();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
-            this.TextEditor = new Sgry.Azuki.WinForms.AzukiControl();
+            this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
@@ -84,7 +83,7 @@
             // 
             // ContentsPanel.Panel2
             // 
-            this.ContentsPanel.Panel2.Controls.Add(this.TextEditor);
+            this.ContentsPanel.Panel2.Controls.Add(this.TextEditControl);
             this.ContentsPanel.Size = new System.Drawing.Size(784, 424);
             this.ContentsPanel.SplitterDistance = 250;
             this.ContentsPanel.SplitterWidth = 1;
@@ -102,33 +101,14 @@
             this.PageCollectionControl.Size = new System.Drawing.Size(250, 424);
             this.PageCollectionControl.TabIndex = 0;
             // 
-            // TextEditor
+            // TextEditControl
             // 
-            this.TextEditor.BackColor = System.Drawing.SystemColors.Window;
-            this.TextEditor.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TextEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.TextEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextEditor.DrawingOption = ((Sgry.Azuki.DrawingOption)(((((Sgry.Azuki.DrawingOption.DrawsFullWidthSpace | Sgry.Azuki.DrawingOption.DrawsTab) 
-            | Sgry.Azuki.DrawingOption.DrawsEol) 
-            | Sgry.Azuki.DrawingOption.ShowsLineNumber) 
-            | Sgry.Azuki.DrawingOption.HighlightsMatchedBracket)));
-            this.TextEditor.FirstVisibleLine = 0;
-            this.TextEditor.Font = new System.Drawing.Font("メイリオ", 10F);
-            fontInfo1.Name = "メイリオ";
-            fontInfo1.Size = 10;
-            fontInfo1.Style = System.Drawing.FontStyle.Regular;
-            this.TextEditor.FontInfo = fontInfo1;
-            this.TextEditor.ForeColor = System.Drawing.Color.Black;
-            this.TextEditor.HighlightsCurrentLine = false;
-            this.TextEditor.LeftMargin = 8;
-            this.TextEditor.Location = new System.Drawing.Point(0, 0);
-            this.TextEditor.Margin = new System.Windows.Forms.Padding(0);
-            this.TextEditor.Name = "TextEditor";
-            this.TextEditor.ScrollPos = new System.Drawing.Point(0, 0);
-            this.TextEditor.ShowsDirtBar = false;
-            this.TextEditor.Size = new System.Drawing.Size(533, 424);
-            this.TextEditor.TabIndex = 0;
-            this.TextEditor.ViewWidth = 109;
+            this.TextEditControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextEditControl.Location = new System.Drawing.Point(0, 0);
+            this.TextEditControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TextEditControl.Name = "TextEditControl";
+            this.TextEditControl.Size = new System.Drawing.Size(533, 424);
+            this.TextEditControl.TabIndex = 0;
             // 
             // MenuToolStrip
             // 
@@ -274,9 +254,9 @@
         private System.Windows.Forms.ToolStripButton SearchMenuItem;
         private System.Windows.Forms.PictureBox VerticalSeparator;
         private System.Windows.Forms.ToolStripButton FontMenuItem;
-        private Sgry.Azuki.WinForms.AzukiControl TextEditor;
         private System.Windows.Forms.ToolStripButton MenuSeparator1;
         private System.Windows.Forms.ToolStripButton MenuSeparator2;
+        private TextEditControl TextEditControl;
     }
 }
 
