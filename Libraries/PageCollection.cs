@@ -41,7 +41,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemCollection
+        /// PageCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
@@ -52,7 +52,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemCollection
+        /// PageCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
