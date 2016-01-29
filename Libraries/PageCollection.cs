@@ -126,7 +126,7 @@ namespace Cube.Note
         public void NewPage()
         {
             var page = new Page();
-            Touch(ToPath(page));
+            Touch(page);
             Insert(0, page);
         }
 
@@ -169,6 +169,25 @@ namespace Cube.Note
 
         #endregion
 
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveItem
+        ///
+        /// <summary>
+        /// 項目を削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void RemoveItem(int index)
+        {
+            Clean(Items[index]);
+            base.RemoveItem(index);
+        }
+
+        #endregion
+
         #region Other private methods
 
         /* ----------------------------------------------------------------- */
@@ -180,25 +199,25 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Touch(string path)
+        private void Touch(Page page)
         {
+            var path = ToPath(page);
             CreateDirectory(IoEx.Path.GetDirectoryName(path));
             IoEx.File.Create(path).Close();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateDirectory
+        /// Clean
         ///
         /// <summary>
-        /// ディレクトリを生成します。
+        /// 削除するための処理を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void CreateDirectory(string path)
+        private void Clean(Page page)
         {
-            if (IoEx.Directory.Exists(path)) return;
-            IoEx.Directory.CreateDirectory(path);
+            IoEx.File.Delete(ToPath(page));
         }
 
         /* ----------------------------------------------------------------- */
@@ -227,6 +246,21 @@ namespace Cube.Note
         private string ToPath(string filename)
         {
             return IoEx.Path.Combine(Directory, filename);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateDirectory
+        ///
+        /// <summary>
+        /// ディレクトリを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void CreateDirectory(string path)
+        {
+            if (IoEx.Directory.Exists(path)) return;
+            IoEx.Directory.CreateDirectory(path);
         }
 
         #endregion

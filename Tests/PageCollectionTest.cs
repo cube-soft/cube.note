@@ -149,6 +149,26 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Remove
+        ///
+        /// <summary>
+        /// ページを削除するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Remove()
+        {
+            var filename = Pages[0].FileName;
+            Pages.RemoveAt(0);
+            Assert.That(
+                IoEx.File.Exists(IoEx.Path.Combine(Pages.Directory, filename)),
+                Is.False
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Save
         ///
         /// <summary>
