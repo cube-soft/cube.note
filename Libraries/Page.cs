@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Item.cs
+/// Page.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -24,17 +24,50 @@ namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Item
+    /// Page
     /// 
     /// <summary>
-    /// 1 つのノートを表すクラスです。
+    /// ページを表すクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class Item
+    public class Page
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Page
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Page()
+        {
+            var guid = new Guid();
+            FileName = guid.ToString();
+            Abstract = string.Empty;
+            Creation = DateTime.Now;
+        }
+
+        #endregion
+
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileName
+        ///
+        /// <summary>
+        /// ファイル名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string FileName { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -46,7 +79,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string Abstract { get; set; } = string.Empty;
+        public string Abstract { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -58,21 +91,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public DateTime Creation { get; set; } = DateTime.Now;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FileName
-        ///
-        /// <summary>
-        /// ファイル名を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string FileName
-        {
-            get { return Creation.ToString("yyyyMMddHHmmssfff"); }
-        }
+        public DateTime Creation { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -83,7 +102,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public object Document { get; set; } = null;
+        public object Document { get; set; }
 
         #endregion
     }

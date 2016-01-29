@@ -35,7 +35,7 @@ namespace Cube.Note
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class ItemCollection : ObservableCollection<Item>
+    public class PageCollection : ObservableCollection<Page>
     {
         #region Constructors
 
@@ -48,7 +48,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ItemCollection() : this(Assembly.GetExecutingAssembly()) { }
+        public PageCollection() : this(Assembly.GetExecutingAssembly()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -59,7 +59,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ItemCollection(Assembly assembly)
+        public PageCollection(Assembly assembly)
         {
             var reader = new AssemblyReader(assembly);
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -76,7 +76,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ItemCollection(string directory)
+        public PageCollection(string directory)
         {
             Directory = directory;
         }
@@ -105,7 +105,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Cube.Settings.FileType FileType
+        public Settings.FileType FileType
         {
             get { return Settings.FileType.Json; }
         }
@@ -116,19 +116,18 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// NewItem
+        /// NewPage
         ///
         /// <summary>
-        /// 新しいノートを先頭に追加します。
+        /// 新しいページを先頭に追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewItem()
+        public void NewPage()
         {
-            var item = new Item();
-            while (IoEx.File.Exists(GetPath(item))) item.Creation.AddMilliseconds(1);
-            using (var obj = IoEx.File.Create(GetPath(item))) { /* close immediately */ }
-            Insert(0, item);
+            var page = new Page();
+            Touch(ToPath(page));
+            Insert(0, page);
         }
 
         /* ----------------------------------------------------------------- */
@@ -142,14 +141,14 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public void Load(string filename)
         {
-            var def = GetPath(filename);
+            var def = ToPath(filename);
             if (!IoEx.File.Exists(def)) return;
 
-            var items = Cube.Settings.Load<List<Item>>(def, FileType);
-            foreach (var item in items)
+            var pages = Settings.Load<List<Page>>(def, FileType);
+            foreach (var page in pages)
             {
-                if (!IoEx.File.Exists(GetPath(item))) continue;
-                Add(item);
+                if (!IoEx.File.Exists(ToPath(page))) continue;
+                Add(page);
             }
         }
 
@@ -164,8 +163,8 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public void Save(string filename)
         {
-            if (!IoEx.Directory.Exists(Directory)) IoEx.Directory.CreateDirectory(Directory);
-            Cube.Settings.Save(this.ToList(), GetPath(filename), FileType);
+            CreateDirectory(Directory);
+            Settings.Save(this.ToList(), ToPath(filename), FileType);
         }
 
         #endregion
@@ -174,28 +173,58 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetPath
+        /// Touch
+        ///
+        /// <summary>
+        /// 空のファイルを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Touch(string path)
+        {
+            CreateDirectory(IoEx.Path.GetDirectoryName(path));
+            IoEx.File.Create(path).Close();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateDirectory
+        ///
+        /// <summary>
+        /// ディレクトリを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void CreateDirectory(string path)
+        {
+            if (IoEx.Directory.Exists(path)) return;
+            IoEx.Directory.CreateDirectory(path);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToPath
         ///
         /// <summary>
         /// 指定されたオブジェクトに対応するパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetPath(Item item)
+        private string ToPath(Page item)
         {
-            return GetPath(item.FileName);
+            return ToPath(item.FileName);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetPath
+        /// ToPath
         ///
         /// <summary>
         /// 指定されたファイル名に対応するパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetPath(string filename)
+        private string ToPath(string filename)
         {
             return IoEx.Path.Combine(Directory, filename);
         }
