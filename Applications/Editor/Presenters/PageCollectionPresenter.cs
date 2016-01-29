@@ -48,13 +48,14 @@ namespace Cube.Note.App.Editor
         public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
             : base(view, model)
         {
-            View.FindForm().Shown       += View_Shown;
             View.FindForm().FormClosing += View_Closing;
             View.SelectedIndexChanged   += View_SelectedIndexChanged;
             View.NewPageRequired        += (s, e) => Model.NewPage();
             View.Removed                += (s, e) => Model.RemoveAt(e.Value);
 
             Model.CollectionChanged += Model_CollectionChanged;
+
+            InitializeModel();
         }
 
         #endregion
@@ -65,14 +66,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Shown
+        /// InitializeModel
         /// 
         /// <summary>
-        /// フォーム閉じる時に実行されるハンドラです。
+        /// モデルを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Shown(object sender, System.EventArgs e)
+        private void InitializeModel()
         {
             Task.Run(() =>
             {

@@ -19,14 +19,14 @@
 /* ------------------------------------------------------------------------- */
 using System;
 
-namespace Cube.Note.App.Editor.Presenters
+namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
     /// TextEditPresenter
     /// 
     /// <summary>
-    /// テキストエディタとモデルを関連付けるためのクラスです。
+    /// TextEditControl とモデルを関連付けるためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
@@ -46,7 +46,34 @@ namespace Cube.Note.App.Editor.Presenters
         public TextEditPresenter(TextEditControl view, PageCollection model)
             : base(view, model)
         {
+            Model.TargetChanged += Model_TargetChanged;
+        }
 
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_TargetChanged
+        ///
+        /// <summary>
+        /// 編集対象となる Page オブジェクトが変更された時に実行される
+        /// ハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: ここで View.Focus() を実行しても ListView の MouseUp
+        /// 発生時にフォーカスを奪われてしまう模様。対応方法を検討する。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_TargetChanged(object sender, PageChangedEventArgs e)
+        {
+            if (e.NewPage == null) return;
+
+            View.Document = e.NewPage.CreateDocument();
+            View.Focus();
         }
 
         #endregion

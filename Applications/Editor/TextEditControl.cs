@@ -58,6 +58,16 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Properties
+
+        public Sgry.Azuki.Document Document
+        {
+            get { return AzukiTextControl.Document; }
+            set { AzukiTextControl.Document = value; }
+        }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */

@@ -87,6 +87,7 @@ namespace Cube.Note.App.Editor
         private void InitializePresenters()
         {
             new PageCollectionPresenter(PageCollectionControl, Pages);
+            new TextEditPresenter(TextEditControl, Pages);
         }
 
         #endregion
@@ -108,22 +109,6 @@ namespace Cube.Note.App.Editor
 
             InitializeEvents();
             InitializePresenters();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnShown
-        ///
-        /// <summary>
-        /// フォームが表示された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnShown(EventArgs e)
-        {
-            TextEditControl.Focus();
-            Refresh();
-            base.OnShown(e);
         }
 
         #endregion
