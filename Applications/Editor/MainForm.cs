@@ -17,8 +17,10 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Reflection;
 using System.Drawing;
 using System.Windows.Forms;
+using System;
 
 namespace Cube.Note.App.Editor
 {
@@ -46,18 +48,28 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MainForm()
         {
-            InitializeComponent();
-            InitializeColorScheme();
-
-            FontMenuItem.Click += (s, e) => ChangeFont();
-            VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
-
+            InitializeComponent();            
             VisibleMenuItem.Tag = true;
         }
 
         #endregion
 
-        #region Other private methods
+        #region Initialize methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeEvents
+        ///
+        /// <summary>
+        /// 各種イベントハンドラを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeEvents()
+        {
+            FontMenuItem.Click += (s, e) => ChangeFont();
+            VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,6 +89,46 @@ namespace Cube.Note.App.Editor
             colors.SelectionFore  = SystemColors.HighlightText;
             colors.EolColor       = colors.WhiteSpaceColor;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializePresenters
+        ///
+        /// <summary>
+        /// 各種 Presenter を初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializePresenters()
+        {
+            new PageCollectionPresenter(PageCollectionControl, Pages);
+        }
+
+        #endregion
+
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        ///
+        /// <summary>
+        /// ロード時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            InitializeColorScheme();
+            InitializeEvents();
+            InitializePresenters();
+        }
+
+        #endregion
+
+        #region Other private methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -125,6 +177,10 @@ namespace Cube.Note.App.Editor
             ContentsPanel.Panel1Collapsed = !visible;
         }
 
+        #endregion
+
+        #region Models
+        private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
         #endregion
     }
 }

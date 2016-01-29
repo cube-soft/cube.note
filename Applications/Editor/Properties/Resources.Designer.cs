@@ -91,6 +91,24 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   yyyy/MM/dd HH:mm 作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CreationFormat {
+            get {
+                return ResourceManager.GetString("CreationFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無題のページ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string EmptyPage {
+            get {
+                return ResourceManager.GetString("EmptyPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Font {
@@ -106,6 +124,15 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string HideMenu {
             get {
                 return ResourceManager.GetString("HideMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Order.json に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string OrderFileName {
+            get {
+                return ResourceManager.GetString("OrderFileName", resourceCulture);
             }
         }
         

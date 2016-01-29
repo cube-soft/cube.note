@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -50,8 +49,53 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
             InitializeLayout();
+        }
 
-            DummyData(5);
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        /// 
+        /// <summary>
+        /// 新しいページを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(Page item)
+        {
+            PageListView.Add(item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        /// 
+        /// <summary>
+        /// 指定されたインデックスに新しいページを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(int index, Page item)
+        {
+            PageListView.Insert(index, item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        /// 
+        /// <summary>
+        /// 項目を選択します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select(int index)
+        {
+            if (index < 0 || index >= PageListView.Items.Count) return;
+            PageListView.Items[index].Selected = true;
         }
 
         #endregion
@@ -77,6 +121,37 @@ namespace Cube.Note.App.Editor
             PageListView.TileSize = new Size(width, height);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageListView_SelectedIndexChanged
+        /// 
+        /// <summary>
+        /// 選択されている項目が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PageListView.SelectedIndices.Count <= 0 && _lastIndex >= 0)
+            {
+                PageListView.SelectedIndices.Add(_lastIndex);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageListView_ItemSelectionChanged
+        /// 
+        /// <summary>
+        /// 選択されている項目が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected) _lastIndex = e.ItemIndex;
+        }
+
         #endregion
 
         #region Other private methods
@@ -94,9 +169,7 @@ namespace Cube.Note.App.Editor
         {
             PageListView.View = View.Tile;
             PageListView.TileSize = new Size(PageListView.Width, 70);
-            PageListView.LargeImageList = new ImageList();
-            PageListView.LargeImageList.ImageSize = new Size(8, 1);
-            PageListView.LargeImageList.Images.Add(new Bitmap(8, 1));
+            PageListView.Converter = new PageConverter();
             PageListView.Columns.AddRange(new ColumnHeader[]
             {
                 new ColumnHeader(), // Title
@@ -106,34 +179,8 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region For debug
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DummyData
-        /// 
-        /// <summary>
-        /// ダミーデータを追加します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 見た目の確認用です。追加処理が実装され次第、削除されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Conditional("DEBUG")]
-        public void DummyData(int count)
-        {
-            for (var i = 0; i < count; ++i)
-            {
-                PageListView.Items.Add(new ListViewItem(new string[]
-                {
-                    string.Format("ダミーノート ({0}) 株式会社キューブ・ソフト abcdefghijklmnopqrstuvwxyz", i),
-                    DateTime.Now.ToString("yyyy/mm/dd HH:MM 作成")
-                }, 0));
-            }
-        }
-
+        #region Fields
+        private int _lastIndex = -1;
         #endregion
     }
 }

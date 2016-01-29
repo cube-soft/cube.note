@@ -44,7 +44,8 @@
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Cube.Forms">
+    <Reference Include="Cube.Forms, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
@@ -64,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\PageConverter.cs" />
     <Compile Include="PageCollectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,6 +78,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presenters\PageCollectionPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="PageCollectionControl.resx">
@@ -119,7 +122,10 @@
     <None Include="Resources\Add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Presenters\" />
+    <ProjectReference Include="..\..\Libraries\Cube.Note.csproj">
+      <Project>{9f978a54-6ea5-465d-bd06-58d1b720f804}</Project>
+      <Name>Cube.Note</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

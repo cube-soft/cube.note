@@ -63,7 +63,7 @@ namespace Cube.Note
         {
             var reader = new AssemblyReader(assembly);
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var folder = string.Format(@"{0}\{1}", reader.Company, reader.Product);
+            var folder = string.Format(@"{0}\{1}\Inbox", reader.Company, reader.Product);
             Directory = IoEx.Path.Combine(appdata, folder);
         }
 
