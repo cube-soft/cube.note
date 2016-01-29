@@ -53,20 +53,95 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedIndex
+        /// 
+        /// <summary>
+        /// 選択されている項目のインデックスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int SelectedIndex
+        {
+            get
+            {
+                return PageListView.SelectedIndices.Count > 0 ?
+                       PageListView.SelectedIndices[0] :
+                       -1;
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewPage
+        ///
+        /// <summary>
+        /// 新しいページの追加が要求された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler NewPageRequired;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Added
+        ///
+        /// <summary>
+        /// ページが追加された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<DataEventArgs<int>> Added;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Removed
+        ///
+        /// <summary>
+        /// ページが削除された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<DataEventArgs<int>> Removed;
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
+        /// NewPage
         /// 
         /// <summary>
         /// 新しいページを追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        public void NewPage()
+        {
+            OnNewPageRequired(new EventArgs());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        /// 
+        /// <summary>
+        /// ページを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public void Add(Page item)
         {
-            PageListView.Add(item);
+            var index = PageListView.Items.Count;
+            Insert(index, item);
         }
 
         /* ----------------------------------------------------------------- */
@@ -74,28 +149,85 @@ namespace Cube.Note.App.Editor
         /// Insert
         /// 
         /// <summary>
-        /// 指定されたインデックスに新しいページを追加します。
+        /// 指定されたインデックスにページを追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public void Insert(int index, Page item)
         {
             PageListView.Insert(index, item);
+            OnAdded(new DataEventArgs<int>(index));
+            if (PageListView.Items.Count == 1)
+            {
+                PageListView.Items[0].Selected = true;
+            }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Select
+        /// Remove
         /// 
         /// <summary>
-        /// 項目を選択します。
+        /// ページを削除します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Select(int index)
+        public void Remove(int index)
         {
             if (index < 0 || index >= PageListView.Items.Count) return;
-            PageListView.Items[index].Selected = true;
+            PageListView.Items.RemoveAt(index);
+            OnRemoved(new DataEventArgs<int>(index));
+            if (PageListView.Items.Count > 0)
+            {
+                var newindex = Math.Min(index, PageListView.Items.Count - 1);
+                PageListView.Items[newindex].Selected = true;
+            }
+        }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewPage
+        ///
+        /// <summary>
+        /// 新しいページの追加要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnNewPageRequired(EventArgs e)
+        {
+            if (NewPageRequired != null) NewPageRequired(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnAdded
+        ///
+        /// <summary>
+        /// ページが追加された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnAdded(DataEventArgs<int> e)
+        {
+            if (Added != null) Added(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnRemoved
+        ///
+        /// <summary>
+        /// ページが削除された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnRemoved(DataEventArgs<int> e)
+        {
+            if (Removed != null) Removed(this, e);
         }
 
         #endregion
@@ -119,37 +251,6 @@ namespace Cube.Note.App.Editor
                          PageListView.Width - SystemInformation.VerticalScrollBarWidth :
                          PageListView.Width;
             PageListView.TileSize = new Size(width, height);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageListView_SelectedIndexChanged
-        /// 
-        /// <summary>
-        /// 選択されている項目が変化した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (PageListView.SelectedIndices.Count <= 0 && _lastIndex >= 0)
-            {
-                PageListView.SelectedIndices.Add(_lastIndex);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageListView_ItemSelectionChanged
-        /// 
-        /// <summary>
-        /// 選択されている項目が変化した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            if (e.IsSelected) _lastIndex = e.ItemIndex;
         }
 
         #endregion
@@ -177,10 +278,6 @@ namespace Cube.Note.App.Editor
             });
         }
 
-        #endregion
-
-        #region Fields
-        private int _lastIndex = -1;
         #endregion
     }
 }

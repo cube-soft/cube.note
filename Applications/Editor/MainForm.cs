@@ -67,8 +67,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            FontMenuItem.Click += (s, e) => ChangeFont();
+            FontMenuItem.Click    += (s, e) => ChangeFont();
             VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
+            NewPageMenuItem.Click += (s, e) => PageCollectionControl.NewPage();
+            RemoveMenuItem.Click  += (s, e) =>
+            {
+                var index = PageCollectionControl.SelectedIndex;
+                PageCollectionControl.Remove(index);
+            };
         }
 
         /* ----------------------------------------------------------------- */

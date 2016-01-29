@@ -36,6 +36,7 @@
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Converter = null;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.PageListView.Location = new System.Drawing.Point(5, 0);
             this.PageListView.Margin = new System.Windows.Forms.Padding(0);
             this.PageListView.MultiSelect = false;
@@ -45,8 +46,6 @@
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.PageListView.TileSize = new System.Drawing.Size(248, 80);
             this.PageListView.UseCompatibleStateImageBehavior = false;
-            this.PageListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.PageListView_ItemSelectionChanged);
-            this.PageListView.SelectedIndexChanged += new System.EventHandler(this.PageListView_SelectedIndexChanged);
             this.PageListView.Resize += new System.EventHandler(this.PageListView_Resize);
             // 
             // PageCollectionControl

@@ -48,8 +48,11 @@ namespace Cube.Note.App.Editor
         public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
             : base(view, model)
         {
-            Model.CollectionChanged += Model_CollectionChanged;
+            View.NewPageRequired += (s, e) => Model.NewPage();
+            View.Removed += (s, e) => Model.RemoveAt(e.Value);
             View.FindForm().FormClosing += View_Closing;
+
+            Model.CollectionChanged += Model_CollectionChanged;
 
             var _ = InitializeAsync();
         }
@@ -98,6 +101,9 @@ namespace Cube.Note.App.Editor
                         View.Insert(index, Model[index]);
                     });
                     break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (Model.Count <= 0) Model.NewPage();
+                    break;
             }
         }
 
@@ -122,7 +128,6 @@ namespace Cube.Note.App.Editor
             {
                 Model.Load(Properties.Resources.OrderFileName);
                 if (Model.Count <= 0) Model.NewPage();
-                Post(() => View.Select(0));
             });
         }
 

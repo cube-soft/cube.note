@@ -37,7 +37,7 @@
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
-            this.AddMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.NewPageMenuItem = new System.Windows.Forms.ToolStripButton();
             this.RemoveMenuItem = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
@@ -92,10 +92,13 @@
             // 
             // PageCollectionControl
             // 
+            this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
             this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
+            this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
+            this.PageCollectionControl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.PageCollectionControl.Size = new System.Drawing.Size(250, 424);
             this.PageCollectionControl.TabIndex = 0;
             // 
@@ -137,7 +140,7 @@
             this.MenuToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VisibleMenuItem,
             this.MenuSeparator1,
-            this.AddMenuItem,
+            this.NewPageMenuItem,
             this.RemoveMenuItem,
             this.SearchMenuItem,
             this.MenuSeparator2,
@@ -172,16 +175,16 @@
             this.MenuSeparator1.Name = "MenuSeparator1";
             this.MenuSeparator1.Size = new System.Drawing.Size(1, 34);
             // 
-            // AddMenuItem
+            // NewPageMenuItem
             // 
-            this.AddMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.AddMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
-            this.AddMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.AddMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.AddMenuItem.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
-            this.AddMenuItem.Name = "AddMenuItem";
-            this.AddMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.AddMenuItem.Text = "ノートを追加";
+            this.NewPageMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.NewPageMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
+            this.NewPageMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.NewPageMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewPageMenuItem.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.NewPageMenuItem.Name = "NewPageMenuItem";
+            this.NewPageMenuItem.Size = new System.Drawing.Size(28, 28);
+            this.NewPageMenuItem.Text = "ノートを追加";
             // 
             // RemoveMenuItem
             // 
@@ -266,7 +269,7 @@
         private PageCollectionControl PageCollectionControl;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
-        private System.Windows.Forms.ToolStripButton AddMenuItem;
+        private System.Windows.Forms.ToolStripButton NewPageMenuItem;
         private System.Windows.Forms.ToolStripButton RemoveMenuItem;
         private System.Windows.Forms.ToolStripButton SearchMenuItem;
         private System.Windows.Forms.PictureBox VerticalSeparator;
