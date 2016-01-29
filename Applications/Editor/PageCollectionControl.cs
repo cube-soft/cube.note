@@ -111,6 +111,17 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public event EventHandler<DataEventArgs<int>> Removed;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedIndexChanged
+        ///
+        /// <summary>
+        /// 選択項目が変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler SelectedIndexChanged;
+
         #endregion
 
         #region Methods
@@ -230,6 +241,20 @@ namespace Cube.Note.App.Editor
             if (Removed != null) Removed(this, e);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnSelectedIndexChanged
+        ///
+        /// <summary>
+        /// 選択項目が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnSelectedIndexChanged(EventArgs e)
+        {
+            if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
+        }
+
         #endregion
 
         #region Event handlers
@@ -251,6 +276,21 @@ namespace Cube.Note.App.Editor
                          PageListView.Width - SystemInformation.VerticalScrollBarWidth :
                          PageListView.Width;
             PageListView.TileSize = new Size(width, height);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageListView_SelectedIndexChanged
+        /// 
+        /// <summary>
+        /// 選択項目が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PageListView.SelectedIndices.Count == 0) return;
+            OnSelectedIndexChanged(e);
         }
 
         /* ----------------------------------------------------------------- */

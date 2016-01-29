@@ -47,6 +47,7 @@
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.PageListView.TileSize = new System.Drawing.Size(248, 80);
             this.PageListView.UseCompatibleStateImageBehavior = false;
+            this.PageListView.SelectedIndexChanged += new System.EventHandler(this.PageListView_SelectedIndexChanged);
             this.PageListView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PageListView_MouseUp);
             this.PageListView.Resize += new System.EventHandler(this.PageListView_Resize);
             // 
