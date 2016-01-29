@@ -47,8 +47,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public Page()
         {
-            var guid = new Guid();
-            FileName = guid.ToString();
+            FileName = Guid.NewGuid().ToString("N");
             Abstract = string.Empty;
             Creation = DateTime.Now;
         }
