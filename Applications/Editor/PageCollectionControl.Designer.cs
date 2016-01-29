@@ -35,11 +35,11 @@
             // 
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageListView.Location = new System.Drawing.Point(4, 0);
+            this.PageListView.Location = new System.Drawing.Point(5, 0);
             this.PageListView.Margin = new System.Windows.Forms.Padding(0);
             this.PageListView.MultiSelect = false;
             this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(196, 200);
+            this.PageListView.Size = new System.Drawing.Size(195, 200);
             this.PageListView.TabIndex = 0;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.PageListView.TileSize = new System.Drawing.Size(248, 80);
@@ -53,7 +53,7 @@
             this.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PageCollectionControl";
-            this.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.Size = new System.Drawing.Size(200, 200);
             this.ResumeLayout(false);
 

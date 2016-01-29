@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ItemListControl.cs
+/// PageCollectionControl.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
