@@ -64,11 +64,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ItemListControl.cs">
+    <Compile Include="PageCollectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ItemListControl.Designer.cs">
-      <DependentUpon>ItemListControl.cs</DependentUpon>
+    <Compile Include="PageCollectionControl.Designer.cs">
+      <DependentUpon>PageCollectionControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -78,8 +78,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ItemListControl.resx">
-      <DependentUpon>ItemListControl.cs</DependentUpon>
+    <EmbeddedResource Include="PageCollectionControl.resx">
+      <DependentUpon>PageCollectionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -117,6 +117,9 @@
     <None Include="Resources\ArrowRight.png" />
     <None Include="Resources\ArrowLeft.png" />
     <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Presenters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -26,14 +26,14 @@ namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ItemListControl
+    /// PageCollectionControl
     /// 
     /// <summary>
-    /// ノート一覧を表示するためのクラスです。
+    /// ページ一覧を表示するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class ItemListControl : Cube.Forms.UserControl
+    public partial class PageCollectionControl : Cube.Forms.UserControl
     {
         #region Constructors
 
@@ -46,7 +46,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ItemListControl()
+        public PageCollectionControl()
         {
             InitializeComponent();
             InitializeLayout();
@@ -60,21 +60,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemListView_Resize
+        /// PageListView_Resize
         /// 
         /// <summary>
         /// ListView のリサイズ時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ItemListView_Resize(object sender, EventArgs e)
+        private void PageListView_Resize(object sender, EventArgs e)
         {
-            var count  = ItemListView.Items.Count;
-            var height = ItemListView.TileSize.Height;
-            var width  = ItemListView.ClientSize.Height < height * count ?
-                         ItemListView.Width - SystemInformation.VerticalScrollBarWidth :
-                         ItemListView.Width;
-            ItemListView.TileSize = new Size(width, height);
+            var count  = PageListView.Items.Count;
+            var height = PageListView.TileSize.Height;
+            var width  = PageListView.ClientSize.Height < height * count ?
+                         PageListView.Width - SystemInformation.VerticalScrollBarWidth :
+                         PageListView.Width;
+            PageListView.TileSize = new Size(width, height);
         }
 
         #endregion
@@ -92,12 +92,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            ItemListView.View = View.Tile;
-            ItemListView.TileSize = new Size(ItemListView.Width, 70);
-            ItemListView.LargeImageList = new ImageList();
-            ItemListView.LargeImageList.ImageSize = new Size(8, 1);
-            ItemListView.LargeImageList.Images.Add(new Bitmap(8, 1));
-            ItemListView.Columns.AddRange(new ColumnHeader[]
+            PageListView.View = View.Tile;
+            PageListView.TileSize = new Size(PageListView.Width, 70);
+            PageListView.LargeImageList = new ImageList();
+            PageListView.LargeImageList.ImageSize = new Size(8, 1);
+            PageListView.LargeImageList.Images.Add(new Bitmap(8, 1));
+            PageListView.Columns.AddRange(new ColumnHeader[]
             {
                 new ColumnHeader(), // Title
                 new ColumnHeader(), // CreationTime
@@ -126,7 +126,7 @@ namespace Cube.Note.App.Editor
         {
             for (var i = 0; i < count; ++i)
             {
-                ItemListView.Items.Add(new ListViewItem(new string[]
+                PageListView.Items.Add(new ListViewItem(new string[]
                 {
                     string.Format("ダミーノート ({0}) 株式会社キューブ・ソフト abcdefghijklmnopqrstuvwxyz", i),
                     DateTime.Now.ToString("yyyy/mm/dd HH:MM 作成")

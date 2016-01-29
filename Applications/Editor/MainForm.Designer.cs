@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
+            this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
             this.TextEditor = new Sgry.Azuki.WinForms.AzukiControl();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
@@ -42,7 +43,6 @@
             this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
             this.FontMenuItem = new System.Windows.Forms.ToolStripButton();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
-            this.ItemListControl = new Cube.Note.App.Editor.ItemListControl();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -80,7 +80,7 @@
             // 
             // ContentsPanel.Panel1
             // 
-            this.ContentsPanel.Panel1.Controls.Add(this.ItemListControl);
+            this.ContentsPanel.Panel1.Controls.Add(this.PageCollectionControl);
             // 
             // ContentsPanel.Panel2
             // 
@@ -89,6 +89,15 @@
             this.ContentsPanel.SplitterDistance = 250;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
+            // 
+            // PageCollectionControl
+            // 
+            this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
+            this.PageCollectionControl.Name = "PageCollectionControl";
+            this.PageCollectionControl.Size = new System.Drawing.Size(250, 424);
+            this.PageCollectionControl.TabIndex = 0;
             // 
             // TextEditor
             // 
@@ -230,15 +239,6 @@
             this.VerticalSeparator.TabIndex = 2;
             this.VerticalSeparator.TabStop = false;
             // 
-            // ItemListControl
-            // 
-            this.ItemListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ItemListControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.ItemListControl.Location = new System.Drawing.Point(0, 0);
-            this.ItemListControl.Name = "ItemListControl";
-            this.ItemListControl.Size = new System.Drawing.Size(250, 424);
-            this.ItemListControl.TabIndex = 0;
-            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 461);
@@ -263,7 +263,7 @@
 
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.SplitContainer ContentsPanel;
-        private ItemListControl ItemListControl;
+        private PageCollectionControl PageCollectionControl;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
         private System.Windows.Forms.ToolStripButton AddMenuItem;

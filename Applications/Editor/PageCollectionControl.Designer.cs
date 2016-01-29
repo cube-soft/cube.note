@@ -1,6 +1,6 @@
 ﻿namespace Cube.Note.App.Editor
 {
-    partial class ItemListControl
+    partial class PageCollectionControl
     {
         /// <summary> 
         /// 必要なデザイナー変数です。
@@ -28,29 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ItemListView = new Cube.Forms.ListView();
+            this.PageListView = new Cube.Forms.ListView();
             this.SuspendLayout();
             // 
-            // ItemListView
+            // PageListView
             // 
-            this.ItemListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ItemListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ItemListView.Location = new System.Drawing.Point(0, 0);
-            this.ItemListView.Margin = new System.Windows.Forms.Padding(0);
-            this.ItemListView.MultiSelect = false;
-            this.ItemListView.Name = "ItemListView";
-            this.ItemListView.Size = new System.Drawing.Size(200, 200);
-            this.ItemListView.TabIndex = 0;
-            this.ItemListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.ItemListView.TileSize = new System.Drawing.Size(248, 80);
-            this.ItemListView.UseCompatibleStateImageBehavior = false;
-            this.ItemListView.Resize += new System.EventHandler(this.ItemListView_Resize);
+            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageListView.Location = new System.Drawing.Point(4, 0);
+            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
+            this.PageListView.MultiSelect = false;
+            this.PageListView.Name = "PageListView";
+            this.PageListView.Size = new System.Drawing.Size(196, 200);
+            this.PageListView.TabIndex = 0;
+            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
+            this.PageListView.TileSize = new System.Drawing.Size(248, 80);
+            this.PageListView.UseCompatibleStateImageBehavior = false;
+            this.PageListView.Resize += new System.EventHandler(this.PageListView_Resize);
             // 
-            // ItemListControl
+            // PageCollectionControl
             // 
-            this.Controls.Add(this.ItemListView);
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.Controls.Add(this.PageListView);
             this.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.Name = "ItemListControl";
+            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Name = "PageCollectionControl";
+            this.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.Size = new System.Drawing.Size(200, 200);
             this.ResumeLayout(false);
 
@@ -58,6 +61,6 @@
 
         #endregion
 
-        private Cube.Forms.ListView ItemListView;
+        private Cube.Forms.ListView PageListView;
     }
 }
