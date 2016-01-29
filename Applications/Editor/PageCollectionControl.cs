@@ -253,6 +253,28 @@ namespace Cube.Note.App.Editor
             PageListView.TileSize = new Size(width, height);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageListView_MouseUp
+        /// 
+        /// <summary>
+        /// マウスのボタンから手が離れた時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 項目がまったく選択されない状態になる事を防止します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageListView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (PageListView.FocusedItem != null &&
+                PageListView.SelectedIndices.Count == 0)
+            {
+                PageListView.FocusedItem.Selected = true;
+            }
+        }
+
         #endregion
 
         #region Other private methods
