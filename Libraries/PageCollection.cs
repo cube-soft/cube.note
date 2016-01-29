@@ -87,17 +87,6 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Directory
-        ///
-        /// <summary>
-        /// 対象とするディレクトリへのパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Directory { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// FileType
         ///
         /// <summary>
@@ -109,6 +98,54 @@ namespace Cube.Note
         {
             get { return Settings.FileType.Json; }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Directory
+        ///
+        /// <summary>
+        /// 対象とするディレクトリへのパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Directory { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Target
+        ///
+        /// <summary>
+        /// 対象とする Page オブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Page Target
+        {
+            get { return _target; }
+            set
+            {
+                if (_target == value) return;
+
+                var before = _target;
+                _target = value;
+                OnTargetChanged(new PageChangedEventArgs(before, value));
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TargetChanged
+        ///
+        /// <summary>
+        /// 対象となる Page オブジェクトが変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler<PageChangedEventArgs> TargetChanged;
 
         #endregion
 
@@ -165,6 +202,25 @@ namespace Cube.Note
         {
             CreateDirectory(Directory);
             Settings.Save(this.ToList(), ToPath(filename), FileType);
+        }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnTargetChanged
+        ///
+        /// <summary>
+        /// 対象となる Page オブジェクトが変更された時に実行される
+        /// ハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnTargetChanged(PageChangedEventArgs e)
+        {
+            if (TargetChanged != null) TargetChanged(this, e);
         }
 
         #endregion
@@ -263,6 +319,10 @@ namespace Cube.Note
             IoEx.Directory.CreateDirectory(path);
         }
 
+        #endregion
+
+        #region Fields
+        private Page _target = null;
         #endregion
     }
 }

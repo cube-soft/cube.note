@@ -48,10 +48,11 @@ namespace Cube.Note.App.Editor
         public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
             : base(view, model)
         {
-            View.NewPageRequired += (s, e) => Model.NewPage();
-            View.Removed += (s, e) => Model.RemoveAt(e.Value);
-            View.FindForm().Shown += View_Shown;
+            View.FindForm().Shown       += View_Shown;
             View.FindForm().FormClosing += View_Closing;
+            View.SelectedIndexChanged   += View_SelectedIndexChanged;
+            View.NewPageRequired        += (s, e) => Model.NewPage();
+            View.Removed                += (s, e) => Model.RemoveAt(e.Value);
 
             Model.CollectionChanged += Model_CollectionChanged;
         }
@@ -92,6 +93,22 @@ namespace Cube.Note.App.Editor
         private void View_Closing(object sender, FormClosingEventArgs e)
         {
             Model.Save(Properties.Resources.OrderFileName);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_SelectedIndexChanged
+        /// 
+        /// <summary>
+        /// 選択項目が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            var index = View.SelectedIndex;
+            if (index < 0 || index >= Model.Count) return;
+            Model.Target = Model[index];
         }
 
         #endregion
