@@ -46,8 +46,9 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         protected FileResource()
         {
-            var exec = Assembly.GetExecutingAssembly().Location;
-            Root = IoEx.Path.GetDirectoryName(exec);
+            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
+            Root = IoEx.Path.GetDirectoryName(reader.Location);
+            _folder = GetType().FullName.Replace(string.Format("{0}.", reader.Product), "");
             Initialize();
         }
 
@@ -94,8 +95,7 @@ namespace Cube.Note.Tests
         {
             get
             {
-                var classname = GetType().FullName.Replace("Cube.Note.Tests.", "");
-                var folder = string.Format(@"Results\{0}", classname);
+                var folder = string.Format(@"Results\{0}", _folder);
                 return IoEx.Path.Combine(Root, folder);
             }
         }
@@ -142,6 +142,10 @@ namespace Cube.Note.Tests
             }
         }
 
+        #endregion
+
+        #region Fields
+        private string _folder = string.Empty;
         #endregion
     }
 }

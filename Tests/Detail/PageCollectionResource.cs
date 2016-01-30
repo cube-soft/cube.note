@@ -21,6 +21,15 @@ using IoEx = System.IO;
 
 namespace Cube.Note.Tests
 {
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PageCollectionResource
+    /// 
+    /// <summary>
+    /// PageCollection のテストを補助するクラスです。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
     class PageCollectionResource : FileResource
     {
         #region Constructors
