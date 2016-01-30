@@ -17,7 +17,6 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Threading.Tasks;
 using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
@@ -113,13 +112,8 @@ namespace Cube.Note.App.Editor
         {
             if (page == null) return;
 
-            Task.Run(() =>
-            {
-                var document = page.Document as Document;
-                if (document != null) document.ContentChanged -= Model_ContentChanged;
-
-                page.SaveDocument(Model.Directory);
-            });
+            var document = page.Document as Document;
+            if (document != null) document.ContentChanged -= Model_ContentChanged;
         }
 
         /* ----------------------------------------------------------------- */

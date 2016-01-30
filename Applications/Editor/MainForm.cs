@@ -47,7 +47,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MainForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            InitializeEvents();
+            InitializePresenters();
         }
 
         #endregion
@@ -125,9 +127,9 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
 
-            InitializeEvents();
             InitializeLayout();
-            InitializePresenters();
+
+            Saver = new AutoSaver(Pages);
         }
 
         #endregion
@@ -164,6 +166,7 @@ namespace Cube.Note.App.Editor
 
         #region Models
         private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
+        private AutoSaver Saver = null;
         #endregion
     }
 }

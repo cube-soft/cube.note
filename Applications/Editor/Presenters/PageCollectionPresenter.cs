@@ -19,10 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Collections;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
@@ -51,14 +48,11 @@ namespace Cube.Note.App.Editor
         public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
             : base(view, model)
         {
-            View.FindForm().FormClosing += View_Closing;
             View.SelectedIndexChanged   += View_SelectedIndexChanged;
             View.NewPageRequired        += View_NewPageRequired;
             View.Removed                += View_Removed;
 
-            Model.CollectionChanged += Model_CollectionChanged;
-
-            InitializeModel();
+            Model.CollectionChanged     += Model_CollectionChanged;
         }
 
         #endregion
@@ -66,21 +60,6 @@ namespace Cube.Note.App.Editor
         #region Event handlers
 
         #region View
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Closing
-        /// 
-        /// <summary>
-        /// フォームを閉じる時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Closing(object sender, FormClosingEventArgs e)
-        {
-            if (Model.Active != null) Model.Active.SaveDocument(Model.Directory);
-            Model.Save(Properties.Resources.OrderFileName);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -183,28 +162,6 @@ namespace Cube.Note.App.Editor
         }
 
         #endregion
-
-        #endregion
-
-        #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeModel
-        /// 
-        /// <summary>
-        /// モデルを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeModel()
-        {
-            Task.Run(() =>
-            {
-                Model.Load(Properties.Resources.OrderFileName);
-                if (Model.Count <= 0) Model.NewPage();
-            });
-        }
 
         #endregion
     }

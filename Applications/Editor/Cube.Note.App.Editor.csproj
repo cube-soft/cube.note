@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AutoSaver.cs" />
     <Compile Include="Models\PageConverter.cs" />
     <Compile Include="Models\PageEx.cs" />
     <Compile Include="PageCollectionControl.cs">
