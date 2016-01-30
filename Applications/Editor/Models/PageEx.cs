@@ -69,19 +69,8 @@ namespace Cube.Note.App.Editor
             var doc = page.Document as Document;
             if (doc == null || doc.IsReadOnly) return;
 
-            var path  = IoEx.Path.Combine(directory, page.FileName);
-            var bytes = _Encoding.GetBytes(doc.Text);
-            var bom   = _Encoding.GetBytes("\xFEFF");
-
-            using (var stream = IoEx.File.Open(path,
-                IoEx.FileMode.OpenOrCreate, IoEx.FileAccess.ReadWrite, IoEx.FileShare.ReadWrite))
-            {
-                stream.SetLength(0);
-                stream.Write(bom, 0, bom.Length);
-                stream.Write(bytes, 0, bytes.Length);
-            }
-
-            doc.IsDirty = false;
+            var path = IoEx.Path.Combine(directory, page.FileName);
+            SaveDocument(doc, path);
         }
 
         #endregion
@@ -123,6 +112,31 @@ namespace Cube.Note.App.Editor
             }
 
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SaveDocument
+        /// 
+        /// <summary>
+        /// Document の内容をファイルに保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void SaveDocument(Document src, string path)
+        {
+            var bytes = _Encoding.GetBytes(src.Text);
+            var bom   = _Encoding.GetBytes("\xFEFF");
+
+            using (var stream = IoEx.File.Open(path,
+                IoEx.FileMode.OpenOrCreate, IoEx.FileAccess.ReadWrite, IoEx.FileShare.ReadWrite))
+            {
+                stream.SetLength(0);
+                stream.Write(bom, 0, bom.Length);
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
+            src.IsDirty = false;
         }
 
         #endregion
