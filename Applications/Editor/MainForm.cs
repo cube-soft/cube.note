@@ -17,8 +17,9 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
 using System;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
@@ -77,6 +78,22 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// InitializeLayout
+        ///
+        /// <summary>
+        /// レイアウトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeLayout()
+        {
+            var area = Screen.FromControl(this).WorkingArea.Size;
+            Width  = (int)(area.Width  * 0.7);
+            Height = (int)(area.Height * 0.7);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// InitializePresenters
         ///
         /// <summary>
@@ -108,6 +125,7 @@ namespace Cube.Note.App.Editor
             base.OnLoad(e);
 
             InitializeEvents();
+            InitializeLayout();
             InitializePresenters();
         }
 
