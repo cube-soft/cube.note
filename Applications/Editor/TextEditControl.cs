@@ -91,8 +91,7 @@ namespace Cube.Note.App.Editor
         public override void Refresh()
         {
             AzukiTextControl.ScrollToCaret();
-            AzukiTextControl.UpdateCaretGraphic();
-            AzukiTextControl.UpdateScrollBarRange();
+            AzukiTextControl.ViewWidth = 0;
 
             base.Refresh();
         }
