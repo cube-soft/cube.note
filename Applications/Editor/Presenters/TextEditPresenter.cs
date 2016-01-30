@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Threading.Tasks;
+using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -73,12 +74,60 @@ namespace Cube.Note.App.Editor
         {
             if (e.NewPage == null) return;
 
-            View.Document = e.NewPage.CreateDocument(Model.Directory);
+            var document = e.NewPage.CreateDocument(Model.Directory);
+            document.ContentChanged -= Model_ContentChanged;
+            document.ContentChanged += Model_ContentChanged;
+
+            View.Document = document;
             View.Focus();
             View.Refresh();
 
-            if (e.OldPage == null) return;
-            Task.Run(() => e.OldPage.SaveDocument(Model.Directory));
+            Clean(e.OldPage);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_ContentChanged
+        ///
+        /// <summary>
+        /// Document オブジェクトの内容が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
+        {
+            if (Model.Active == null || Model.Active.Document != sender) return;
+
+            var document = Model.Active.Document as Document;
+            if (document == null) return;
+
+            Model.Active.Abstract = document.GetLineContent(0);
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clean
+        ///
+        /// <summary>
+        /// 編集対象ではなくなった Page オブジェクトの後処理を行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Clean(Page page)
+        {
+            if (page == null) return;
+
+            Task.Run(() =>
+            {
+                var document = page.Document as Document;
+                if (document != null) document.ContentChanged -= Model_ContentChanged;
+
+                page.SaveDocument(Model.Directory);
+            });
         }
 
         #endregion

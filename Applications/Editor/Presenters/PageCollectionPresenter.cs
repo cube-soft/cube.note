@@ -66,24 +66,6 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeModel
-        /// 
-        /// <summary>
-        /// モデルを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeModel()
-        {
-            Task.Run(() =>
-            {
-                Model.Load(Properties.Resources.OrderFileName);
-                if (Model.Count <= 0) Model.NewPage();
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// View_Closing
         /// 
         /// <summary>
@@ -144,6 +126,28 @@ namespace Cube.Note.App.Editor
         }
 
         #endregion
+
+        #endregion
+
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeModel
+        /// 
+        /// <summary>
+        /// モデルを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeModel()
+        {
+            Task.Run(() =>
+            {
+                Model.Load(Properties.Resources.OrderFileName);
+                if (Model.Count <= 0) Model.NewPage();
+            });
+        }
 
         #endregion
     }
