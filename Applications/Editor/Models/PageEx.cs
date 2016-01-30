@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using Sgry.Azuki;
+using IoEx = System.IO;
 
 namespace Cube.Note.App.Editor
 {
@@ -32,6 +33,8 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     public static class PageEx
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// CreateDocument
@@ -41,14 +44,50 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Document CreateDocument(this Page page)
+        public static Document CreateDocument(this Page page, string directory)
         {
             var done = page.Document as Document;
             if (done != null) return done;
 
-            var dest = new Document();
+            var path = IoEx.Path.Combine(directory, page.FileName);
+            var dest = CreateDocument(path);
             page.Document = dest;
             return dest;
         }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateDocument
+        /// 
+        /// <summary>
+        /// ファイルから内容を読み込だ Document オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Document CreateDocument(string path)
+        {
+            using (var reader = new IoEx.StreamReader(path, true))
+            {
+                var dest = new Document();
+                dest.Capacity = (int)(reader.BaseStream.Length / 2);
+
+                var buffer = reader.BaseStream.Length < 1024 * 1024 ?
+                             new char[reader.BaseStream.Length] :
+                             new char[(reader.BaseStream.Length + 10) / 10];
+
+                while (!reader.EndOfStream)
+                {
+                    var count = reader.Read(buffer, 0, buffer.Length);
+                    dest.Replace(new string(buffer, 0, count), dest.Length, dest.Length);
+                }
+                return dest;
+            }
+        }
+
+        #endregion
     }
 }

@@ -72,7 +72,7 @@ namespace Cube.Note.App.Editor
         {
             if (e.NewPage == null) return;
 
-            View.Document = e.NewPage.CreateDocument();
+            View.Document = e.NewPage.CreateDocument(Model.Directory);
             View.Focus();
             View.Refresh();
         }
