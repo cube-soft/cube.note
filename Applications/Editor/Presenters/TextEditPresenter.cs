@@ -94,11 +94,7 @@ namespace Cube.Note.App.Editor
         private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
         {
             if (Model.Active == null || Model.Active.Document != sender) return;
-
-            var document = Model.Active.Document as Document;
-            if (document == null) return;
-
-            Model.Active.Abstract = document.GetLineContent(0);
+            Model.Active.Abstract = Abstract(Model.Active.Document as Document);
         }
 
         #endregion
@@ -125,6 +121,27 @@ namespace Cube.Note.App.Editor
 
                 page.SaveDocument(Model.Directory);
             });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Abstract
+        ///
+        /// <summary>
+        /// 概要を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string Abstract(Document document)
+        {
+            if (document == null) return string.Empty;
+
+            for (var i = 0; i < document.LineCount; ++i)
+            {
+                var content = document.GetLineContent(i);
+                if (content.Length > 0) return content;
+            }
+            return string.Empty;
         }
 
         #endregion

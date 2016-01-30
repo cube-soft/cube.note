@@ -84,7 +84,7 @@ namespace Cube.Note.App.Editor
         {
             var doc = page.Document as Document;
             if (doc == null || doc.IsReadOnly || !doc.IsDirty) return;
-
+            
             var path = IoEx.Path.Combine(directory, page.FileName);
             SaveDocument(doc, path);
         }
