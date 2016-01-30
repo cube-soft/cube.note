@@ -66,7 +66,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Root { get; }
+        protected string Root { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,7 +77,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Examples
+        protected string Examples
         {
             get { return IoEx.Path.Combine(Root, "Examples"); }
         }
@@ -91,7 +91,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Results
+        protected string Results
         {
             get
             {
