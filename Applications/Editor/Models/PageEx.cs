@@ -123,6 +123,7 @@ namespace Cube.Note.App.Editor
                     dest.Replace(new string(buffer, 0, count), dest.Length, dest.Length);
                 }
 
+                dest.SetCaretIndex(0, 0);
                 dest.ClearHistory();
                 dest.IsDirty = false;
             }
