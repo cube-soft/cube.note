@@ -35,7 +35,7 @@ namespace Cube.Note
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class PageCollection : ObservableCollection<Page>, IDisposable
+    public class PageCollection : ObservableCollection<Page>
     {
         #region Constructors
 
@@ -79,20 +79,6 @@ namespace Cube.Note
         public PageCollection(string directory)
         {
             Directory = directory;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~PageCollection
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        ~PageCollection()
-        {
-            Dispose(false);
         }
 
         #endregion
@@ -219,45 +205,9 @@ namespace Cube.Note
             Settings.Save(this.ToList(), ToPath(filename), FileType);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         #endregion
 
         #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-            _disposed = true;
-
-            if (disposing)
-            {
-                Active = null;
-                Clear();
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -373,7 +323,6 @@ namespace Cube.Note
         #endregion
 
         #region Fields
-        private bool _disposed = false;
         private Page _active = null;
         #endregion
     }
