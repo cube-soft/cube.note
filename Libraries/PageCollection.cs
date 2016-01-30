@@ -112,23 +112,23 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Target
+        /// Active
         ///
         /// <summary>
-        /// 対象とする Page オブジェクトを取得または設定します。
+        /// アクティブ状態の Page オブジェクトを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page Target
+        public Page Active
         {
-            get { return _target; }
+            get { return _active; }
             set
             {
-                if (_target == value) return;
+                if (_active == value) return;
 
-                var before = _target;
-                _target = value;
-                OnTargetChanged(new PageChangedEventArgs(before, value));
+                var before = _active;
+                _active = value;
+                OnActiveChanged(new PageChangedEventArgs(before, value));
             }
         }
 
@@ -138,14 +138,15 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TargetChanged
+        /// ActiveChanged
         ///
         /// <summary>
-        /// 対象となる Page オブジェクトが変更された時に発生するイベントです。
+        /// アクティブ状態の Page オブジェクトが変更された時に発生する
+        /// イベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<PageChangedEventArgs> TargetChanged;
+        public EventHandler<PageChangedEventArgs> ActiveChanged;
 
         #endregion
 
@@ -210,17 +211,17 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnTargetChanged
+        /// OnActiveChanged
         ///
         /// <summary>
-        /// 対象となる Page オブジェクトが変更された時に実行される
+        /// アクティブ状態の Page オブジェクトが変更された時に実行される
         /// ハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnTargetChanged(PageChangedEventArgs e)
+        protected virtual void OnActiveChanged(PageChangedEventArgs e)
         {
-            if (TargetChanged != null) TargetChanged(this, e);
+            if (ActiveChanged != null) ActiveChanged(this, e);
         }
 
         #endregion
@@ -322,7 +323,7 @@ namespace Cube.Note
         #endregion
 
         #region Fields
-        private Page _target = null;
+        private Page _active = null;
         #endregion
     }
 }

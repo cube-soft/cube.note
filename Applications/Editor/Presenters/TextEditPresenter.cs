@@ -46,7 +46,7 @@ namespace Cube.Note.App.Editor
         public TextEditPresenter(TextEditControl view, PageCollection model)
             : base(view, model)
         {
-            Model.TargetChanged += Model_TargetChanged;
+            Model.ActiveChanged += Model_ActiveChanged;
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_TargetChanged
+        /// Model_ActiveChanged
         ///
         /// <summary>
         /// 編集対象となる Page オブジェクトが変更された時に実行される
@@ -68,7 +68,7 @@ namespace Cube.Note.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_TargetChanged(object sender, PageChangedEventArgs e)
+        private void Model_ActiveChanged(object sender, PageChangedEventArgs e)
         {
             if (e.NewPage == null) return;
 

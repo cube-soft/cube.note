@@ -109,7 +109,7 @@ namespace Cube.Note.App.Editor
         {
             var index = View.SelectedIndex;
             if (index < 0 || index >= Model.Count) return;
-            Model.Target = Model[index];
+            Model.Active = Model[index];
         }
 
         #endregion
