@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
@@ -52,8 +53,8 @@ namespace Cube.Note.App.Editor
         {
             View.FindForm().FormClosing += View_Closing;
             View.SelectedIndexChanged   += View_SelectedIndexChanged;
-            View.NewPageRequired        += (s, e) => Model.NewPage();
-            View.Removed                += (s, e) => Model.RemoveAt(e.Value);
+            View.NewPageRequired        += View_NewPageRequired;
+            View.Removed                += View_Removed;
 
             Model.CollectionChanged += Model_CollectionChanged;
 
@@ -77,7 +78,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_Closing(object sender, FormClosingEventArgs e)
         {
-            Model.Active.SaveDocument(Model.Directory);
+            if (Model.Active != null) Model.Active.SaveDocument(Model.Directory);
             Model.Save(Properties.Resources.OrderFileName);
         }
 
@@ -90,11 +91,44 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
             var index = View.SelectedIndex;
             if (index < 0 || index >= Model.Count) return;
             Model.Active = Model[index];
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_NewPageRequired
+        /// 
+        /// <summary>
+        /// 新しいページの作成要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_NewPageRequired(object sender, EventArgs e)
+        {
+            Model.NewPage();
+            Post(() => View.Select(0));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Removed
+        /// 
+        /// <summary>
+        /// ページが削除された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Removed(object sender, DataEventArgs<int> e)
+        {
+            var index = e.Value;
+            if (index < 0 || index >= Model.Count) return;
+
+            Model[index].PropertyChanged -= Model_PropertyChanged;
+            Model.RemoveAt(index);
         }
 
         #endregion
@@ -115,13 +149,10 @@ namespace Cube.Note.App.Editor
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    Send(() =>
-                    {
-                        var index = e.NewStartingIndex;
-                        Model[index].PropertyChanged -= Model_PropertyChanged;
-                        Model[index].PropertyChanged += Model_PropertyChanged;
-                        View.Insert(index, Model[index]);
-                    });
+                    var index = e.NewStartingIndex;
+                    Model[index].PropertyChanged -= Model_PropertyChanged;
+                    Model[index].PropertyChanged += Model_PropertyChanged;
+                    Send(() => View.Insert(index, Model[index]));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (Model.Count <= 0) Model.NewPage();
@@ -148,7 +179,7 @@ namespace Cube.Note.App.Editor
             var index = Model.IndexOf(page);
             if (index == -1) return;
 
-            View.UpdateText(index, page.GetAbstract());
+            Post(() => View.UpdateText(index, page.GetAbstract()));
         }
 
         #endregion
@@ -173,25 +204,6 @@ namespace Cube.Note.App.Editor
                 Model.Load(Properties.Resources.OrderFileName);
                 if (Model.Count <= 0) Model.NewPage();
             });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Clean
-        /// 
-        /// <summary>
-        /// 削除された項目に対して後処理を行います。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Clean(IList removed)
-        {
-            foreach (var item in removed)
-            {
-                var page = item as Page;
-                if (page == null) continue;
-                page.PropertyChanged -= Model_PropertyChanged;
-            }
         }
 
         #endregion

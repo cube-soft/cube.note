@@ -173,10 +173,7 @@ namespace Cube.Note.App.Editor
         {
             PageListView.Insert(index, item);
             OnAdded(new DataEventArgs<int>(index));
-            if (PageListView.Items.Count == 1)
-            {
-                PageListView.Items[0].Selected = true;
-            }
+            if (PageListView.Items.Count == 1) Select(0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -193,11 +190,22 @@ namespace Cube.Note.App.Editor
             if (index < 0 || index >= PageListView.Items.Count) return;
             PageListView.Items.RemoveAt(index);
             OnRemoved(new DataEventArgs<int>(index));
-            if (PageListView.Items.Count > 0)
-            {
-                var newindex = Math.Min(index, PageListView.Items.Count - 1);
-                PageListView.Items[newindex].Selected = true;
-            }
+            if (PageListView.Items.Count > 0) Select(Math.Min(index, PageListView.Items.Count - 1));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        /// 
+        /// <summary>
+        /// ページを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select(int index)
+        {
+            if (index < 0 || index >= PageListView.Items.Count) return;
+            PageListView.Items[index].Selected = true;
         }
 
         #endregion
