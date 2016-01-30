@@ -73,8 +73,11 @@ namespace Cube.Note.App.Editor
             document.ContentChanged -= Model_ContentChanged;
             document.ContentChanged += Model_ContentChanged;
 
-            View.Document = document;
-            View.Refresh();
+            Post(() =>
+            {
+                View.Document = document;
+                View.Refresh();
+            });
 
             Clean(e.OldPage);
         }
