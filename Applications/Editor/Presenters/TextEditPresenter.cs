@@ -74,6 +74,7 @@ namespace Cube.Note.App.Editor
 
             View.Document = e.NewPage.CreateDocument();
             View.Focus();
+            View.Refresh();
         }
 
         #endregion

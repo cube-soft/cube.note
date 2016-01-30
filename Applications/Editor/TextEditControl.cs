@@ -60,6 +60,15 @@ namespace Cube.Note.App.Editor
 
         #region Properties
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Document
+        ///
+        /// <summary>
+        /// Document オブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public Sgry.Azuki.Document Document
         {
             get { return AzukiTextControl.Document; }
@@ -69,6 +78,24 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        ///
+        /// <summary>
+        /// コントロールを再描画します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override void Refresh()
+        {
+            AzukiTextControl.ScrollToCaret();
+            AzukiTextControl.UpdateCaretGraphic();
+            AzukiTextControl.UpdateScrollBarRange();
+
+            base.Refresh();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
