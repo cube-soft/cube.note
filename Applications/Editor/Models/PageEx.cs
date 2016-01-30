@@ -55,6 +55,35 @@ namespace Cube.Note.App.Editor
             return dest;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SaveDocument
+        /// 
+        /// <summary>
+        /// 内容を保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void SaveDocument(this Page page, string directory)
+        {
+            var doc = page.Document as Document;
+            if (doc == null || doc.IsReadOnly) return;
+
+            var path  = IoEx.Path.Combine(directory, page.FileName);
+            var bytes = _Encoding.GetBytes(doc.Text);
+            var bom   = _Encoding.GetBytes("\xFEFF");
+
+            using (var stream = IoEx.File.Open(path,
+                IoEx.FileMode.OpenOrCreate, IoEx.FileAccess.ReadWrite, IoEx.FileShare.ReadWrite))
+            {
+                stream.SetLength(0);
+                stream.Write(bom, 0, bom.Length);
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
+            doc.IsDirty = false;
+        }
+
         #endregion
 
         #region Implementations
@@ -70,9 +99,13 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private static Document CreateDocument(string path)
         {
-            using (var reader = new IoEx.StreamReader(path, true))
+            var dest = new Document();
+            if (!IoEx.File.Exists(path)) return dest;
+
+            using (var stream = IoEx.File.Open(path,
+                IoEx.FileMode.Open, IoEx.FileAccess.Read, IoEx.FileShare.ReadWrite))
+            using (var reader = new IoEx.StreamReader(stream, _Encoding, true))
             {
-                var dest = new Document();
                 dest.Capacity = (int)(reader.BaseStream.Length / 2);
 
                 var buffer = reader.BaseStream.Length < 1024 * 1024 ?
@@ -84,10 +117,18 @@ namespace Cube.Note.App.Editor
                     var count = reader.Read(buffer, 0, buffer.Length);
                     dest.Replace(new string(buffer, 0, count), dest.Length, dest.Length);
                 }
-                return dest;
+
+                dest.ClearHistory();
+                dest.IsDirty = false;
             }
+
+            return dest;
         }
 
+        #endregion
+
+        #region Fields
+        private static System.Text.Encoding _Encoding = System.Text.Encoding.UTF8;
         #endregion
     }
 }

@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Threading.Tasks;
 
 namespace Cube.Note.App.Editor
 {
@@ -75,6 +76,9 @@ namespace Cube.Note.App.Editor
             View.Document = e.NewPage.CreateDocument(Model.Directory);
             View.Focus();
             View.Refresh();
+
+            if (e.OldPage == null) return;
+            Task.Run(() => e.OldPage.SaveDocument(Model.Directory));
         }
 
         #endregion
