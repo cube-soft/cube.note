@@ -152,17 +152,6 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Disposing
-        ///
-        /// <summary>
-        /// リソースが破棄される時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EventHandler Disposing;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// ActiveChanged
         ///
         /// <summary>
@@ -262,7 +251,6 @@ namespace Cube.Note
         {
             if (_disposed) return;
             _disposed = true;
-            if (Disposing != null) Disposing(this, new EventArgs());
             Active = null;
             Clear();
         }
