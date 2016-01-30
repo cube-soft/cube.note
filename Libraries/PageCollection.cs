@@ -251,8 +251,12 @@ namespace Cube.Note
         {
             if (_disposed) return;
             _disposed = true;
-            Active = null;
-            Clear();
+
+            if (disposing)
+            {
+                Active = null;
+                Clear();
+            }
         }
 
         /* ----------------------------------------------------------------- */
