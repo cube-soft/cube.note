@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Cube.Note
@@ -32,7 +33,7 @@ namespace Cube.Note
     /// 
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class Page
+    public class Page : INotifyPropertyChanged
     {
         #region Constructors
 
@@ -50,6 +51,7 @@ namespace Cube.Note
             FileName = Guid.NewGuid().ToString("N");
             Abstract = string.Empty;
             Creation = DateTime.Now;
+            Document = null;
         }
 
         #endregion
@@ -66,7 +68,16 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string FileName { get; set; }
+        public string FileName
+        {
+            get { return _filename; }
+            set
+            {
+                if (_filename == value) return;
+                _filename = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("FileName"));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -78,7 +89,16 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string Abstract { get; set; }
+        public string Abstract
+        {
+            get { return _abstract; }
+            set
+            {
+                if (_abstract == value) return;
+                _abstract = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Abstract"));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,7 +110,16 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public DateTime Creation { get; set; }
+        public DateTime Creation
+        {
+            get { return _creation; }
+            set
+            {
+                if (_creation == value) return;
+                _creation = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Creation"));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,8 +130,57 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public object Document { get; set; }
+        public object Document
+        {
+            get { return _document; }
+            set
+            {
+                if (_document == value) return;
+                _document = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Document"));
+            }
+        }
 
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PropertyChanged
+        ///
+        /// <summary>
+        /// プロパティの内容が変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPropertyChanged
+        ///
+        /// <summary>
+        /// プロパティの内容が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, e);
+        }
+
+        #endregion
+
+        #region Fields
+        private string _filename;
+        private string _abstract;
+        private DateTime _creation;
+        private object _document;
         #endregion
     }
 }
