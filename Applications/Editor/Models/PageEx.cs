@@ -67,7 +67,7 @@ namespace Cube.Note.App.Editor
         public static void SaveDocument(this Page page, string directory)
         {
             var doc = page.Document as Document;
-            if (doc == null || doc.IsReadOnly) return;
+            if (doc == null || doc.IsReadOnly || !doc.IsDirty) return;
 
             var path = IoEx.Path.Combine(directory, page.FileName);
             SaveDocument(doc, path);

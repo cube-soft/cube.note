@@ -93,6 +93,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_Closing(object sender, FormClosingEventArgs e)
         {
+            Model.Active.SaveDocument(Model.Directory);
             Model.Save(Properties.Resources.OrderFileName);
         }
 
