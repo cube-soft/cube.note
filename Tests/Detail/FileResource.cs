@@ -44,7 +44,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileResource()
+        protected FileResource()
         {
             var exec = Assembly.GetExecutingAssembly().Location;
             Root = IoEx.Path.GetDirectoryName(exec);

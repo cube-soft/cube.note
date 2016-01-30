@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Azuki">
+      <HintPath>..\..\lib\Azuki.dll</HintPath>
+    </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
@@ -44,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Azuki\DocumentHandler.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="PageChangedEventArgs.cs" />
     <Compile Include="PageCollection.cs" />

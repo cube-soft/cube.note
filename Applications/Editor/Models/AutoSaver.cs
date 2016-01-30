@@ -20,6 +20,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Timers;
+using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
 {

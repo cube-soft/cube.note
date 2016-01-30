@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using Sgry.Azuki;
+using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -92,7 +93,7 @@ namespace Cube.Note.App.Editor
         private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
         {
             if (Model.Active == null || Model.Active.Document != sender) return;
-            Model.Active.Abstract = Abstract(Model.Active.Document as Document);
+            Model.Active.Abstract = Abstract(Model.Active.Document as Sgry.Azuki.Document);
         }
 
         #endregion
@@ -112,7 +113,7 @@ namespace Cube.Note.App.Editor
         {
             if (page == null) return;
 
-            var document = page.Document as Document;
+            var document = page.Document as Sgry.Azuki.Document;
             if (document != null) document.ContentChanged -= Model_ContentChanged;
         }
 
@@ -125,7 +126,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Abstract(Document document)
+        private string Abstract(Sgry.Azuki.Document document)
         {
             if (document == null) return string.Empty;
 

@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Azuki, Version=1.7.12.29162, Culture=neutral, PublicKeyToken=46b77eb7f2d82aba, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Azuki.dll</HintPath>
+    </Reference>
     <Reference Include="Cube.Core, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\net45\Cube.Core.dll</HintPath>
@@ -48,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Azuki\DocumentHandlerTest.cs" />
+    <Compile Include="Detail\PageCollectionResource.cs" />
     <Compile Include="PageCollectionTest.cs" />
     <Compile Include="Detail\FileResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

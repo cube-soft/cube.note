@@ -33,32 +33,8 @@ namespace Cube.Note.Tests
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class PageCollectionTest : FileResource
+    class PageCollectionTest : PageCollectionResource
     {
-        #region SetUp and TearDown
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OneTimeSetUp
-        ///
-        /// <summary>
-        /// 初期化処理を一度だけ行います。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-            Copy("Order.json");
-            Copy("05859d5f90094ab0b8ec739b6150f455");
-            Copy("a65006b41d3c47a8981a8feaec7523bc");
-
-            Pages = new PageCollection(Results);
-            Pages.Load("Order.json");
-        }
-
-        #endregion
-
         #region Tests
 
         /* ----------------------------------------------------------------- */
@@ -183,39 +159,6 @@ namespace Cube.Note.Tests
             Assert.That(
                 IoEx.File.Exists(IoEx.Path.Combine(Pages.Directory, filename)),
                 Is.True
-            );
-        }
-
-        #endregion
-
-        #region Helper methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Pages
-        ///
-        /// <summary>
-        /// PageCollection オブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private PageCollection Pages { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Copy
-        ///
-        /// <summary>
-        /// Examples フォルダから Results フォルダへファイルをコピーします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Copy(string filename)
-        {
-            IoEx.File.Copy(
-                IoEx.Path.Combine(Examples, filename),
-                IoEx.Path.Combine(Results, filename),
-                true
             );
         }
 
