@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Drawing;
 using System.Windows.Forms;
+using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -69,7 +70,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Sgry.Azuki.Document Document
+        public Document Document
         {
             get { return AzukiTextControl.Document; }
             set { AzukiTextControl.Document = value; }

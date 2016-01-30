@@ -48,7 +48,6 @@ namespace Cube.Note.App.Editor
         public MainForm()
         {
             InitializeComponent();            
-            VisibleMenuItem.Tag = true;
         }
 
         #endregion
@@ -87,6 +86,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
+            VisibleMenuItem.Tag = true;
+
             var area = Screen.FromControl(this).WorkingArea.Size;
             Width  = (int)(area.Width  * 0.7);
             Height = (int)(area.Height * 0.7);
