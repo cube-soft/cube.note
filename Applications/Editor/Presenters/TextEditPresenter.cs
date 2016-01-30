@@ -64,11 +64,6 @@ namespace Cube.Note.App.Editor
         /// ハンドラです。
         /// </summary>
         /// 
-        /// <remarks>
-        /// TODO: ここで View.Focus() を実行しても ListView の MouseUp
-        /// 発生時にフォーカスを奪われてしまう模様。対応方法を検討する。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         private void Model_ActiveChanged(object sender, PageChangedEventArgs e)
         {
@@ -79,7 +74,6 @@ namespace Cube.Note.App.Editor
             document.ContentChanged += Model_ContentChanged;
 
             View.Document = document;
-            View.Focus();
             View.Refresh();
 
             Clean(e.OldPage);
