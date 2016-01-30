@@ -51,30 +51,10 @@ namespace Cube.Note.App.Editor
             if (page == null) return new ListViewItem(src.ToString());
 
             var dest = new List<string>();
-            dest.Add(Abstract(page));
+            dest.Add(page.GetAbstract());
             dest.Add(page.Creation.ToString(Properties.Resources.CreationFormat));
 
             return new ListViewItem(dest.ToArray());
-        }
-
-        #endregion
-
-        #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Abstract
-        ///
-        /// <summary>
-        /// 概要を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string Abstract(Page src)
-        {
-            return string.IsNullOrEmpty(src.Abstract) ?
-                   Properties.Resources.EmptyPage :
-                   src.Abstract;
         }
 
         #endregion

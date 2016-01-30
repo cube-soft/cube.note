@@ -37,6 +37,22 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetAbstract
+        /// 
+        /// <summary>
+        /// 概要を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetAbstract(this Page page)
+        {
+            return string.IsNullOrEmpty(page.Abstract) ?
+                   Properties.Resources.EmptyPage :
+                   page.Abstract;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// CreateDocument
         /// 
         /// <summary>

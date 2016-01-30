@@ -17,6 +17,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.ComponentModel;
+using System.Collections;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -116,6 +118,8 @@ namespace Cube.Note.App.Editor
                     Send(() =>
                     {
                         var index = e.NewStartingIndex;
+                        Model[index].PropertyChanged -= Model_PropertyChanged;
+                        Model[index].PropertyChanged += Model_PropertyChanged;
                         View.Insert(index, Model[index]);
                     });
                     break;
@@ -123,6 +127,28 @@ namespace Cube.Note.App.Editor
                     if (Model.Count <= 0) Model.NewPage();
                     break;
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_PropertyChanged
+        /// 
+        /// <summary>
+        /// プロパティの値が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "Abstract") return;
+
+            var page = sender as Page;
+            if (page == null) return;
+
+            var index = Model.IndexOf(page);
+            if (index == -1) return;
+
+            View.UpdateText(index, page.GetAbstract());
         }
 
         #endregion
@@ -147,6 +173,25 @@ namespace Cube.Note.App.Editor
                 Model.Load(Properties.Resources.OrderFileName);
                 if (Model.Count <= 0) Model.NewPage();
             });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clean
+        /// 
+        /// <summary>
+        /// 削除された項目に対して後処理を行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Clean(IList removed)
+        {
+            foreach (var item in removed)
+            {
+                var page = item as Page;
+                if (page == null) continue;
+                page.PropertyChanged -= Model_PropertyChanged;
+            }
         }
 
         #endregion

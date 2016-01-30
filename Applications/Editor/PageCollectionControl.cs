@@ -126,6 +126,11 @@ namespace Cube.Note.App.Editor
 
         #region Methods
 
+        public void UpdateText(int index, string text)
+        {
+            PageListView.Items[index].Text = text;
+        }
+
         /* ----------------------------------------------------------------- */
         ///
         /// NewPage
