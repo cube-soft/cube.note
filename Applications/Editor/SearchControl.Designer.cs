@@ -28,16 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.KeywordTextBox = new System.Windows.Forms.TextBox();
             this.SearchButton = new Cube.Forms.Button();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.RemoveButton = new Cube.Forms.Button();
-            this.FoundationPanel = new System.Windows.Forms.Panel();
-            this.PageListView = new Cube.Note.App.Editor.PageListView();
+            this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
             this.LayoutPanel.SuspendLayout();
-            this.FoundationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -49,7 +46,7 @@
             this.LayoutPanel.Controls.Add(this.SearchButton, 1, 0);
             this.LayoutPanel.Controls.Add(this.StatusLabel, 0, 2);
             this.LayoutPanel.Controls.Add(this.RemoveButton, 1, 2);
-            this.LayoutPanel.Controls.Add(this.FoundationPanel, 0, 1);
+            this.LayoutPanel.Controls.Add(this.PageCollectionControl, 0, 1);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -107,35 +104,18 @@
             this.RemoveButton.TabIndex = 4;
             this.RemoveButton.UseVisualStyleBackColor = false;
             // 
-            // FoundationPanel
+            // PageCollectionControl
             // 
-            this.FoundationPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.LayoutPanel.SetColumnSpan(this.FoundationPanel, 2);
-            this.FoundationPanel.Controls.Add(this.PageListView);
-            this.FoundationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FoundationPanel.Location = new System.Drawing.Point(0, 32);
-            this.FoundationPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.FoundationPanel.Name = "FoundationPanel";
-            this.FoundationPanel.Size = new System.Drawing.Size(200, 248);
-            this.FoundationPanel.TabIndex = 5;
-            // 
-            // PageListView
-            // 
-            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Converter = pageConverter1;
-            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageListView.FullRowSelect = true;
-            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.PageListView.Location = new System.Drawing.Point(0, 0);
-            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
-            this.PageListView.MultiSelect = false;
-            this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(200, 248);
-            this.PageListView.TabIndex = 0;
-            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(200, 70);
-            this.PageListView.UseCompatibleStateImageBehavior = false;
-            this.PageListView.View = System.Windows.Forms.View.Tile;
+            this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
+            this.LayoutPanel.SetColumnSpan(this.PageCollectionControl, 2);
+            this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.PageCollectionControl.Location = new System.Drawing.Point(0, 32);
+            this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
+            this.PageCollectionControl.Name = "PageCollectionControl";
+            this.PageCollectionControl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.PageCollectionControl.Size = new System.Drawing.Size(200, 248);
+            this.PageCollectionControl.TabIndex = 5;
             // 
             // SearchControl
             // 
@@ -145,7 +125,6 @@
             this.Size = new System.Drawing.Size(200, 300);
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
-            this.FoundationPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -157,7 +136,6 @@
         private Cube.Forms.Button SearchButton;
         private System.Windows.Forms.Label StatusLabel;
         private Cube.Forms.Button RemoveButton;
-        private System.Windows.Forms.Panel FoundationPanel;
-        private PageListView PageListView;
+        private PageCollectionControl PageCollectionControl;
     }
 }

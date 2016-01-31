@@ -47,8 +47,7 @@ namespace Cube.Note.App.Editor
         public SearchControl()
         {
             InitializeComponent();
-            InitializeLayout();
-
+            Dock = DockStyle.Fill;
             RemoveButton.Click += (s, e) => Pop();
         }
 
@@ -91,31 +90,6 @@ namespace Cube.Note.App.Editor
             Parent.Controls.Remove(this);
             foreach (var control in _controls) parent.Controls.Add(control);
             _controls.Clear();
-        }
-
-        #endregion
-
-        #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeLayout
-        /// 
-        /// <summary>
-        /// レイアウトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeLayout()
-        {
-            Dock = DockStyle.Fill;
-
-            // TODO: PageListView 側に実装できたら削除
-            PageListView.Columns.AddRange(new ColumnHeader[]
-            {
-                new ColumnHeader(), // Title
-                new ColumnHeader(), // CreationTime
-            });
         }
 
         #endregion
