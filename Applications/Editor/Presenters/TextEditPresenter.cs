@@ -72,7 +72,7 @@ namespace Cube.Note.App.Editor
             document.ContentChanged -= Model_ContentChanged;
             document.ContentChanged += Model_ContentChanged;
 
-            Post(() =>
+            Sync(() =>
             {
                 View.Document = document;
                 View.Refresh();
@@ -93,7 +93,7 @@ namespace Cube.Note.App.Editor
         private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
         {
             if (Model.Active == null || Model.Active.Document != sender) return;
-            Model.Active.Abstract = Abstract(Model.Active.Document as Sgry.Azuki.Document);
+            Model.Active.Abstract = Abstract(Model.Active.Document as Document);
         }
 
         #endregion
@@ -113,7 +113,7 @@ namespace Cube.Note.App.Editor
         {
             if (page == null) return;
 
-            var document = page.Document as Sgry.Azuki.Document;
+            var document = page.Document as Document;
             if (document != null) document.ContentChanged -= Model_ContentChanged;
         }
 
@@ -126,7 +126,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Abstract(Sgry.Azuki.Document document)
+        private string Abstract(Document document)
         {
             if (document == null) return string.Empty;
 

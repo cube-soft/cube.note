@@ -89,7 +89,7 @@ namespace Cube.Note.App.Editor
         private void View_NewPageRequired(object sender, EventArgs e)
         {
             Model.NewPage();
-            Post(() => View.Select(0));
+            Sync(() => View.Select(0));
         }
 
         /* ----------------------------------------------------------------- */
@@ -131,7 +131,7 @@ namespace Cube.Note.App.Editor
                     var index = e.NewStartingIndex;
                     Model[index].PropertyChanged -= Model_PropertyChanged;
                     Model[index].PropertyChanged += Model_PropertyChanged;
-                    Send(() => View.Insert(index, Model[index]));
+                    SyncWait(() => View.Insert(index, Model[index]));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (Model.Count <= 0) Model.NewPage();
@@ -158,7 +158,7 @@ namespace Cube.Note.App.Editor
             var index = Model.IndexOf(page);
             if (index == -1) return;
 
-            Post(() => View.UpdateText(index, page.GetAbstract()));
+            Sync(() => View.UpdateText(index, page.GetAbstract()));
         }
 
         #endregion
