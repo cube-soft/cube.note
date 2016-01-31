@@ -74,6 +74,20 @@ namespace Cube.Note.App.Editor
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Count
+        /// 
+        /// <summary>
+        /// 表示項目の数を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Count
+        {
+            get { return PageListView.Items.Count; }
+        }
+
         #endregion
 
         #region Events
@@ -193,7 +207,6 @@ namespace Cube.Note.App.Editor
         {
             PageListView.Insert(index, item);
             OnAdded(new DataEventArgs<int>(index));
-            if (PageListView.Items.Count == 1) Select(0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -210,7 +223,6 @@ namespace Cube.Note.App.Editor
             if (index < 0 || index >= PageListView.Items.Count) return;
             PageListView.Items.RemoveAt(index);
             OnRemoved(new DataEventArgs<int>(index));
-            if (PageListView.Items.Count > 0) Select(Math.Min(index, PageListView.Items.Count - 1));
         }
 
         /* ----------------------------------------------------------------- */

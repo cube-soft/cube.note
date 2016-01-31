@@ -48,11 +48,12 @@ namespace Cube.Note.App.Editor
         public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
             : base(view, model)
         {
-            View.SelectedIndexChanged   += View_SelectedIndexChanged;
-            View.NewPageRequired        += View_NewPageRequired;
-            View.Removed                += View_Removed;
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.NewPageRequired      += View_NewPageRequired;
+            View.Added                += View_Added;
+            View.Removed              += View_Removed;
 
-            Model.CollectionChanged     += Model_CollectionChanged;
+            Model.CollectionChanged   += Model_CollectionChanged;
         }
 
         #endregion
@@ -89,7 +90,21 @@ namespace Cube.Note.App.Editor
         private void View_NewPageRequired(object sender, EventArgs e)
         {
             Model.NewPage();
-            Sync(() => View.Select(0));
+            View.Select(0);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Added
+        /// 
+        /// <summary>
+        /// 項目が追加された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Added(object sender, EventArgs e)
+        {
+            if (View.Count == 1) View.Select(0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -105,6 +120,7 @@ namespace Cube.Note.App.Editor
         {
             var index = e.Value;
             if (index < 0 || index >= Model.Count) return;
+            if (View.Count > 0) View.Select(Math.Min(index, View.Count - 1));
 
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model.RemoveAt(index);
@@ -128,15 +144,29 @@ namespace Cube.Note.App.Editor
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    var index = e.NewStartingIndex;
-                    Model[index].PropertyChanged -= Model_PropertyChanged;
-                    Model[index].PropertyChanged += Model_PropertyChanged;
-                    SyncWait(() => View.Insert(index, Model[index]));
+                    Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (Model.Count <= 0) Model.NewPage();
                     break;
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_Added
+        /// 
+        /// <summary>
+        /// コレクションに要素が追加された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var index = e.NewStartingIndex;
+            Model[index].PropertyChanged -= Model_PropertyChanged;
+            Model[index].PropertyChanged += Model_PropertyChanged;
+            SyncWait(() => View.Insert(index, Model[index]));
         }
 
         /* ----------------------------------------------------------------- */
