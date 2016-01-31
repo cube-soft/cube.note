@@ -224,6 +224,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public void Clear()
         {
+            if (PageListView.Items.Count == 0) return;
             PageListView.Items.Clear();
             OnCleared(new EventArgs());
         }

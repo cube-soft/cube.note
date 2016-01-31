@@ -59,6 +59,24 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedIndex
+        ///
+        /// <summary>
+        /// 選択されている項目を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int SelectedIndex
+        {
+            get { return PageCollectionControl.SelectedIndex; }
+        }
+
+        #endregion
+
         #region Events
 
         /* ----------------------------------------------------------------- */
@@ -121,6 +139,20 @@ namespace Cube.Note.App.Editor
         public void Add(Page item)
         {
             PageCollectionControl.Add(item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        /// 
+        /// <summary>
+        /// 指定されたインデックスにページを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(int index, Page item)
+        {
+            PageCollectionControl.Insert(index, item);
         }
 
         /* ----------------------------------------------------------------- */

@@ -104,8 +104,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new PageCollectionPresenter(PageCollectionControl, Pages);
             new TextEditPresenter(TextEditControl, Pages);
+            new PageCollectionPresenter(PageCollectionControl, Pages);
+            new SearchPresenter(SearchControl, Pages);
         }
 
         #endregion

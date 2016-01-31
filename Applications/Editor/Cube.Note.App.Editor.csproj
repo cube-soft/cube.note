@@ -81,6 +81,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
+    <Compile Include="Presenters\SearchPresenter.cs" />
     <Compile Include="Presenters\TextEditPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
