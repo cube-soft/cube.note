@@ -48,7 +48,7 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            RemoveButton.Click += (s, e) => Pop();
+            RemoveButton.Click += (s, e) => Detach();
         }
 
         #endregion
@@ -57,14 +57,29 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Stash
+        /// Switch
         /// 
         /// <summary>
-        /// 指定されたコントロールから他の子要素を退避させ、自身を挿入します。
+        /// 現在状態に応じて Attach または Detach を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Stash(Control parent)
+        public void Switch(Control parent)
+        {
+            if (Parent == parent) Detach();
+            else Attach(parent);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        /// 
+        /// <summary>
+        /// コントロールから他の子要素を退避させ、自コントロールを挿入します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Attach(Control parent)
         {
             if (Parent == parent) return;
 
@@ -76,14 +91,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pop
+        /// Detach
         /// 
         /// <summary>
-        /// 退避させた子要素を元に戻します。
+        /// 自コントロールを除去し、退避させた子要素を元に戻します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Pop()
+        public void Detach()
         {
             if (Parent == null) return;
             var parent = Parent;

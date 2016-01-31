@@ -69,7 +69,7 @@ namespace Cube.Note.App.Editor
         {
             FontMenuItem.Click    += (s, e) => TextEditControl.SelectFont();
             VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
-            SearchMenuItem.Click  += (s, e) => SearchControl.Stash(ContentsPanel.Panel1);
+            SearchMenuItem.Click  += (s, e) => SearchControl.Switch(ContentsPanel.Panel1);
             NewPageMenuItem.Click += (s, e) => PageCollectionControl.NewPage();
             RemoveMenuItem.Click  += (s, e) =>
             {
