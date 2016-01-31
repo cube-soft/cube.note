@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -47,12 +48,108 @@ namespace Cube.Note.App.Editor
         public SearchControl()
         {
             InitializeComponent();
+
+            SearchButton.Click += (s, e) => OnSearch(new DataEventArgs<string>(KeywordTextBox.Text));
+            PageCollectionControl.Added += (s, e) => OnAdded(e);
+            PageCollectionControl.Cleared += (s, e) => OnCleared(e);
+            PageCollectionControl.SelectedIndexChanged += (s, e) => OnSelectedIndexChanged(e);
+
             Dock = DockStyle.Fill;
         }
 
         #endregion
 
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Added
+        ///
+        /// <summary>
+        /// ページが追加された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<DataEventArgs<int>> Added;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Cleared
+        ///
+        /// <summary>
+        /// ページが全て削除された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Cleared;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Search
+        /// 
+        /// <summary>
+        /// 検索が実行された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler<DataEventArgs<string>> Search;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedIndexChanged
+        ///
+        /// <summary>
+        /// 選択項目が変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler SelectedIndexChanged;
+
+        #endregion
+
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        /// 
+        /// <summary>
+        /// ページを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(Page item)
+        {
+            PageCollectionControl.Add(item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        /// 
+        /// <summary>
+        /// ページを全て削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear()
+        {
+            PageCollectionControl.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        /// 
+        /// <summary>
+        /// ページを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select(int index)
+        {
+            PageCollectionControl.Select(index);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -104,6 +201,66 @@ namespace Cube.Note.App.Editor
             Parent.Controls.Remove(this);
             foreach (var control in _controls) parent.Controls.Add(control);
             _controls.Clear();
+        }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnAdded
+        ///
+        /// <summary>
+        /// Added イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnAdded(DataEventArgs<int> e)
+        {
+            if (Added != null) Added(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCleared
+        ///
+        /// <summary>
+        /// Cleared イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnCleared(EventArgs e)
+        {
+            if (Cleared != null) Cleared(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnSearch
+        /// 
+        /// <summary>
+        /// 検索時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnSearch(DataEventArgs<string> e)
+        {
+            if (Search != null) Search(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnSelectedIndexChanged
+        ///
+        /// <summary>
+        /// SelectedIndexChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnSelectedIndexChanged(EventArgs e)
+        {
+            if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
         }
 
         #endregion
