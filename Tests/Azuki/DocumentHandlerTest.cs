@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
 using NUnit.Framework;
 using Cube.Note.Azuki;
 
@@ -73,6 +74,27 @@ namespace Cube.Note.Tests.Azuki
                 document.Replace("Replaced", 0, document.Length);
                 page.SaveDocument(Pages.Directory);
             });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Search_Count
+        ///
+        /// <summary>
+        /// 検索のテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Hello", 1)]
+        public void Search_Count(string keyword, int expected)
+        {
+            var results = new List<Page>();
+            Pages.Search(keyword, results);
+
+            Assert.That(
+                results.Count,
+                Is.EqualTo(expected)
+            );
         }
 
         #endregion

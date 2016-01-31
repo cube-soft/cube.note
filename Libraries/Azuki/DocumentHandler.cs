@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
 using Sgry.Azuki;
 using IoEx = System.IO;
 
@@ -27,14 +28,15 @@ namespace Cube.Note.Azuki
     /// DocumentHandler
     /// 
     /// <summary>
-    /// Azuki.Document オブジェクトを扱うためのクラスです。Page クラスに
-    /// 対する拡張メソッドとして実装されます。
+    /// Azuki.Document オブジェクトを扱うためのクラスです。
+    /// Page および PageCollection クラスに対する拡張メソッドとして
+    /// 実装されます。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
     public static class DocumentHandler
     {
-        #region Methods
+        #region Page extension methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -72,6 +74,28 @@ namespace Cube.Note.Azuki
             
             var path = IoEx.Path.Combine(directory, page.FileName);
             SaveDocument(doc, path);
+        }
+
+        #endregion
+
+        #region PageCollection extension methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Search
+        /// 
+        /// <summary>
+        /// キーワードの含まれる Page オブジェクトを検索します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Search(this PageCollection pages, string keyword, IList<Page> results)
+        {
+            foreach (var page in pages)
+            {
+                var document = page.CreateDocument(pages.Directory);
+                if (document.FindNext(keyword, 0) != null) results.Add(page);
+            }
         }
 
         #endregion
