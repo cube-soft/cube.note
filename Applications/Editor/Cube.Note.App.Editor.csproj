@@ -135,8 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\SearchEnd.png" />
     <None Include="Resources\SearchSmall.png" />
-    <None Include="Resources\Exit.png" />
     <None Include="Resources\Font.png" />
     <None Include="Resources\Search.png" />
     <None Include="Resources\Remove.png" />

@@ -48,7 +48,24 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            RemoveButton.Click += (s, e) => Detach();
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsAttach
+        /// 
+        /// <summary>
+        /// Attach されているかどうかを示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsAttach
+        {
+            get { return Parent != null; }
         }
 
         #endregion

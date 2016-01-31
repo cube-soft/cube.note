@@ -67,9 +67,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
+            SearchMenuItem.Click  += SearchMenuItem_Click;
             FontMenuItem.Click    += (s, e) => TextEditControl.SelectFont();
             VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
-            SearchMenuItem.Click  += (s, e) => SearchControl.Switch(ContentsPanel.Panel1);
             NewPageMenuItem.Click += (s, e) => PageCollectionControl.NewPage();
             RemoveMenuItem.Click  += (s, e) =>
             {
@@ -127,10 +127,32 @@ namespace Cube.Note.App.Editor
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
             InitializeLayout();
-
             Saver = new AutoSaver(Pages);
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchMenuItem_Click
+        ///
+        /// <summary>
+        /// 検索メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SearchMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchControl.Switch(ContentsPanel.Panel1);
+
+            NewPageMenuItem.Enabled = !SearchControl.IsAttach;
+            RemoveMenuItem.Enabled  = !SearchControl.IsAttach;
+            SearchMenuItem.Image    = SearchControl.IsAttach ?
+                                      Properties.Resources.SearchEnd :
+                                      Properties.Resources.Search;
         }
 
         #endregion
