@@ -52,24 +52,6 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsAttach
-        /// 
-        /// <summary>
-        /// Attach されているかどうかを示す値を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool IsAttach
-        {
-            get { return Parent != null; }
-        }
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */

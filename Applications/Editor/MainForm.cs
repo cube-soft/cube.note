@@ -67,15 +67,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            SearchMenuItem.Click  += SearchMenuItem_Click;
-            FontMenuItem.Click    += (s, e) => TextEditControl.SelectFont();
+            PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
+            RemoveMenuItem.Click += RemoveMenuItem_Click;
+            SearchMenuItem.Click += SearchMenuItem_Click;
+            FontMenuItem.Click += (s, e) => TextEditControl.SelectFont();
             VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
             NewPageMenuItem.Click += (s, e) => PageCollectionControl.NewPage();
-            RemoveMenuItem.Click  += (s, e) =>
-            {
-                var index = PageCollectionControl.SelectedIndex;
-                PageCollectionControl.Remove(index);
-            };
         }
 
         /* ----------------------------------------------------------------- */
@@ -137,6 +134,37 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// PageCollectionControl_ParentChanged
+        ///
+        /// <summary>
+        /// 親コントロールが変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageCollectionControl_ParentChanged(object sender, EventArgs e)
+        {
+            var active = IsActive(PageCollectionControl);
+            NewPageMenuItem.Enabled = active;
+            RemoveMenuItem.Enabled = active;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveMenuItem_Click
+        ///
+        /// <summary>
+        /// 削除メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveMenuItem_Click(object sender, EventArgs e)
+        {
+            var index = PageCollectionControl.SelectedIndex;
+            PageCollectionControl.Remove(index);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SearchMenuItem_Click
         ///
         /// <summary>
@@ -147,17 +175,28 @@ namespace Cube.Note.App.Editor
         private void SearchMenuItem_Click(object sender, EventArgs e)
         {
             SearchControl.Switch(ContentsPanel.Panel1);
-
-            NewPageMenuItem.Enabled = !SearchControl.IsAttach;
-            RemoveMenuItem.Enabled  = !SearchControl.IsAttach;
-            SearchMenuItem.Image    = SearchControl.IsAttach ?
-                                      Properties.Resources.SearchEnd :
-                                      Properties.Resources.Search;
+            SearchMenuItem.Image = IsActive(SearchControl) ?
+                                   Properties.Resources.SearchEnd :
+                                   Properties.Resources.Search;
         }
 
         #endregion
 
         #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsActive
+        ///
+        /// <summary>
+        /// コントロールがアクティブ状態になっているかどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsActive(Control control)
+        {
+            return control.Parent == ContentsPanel.Panel1;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
