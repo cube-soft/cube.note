@@ -80,6 +80,9 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PageListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
     <Compile Include="Presenters\TextEditPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -89,6 +92,12 @@
     </Compile>
     <Compile Include="TextEditControl.Designer.cs">
       <DependentUpon>TextEditControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SearchControl.Designer.cs">
+      <DependentUpon>SearchControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="PageCollectionControl.resx">
       <DependentUpon>PageCollectionControl.cs</DependentUpon>
@@ -106,6 +115,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SearchControl.resx">
+      <DependentUpon>SearchControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TextEditControl.resx">
       <DependentUpon>TextEditControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\SearchSmall.png" />
+    <None Include="Resources\Exit.png" />
     <None Include="Resources\Font.png" />
     <None Include="Resources\Search.png" />
     <None Include="Resources\Remove.png" />
