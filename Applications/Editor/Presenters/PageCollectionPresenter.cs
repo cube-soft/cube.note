@@ -53,6 +53,7 @@ namespace Cube.Note.App.Editor
             View.Added                += View_Added;
             View.Removed              += View_Removed;
 
+            Model.ActiveChanged       += Model_ActiveChanged;
             Model.CollectionChanged   += Model_CollectionChanged;
         }
 
@@ -129,6 +130,28 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Model
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_ActiveChanged
+        /// 
+        /// <summary>
+        /// アクティブな Page が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_ActiveChanged(object sender, EventArgs e)
+        {
+            if (Model.Active == null) return;
+
+            var index = View.SelectedIndex;
+            if (index >= 0 && index < Model.Count && Model.Active == Model[index]) return;
+
+            var changed = Model.IndexOf(Model.Active);
+            if (changed == -1) return;
+
+            Sync(() => View.Select(changed));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
