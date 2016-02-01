@@ -139,12 +139,13 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             NewPageMenuItem.Click += NewPageMenuItem_Click;
             RemoveMenuItem.Click += RemoveMenuItem_Click;
             SearchMenuItem.Click += SearchMenuItem_Click;
+            VisibleMenuItem.Click += VisibleMenuItem_Click;
             FontMenuItem.Click += (s, e) => TextEditControl.SelectFont();
-            VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
+            PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
+            ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -268,9 +269,27 @@ namespace Cube.Note.App.Editor
         private void SearchMenuItem_Click(object sender, EventArgs e)
         {
             SearchControl.Switch(ContentsPanel.Panel1);
-            SearchMenuItem.Image = IsActive(SearchControl) ?
-                                   Properties.Resources.SearchEnd :
-                                   Properties.Resources.Search;
+
+            if (IsActive(SearchControl))
+            {
+                SearchMenuItem.Image = Properties.Resources.SearchEnd;
+                ContentsPanel.Panel1Collapsed = false;
+            }
+            else SearchMenuItem.Image = Properties.Resources.Search;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// VisibleMenuItem_Click
+        ///
+        /// <summary>
+        /// 表示方法の変更メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void VisibleMenuItem_Click(object sender, EventArgs e)
+        {
+            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
         }
 
         /* ----------------------------------------------------------------- */
@@ -289,6 +308,35 @@ namespace Cube.Note.App.Editor
             RemoveMenuItem.Enabled = active;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ContentsPanel2_ClientSizeChanged
+        ///
+        /// <summary>
+        /// ページリストの表示方法が変更された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// ContentsPanel.Panel1Collapsed の変更を通知するイベントが
+        /// 存在しないため Panel2 側のサイズ変更イベントで代替します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ContentsPanel2_ClientSizeChanged(object sender, EventArgs e)
+        {
+            var hidden = ContentsPanel.Panel1Collapsed;
+            var text   = hidden ?
+                         Properties.Resources.VisibleMenu :
+                         Properties.Resources.HideMenu;
+            var image  = hidden ?
+                         Properties.Resources.ArrowRight :
+                         Properties.Resources.ArrowLeft;
+
+            VisibleMenuItem.Image = image;
+            VisibleMenuItem.Text = text;
+            VisibleMenuItem.ToolTipText = text;
+        }
+
         #endregion
 
         #region Other private methods
@@ -305,32 +353,6 @@ namespace Cube.Note.App.Editor
         private bool IsActive(Control control)
         {
             return control.Parent == ContentsPanel.Panel1;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ChangeMenuPanelVisibility
-        ///
-        /// <summary>
-        /// 左側のメニューパネルの表示状態を変更します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ChangeMenuPanelVisibility()
-        {
-            var visible = !(bool)VisibleMenuItem.Tag;
-            var text    = visible ?
-                          Properties.Resources.HideMenu :
-                          Properties.Resources.VisibleMenu;
-            var image   = visible ?
-                          Properties.Resources.ArrowLeft :
-                          Properties.Resources.ArrowRight;
-
-            VisibleMenuItem.Image = image;
-            VisibleMenuItem.Text = text;
-            VisibleMenuItem.ToolTipText = text;
-            VisibleMenuItem.Tag = visible;
-            ContentsPanel.Panel1Collapsed = !visible;
         }
 
         #endregion
