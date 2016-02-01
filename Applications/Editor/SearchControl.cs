@@ -49,7 +49,8 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            SearchButton.Click += (s, e) => OnSearch(new DataEventArgs<string>(KeywordTextBox.Text));
+            SearchButton.Click += (s, e) => RaiseSearchEvent();
+            KeywordTextBox.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) RaiseSearchEvent(); };
             PageCollectionControl.Added += (s, e) => OnAdded(e);
             PageCollectionControl.Cleared += (s, e) => OnCleared(e);
             PageCollectionControl.SelectedIndexChanged += (s, e) => OnSelectedIndexChanged(e);
@@ -273,7 +274,7 @@ namespace Cube.Note.App.Editor
         /// OnSearch
         /// 
         /// <summary>
-        /// 検索時に実行されます。
+        /// Search イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -294,6 +295,24 @@ namespace Cube.Note.App.Editor
         protected virtual void OnSelectedIndexChanged(EventArgs e)
         {
             if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
+        }
+
+        #endregion
+
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseSearchEvent
+        ///
+        /// <summary>
+        /// Search イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseSearchEvent()
+        {
+            OnSearch(new DataEventArgs<string>(KeywordTextBox.Text));
         }
 
         #endregion

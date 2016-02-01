@@ -364,6 +364,7 @@
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "CubeNote";
             this.LayoutPanel.ResumeLayout(false);
