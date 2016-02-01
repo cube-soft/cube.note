@@ -58,7 +58,7 @@ namespace Cube.Note.App.Editor
             Target.ActiveChanged += Target_ActiveChanged;
             _timer.Elapsed += Timer_Elapsed;
 
-            Task.Run(() => InitializeTarget());
+            Task35.Run(() => InitializeTarget());
         }
 
         /* ----------------------------------------------------------------- */
@@ -139,7 +139,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            await Task.Run(() =>
+            await Task35.Run(() =>
             {
                 SaveDocument(Target.Active);
                 SaveOrderFile();
@@ -158,7 +158,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void Target_ActiveChanged(object sender, PageChangedEventArgs e)
         {
-            await Task.Run(() => SaveDocument(e.OldPage));
+            await Task35.Run(() => SaveDocument(e.OldPage));
         }
 
         #endregion

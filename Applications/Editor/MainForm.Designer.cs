@@ -45,12 +45,12 @@
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
             this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
             this.LayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
             this.ContentsPanel.Panel2.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
             this.MenuToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -370,11 +370,11 @@
             this.LayoutPanel.PerformLayout();
             this.ContentsPanel.Panel1.ResumeLayout(false);
             this.ContentsPanel.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).EndInit();
             this.ContentsPanel.ResumeLayout(false);
             this.MenuToolStrip.ResumeLayout(false);
             this.MenuToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).EndInit();
             this.ResumeLayout(false);
 
         }
