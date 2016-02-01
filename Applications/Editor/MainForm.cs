@@ -54,6 +54,78 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Keybord shortcuts
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// KeyShortCut
+        ///
+        /// <summary>
+        /// キーボードショートカットを処理します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void KeyShortCut(KeyEventArgs e)
+        {
+            var result = true;
+            switch (e.KeyCode)
+            {
+                case Keys.Delete:
+                    RemoveMenuItem_Click(this, e);
+                    break;
+                default:
+                    result = false;
+                    break;
+            }
+            e.Handled = result;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// KeyShortCutWithControl
+        ///
+        /// <summary>
+        /// Ctrl 付のキーボードショートカットを処理します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void KeyShortCutWithControl(KeyEventArgs e)
+        {
+            var result = true;
+            switch (e.KeyCode)
+            {
+                case Keys.D:
+                    RemoveMenuItem_Click(this, e);
+                    break;
+                case Keys.F:
+                    SearchMenuItem_Click(this, e);
+                    break;
+                case Keys.N:
+                    NewPageMenuItem_Click(this, e);
+                    break;
+                default:
+                    result = false;
+                    break;
+            }
+            e.Handled = result;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeEvents
+        ///
+        /// <summary>
+        /// Alt 付のキーボードショートカットを処理します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void KeyShortCutWithAlt(KeyEventArgs e)
+        {
+            // do nothing
+        }
+
+        #endregion
+
         #region Initialize methods
 
         /* ----------------------------------------------------------------- */
@@ -68,11 +140,11 @@ namespace Cube.Note.App.Editor
         private void InitializeEvents()
         {
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
+            NewPageMenuItem.Click += NewPageMenuItem_Click;
             RemoveMenuItem.Click += RemoveMenuItem_Click;
             SearchMenuItem.Click += SearchMenuItem_Click;
             FontMenuItem.Click += (s, e) => TextEditControl.SelectFont();
             VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
-            NewPageMenuItem.Click += (s, e) => PageCollectionControl.NewPage();
         }
 
         /* ----------------------------------------------------------------- */
@@ -131,22 +203,42 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        ///
+        /// <summary>
+        /// キーが押下された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Control) KeyShortCutWithControl(e);
+            else if (e.Alt) KeyShortCutWithAlt(e);
+            else KeyShortCut(e);
+
+            base.OnKeyDown(e);
+        }
+
+        #endregion
+
         #region Event handlers
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCollectionControl_ParentChanged
+        /// NewPageMenuItem_Click
         ///
         /// <summary>
-        /// 親コントロールが変更された時に実行されるハンドラです。
+        /// 新規追加メニューが押下された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PageCollectionControl_ParentChanged(object sender, EventArgs e)
+        private void NewPageMenuItem_Click(object sender, EventArgs e)
         {
-            var active = IsActive(PageCollectionControl);
-            NewPageMenuItem.Enabled = active;
-            RemoveMenuItem.Enabled = active;
+            PageCollectionControl.NewPage();
         }
 
         /* ----------------------------------------------------------------- */
@@ -179,6 +271,22 @@ namespace Cube.Note.App.Editor
             SearchMenuItem.Image = IsActive(SearchControl) ?
                                    Properties.Resources.SearchEnd :
                                    Properties.Resources.Search;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageCollectionControl_ParentChanged
+        ///
+        /// <summary>
+        /// 親コントロールが変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageCollectionControl_ParentChanged(object sender, EventArgs e)
+        {
+            var active = IsActive(PageCollectionControl);
+            NewPageMenuItem.Enabled = active;
+            RemoveMenuItem.Enabled = active;
         }
 
         #endregion
