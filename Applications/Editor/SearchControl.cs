@@ -215,6 +215,7 @@ namespace Cube.Note.App.Editor
             foreach (Control control in parent.Controls) _controls.Add(control);
             parent.Controls.Clear();
             parent.Controls.Add(this);
+            KeywordTextBox.Focus();
         }
 
         /* ----------------------------------------------------------------- */
