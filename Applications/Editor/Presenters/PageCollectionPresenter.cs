@@ -125,6 +125,7 @@ namespace Cube.Note.App.Editor
 
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model.RemoveAt(index);
+            Model.Active = Model[Math.Min(index, Model.Count - 1)];
         }
 
         #endregion
