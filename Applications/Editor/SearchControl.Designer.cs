@@ -71,7 +71,7 @@
             this.SearchButton.FlatAppearance.BorderSize = 0;
             this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SearchButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.SearchButton.Image = global::Cube.Note.App.Editor.Properties.Resources.SearchSmall;
+            this.SearchButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Search;
             this.SearchButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.SearchButton.Location = new System.Drawing.Point(168, 0);
             this.SearchButton.Margin = new System.Windows.Forms.Padding(0);

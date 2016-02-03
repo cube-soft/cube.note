@@ -116,7 +116,7 @@
             // VisibleMenuItem
             // 
             this.VisibleMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.VisibleMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.ArrowLeft;
+            this.VisibleMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Left;
             this.VisibleMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.VisibleMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.VisibleMenuItem.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
@@ -184,7 +184,7 @@
             // FontMenuItem
             // 
             this.FontMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.FontMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Font;
+            this.FontMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Settings;
             this.FontMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.FontMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.FontMenuItem.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);

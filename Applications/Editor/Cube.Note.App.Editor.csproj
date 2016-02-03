@@ -136,13 +136,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Settings.png" />
+    <None Include="Resources\Logo.png" />
+    <None Include="Resources\Left.png" />
     <None Include="Resources\SearchEnd.png" />
-    <None Include="Resources\SearchSmall.png" />
-    <None Include="Resources\Font.png" />
     <None Include="Resources\Search.png" />
     <None Include="Resources\Remove.png" />
-    <None Include="Resources\ArrowRight.png" />
-    <None Include="Resources\ArrowLeft.png" />
     <None Include="Resources\Add.png" />
   </ItemGroup>
   <ItemGroup>

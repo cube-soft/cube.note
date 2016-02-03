@@ -328,11 +328,7 @@ namespace Cube.Note.App.Editor
             var text   = hidden ?
                          Properties.Resources.VisibleMenu :
                          Properties.Resources.HideMenu;
-            var image  = hidden ?
-                         Properties.Resources.ArrowRight :
-                         Properties.Resources.ArrowLeft;
 
-            VisibleMenuItem.Image = image;
             VisibleMenuItem.Text = text;
             VisibleMenuItem.ToolTipText = text;
         }

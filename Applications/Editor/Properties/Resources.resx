@@ -121,23 +121,20 @@
   <data name="Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ArrowLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ArrowRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ArrowRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="CreationFormat" xml:space="preserve">
     <value>yyyy/MM/dd HH:mm 作成</value>
   </data>
   <data name="EmptyPage" xml:space="preserve">
     <value>無題のページ</value>
   </data>
-  <data name="Font" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Font.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="HideMenu" xml:space="preserve">
     <value>ノート一覧を非表示</value>
+  </data>
+  <data name="Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="OrderFileName" xml:space="preserve">
     <value>Order.json</value>
@@ -151,8 +148,8 @@
   <data name="SearchEnd" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SearchEnd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SearchSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SearchSmall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VisibleMenu" xml:space="preserve">
     <value>ノート一覧を表示</value>
