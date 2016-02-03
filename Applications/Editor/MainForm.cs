@@ -21,6 +21,9 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 
+using System.Runtime.InteropServices;
+using System.Drawing;
+
 namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -201,10 +204,6 @@ namespace Cube.Note.App.Editor
             InitializeLayout();
             Saver = new AutoSaver(Pages);
         }
-
-        #endregion
-
-        #region Override methods
 
         /* ----------------------------------------------------------------- */
         ///
