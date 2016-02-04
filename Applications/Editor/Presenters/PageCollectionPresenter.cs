@@ -121,7 +121,6 @@ namespace Cube.Note.App.Editor
         {
             var index = e.Value;
             if (index < 0 || index >= Model.Count) return;
-            if (View.Count > 0) View.Select(Math.Min(index, View.Count - 1));
 
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model.RemoveAt(index);
