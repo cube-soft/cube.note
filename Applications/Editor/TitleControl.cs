@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -156,10 +155,10 @@ namespace Cube.Note.App.Editor
             var control = sender as Control;
             if (control == null) return;
 
-            var size = new Size(control.Height, control.Height);
-            ExitButton.Size = size;
-            MaximizeButton.Size = size;
-            MinimizeButton.Size = size;
+            var height = control.Height;
+            ExitButton.Height = height;
+            MaximizeButton.Height = height;
+            MinimizeButton.Height = height;
         }
 
         #endregion

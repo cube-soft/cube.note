@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
-            this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.ButtonsPanel = new Cube.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Button();
             this.MaximizeButton = new Cube.Forms.Button();
             this.MinimizeButton = new Cube.Forms.Button();
+            this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -55,18 +55,6 @@
             this.LayoutPanel.Size = new System.Drawing.Size(400, 30);
             this.LayoutPanel.TabIndex = 0;
             // 
-            // TitlePictureBox
-            // 
-            this.TitlePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TitlePictureBox.Image = global::Cube.Note.App.Editor.Properties.Resources.Title;
-            this.TitlePictureBox.Location = new System.Drawing.Point(0, 0);
-            this.TitlePictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.TitlePictureBox.Name = "TitlePictureBox";
-            this.TitlePictureBox.Size = new System.Drawing.Size(120, 30);
-            this.TitlePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.TitlePictureBox.TabIndex = 0;
-            this.TitlePictureBox.TabStop = false;
-            // 
             // ButtonsPanel
             // 
             this.ButtonsPanel.Controls.Add(this.ExitButton);
@@ -83,24 +71,26 @@
             // ExitButton
             // 
             this.ExitButton.FlatAppearance.BorderSize = 0;
+            this.ExitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExitButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Close;
-            this.ExitButton.Location = new System.Drawing.Point(250, 0);
+            this.ExitButton.Location = new System.Drawing.Point(235, 0);
             this.ExitButton.Margin = new System.Windows.Forms.Padding(0);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(30, 30);
+            this.ExitButton.Size = new System.Drawing.Size(45, 30);
             this.ExitButton.TabIndex = 0;
             this.ExitButton.UseVisualStyleBackColor = false;
             // 
             // MaximizeButton
             // 
+            this.MaximizeButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MaximizeButton.FlatAppearance.BorderSize = 0;
             this.MaximizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MaximizeButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Maximize;
-            this.MaximizeButton.Location = new System.Drawing.Point(204, 0);
-            this.MaximizeButton.Margin = new System.Windows.Forms.Padding(16, 0, 16, 0);
+            this.MaximizeButton.Location = new System.Drawing.Point(190, 0);
+            this.MaximizeButton.Margin = new System.Windows.Forms.Padding(0);
             this.MaximizeButton.Name = "MaximizeButton";
-            this.MaximizeButton.Size = new System.Drawing.Size(30, 30);
+            this.MaximizeButton.Size = new System.Drawing.Size(45, 30);
             this.MaximizeButton.TabIndex = 1;
             this.MaximizeButton.UseVisualStyleBackColor = false;
             // 
@@ -109,12 +99,24 @@
             this.MinimizeButton.FlatAppearance.BorderSize = 0;
             this.MinimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MinimizeButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Minimize;
-            this.MinimizeButton.Location = new System.Drawing.Point(158, 0);
+            this.MinimizeButton.Location = new System.Drawing.Point(145, 0);
             this.MinimizeButton.Margin = new System.Windows.Forms.Padding(0);
             this.MinimizeButton.Name = "MinimizeButton";
-            this.MinimizeButton.Size = new System.Drawing.Size(30, 30);
+            this.MinimizeButton.Size = new System.Drawing.Size(45, 29);
             this.MinimizeButton.TabIndex = 2;
             this.MinimizeButton.UseVisualStyleBackColor = true;
+            // 
+            // TitlePictureBox
+            // 
+            this.TitlePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TitlePictureBox.Image = global::Cube.Note.App.Editor.Properties.Resources.Title;
+            this.TitlePictureBox.Location = new System.Drawing.Point(0, 0);
+            this.TitlePictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.TitlePictureBox.Name = "TitlePictureBox";
+            this.TitlePictureBox.Size = new System.Drawing.Size(120, 30);
+            this.TitlePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.TitlePictureBox.TabIndex = 0;
+            this.TitlePictureBox.TabStop = false;
             // 
             // TitleControl
             // 
@@ -124,8 +126,8 @@
             this.Name = "TitleControl";
             this.Size = new System.Drawing.Size(400, 30);
             this.LayoutPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).EndInit();
             this.ButtonsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
