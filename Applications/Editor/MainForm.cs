@@ -21,9 +21,6 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 
-using System.Runtime.InteropServices;
-using System.Drawing;
-
 namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -35,7 +32,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.Form
+    public partial class MainForm : Cube.Forms.WidgetForm
     {
         #region Constructors
 
@@ -53,78 +50,42 @@ namespace Cube.Note.App.Editor
             InitializeComponent();
             InitializeEvents();
             InitializePresenters();
+            TitleControl = TitleBar;
         }
 
         #endregion
 
-        #region Keybord shortcuts
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// KeyShortCut
+        /// Maximize
         ///
         /// <summary>
-        /// キーボードショートカットを処理します。
+        /// 最大化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void KeyShortCut(KeyEventArgs e)
+        public void Maximize()
         {
-            var result = true;
-            switch (e.KeyCode)
-            {
-                case Keys.Delete:
-                    RemoveMenuItem_Click(this, e);
-                    break;
-                default:
-                    result = false;
-                    break;
-            }
-            e.Handled = result;
+            WindowState = WindowState == FormWindowState.Normal ?
+                          FormWindowState.Maximized :
+                          FormWindowState.Normal;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// KeyShortCutWithControl
+        /// Minimize
         ///
         /// <summary>
-        /// Ctrl 付のキーボードショートカットを処理します。
+        /// 最小化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void KeyShortCutWithControl(KeyEventArgs e)
+        public void Minimize()
         {
-            var result = true;
-            switch (e.KeyCode)
-            {
-                case Keys.D:
-                    RemoveMenuItem_Click(this, e);
-                    break;
-                case Keys.F:
-                    SearchMenuItem_Click(this, e);
-                    break;
-                case Keys.N:
-                    NewPageMenuItem_Click(this, e);
-                    break;
-                default:
-                    result = false;
-                    break;
-            }
-            e.Handled = result;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeEvents
-        ///
-        /// <summary>
-        /// Alt 付のキーボードショートカットを処理します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void KeyShortCutWithAlt(KeyEventArgs e)
-        {
-            // do nothing
+            if (WindowState == FormWindowState.Minimized) return;
+            WindowState = FormWindowState.Minimized;
         }
 
         #endregion
@@ -142,6 +103,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
+            TitleBar.CloseRequired += (s, e) => Close();
+            TitleBar.MaximizeRequired += (s, e) => Maximize();
+            TitleBar.MinimizeRequired += (s, e) => Minimize();
             NewPageMenuItem.Click += NewPageMenuItem_Click;
             RemoveMenuItem.Click += RemoveMenuItem_Click;
             SearchMenuItem.Click += SearchMenuItem_Click;
@@ -216,11 +180,29 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Control) KeyShortCutWithControl(e);
-            else if (e.Alt) KeyShortCutWithAlt(e);
-            else KeyShortCut(e);
+            try
+            {
+                if (!e.Control) return;
 
-            base.OnKeyDown(e);
+                var result = true;
+                switch (e.KeyCode)
+                {
+                    case Keys.D:
+                        RemoveMenuItem_Click(this, e);
+                        break;
+                    case Keys.F:
+                        SearchMenuItem_Click(this, e);
+                        break;
+                    case Keys.N:
+                        NewPageMenuItem_Click(this, e);
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+                e.Handled = result;
+            }
+            finally { base.OnKeyDown(e); }
         }
 
         #endregion

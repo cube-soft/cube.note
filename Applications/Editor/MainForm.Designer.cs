@@ -31,21 +31,22 @@
             Sgry.Azuki.Document document1 = new Sgry.Azuki.Document();
             Sgry.Azuki.DefaultWordProc defaultWordProc1 = new Sgry.Azuki.DefaultWordProc();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ContentsPanel = new System.Windows.Forms.SplitContainer();
+            this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
+            this.ContentsPanel = new Cube.Forms.SplitContainer();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
             this.NewPageMenuItem = new System.Windows.Forms.ToolStripButton();
             this.RemoveMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator3 = new System.Windows.Forms.ToolStripButton();
             this.FontMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
             this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
-            this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
-            this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.TitleBar = new Cube.Note.App.Editor.TitleControl();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -57,19 +58,22 @@
             // 
             // LayoutPanel
             // 
+            this.LayoutPanel.BackColor = System.Drawing.SystemColors.Control;
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 2);
-            this.LayoutPanel.Controls.Add(this.MenuToolStrip, 0, 0);
-            this.LayoutPanel.Controls.Add(this.VerticalSeparator, 0, 1);
+            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 3);
+            this.LayoutPanel.Controls.Add(this.MenuToolStrip, 0, 1);
+            this.LayoutPanel.Controls.Add(this.VerticalSeparator, 0, 2);
+            this.LayoutPanel.Controls.Add(this.TitleBar, 0, 0);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 3;
+            this.LayoutPanel.RowCount = 4;
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Size = new System.Drawing.Size(784, 461);
+            this.LayoutPanel.Size = new System.Drawing.Size(782, 459);
             this.LayoutPanel.TabIndex = 2;
             // 
             // ContentsPanel
@@ -77,7 +81,7 @@
             this.ContentsPanel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContentsPanel.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 33);
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 63);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
             // 
@@ -88,7 +92,7 @@
             // ContentsPanel.Panel2
             // 
             this.ContentsPanel.Panel2.Controls.Add(this.TextEditControl);
-            this.ContentsPanel.Size = new System.Drawing.Size(784, 428);
+            this.ContentsPanel.Size = new System.Drawing.Size(782, 396);
             this.ContentsPanel.SplitterDistance = 250;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
@@ -110,10 +114,10 @@
             this.MenuSeparator3,
             this.FontMenuItem,
             this.LogoMenuItem});
-            this.MenuToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.MenuToolStrip.Location = new System.Drawing.Point(0, 30);
             this.MenuToolStrip.Name = "MenuToolStrip";
             this.MenuToolStrip.Padding = new System.Windows.Forms.Padding(0);
-            this.MenuToolStrip.Size = new System.Drawing.Size(784, 32);
+            this.MenuToolStrip.Size = new System.Drawing.Size(782, 32);
             this.MenuToolStrip.TabIndex = 0;
             this.MenuToolStrip.Text = "メニュー";
             // 
@@ -165,6 +169,18 @@
             this.RemoveMenuItem.Size = new System.Drawing.Size(28, 28);
             this.RemoveMenuItem.Text = "ノートを削除";
             // 
+            // MenuSeparator2
+            // 
+            this.MenuSeparator2.AutoSize = false;
+            this.MenuSeparator2.AutoToolTip = false;
+            this.MenuSeparator2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.MenuSeparator2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator2.Enabled = false;
+            this.MenuSeparator2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator2.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator2.Name = "MenuSeparator2";
+            this.MenuSeparator2.Size = new System.Drawing.Size(1, 29);
+            // 
             // SearchMenuItem
             // 
             this.SearchMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -202,14 +218,27 @@
             this.FontMenuItem.Size = new System.Drawing.Size(28, 28);
             this.FontMenuItem.Text = "設定";
             // 
+            // LogoMenuItem
+            // 
+            this.LogoMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.LogoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.LogoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Logo;
+            this.LogoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.LogoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.LogoMenuItem.Margin = new System.Windows.Forms.Padding(8, 2, 4, 2);
+            this.LogoMenuItem.Name = "LogoMenuItem";
+            this.LogoMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LogoMenuItem.Size = new System.Drawing.Size(28, 28);
+            this.LogoMenuItem.Text = "Web ページ";
+            // 
             // VerticalSeparator
             // 
             this.VerticalSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
             this.VerticalSeparator.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VerticalSeparator.Location = new System.Drawing.Point(0, 32);
+            this.VerticalSeparator.Location = new System.Drawing.Point(0, 62);
             this.VerticalSeparator.Margin = new System.Windows.Forms.Padding(0);
             this.VerticalSeparator.Name = "VerticalSeparator";
-            this.VerticalSeparator.Size = new System.Drawing.Size(784, 1);
+            this.VerticalSeparator.Size = new System.Drawing.Size(782, 1);
             this.VerticalSeparator.TabIndex = 2;
             this.VerticalSeparator.TabStop = false;
             // 
@@ -222,7 +251,7 @@
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
             this.PageCollectionControl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.PageCollectionControl.Size = new System.Drawing.Size(250, 428);
+            this.PageCollectionControl.Size = new System.Drawing.Size(250, 396);
             this.PageCollectionControl.TabIndex = 0;
             // 
             // TextEditControl
@@ -366,41 +395,29 @@
             this.TextEditControl.Location = new System.Drawing.Point(0, 0);
             this.TextEditControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.TextEditControl.Name = "TextEditControl";
-            this.TextEditControl.Size = new System.Drawing.Size(533, 428);
+            this.TextEditControl.Size = new System.Drawing.Size(531, 396);
             this.TextEditControl.TabIndex = 0;
             // 
-            // MenuSeparator2
+            // TitleBar
             // 
-            this.MenuSeparator2.AutoSize = false;
-            this.MenuSeparator2.AutoToolTip = false;
-            this.MenuSeparator2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.MenuSeparator2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator2.Enabled = false;
-            this.MenuSeparator2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator2.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator2.Name = "MenuSeparator2";
-            this.MenuSeparator2.Size = new System.Drawing.Size(1, 29);
-            // 
-            // LogoMenuItem
-            // 
-            this.LogoMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.LogoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.LogoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Logo;
-            this.LogoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.LogoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.LogoMenuItem.Margin = new System.Windows.Forms.Padding(8, 2, 4, 2);
-            this.LogoMenuItem.Name = "LogoMenuItem";
-            this.LogoMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LogoMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.LogoMenuItem.Text = "Web ページ";
+            this.TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
+            this.TitleBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TitleBar.Location = new System.Drawing.Point(0, 0);
+            this.TitleBar.Margin = new System.Windows.Forms.Padding(0);
+            this.TitleBar.Name = "TitleBar";
+            this.TitleBar.Size = new System.Drawing.Size(782, 30);
+            this.TitleBar.TabIndex = 4;
             // 
             // MainForm
             // 
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainForm";
+            this.Padding = new System.Windows.Forms.Padding(1);
+            this.Sizable = true;
             this.Text = "CubeNote";
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
@@ -417,8 +434,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel LayoutPanel;
-        private System.Windows.Forms.SplitContainer ContentsPanel;
+        private Cube.Forms.TableLayoutPanel LayoutPanel;
+        private Cube.Forms.SplitContainer ContentsPanel;
         private PageCollectionControl PageCollectionControl;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
@@ -432,6 +449,7 @@
         private TextEditControl TextEditControl;
         private System.Windows.Forms.ToolStripButton MenuSeparator2;
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
+        private TitleControl TitleBar;
     }
 }
 

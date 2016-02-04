@@ -120,7 +120,6 @@
             // 
             // TitleControl
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.Controls.Add(this.LayoutPanel);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "TitleControl";
