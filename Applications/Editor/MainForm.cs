@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -102,6 +103,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
+            Activated  += (s, e) => BackColor = Color.FromArgb(  0, 169, 157);
+            Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
+
             TitleControl.CloseRequired    += (s, e) => Close();
             TitleControl.MaximizeRequired += (s, e) => Maximize();
             TitleControl.MinimizeRequired += (s, e) => Minimize();
@@ -168,6 +172,21 @@ namespace Cube.Note.App.Editor
             base.OnLoad(e);
             InitializeLayout();
             Saver = new AutoSaver(Pages);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnBackColorChanged
+        ///
+        /// <summary>
+        /// 背景色が変更された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            TitleControl.BackColor = BackColor;
         }
 
         /* ----------------------------------------------------------------- */

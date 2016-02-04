@@ -361,7 +361,7 @@
             this.MenuSeparator3.Name = "MenuSeparator3";
             this.MenuSeparator3.Size = new System.Drawing.Size(1, 34);
             // 
-            // FontMenuItem
+            // SettingsMenuItem
             // 
             this.SettingsMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.SettingsMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -369,7 +369,7 @@
             this.SettingsMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.SettingsMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SettingsMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 2, 1);
-            this.SettingsMenuItem.Name = "FontMenuItem";
+            this.SettingsMenuItem.Name = "SettingsMenuItem";
             this.SettingsMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.SettingsMenuItem.Size = new System.Drawing.Size(44, 30);
             this.SettingsMenuItem.Text = "設定";
@@ -400,7 +400,6 @@
             // 
             // TitleControl
             // 
-            this.TitleControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.TitleControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TitleControl.Location = new System.Drawing.Point(0, 0);
             this.TitleControl.Margin = new System.Windows.Forms.Padding(0);
