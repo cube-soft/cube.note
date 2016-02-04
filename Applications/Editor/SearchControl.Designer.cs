@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
+            Cube.Note.App.Editor.PageConverter pageConverter2 = new Cube.Note.App.Editor.PageConverter();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.KeywordTextBox = new System.Windows.Forms.TextBox();
             this.SearchButton = new Cube.Forms.Button();
@@ -97,7 +97,7 @@
             // 
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LayoutPanel.SetColumnSpan(this.PageListView, 2);
-            this.PageListView.Converter = pageConverter1;
+            this.PageListView.Converter = pageConverter2;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.PageListView.Location = new System.Drawing.Point(0, 33);

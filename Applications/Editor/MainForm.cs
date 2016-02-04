@@ -254,8 +254,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RemoveMenuItem_Click(object sender, EventArgs e)
         {
-            var index = PageCollectionControl.SelectedIndex;
-            PageCollectionControl.Remove(index);
+            PageCollectionControl.Pages.RemoveItems();
         }
 
         /* ----------------------------------------------------------------- */

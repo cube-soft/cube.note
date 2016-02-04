@@ -68,7 +68,42 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        /// 
+        /// <summary>
+        /// 項目を選択します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select(int index)
+        {
+            if (index < 0 || index >= Count) return;
+            SelectedIndices.Clear();
+            SelectedIndices.Add(index);
+        }
+
+        #endregion
+
         #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnAdded
+        /// 
+        /// <summary>
+        /// 項目が追加された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnAdded(DataEventArgs<int> e)
+        {
+            if (Columns.Count == 0) SetColumns();
+            base.OnAdded(e);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -83,14 +118,15 @@ namespace Cube.Note.App.Editor
         {
             base.OnCreateControl();
 
-            BorderStyle = BorderStyle.None;
-            Converter   = new PageConverter();
-            HeaderStyle = ColumnHeaderStyle.None;
-            Margin      = new Padding(0);
-            MultiSelect = false;
-            Theme       = Cube.Forms.WindowTheme.Explorer;
-            TileSize    = new Size(Width, 70);
-            View        = View.Tile;
+            BorderStyle   = BorderStyle.None;
+            Converter     = new PageConverter();
+            FullRowSelect = true;
+            HeaderStyle   = ColumnHeaderStyle.None;
+            Margin        = new Padding(0);
+            MultiSelect   = false;
+            Theme         = Cube.Forms.WindowTheme.Explorer;
+            TileSize      = new Size(Width, 70);
+            View          = View.Tile;
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,9 +162,10 @@ namespace Cube.Note.App.Editor
                 if (View != View.Tile) return;
 
                 var height = TileSize.Height;
-                var width = Height < height * Count ?
+                var width  = Height < height * Count ?
                              Width - SystemInformation.VerticalScrollBarWidth :
                              Width;
+
                 TileSize = new Size(Math.Max(width, 1), Math.Max(height, 1));
             }
             finally { base.OnResize(e); }
@@ -136,17 +173,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnAdded
+        /// OnSelectedIndexChanged
         /// 
         /// <summary>
-        /// 項目が追加された時に実行されます。
+        /// 選択項目が変更された時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnAdded(DataEventArgs<int> e)
+        protected override void OnSelectedIndexChanged(EventArgs e)
         {
-            if (Columns.Count == 0) SetColumns();
-            base.OnAdded(e);
+            if (SelectedIndices.Count <= 0) return;
+            base.OnSelectedIndexChanged(e);
         }
 
         #endregion

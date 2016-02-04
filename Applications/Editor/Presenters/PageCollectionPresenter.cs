@@ -48,13 +48,13 @@ namespace Cube.Note.App.Editor
         public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
             : base(view, model)
         {
-            View.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.NewPageRequired      += View_NewPageRequired;
-            View.Added                += View_Added;
-            View.Removed              += View_Removed;
+            View.NewPageRequired += View_NewPageRequired;
+            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Pages.Added += View_Added;
+            View.Pages.Removed += View_Removed;
 
-            Model.ActiveChanged       += Model_ActiveChanged;
-            Model.CollectionChanged   += Model_CollectionChanged;
+            Model.ActiveChanged += Model_ActiveChanged;
+            Model.CollectionChanged += Model_CollectionChanged;
         }
 
         #endregion
@@ -74,8 +74,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var index = View.SelectedIndex;
+            var index = View.Pages.SelectedIndices[0];
             if (index < 0 || index >= Model.Count) return;
+
             Model.Active = Model[index];
         }
 
@@ -91,7 +92,7 @@ namespace Cube.Note.App.Editor
         private void View_NewPageRequired(object sender, EventArgs e)
         {
             Model.NewPage();
-            View.Select(0);
+            View.Pages.Select(0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -103,9 +104,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Added(object sender, EventArgs e)
+        private void View_Added(object sender, DataEventArgs<int> e)
         {
-            if (View.Count == 1) View.Select(0);
+            if (View.Pages.Count == 1) View.Pages.Select(0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -117,9 +118,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Removed(object sender, DataEventArgs<int> e)
+        private void View_Removed(object sender, DataEventArgs<int[]> e)
         {
-            var index = e.Value;
+            if (e.Value == null || e.Value.Length <= 0) return;
+
+            var index = e.Value[0];
             if (index < 0 || index >= Model.Count) return;
 
             Model[index].PropertyChanged -= Model_PropertyChanged;
@@ -144,13 +147,14 @@ namespace Cube.Note.App.Editor
         {
             if (Model.Active == null) return;
 
-            var index = View.SelectedIndex;
+            var index = View.Pages.SelectedIndices.Count > 0 ?
+                        View.Pages.SelectedIndices[0] : -1;
             if (index >= 0 && index < Model.Count && Model.Active == Model[index]) return;
 
             var changed = Model.IndexOf(Model.Active);
             if (changed == -1) return;
 
-            Sync(() => View.Select(changed));
+            Sync(() => View.Pages.Select(changed));
         }
 
         /* ----------------------------------------------------------------- */
@@ -189,7 +193,7 @@ namespace Cube.Note.App.Editor
             var index = e.NewStartingIndex;
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model[index].PropertyChanged += Model_PropertyChanged;
-            SyncWait(() => View.Insert(index, Model[index]));
+            SyncWait(() => View.Pages.Insert(index, Model[index]));
         }
 
         /* ----------------------------------------------------------------- */
@@ -211,7 +215,7 @@ namespace Cube.Note.App.Editor
             var index = Model.IndexOf(page);
             if (index == -1) return;
 
-            Sync(() => View.UpdateText(index, page.GetAbstract()));
+            Sync(() => View.Pages.Replace(index, page));
         }
 
         #endregion

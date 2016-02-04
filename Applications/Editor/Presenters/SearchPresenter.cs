@@ -50,8 +50,8 @@ namespace Cube.Note.App.Editor
             : base(view, model)
         {
             View.Search += View_Search;
-            View.ListView.Cleared += (s, e) => Results.Clear();
-            View.ListView.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Pages.Cleared += (s, e) => Results.Clear();
+            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
 
             Results.CollectionChanged += Results_CollectionChanged;
         }
@@ -108,9 +108,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!View.ListView.AnyItemsSelected) return;
+            if (!View.Pages.AnyItemsSelected) return;
 
-            var index = View.ListView.SelectedIndices[0];
+            var index = View.Pages.SelectedIndices[0];
             if (index < 0 || index >= Results.Count) return;
 
             var real = Model.IndexOf(Results[index]);
@@ -138,10 +138,10 @@ namespace Cube.Note.App.Editor
             {
                 case NotifyCollectionChangedAction.Add:
                     var index = e.NewStartingIndex;
-                    SyncWait(() => View.ListView.Insert(index, Results[index]));
+                    SyncWait(() => View.Pages.Insert(index, Results[index]));
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    if (Results.Count == 0) SyncWait(() => View.ListView.Clear());
+                    if (Results.Count == 0) SyncWait(() => View.Pages.Clear());
                     break;
             }
         }

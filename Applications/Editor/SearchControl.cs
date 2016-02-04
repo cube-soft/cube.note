@@ -61,14 +61,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ListView
+        /// Pages
         ///
         /// <summary>
         /// ページ一覧を表示する ListView オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageListView ListView
+        public PageListView Pages
         {
             get { return PageListView; }
         }

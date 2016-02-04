@@ -105,7 +105,6 @@
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
-            this.PageCollectionControl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.PageCollectionControl.Size = new System.Drawing.Size(250, 396);
             this.PageCollectionControl.TabIndex = 0;
             // 
