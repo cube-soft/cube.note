@@ -166,4 +166,7 @@
   <data name="VisibleMenu" xml:space="preserve">
     <value>ノート一覧を表示</value>
   </data>
+  <data name="WebUrl" xml:space="preserve">
+    <value>http://www.cube-soft.jp/</value>
+  </data>
 </root>

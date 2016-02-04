@@ -33,7 +33,7 @@
             this.ExitButton = new Cube.Forms.Button();
             this.MaximizeButton = new Cube.Forms.Button();
             this.MinimizeButton = new Cube.Forms.Button();
-            this.TitlePictureBox = new System.Windows.Forms.PictureBox();
+            this.TitlePictureBox = new Cube.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
@@ -138,6 +138,6 @@
         private Cube.Forms.Button ExitButton;
         private Cube.Forms.Button MaximizeButton;
         private Cube.Forms.Button MinimizeButton;
-        private System.Windows.Forms.PictureBox TitlePictureBox;
+        private Cube.Forms.PictureBox TitlePictureBox;
     }
 }

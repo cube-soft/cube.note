@@ -50,7 +50,6 @@ namespace Cube.Note.App.Editor
             InitializeComponent();
             InitializeEvents();
             InitializePresenters();
-            TitleControl = TitleBar;
         }
 
         #endregion
@@ -103,14 +102,17 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            TitleBar.CloseRequired += (s, e) => Close();
-            TitleBar.MaximizeRequired += (s, e) => Maximize();
-            TitleBar.MinimizeRequired += (s, e) => Minimize();
-            NewPageMenuItem.Click += NewPageMenuItem_Click;
-            RemoveMenuItem.Click += RemoveMenuItem_Click;
-            SearchMenuItem.Click += SearchMenuItem_Click;
-            VisibleMenuItem.Click += VisibleMenuItem_Click;
-            FontMenuItem.Click += (s, e) => TextEditControl.SelectFont();
+            TitleControl.CloseRequired    += (s, e) => Close();
+            TitleControl.MaximizeRequired += (s, e) => Maximize();
+            TitleControl.MinimizeRequired += (s, e) => Minimize();
+
+            NewPageMenuItem.Click  += NewPageMenuItem_Click;
+            RemoveMenuItem.Click   += RemoveMenuItem_Click;
+            SearchMenuItem.Click   += SearchMenuItem_Click;
+            VisibleMenuItem.Click  += VisibleMenuItem_Click;
+            LogoMenuItem.Click     += LogoMenuItem_Click;
+            SettingsMenuItem.Click += (s, e) => TextEditControl.SelectFont();
+
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
         }
@@ -126,11 +128,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            VisibleMenuItem.Tag = true;
-
             var area = Screen.FromControl(this).WorkingArea.Size;
-            Width  = (int)(area.Width  * 0.7);
-            Height = (int)(area.Height * 0.7);
+            Width   = (int)(area.Width  * 0.7);
+            Height  = (int)(area.Height * 0.7);
+            Caption = TitleControl;
         }
 
         /* ----------------------------------------------------------------- */
@@ -271,6 +272,21 @@ namespace Cube.Note.App.Editor
         private void VisibleMenuItem_Click(object sender, EventArgs e)
         {
             ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LogoMenuItem_Click
+        ///
+        /// <summary>
+        /// ロゴが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void LogoMenuItem_Click(object sender, EventArgs e)
+        {
+            try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
+            catch (Exception /* err */) { /* ignore errors */ }
         }
 
         /* ----------------------------------------------------------------- */

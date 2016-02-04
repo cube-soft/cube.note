@@ -214,5 +214,14 @@ namespace Cube.Note.App.Editor.Properties {
                 return ResourceManager.GetString("VisibleMenu", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WebUrl {
+            get {
+                return ResourceManager.GetString("WebUrl", resourceCulture);
+            }
+        }
     }
 }

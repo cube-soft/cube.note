@@ -33,6 +33,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ContentsPanel = new Cube.Forms.SplitContainer();
+            this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
+            this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
@@ -41,12 +43,10 @@
             this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator3 = new System.Windows.Forms.ToolStripButton();
-            this.FontMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.SettingsMenuItem = new System.Windows.Forms.ToolStripButton();
             this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
-            this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
-            this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
-            this.TitleBar = new Cube.Note.App.Editor.TitleControl();
+            this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -64,7 +64,7 @@
             this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 3);
             this.LayoutPanel.Controls.Add(this.MenuToolStrip, 0, 1);
             this.LayoutPanel.Controls.Add(this.VerticalSeparator, 0, 2);
-            this.LayoutPanel.Controls.Add(this.TitleBar, 0, 0);
+            this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -96,151 +96,6 @@
             this.ContentsPanel.SplitterDistance = 250;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
-            // 
-            // MenuToolStrip
-            // 
-            this.MenuToolStrip.BackColor = System.Drawing.SystemColors.Control;
-            this.MenuToolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MenuToolStrip.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.MenuToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
-            this.MenuToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.MenuToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.VisibleMenuItem,
-            this.MenuSeparator1,
-            this.NewPageMenuItem,
-            this.RemoveMenuItem,
-            this.MenuSeparator2,
-            this.SearchMenuItem,
-            this.MenuSeparator3,
-            this.FontMenuItem,
-            this.LogoMenuItem});
-            this.MenuToolStrip.Location = new System.Drawing.Point(0, 30);
-            this.MenuToolStrip.Name = "MenuToolStrip";
-            this.MenuToolStrip.Padding = new System.Windows.Forms.Padding(0);
-            this.MenuToolStrip.Size = new System.Drawing.Size(782, 32);
-            this.MenuToolStrip.TabIndex = 0;
-            this.MenuToolStrip.Text = "メニュー";
-            // 
-            // VisibleMenuItem
-            // 
-            this.VisibleMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.VisibleMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Left;
-            this.VisibleMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.VisibleMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.VisibleMenuItem.Margin = new System.Windows.Forms.Padding(8, 2, 8, 2);
-            this.VisibleMenuItem.Name = "VisibleMenuItem";
-            this.VisibleMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.VisibleMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.VisibleMenuItem.Text = "ノート一覧を非表示";
-            // 
-            // MenuSeparator1
-            // 
-            this.MenuSeparator1.AutoSize = false;
-            this.MenuSeparator1.AutoToolTip = false;
-            this.MenuSeparator1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.MenuSeparator1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator1.Enabled = false;
-            this.MenuSeparator1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator1.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator1.Name = "MenuSeparator1";
-            this.MenuSeparator1.Size = new System.Drawing.Size(1, 34);
-            // 
-            // NewPageMenuItem
-            // 
-            this.NewPageMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.NewPageMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
-            this.NewPageMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.NewPageMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewPageMenuItem.Margin = new System.Windows.Forms.Padding(8, 2, 4, 2);
-            this.NewPageMenuItem.Name = "NewPageMenuItem";
-            this.NewPageMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.NewPageMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.NewPageMenuItem.Text = "ノートを追加";
-            // 
-            // RemoveMenuItem
-            // 
-            this.RemoveMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RemoveMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Remove;
-            this.RemoveMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.RemoveMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RemoveMenuItem.Margin = new System.Windows.Forms.Padding(4, 2, 8, 2);
-            this.RemoveMenuItem.Name = "RemoveMenuItem";
-            this.RemoveMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.RemoveMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.RemoveMenuItem.Text = "ノートを削除";
-            // 
-            // MenuSeparator2
-            // 
-            this.MenuSeparator2.AutoSize = false;
-            this.MenuSeparator2.AutoToolTip = false;
-            this.MenuSeparator2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.MenuSeparator2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator2.Enabled = false;
-            this.MenuSeparator2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator2.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator2.Name = "MenuSeparator2";
-            this.MenuSeparator2.Size = new System.Drawing.Size(1, 29);
-            // 
-            // SearchMenuItem
-            // 
-            this.SearchMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SearchMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Search;
-            this.SearchMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.SearchMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SearchMenuItem.Margin = new System.Windows.Forms.Padding(8, 2, 8, 2);
-            this.SearchMenuItem.Name = "SearchMenuItem";
-            this.SearchMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.SearchMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.SearchMenuItem.Text = "検索";
-            // 
-            // MenuSeparator3
-            // 
-            this.MenuSeparator3.AutoSize = false;
-            this.MenuSeparator3.AutoToolTip = false;
-            this.MenuSeparator3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.MenuSeparator3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator3.Enabled = false;
-            this.MenuSeparator3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator3.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator3.Name = "MenuSeparator3";
-            this.MenuSeparator3.Size = new System.Drawing.Size(1, 34);
-            // 
-            // FontMenuItem
-            // 
-            this.FontMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.FontMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.FontMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Settings;
-            this.FontMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.FontMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FontMenuItem.Margin = new System.Windows.Forms.Padding(4, 2, 8, 2);
-            this.FontMenuItem.Name = "FontMenuItem";
-            this.FontMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.FontMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.FontMenuItem.Text = "設定";
-            // 
-            // LogoMenuItem
-            // 
-            this.LogoMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.LogoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.LogoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Logo;
-            this.LogoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.LogoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.LogoMenuItem.Margin = new System.Windows.Forms.Padding(8, 2, 4, 2);
-            this.LogoMenuItem.Name = "LogoMenuItem";
-            this.LogoMenuItem.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LogoMenuItem.Size = new System.Drawing.Size(28, 28);
-            this.LogoMenuItem.Text = "Web ページ";
-            // 
-            // VerticalSeparator
-            // 
-            this.VerticalSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.VerticalSeparator.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VerticalSeparator.Location = new System.Drawing.Point(0, 62);
-            this.VerticalSeparator.Margin = new System.Windows.Forms.Padding(0);
-            this.VerticalSeparator.Name = "VerticalSeparator";
-            this.VerticalSeparator.Size = new System.Drawing.Size(782, 1);
-            this.VerticalSeparator.TabIndex = 2;
-            this.VerticalSeparator.TabStop = false;
             // 
             // PageCollectionControl
             // 
@@ -398,15 +253,160 @@
             this.TextEditControl.Size = new System.Drawing.Size(531, 396);
             this.TextEditControl.TabIndex = 0;
             // 
-            // TitleBar
+            // MenuToolStrip
             // 
-            this.TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
-            this.TitleBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TitleBar.Location = new System.Drawing.Point(0, 0);
-            this.TitleBar.Margin = new System.Windows.Forms.Padding(0);
-            this.TitleBar.Name = "TitleBar";
-            this.TitleBar.Size = new System.Drawing.Size(782, 30);
-            this.TitleBar.TabIndex = 4;
+            this.MenuToolStrip.BackColor = System.Drawing.SystemColors.Control;
+            this.MenuToolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MenuToolStrip.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.MenuToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this.MenuToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.MenuToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.VisibleMenuItem,
+            this.MenuSeparator1,
+            this.NewPageMenuItem,
+            this.RemoveMenuItem,
+            this.MenuSeparator2,
+            this.SearchMenuItem,
+            this.MenuSeparator3,
+            this.SettingsMenuItem,
+            this.LogoMenuItem});
+            this.MenuToolStrip.Location = new System.Drawing.Point(0, 30);
+            this.MenuToolStrip.Name = "MenuToolStrip";
+            this.MenuToolStrip.Padding = new System.Windows.Forms.Padding(0);
+            this.MenuToolStrip.Size = new System.Drawing.Size(782, 32);
+            this.MenuToolStrip.TabIndex = 0;
+            this.MenuToolStrip.Text = "メニュー";
+            // 
+            // VisibleMenuItem
+            // 
+            this.VisibleMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.VisibleMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Left;
+            this.VisibleMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.VisibleMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.VisibleMenuItem.Margin = new System.Windows.Forms.Padding(6, 1, 6, 1);
+            this.VisibleMenuItem.Name = "VisibleMenuItem";
+            this.VisibleMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.VisibleMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.VisibleMenuItem.Text = "ノート一覧を非表示";
+            // 
+            // MenuSeparator1
+            // 
+            this.MenuSeparator1.AutoSize = false;
+            this.MenuSeparator1.AutoToolTip = false;
+            this.MenuSeparator1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.MenuSeparator1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator1.Enabled = false;
+            this.MenuSeparator1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator1.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator1.Name = "MenuSeparator1";
+            this.MenuSeparator1.Size = new System.Drawing.Size(1, 34);
+            // 
+            // NewPageMenuItem
+            // 
+            this.NewPageMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.NewPageMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
+            this.NewPageMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.NewPageMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewPageMenuItem.Margin = new System.Windows.Forms.Padding(6, 1, 1, 1);
+            this.NewPageMenuItem.Name = "NewPageMenuItem";
+            this.NewPageMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.NewPageMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.NewPageMenuItem.Text = "ノートを追加";
+            // 
+            // RemoveMenuItem
+            // 
+            this.RemoveMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RemoveMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Remove;
+            this.RemoveMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.RemoveMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RemoveMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 6, 1);
+            this.RemoveMenuItem.Name = "RemoveMenuItem";
+            this.RemoveMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.RemoveMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.RemoveMenuItem.Text = "ノートを削除";
+            // 
+            // MenuSeparator2
+            // 
+            this.MenuSeparator2.AutoSize = false;
+            this.MenuSeparator2.AutoToolTip = false;
+            this.MenuSeparator2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.MenuSeparator2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator2.Enabled = false;
+            this.MenuSeparator2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator2.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator2.Name = "MenuSeparator2";
+            this.MenuSeparator2.Size = new System.Drawing.Size(1, 29);
+            // 
+            // SearchMenuItem
+            // 
+            this.SearchMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SearchMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Search;
+            this.SearchMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.SearchMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SearchMenuItem.Margin = new System.Windows.Forms.Padding(6, 1, 6, 1);
+            this.SearchMenuItem.Name = "SearchMenuItem";
+            this.SearchMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.SearchMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.SearchMenuItem.Text = "検索";
+            // 
+            // MenuSeparator3
+            // 
+            this.MenuSeparator3.AutoSize = false;
+            this.MenuSeparator3.AutoToolTip = false;
+            this.MenuSeparator3.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.MenuSeparator3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator3.Enabled = false;
+            this.MenuSeparator3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator3.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator3.Name = "MenuSeparator3";
+            this.MenuSeparator3.Size = new System.Drawing.Size(1, 34);
+            // 
+            // FontMenuItem
+            // 
+            this.SettingsMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.SettingsMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SettingsMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Settings;
+            this.SettingsMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.SettingsMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SettingsMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 2, 1);
+            this.SettingsMenuItem.Name = "FontMenuItem";
+            this.SettingsMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.SettingsMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.SettingsMenuItem.Text = "設定";
+            // 
+            // LogoMenuItem
+            // 
+            this.LogoMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.LogoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.LogoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Logo;
+            this.LogoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.LogoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.LogoMenuItem.Margin = new System.Windows.Forms.Padding(1);
+            this.LogoMenuItem.Name = "LogoMenuItem";
+            this.LogoMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.LogoMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.LogoMenuItem.Text = "Web ページ";
+            // 
+            // VerticalSeparator
+            // 
+            this.VerticalSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.VerticalSeparator.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VerticalSeparator.Location = new System.Drawing.Point(0, 62);
+            this.VerticalSeparator.Margin = new System.Windows.Forms.Padding(0);
+            this.VerticalSeparator.Name = "VerticalSeparator";
+            this.VerticalSeparator.Size = new System.Drawing.Size(782, 1);
+            this.VerticalSeparator.TabIndex = 2;
+            this.VerticalSeparator.TabStop = false;
+            // 
+            // TitleControl
+            // 
+            this.TitleControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
+            this.TitleControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TitleControl.Location = new System.Drawing.Point(0, 0);
+            this.TitleControl.Margin = new System.Windows.Forms.Padding(0);
+            this.TitleControl.Name = "TitleControl";
+            this.TitleControl.Size = new System.Drawing.Size(782, 30);
+            this.TitleControl.TabIndex = 4;
             // 
             // MainForm
             // 
@@ -443,13 +443,13 @@
         private System.Windows.Forms.ToolStripButton RemoveMenuItem;
         private System.Windows.Forms.ToolStripButton SearchMenuItem;
         private System.Windows.Forms.PictureBox VerticalSeparator;
-        private System.Windows.Forms.ToolStripButton FontMenuItem;
+        private System.Windows.Forms.ToolStripButton SettingsMenuItem;
         private System.Windows.Forms.ToolStripButton MenuSeparator1;
         private System.Windows.Forms.ToolStripButton MenuSeparator3;
         private TextEditControl TextEditControl;
         private System.Windows.Forms.ToolStripButton MenuSeparator2;
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
-        private TitleControl TitleBar;
+        private TitleControl TitleControl;
     }
 }
 
