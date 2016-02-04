@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.KeywordTextBox = new System.Windows.Forms.TextBox();
             this.SearchButton = new Cube.Forms.Button();
-            this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
             this.Separator1 = new System.Windows.Forms.PictureBox();
+            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
             this.SuspendLayout();
@@ -44,8 +45,8 @@
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.LayoutPanel.Controls.Add(this.KeywordTextBox, 0, 0);
             this.LayoutPanel.Controls.Add(this.SearchButton, 1, 0);
-            this.LayoutPanel.Controls.Add(this.PageCollectionControl, 0, 2);
             this.LayoutPanel.Controls.Add(this.Separator1, 0, 1);
+            this.LayoutPanel.Controls.Add(this.PageListView, 0, 2);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -53,7 +54,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Size = new System.Drawing.Size(200, 300);
+            this.LayoutPanel.Size = new System.Drawing.Size(300, 300);
             this.LayoutPanel.TabIndex = 0;
             // 
             // KeywordTextBox
@@ -62,7 +63,7 @@
             this.KeywordTextBox.Location = new System.Drawing.Point(4, 3);
             this.KeywordTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 0, 0);
             this.KeywordTextBox.Name = "KeywordTextBox";
-            this.KeywordTextBox.Size = new System.Drawing.Size(164, 23);
+            this.KeywordTextBox.Size = new System.Drawing.Size(264, 19);
             this.KeywordTextBox.TabIndex = 0;
             // 
             // SearchButton
@@ -73,25 +74,12 @@
             this.SearchButton.ForeColor = System.Drawing.SystemColors.Control;
             this.SearchButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Search;
             this.SearchButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.SearchButton.Location = new System.Drawing.Point(168, 0);
+            this.SearchButton.Location = new System.Drawing.Point(268, 0);
             this.SearchButton.Margin = new System.Windows.Forms.Padding(0);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(32, 32);
             this.SearchButton.TabIndex = 1;
             this.SearchButton.UseVisualStyleBackColor = false;
-            // 
-            // PageCollectionControl
-            // 
-            this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
-            this.LayoutPanel.SetColumnSpan(this.PageCollectionControl, 2);
-            this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.PageCollectionControl.Location = new System.Drawing.Point(0, 33);
-            this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
-            this.PageCollectionControl.Name = "PageCollectionControl";
-            this.PageCollectionControl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.PageCollectionControl.Size = new System.Drawing.Size(200, 267);
-            this.PageCollectionControl.TabIndex = 5;
             // 
             // Separator1
             // 
@@ -101,16 +89,34 @@
             this.Separator1.Location = new System.Drawing.Point(0, 32);
             this.Separator1.Margin = new System.Windows.Forms.Padding(0);
             this.Separator1.Name = "Separator1";
-            this.Separator1.Size = new System.Drawing.Size(200, 1);
+            this.Separator1.Size = new System.Drawing.Size(300, 1);
             this.Separator1.TabIndex = 6;
             this.Separator1.TabStop = false;
+            // 
+            // PageListView
+            // 
+            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LayoutPanel.SetColumnSpan(this.PageListView, 2);
+            this.PageListView.Converter = pageConverter1;
+            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.PageListView.Location = new System.Drawing.Point(0, 33);
+            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
+            this.PageListView.MultiSelect = false;
+            this.PageListView.Name = "PageListView";
+            this.PageListView.Size = new System.Drawing.Size(300, 267);
+            this.PageListView.TabIndex = 7;
+            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
+            this.PageListView.TileSize = new System.Drawing.Size(300, 70);
+            this.PageListView.UseCompatibleStateImageBehavior = false;
+            this.PageListView.View = System.Windows.Forms.View.Tile;
             // 
             // SearchControl
             // 
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.LayoutPanel);
             this.Name = "SearchControl";
-            this.Size = new System.Drawing.Size(200, 300);
+            this.Size = new System.Drawing.Size(300, 300);
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).EndInit();
@@ -123,7 +129,7 @@
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.TextBox KeywordTextBox;
         private Cube.Forms.Button SearchButton;
-        private PageCollectionControl PageCollectionControl;
         private System.Windows.Forms.PictureBox Separator1;
+        private PageListView PageListView;
     }
 }

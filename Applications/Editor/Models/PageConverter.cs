@@ -53,7 +53,6 @@ namespace Cube.Note.App.Editor
             var dest = new List<string>();
             dest.Add(page.GetAbstract());
             dest.Add(page.Creation.ToString(Properties.Resources.CreationFormat));
-
             return new ListViewItem(dest.ToArray());
         }
 

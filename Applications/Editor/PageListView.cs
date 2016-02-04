@@ -91,13 +91,6 @@ namespace Cube.Note.App.Editor
             Theme       = Cube.Forms.WindowTheme.Explorer;
             TileSize    = new Size(Width, 70);
             View        = View.Tile;
-
-            Columns.AddRange(new ColumnHeader[]
-            {
-                new ColumnHeader(), // Title
-                new ColumnHeader(), // CreationTime
-            });
-
         }
 
         /* ----------------------------------------------------------------- */
@@ -128,13 +121,54 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnResize(EventArgs e)
         {
-            var height = TileSize.Height;
-            var width  = Height < height * Count ?
-                         Width - SystemInformation.VerticalScrollBarWidth :
-                         Width;
-            TileSize   = new Size(width, height);
+            try
+            {
+                if (View != View.Tile) return;
 
-            base.OnResize(e);
+                var height = TileSize.Height;
+                var width = Height < height * Count ?
+                             Width - SystemInformation.VerticalScrollBarWidth :
+                             Width;
+                TileSize = new Size(Math.Max(width, 1), Math.Max(height, 1));
+            }
+            finally { base.OnResize(e); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnAdded
+        /// 
+        /// <summary>
+        /// 項目が追加された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnAdded(DataEventArgs<int> e)
+        {
+            if (Columns.Count == 0) SetColumns();
+            base.OnAdded(e);
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetColumns
+        /// 
+        /// <summary>
+        /// カラムを設定します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void SetColumns()
+        {
+            Columns.AddRange(new ColumnHeader[]
+            {
+                new ColumnHeader(), // Title
+                new ColumnHeader(), // CreationTime
+            });
         }
 
         #endregion
