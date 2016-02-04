@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
-            this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator = new System.Windows.Forms.PictureBox();
-            this.ContentsPanel = new System.Windows.Forms.Panel();
+            this.ContentsPanel = new Cube.Forms.Panel();
             this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
@@ -125,10 +125,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel LayoutPanel;
+        private Cube.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.ComboBox TagComboBox;
         private System.Windows.Forms.PictureBox Separator;
-        private System.Windows.Forms.Panel ContentsPanel;
+        private Cube.Forms.Panel ContentsPanel;
         private PageListView PageListView;
     }
 }
