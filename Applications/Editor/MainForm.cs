@@ -19,10 +19,8 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
-using System.Windows.Forms;
-
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
@@ -35,7 +33,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.Form
+    public partial class MainForm : Cube.Forms.WidgetForm
     {
         #region Constructors
 
@@ -57,74 +55,37 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Keybord shortcuts
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// KeyShortCut
+        /// Maximize
         ///
         /// <summary>
-        /// キーボードショートカットを処理します。
+        /// 最大化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void KeyShortCut(KeyEventArgs e)
+        public void Maximize()
         {
-            var result = true;
-            switch (e.KeyCode)
-            {
-                case Keys.Delete:
-                    RemoveMenuItem_Click(this, e);
-                    break;
-                default:
-                    result = false;
-                    break;
-            }
-            e.Handled = result;
+            WindowState = WindowState == FormWindowState.Normal ?
+                          FormWindowState.Maximized :
+                          FormWindowState.Normal;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// KeyShortCutWithControl
+        /// Minimize
         ///
         /// <summary>
-        /// Ctrl 付のキーボードショートカットを処理します。
+        /// 最小化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void KeyShortCutWithControl(KeyEventArgs e)
+        public void Minimize()
         {
-            var result = true;
-            switch (e.KeyCode)
-            {
-                case Keys.D:
-                    RemoveMenuItem_Click(this, e);
-                    break;
-                case Keys.F:
-                    SearchMenuItem_Click(this, e);
-                    break;
-                case Keys.N:
-                    NewPageMenuItem_Click(this, e);
-                    break;
-                default:
-                    result = false;
-                    break;
-            }
-            e.Handled = result;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeEvents
-        ///
-        /// <summary>
-        /// Alt 付のキーボードショートカットを処理します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void KeyShortCutWithAlt(KeyEventArgs e)
-        {
-            // do nothing
+            if (WindowState == FormWindowState.Minimized) return;
+            WindowState = FormWindowState.Minimized;
         }
 
         #endregion
@@ -142,11 +103,20 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            NewPageMenuItem.Click += NewPageMenuItem_Click;
-            RemoveMenuItem.Click += RemoveMenuItem_Click;
-            SearchMenuItem.Click += SearchMenuItem_Click;
-            VisibleMenuItem.Click += VisibleMenuItem_Click;
-            FontMenuItem.Click += (s, e) => TextEditControl.SelectFont();
+            Activated  += (s, e) => BackColor = Color.FromArgb(  0, 169, 157);
+            Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
+
+            TitleControl.CloseRequired    += (s, e) => Close();
+            TitleControl.MaximizeRequired += (s, e) => Maximize();
+            TitleControl.MinimizeRequired += (s, e) => Minimize();
+
+            NewPageMenuItem.Click  += NewPageMenuItem_Click;
+            RemoveMenuItem.Click   += RemoveMenuItem_Click;
+            SearchMenuItem.Click   += SearchMenuItem_Click;
+            VisibleMenuItem.Click  += VisibleMenuItem_Click;
+            LogoMenuItem.Click     += LogoMenuItem_Click;
+            SettingsMenuItem.Click += (s, e) => TextEditControl.SelectFont();
+
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
         }
@@ -162,11 +132,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            VisibleMenuItem.Tag = true;
-
             var area = Screen.FromControl(this).WorkingArea.Size;
-            Width  = (int)(area.Width  * 0.7);
-            Height = (int)(area.Height * 0.7);
+            Width   = (int)(area.Width  * 0.7);
+            Height  = (int)(area.Height * 0.7);
+            Caption = TitleControl;
         }
 
         /* ----------------------------------------------------------------- */
@@ -207,6 +176,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnBackColorChanged
+        ///
+        /// <summary>
+        /// 背景色が変更された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            TitleControl.BackColor = BackColor;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnKeyDown
         ///
         /// <summary>
@@ -216,11 +200,29 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Control) KeyShortCutWithControl(e);
-            else if (e.Alt) KeyShortCutWithAlt(e);
-            else KeyShortCut(e);
+            try
+            {
+                if (!e.Control) return;
 
-            base.OnKeyDown(e);
+                var result = true;
+                switch (e.KeyCode)
+                {
+                    case Keys.D:
+                        RemoveMenuItem_Click(this, e);
+                        break;
+                    case Keys.F:
+                        SearchMenuItem_Click(this, e);
+                        break;
+                    case Keys.N:
+                        NewPageMenuItem_Click(this, e);
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+                e.Handled = result;
+            }
+            finally { base.OnKeyDown(e); }
         }
 
         #endregion
@@ -289,6 +291,21 @@ namespace Cube.Note.App.Editor
         private void VisibleMenuItem_Click(object sender, EventArgs e)
         {
             ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LogoMenuItem_Click
+        ///
+        /// <summary>
+        /// ロゴが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void LogoMenuItem_Click(object sender, EventArgs e)
+        {
+            try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
+            catch (Exception /* err */) { /* ignore errors */ }
         }
 
         /* ----------------------------------------------------------------- */

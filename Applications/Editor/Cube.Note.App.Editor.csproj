@@ -97,6 +97,12 @@
     <Compile Include="SearchControl.Designer.cs">
       <DependentUpon>SearchControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="TitleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TitleControl.Designer.cs">
+      <DependentUpon>TitleControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="PageCollectionControl.resx">
       <DependentUpon>PageCollectionControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +125,9 @@
     <EmbeddedResource Include="TextEditControl.resx">
       <DependentUpon>TextEditControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TitleControl.resx">
+      <DependentUpon>TitleControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.manifest" />
     <None Include="Packages.config" />
     <None Include="Properties\Settings.settings">
@@ -136,6 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Title.png" />
+    <None Include="Resources\Minimize.png" />
+    <None Include="Resources\Maximize.png" />
+    <None Include="Resources\Close.png" />
     <None Include="Resources\Settings.png" />
     <None Include="Resources\Logo.png" />
     <None Include="Resources\Left.png" />
