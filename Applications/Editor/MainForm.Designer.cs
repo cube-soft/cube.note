@@ -32,7 +32,7 @@
             Sgry.Azuki.DefaultWordProc defaultWordProc1 = new Sgry.Azuki.DefaultWordProc();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
-            this.ContentsPanel = new Cube.Forms.SplitContainer();
+            this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
@@ -435,7 +435,7 @@
         #endregion
 
         private Cube.Forms.TableLayoutPanel LayoutPanel;
-        private Cube.Forms.SplitContainer ContentsPanel;
+        private System.Windows.Forms.SplitContainer ContentsPanel;
         private PageCollectionControl PageCollectionControl;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
