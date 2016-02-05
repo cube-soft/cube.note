@@ -124,7 +124,7 @@ namespace Cube.Note.App.Editor
             Margin        = new Padding(0);
             MultiSelect   = false;
             Theme         = Cube.Forms.WindowTheme.Explorer;
-            TileSize      = new Size(Width, 70);
+            TileSize      = new Size(Width, 95);
             View          = View.Tile;
         }
 
@@ -215,6 +215,7 @@ namespace Cube.Note.App.Editor
             {
                 new ColumnHeader(), // Title
                 new ColumnHeader(), // CreationTime
+                new ColumnHeader(), // LastUpdateTime
             });
         }
 

@@ -117,6 +117,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   yyyy/MM/dd HH:mm 更新 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LastUpdateFormat {
+            get {
+                return ResourceManager.GetString("LastUpdateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Left {
