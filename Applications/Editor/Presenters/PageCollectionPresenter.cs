@@ -249,8 +249,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != "Abstract") return;
-
             var page = sender as Page;
             if (page == null) return;
 
