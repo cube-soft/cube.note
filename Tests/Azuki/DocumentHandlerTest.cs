@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Cube.Note.Azuki;
@@ -39,7 +40,7 @@ namespace Cube.Note.Tests.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateDocument
+        /// CreateDocument_Last
         ///
         /// <summary>
         /// Document オブジェクトを生成するテストを行います。
@@ -57,7 +58,7 @@ namespace Cube.Note.Tests.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveDocument_DoesNotThrow
+        /// SaveDocument_Last
         ///
         /// <summary>
         /// 内容をファイルに保存するテストを行います。
@@ -65,15 +66,17 @@ namespace Cube.Note.Tests.Azuki
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void SaveDocument_Last_DoesNotThrow()
+        public void SaveDocument_Last()
         {
-            Assert.DoesNotThrow(() =>
-            {
-                var page = Pages[Pages.Count - 1];
-                var document = page.CreateDocument(Pages.Directory);
-                document.Replace("Replaced", 0, document.Length);
-                page.SaveDocument(Pages.Directory);
-            });
+            var page = Pages[Pages.Count - 1];
+            var document = page.CreateDocument(Pages.Directory);
+            document.Replace("Replaced", 0, document.Length);
+            page.SaveDocument(Pages.Directory);
+
+            Assert.That(
+                page.LastUpdate,
+                Is.EqualTo(DateTime.Now).Within(TimeSpan.FromSeconds(1))
+            );
         }
 
         /* ----------------------------------------------------------------- */
