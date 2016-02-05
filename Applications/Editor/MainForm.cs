@@ -115,7 +115,7 @@ namespace Cube.Note.App.Editor
             SearchMenuItem.Click   += SearchMenuItem_Click;
             VisibleMenuItem.Click  += VisibleMenuItem_Click;
             LogoMenuItem.Click     += LogoMenuItem_Click;
-            SettingsMenuItem.Click += (s, e) => TextEditControl.SelectFont();
+            SettingsMenuItem.Click += SettingsMenuItem_Click;
 
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
@@ -307,6 +307,21 @@ namespace Cube.Note.App.Editor
         {
             try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
             catch (Exception /* err */) { /* ignore errors */ }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsMenuItem_Click
+        ///
+        /// <summary>
+        /// 設定メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SettingsMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = new FormBase();
+            dialog.ShowDialog();
         }
 
         /* ----------------------------------------------------------------- */

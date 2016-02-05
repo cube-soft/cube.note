@@ -56,6 +56,40 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanMaximize
+        ///
+        /// <summary>
+        /// 最大化可能かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanMaximize
+        {
+            get { return MaximizeButton.Visible; }
+            set { MaximizeButton.Visible = value; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanMinimize
+        ///
+        /// <summary>
+        /// 最小化可能かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanMinimize
+        {
+            get { return MinimizeButton.Visible; }
+            set { MinimizeButton.Visible = value; }
+        }
+
+        #endregion
+
         #region Events
 
         /* ----------------------------------------------------------------- */
