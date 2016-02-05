@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Cube.Note.App.Editor.PageConverter pageConverter2 = new Cube.Note.App.Editor.PageConverter();
+            Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator = new System.Windows.Forms.PictureBox();
@@ -49,7 +49,6 @@
             this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 2);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.LayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 3;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
@@ -60,14 +59,15 @@
             // 
             // TagComboBox
             // 
-            this.TagComboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.TagComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TagComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TagComboBox.FormattingEnabled = true;
-            this.TagComboBox.Location = new System.Drawing.Point(6, 3);
-            this.TagComboBox.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.TagComboBox.Location = new System.Drawing.Point(8, 3);
+            this.TagComboBox.Margin = new System.Windows.Forms.Padding(8, 3, 8, 3);
+            this.TagComboBox.MaxDropDownItems = 10;
             this.TagComboBox.Name = "TagComboBox";
-            this.TagComboBox.Size = new System.Drawing.Size(288, 26);
-            this.TagComboBox.TabIndex = 0;
+            this.TagComboBox.Size = new System.Drawing.Size(284, 26);
+            this.TagComboBox.TabIndex = 3;
             // 
             // Separator
             // 
@@ -96,7 +96,7 @@
             // 
             this.PageListView.AllowNoSelect = false;
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Converter = pageConverter2;
+            this.PageListView.Converter = pageConverter1;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.PageListView.Location = new System.Drawing.Point(4, 0);
@@ -127,9 +127,9 @@
         #endregion
 
         private Cube.Forms.TableLayoutPanel LayoutPanel;
-        private System.Windows.Forms.ComboBox TagComboBox;
         private System.Windows.Forms.PictureBox Separator;
         private Cube.Forms.Panel ContentsPanel;
         private PageListView PageListView;
+        private System.Windows.Forms.ComboBox TagComboBox;
     }
 }
