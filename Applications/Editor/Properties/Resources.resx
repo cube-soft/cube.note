@@ -173,10 +173,10 @@
     <value>ノート一覧を表示</value>
   </data>
   <data name="WarnRemove" xml:space="preserve">
-    <value>このページを削除しますか？</value>
+    <value>このノートを削除しますか？</value>
   </data>
   <data name="WarnRemoveTitle" xml:space="preserve">
-    <value>ページの削除</value>
+    <value>ノートの削除</value>
   </data>
   <data name="WebUrl" xml:space="preserve">
     <value>http://www.cube-soft.jp/</value>

@@ -235,7 +235,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   このページを削除しますか？ に類似しているローカライズされた文字列を検索します。
+        ///   このノートを削除しますか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string WarnRemove {
             get {
@@ -244,7 +244,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ページの削除 に類似しているローカライズされた文字列を検索します。
+        ///   ノートの削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string WarnRemoveTitle {
             get {
