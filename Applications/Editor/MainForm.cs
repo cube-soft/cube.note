@@ -152,6 +152,8 @@ namespace Cube.Note.App.Editor
             new TextEditPresenter(TextEditControl, Pages);
             new PageCollectionPresenter(PageCollectionControl, Pages);
             new SearchPresenter(SearchControl, Pages);
+
+            new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
         #endregion
