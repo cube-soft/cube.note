@@ -143,6 +143,7 @@ namespace Cube.Note.App.Editor
             Parent.Controls.Remove(this);
             foreach (var control in _controls) parent.Controls.Add(control);
             _controls.Clear();
+            Pages.Clear();
         }
 
         #endregion
