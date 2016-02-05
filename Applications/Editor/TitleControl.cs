@@ -139,6 +139,28 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnBackColorChanged
+        ///
+        /// <summary>
+        /// 背景色が変更された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+
+            ExitButton.ForeColor     = BackColor;
+            MaximizeButton.ForeColor = BackColor;
+            MinimizeButton.ForeColor = BackColor;
+        }
+
+        #endregion
+
         #region Event handlers
 
         /* ----------------------------------------------------------------- */
