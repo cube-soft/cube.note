@@ -48,10 +48,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public Page()
         {
-            FileName = Guid.NewGuid().ToString("N");
-            Abstract = string.Empty;
-            Creation = DateTime.Now;
-            Document = null;
+            InitializeValues();
         }
 
         #endregion
@@ -123,6 +120,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// LastUpdate
+        ///
+        /// <summary>
+        /// 生成日時を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public DateTime LastUpdate
+        {
+            get { return _update; }
+            set
+            {
+                if (_update == value) return;
+                _update = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("LastUpdate"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Document
         ///
         /// <summary>
@@ -176,10 +194,48 @@ namespace Cube.Note
 
         #endregion
 
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDeserializing
+        ///
+        /// <summary>
+        /// デシリアライズ時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context)
+        {
+            InitializeValues();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeValues
+        ///
+        /// <summary>
+        /// 値を初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeValues()
+        {
+            FileName   = Guid.NewGuid().ToString("N");
+            Abstract   = string.Empty;
+            Creation   = DateTime.Now;
+            LastUpdate = DateTime.Now;
+            Document   = null;
+        }
+
+        #endregion
+
         #region Fields
         private string _filename;
         private string _abstract;
         private DateTime _creation;
+        private DateTime _update;
         private object _document;
         #endregion
     }
