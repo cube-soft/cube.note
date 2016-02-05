@@ -96,7 +96,6 @@
             // 
             // ContentsPanel
             // 
-            this.ContentsPanel.BackColor = System.Drawing.SystemColors.Window;
             this.LayoutPanel.SetColumnSpan(this.ContentsPanel, 2);
             this.ContentsPanel.Controls.Add(this.PageListView);
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -109,6 +108,7 @@
             // 
             // PageListView
             // 
+            this.PageListView.BackColor = System.Drawing.SystemColors.Control;
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Converter = pageConverter1;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
