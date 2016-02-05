@@ -53,6 +53,10 @@ namespace Cube.Note.App.Editor
             View.Pages.Added += View_Added;
             View.Pages.Removed += View_Removed;
 
+            // NOTE: 暫定
+            View.Tags.Items.Add(Properties.Resources.AllTag);
+            View.Tags.SelectedIndex = 0;
+
             Model.ActiveChanged += Model_ActiveChanged;
             Model.CollectionChanged += Model_CollectionChanged;
         }

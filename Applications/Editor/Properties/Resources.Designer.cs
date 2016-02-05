@@ -71,6 +71,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   すべて に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string AllTag {
+            get {
+                return ResourceManager.GetString("AllTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Close {

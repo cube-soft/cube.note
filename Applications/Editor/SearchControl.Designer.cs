@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Cube.Note.App.Editor.PageConverter pageConverter2 = new Cube.Note.App.Editor.PageConverter();
+            Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.KeywordTextBox = new System.Windows.Forms.TextBox();
             this.SearchButton = new Cube.Forms.Button();
@@ -61,11 +61,11 @@
             // 
             // KeywordTextBox
             // 
-            this.KeywordTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.KeywordTextBox.Location = new System.Drawing.Point(4, 3);
-            this.KeywordTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 0, 0);
+            this.KeywordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.KeywordTextBox.Location = new System.Drawing.Point(6, 6);
+            this.KeywordTextBox.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
             this.KeywordTextBox.Name = "KeywordTextBox";
-            this.KeywordTextBox.Size = new System.Drawing.Size(264, 19);
+            this.KeywordTextBox.Size = new System.Drawing.Size(262, 19);
             this.KeywordTextBox.TabIndex = 0;
             // 
             // SearchButton
@@ -75,7 +75,6 @@
             this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SearchButton.ForeColor = System.Drawing.SystemColors.Control;
             this.SearchButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Search;
-            this.SearchButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.SearchButton.Location = new System.Drawing.Point(268, 0);
             this.SearchButton.Margin = new System.Windows.Forms.Padding(0);
             this.SearchButton.Name = "SearchButton";
@@ -111,7 +110,7 @@
             // PageListView
             // 
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Converter = pageConverter2;
+            this.PageListView.Converter = pageConverter1;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
