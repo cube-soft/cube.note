@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
@@ -134,14 +135,15 @@ namespace Cube.Note.App.Editor
             message.AppendLine(Model[index].GetAbstract());
             message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
 
-            var result = System.Windows.Forms.MessageBox.Show(
+            var result = MessageBox.Show(
                 message.ToString(),
                 Properties.Resources.WarnRemoveTitle,
-                System.Windows.Forms.MessageBoxButtons.YesNo,
-                System.Windows.Forms.MessageBoxIcon.Warning
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button1
             );
 
-            e.Cancel = (result == System.Windows.Forms.DialogResult.No);
+            e.Cancel = (result == DialogResult.No);
         }
 
         /* ----------------------------------------------------------------- */
