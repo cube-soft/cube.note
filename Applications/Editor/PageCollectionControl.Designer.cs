@@ -51,7 +51,7 @@
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 3;
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.Size = new System.Drawing.Size(300, 300);
@@ -62,8 +62,8 @@
             this.TagComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TagComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TagComboBox.FormattingEnabled = true;
-            this.TagComboBox.Location = new System.Drawing.Point(8, 3);
-            this.TagComboBox.Margin = new System.Windows.Forms.Padding(8, 3, 8, 3);
+            this.TagComboBox.Location = new System.Drawing.Point(8, 5);
+            this.TagComboBox.Margin = new System.Windows.Forms.Padding(8, 5, 8, 0);
             this.TagComboBox.MaxDropDownItems = 10;
             this.TagComboBox.Name = "TagComboBox";
             this.TagComboBox.Size = new System.Drawing.Size(284, 26);
@@ -73,7 +73,7 @@
             // 
             this.Separator.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Separator.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Separator.Location = new System.Drawing.Point(0, 32);
+            this.Separator.Location = new System.Drawing.Point(0, 36);
             this.Separator.Margin = new System.Windows.Forms.Padding(0);
             this.Separator.Name = "Separator";
             this.Separator.Size = new System.Drawing.Size(300, 1);
@@ -85,11 +85,11 @@
             this.ContentsPanel.BackColor = System.Drawing.SystemColors.Window;
             this.ContentsPanel.Controls.Add(this.PageListView);
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 33);
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 37);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
             this.ContentsPanel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 4);
-            this.ContentsPanel.Size = new System.Drawing.Size(300, 267);
+            this.ContentsPanel.Size = new System.Drawing.Size(300, 263);
             this.ContentsPanel.TabIndex = 2;
             // 
             // PageListView
@@ -104,7 +104,7 @@
             this.PageListView.Margin = new System.Windows.Forms.Padding(0);
             this.PageListView.MultiSelect = false;
             this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(296, 263);
+            this.PageListView.Size = new System.Drawing.Size(296, 259);
             this.PageListView.TabIndex = 0;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.PageListView.TileSize = new System.Drawing.Size(296, 70);

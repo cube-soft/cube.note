@@ -32,10 +32,10 @@
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.Separator1 = new System.Windows.Forms.PictureBox();
             this.ContentsPanel = new System.Windows.Forms.Panel();
+            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.KeywordPanel = new System.Windows.Forms.Panel();
             this.SearchButton = new Cube.Forms.Button();
             this.KeywordTextBox = new System.Windows.Forms.TextBox();
-            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
             this.ContentsPanel.SuspendLayout();
@@ -53,7 +53,7 @@
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 3;
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.Size = new System.Drawing.Size(300, 300);
@@ -63,7 +63,7 @@
             // 
             this.Separator1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Separator1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Separator1.Location = new System.Drawing.Point(0, 32);
+            this.Separator1.Location = new System.Drawing.Point(0, 36);
             this.Separator1.Margin = new System.Windows.Forms.Padding(0);
             this.Separator1.Name = "Separator1";
             this.Separator1.Size = new System.Drawing.Size(300, 1);
@@ -74,12 +74,31 @@
             // 
             this.ContentsPanel.Controls.Add(this.PageListView);
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 33);
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 37);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
             this.ContentsPanel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 4);
-            this.ContentsPanel.Size = new System.Drawing.Size(300, 267);
+            this.ContentsPanel.Size = new System.Drawing.Size(300, 263);
             this.ContentsPanel.TabIndex = 7;
+            // 
+            // PageListView
+            // 
+            this.PageListView.BackColor = System.Drawing.SystemColors.Control;
+            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PageListView.Converter = pageConverter1;
+            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageListView.FullRowSelect = true;
+            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.PageListView.Location = new System.Drawing.Point(4, 0);
+            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
+            this.PageListView.MultiSelect = false;
+            this.PageListView.Name = "PageListView";
+            this.PageListView.Size = new System.Drawing.Size(296, 259);
+            this.PageListView.TabIndex = 8;
+            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
+            this.PageListView.TileSize = new System.Drawing.Size(296, 70);
+            this.PageListView.UseCompatibleStateImageBehavior = false;
+            this.PageListView.View = System.Windows.Forms.View.Tile;
             // 
             // KeywordPanel
             // 
@@ -91,7 +110,7 @@
             this.KeywordPanel.Location = new System.Drawing.Point(8, 4);
             this.KeywordPanel.Margin = new System.Windows.Forms.Padding(8, 4, 8, 4);
             this.KeywordPanel.Name = "KeywordPanel";
-            this.KeywordPanel.Size = new System.Drawing.Size(284, 24);
+            this.KeywordPanel.Size = new System.Drawing.Size(284, 28);
             this.KeywordPanel.TabIndex = 8;
             // 
             // SearchButton
@@ -106,7 +125,7 @@
             this.SearchButton.Location = new System.Drawing.Point(256, 0);
             this.SearchButton.Margin = new System.Windows.Forms.Padding(0);
             this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(26, 22);
+            this.SearchButton.Size = new System.Drawing.Size(26, 26);
             this.SearchButton.TabIndex = 1;
             this.SearchButton.UseVisualStyleBackColor = false;
             // 
@@ -114,30 +133,11 @@
             // 
             this.KeywordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.KeywordTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.KeywordTextBox.Location = new System.Drawing.Point(6, 2);
+            this.KeywordTextBox.Location = new System.Drawing.Point(6, 4);
             this.KeywordTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.KeywordTextBox.Name = "KeywordTextBox";
             this.KeywordTextBox.Size = new System.Drawing.Size(250, 18);
             this.KeywordTextBox.TabIndex = 0;
-            // 
-            // PageListView
-            // 
-            this.PageListView.BackColor = System.Drawing.SystemColors.Control;
-            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Converter = pageConverter1;
-            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageListView.FullRowSelect = true;
-            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.PageListView.Location = new System.Drawing.Point(4, 0);
-            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
-            this.PageListView.MultiSelect = false;
-            this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(296, 263);
-            this.PageListView.TabIndex = 8;
-            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(296, 70);
-            this.PageListView.UseCompatibleStateImageBehavior = false;
-            this.PageListView.View = System.Windows.Forms.View.Tile;
             // 
             // SearchControl
             // 

@@ -33,8 +33,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ContentsPanel = new Cube.Forms.SplitContainer();
-            this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
-            this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
@@ -46,6 +44,8 @@
             this.SettingsMenuItem = new System.Windows.Forms.ToolStripButton();
             this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
+            this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
+            this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
@@ -81,6 +81,7 @@
             this.ContentsPanel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContentsPanel.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.ContentsPanel.IsSplitterFixed = true;
             this.ContentsPanel.Location = new System.Drawing.Point(0, 63);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
@@ -93,163 +94,9 @@
             // 
             this.ContentsPanel.Panel2.Controls.Add(this.TextEditControl);
             this.ContentsPanel.Size = new System.Drawing.Size(782, 396);
-            this.ContentsPanel.SplitterDistance = 250;
+            this.ContentsPanel.SplitterDistance = 270;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
-            // 
-            // PageCollectionControl
-            // 
-            this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
-            this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageCollectionControl.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
-            this.PageCollectionControl.Name = "PageCollectionControl";
-            this.PageCollectionControl.Size = new System.Drawing.Size(250, 396);
-            this.PageCollectionControl.TabIndex = 0;
-            // 
-            // TextEditControl
-            // 
-            this.TextEditControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            document1.Capacity = 5120;
-            document1.EolCode = "\r\n";
-            document1.Highlighter = null;
-            document1.IsDirty = false;
-            document1.IsReadOnly = false;
-            document1.IsRecordingHistory = true;
-            document1.MarksUri = false;
-            document1.RectSelectRanges = null;
-            document1.SelectionMode = Sgry.Azuki.TextDataType.Normal;
-            document1.Tag = null;
-            document1.Text = "";
-            defaultWordProc1.CharsForbiddenToEndLine = new char[] {
-        '(',
-        '[',
-        '{',
-        '«',
-        '—',
-        '‘',
-        '“',
-        '‥',
-        '…',
-        '〈',
-        '《',
-        '「',
-        '『',
-        '【',
-        '〔',
-        '〖',
-        '〘',
-        '〚',
-        '〝',
-        '〳',
-        '〴',
-        '（',
-        '［',
-        '｛',
-        '｟'};
-            defaultWordProc1.CharsForbiddenToStartLine = new char[] {
-        ')',
-        ',',
-        '.',
-        ':',
-        ';',
-        ']',
-        '»',
-        '‐',
-        '–',
-        '’',
-        '”',
-        '、',
-        '。',
-        '々',
-        '〉',
-        '》',
-        '」',
-        '』',
-        '】',
-        '〕',
-        '〗',
-        '〙',
-        '〛',
-        '〜',
-        '〟',
-        '〵',
-        '〻',
-        'ぁ',
-        'ぃ',
-        'ぅ',
-        'ぇ',
-        'ぉ',
-        'っ',
-        'ゃ',
-        'ゅ',
-        'ょ',
-        'ゎ',
-        'ゕ',
-        'ゖ',
-        '゠',
-        'ァ',
-        'ィ',
-        'ゥ',
-        'ェ',
-        'ォ',
-        'ッ',
-        'ャ',
-        'ュ',
-        'ョ',
-        'ヮ',
-        'ヵ',
-        'ヶ',
-        '・',
-        'ー',
-        'ヽ',
-        'ヾ',
-        'ㇰ',
-        'ㇱ',
-        'ㇲ',
-        'ㇳ',
-        'ㇴ',
-        'ㇵ',
-        'ㇶ',
-        'ㇷ',
-        'ㇸ',
-        'ㇹ',
-        'ㇺ',
-        'ㇻ',
-        'ㇼ',
-        'ㇽ',
-        'ㇾ',
-        'ㇿ',
-        '）',
-        '，',
-        '－',
-        '：',
-        '；',
-        '＝',
-        '］',
-        '｝',
-        '｠'};
-            defaultWordProc1.CharsToBeHanged = new char[] {
-        ',',
-        '.',
-        '、',
-        '。',
-        '，',
-        '．'};
-            defaultWordProc1.EnableCharacterHanging = true;
-            defaultWordProc1.EnableEolHanging = true;
-            defaultWordProc1.EnableLineEndRestriction = true;
-            defaultWordProc1.EnableLineHeadRestriction = true;
-            defaultWordProc1.EnableWordWrap = true;
-            defaultWordProc1.KinsokuDepth = 8;
-            document1.WordProc = defaultWordProc1;
-            this.TextEditControl.Document = document1;
-            this.TextEditControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.TextEditControl.Location = new System.Drawing.Point(0, 0);
-            this.TextEditControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.TextEditControl.Name = "TextEditControl";
-            this.TextEditControl.Size = new System.Drawing.Size(531, 396);
-            this.TextEditControl.TabIndex = 0;
             // 
             // MenuToolStrip
             // 
@@ -395,6 +242,161 @@
             this.VerticalSeparator.Size = new System.Drawing.Size(782, 1);
             this.VerticalSeparator.TabIndex = 2;
             this.VerticalSeparator.TabStop = false;
+            // 
+            // PageCollectionControl
+            // 
+            this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
+            this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageCollectionControl.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
+            this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
+            this.PageCollectionControl.Name = "PageCollectionControl";
+            this.PageCollectionControl.Size = new System.Drawing.Size(270, 396);
+            this.PageCollectionControl.TabIndex = 0;
+            // 
+            // TextEditControl
+            // 
+            this.TextEditControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            document1.Capacity = 5120;
+            document1.EolCode = "\r\n";
+            document1.Highlighter = null;
+            document1.IsDirty = false;
+            document1.IsReadOnly = false;
+            document1.IsRecordingHistory = true;
+            document1.MarksUri = false;
+            document1.RectSelectRanges = null;
+            document1.SelectionMode = Sgry.Azuki.TextDataType.Normal;
+            document1.Tag = null;
+            document1.Text = "";
+            defaultWordProc1.CharsForbiddenToEndLine = new char[] {
+        '(',
+        '[',
+        '{',
+        '«',
+        '—',
+        '‘',
+        '“',
+        '‥',
+        '…',
+        '〈',
+        '《',
+        '「',
+        '『',
+        '【',
+        '〔',
+        '〖',
+        '〘',
+        '〚',
+        '〝',
+        '〳',
+        '〴',
+        '（',
+        '［',
+        '｛',
+        '｟'};
+            defaultWordProc1.CharsForbiddenToStartLine = new char[] {
+        ')',
+        ',',
+        '.',
+        ':',
+        ';',
+        ']',
+        '»',
+        '‐',
+        '–',
+        '’',
+        '”',
+        '、',
+        '。',
+        '々',
+        '〉',
+        '》',
+        '」',
+        '』',
+        '】',
+        '〕',
+        '〗',
+        '〙',
+        '〛',
+        '〜',
+        '〟',
+        '〵',
+        '〻',
+        'ぁ',
+        'ぃ',
+        'ぅ',
+        'ぇ',
+        'ぉ',
+        'っ',
+        'ゃ',
+        'ゅ',
+        'ょ',
+        'ゎ',
+        'ゕ',
+        'ゖ',
+        '゠',
+        'ァ',
+        'ィ',
+        'ゥ',
+        'ェ',
+        'ォ',
+        'ッ',
+        'ャ',
+        'ュ',
+        'ョ',
+        'ヮ',
+        'ヵ',
+        'ヶ',
+        '・',
+        'ー',
+        'ヽ',
+        'ヾ',
+        'ㇰ',
+        'ㇱ',
+        'ㇲ',
+        'ㇳ',
+        'ㇴ',
+        'ㇵ',
+        'ㇶ',
+        'ㇷ',
+        'ㇸ',
+        'ㇹ',
+        'ㇺ',
+        'ㇻ',
+        'ㇼ',
+        'ㇽ',
+        'ㇾ',
+        'ㇿ',
+        '）',
+        '，',
+        '－',
+        '：',
+        '；',
+        '＝',
+        '］',
+        '｝',
+        '｠'};
+            defaultWordProc1.CharsToBeHanged = new char[] {
+        ',',
+        '.',
+        '、',
+        '。',
+        '，',
+        '．'};
+            defaultWordProc1.EnableCharacterHanging = true;
+            defaultWordProc1.EnableEolHanging = true;
+            defaultWordProc1.EnableLineEndRestriction = true;
+            defaultWordProc1.EnableLineHeadRestriction = true;
+            defaultWordProc1.EnableWordWrap = true;
+            defaultWordProc1.KinsokuDepth = 8;
+            document1.WordProc = defaultWordProc1;
+            this.TextEditControl.Document = document1;
+            this.TextEditControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.TextEditControl.Location = new System.Drawing.Point(0, 0);
+            this.TextEditControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TextEditControl.Name = "TextEditControl";
+            this.TextEditControl.Size = new System.Drawing.Size(511, 396);
+            this.TextEditControl.TabIndex = 0;
             // 
             // TitleControl
             // 
