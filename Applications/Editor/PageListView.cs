@@ -68,26 +68,6 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Select
-        /// 
-        /// <summary>
-        /// 項目を選択します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Select(int index)
-        {
-            if (index < 0 || index >= Count) return;
-            SelectedIndices.Clear();
-            SelectedIndices.Add(index);
-        }
-
-        #endregion
-
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -182,7 +162,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
-            if (SelectedIndices.Count <= 0) return;
+            if (!AllowNoSelect && SelectedIndices.Count <= 0) return;
             base.OnSelectedIndexChanged(e);
         }
 
