@@ -97,6 +97,7 @@
             this.PageListView.AllowNoSelect = false;
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Converter = pageConverter1;
+            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.PageListView.Location = new System.Drawing.Point(4, 0);

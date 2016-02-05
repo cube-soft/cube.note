@@ -128,6 +128,27 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnRemoved
+        /// 
+        /// <summary>
+        /// 項目が削除された時に実行されます。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 追加時（スクロールバーが新たに表示されたタイミング）に関しては
+        /// 必要に応じて Resize イベントが発生するようなので、OnResize で
+        /// 一括対応。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnRemoved(DataEventArgs<int[]> e)
+        {
+            SetTileSize();
+            base.OnRemoved(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnResize
         /// 
         /// <summary>
@@ -137,18 +158,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnResize(EventArgs e)
         {
-            try
-            {
-                if (View != View.Tile) return;
-
-                var height = TileSize.Height;
-                var width  = Height < height * Count ?
-                             Width - SystemInformation.VerticalScrollBarWidth :
-                             Width;
-
-                TileSize = new Size(Math.Max(width, 1), Math.Max(height, 1));
-            }
-            finally { base.OnResize(e); }
+            SetTileSize();
+            base.OnResize(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -186,6 +197,29 @@ namespace Cube.Note.App.Editor
                 new ColumnHeader(), // Title
                 new ColumnHeader(), // CreationTime
             });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetTileSize
+        /// 
+        /// <summary>
+        /// タイルサイズを設定します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void SetTileSize()
+        {
+            if (View != View.Tile) return;
+
+            var height = Math.Max(TileSize.Height, 1);
+            var width  = Height < height * Count ?
+                         Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1) :
+                         Math.Max(Width, 1);
+
+            if (width == TileSize.Width && height == TileSize.Height) return;
+
+            TileSize = new Size(width, height);
         }
 
         #endregion
