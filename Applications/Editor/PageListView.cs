@@ -68,6 +68,25 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceText
+        /// 
+        /// <summary>
+        /// 項目のテキストを置換します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ReplaceText(int index, string text)
+        {
+            if (index < 0 || index >= Count) return;
+            Items[index].Text = text;
+        }
+
+        #endregion
+
         #region Override methods
 
         /* ----------------------------------------------------------------- */

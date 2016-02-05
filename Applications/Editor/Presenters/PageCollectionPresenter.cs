@@ -240,6 +240,11 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// プロパティの値が変化した時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 項目全体を置換すると画面のちらつき目立つため、概要の更新に
+        /// ついては Text 部分のみを置換します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -252,7 +257,11 @@ namespace Cube.Note.App.Editor
             var index = Model.IndexOf(page);
             if (index == -1) return;
 
-            Sync(() => View.Pages.Replace(index, page));
+            Sync(() =>
+            {
+                if (e.PropertyName == "Abstract") View.Pages.ReplaceText(index, page.GetAbstract());
+                else View.Pages.Replace(index, page);
+            });
         }
 
         #endregion
