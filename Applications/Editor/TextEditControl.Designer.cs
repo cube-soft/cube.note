@@ -29,7 +29,10 @@
         private void InitializeComponent()
         {
             Sgry.Azuki.FontInfo fontInfo1 = new Sgry.Azuki.FontInfo();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextEditControl));
             this.AzukiTextControl = new Sgry.Azuki.WinForms.AzukiControl();
+            this.SizeGripControl = new Cube.Forms.SizeGripControl();
+            ((System.ComponentModel.ISupportInitialize)(this.SizeGripControl)).BeginInit();
             this.SuspendLayout();
             // 
             // AzukiTextControl
@@ -58,14 +61,27 @@
             this.AzukiTextControl.ShowsDirtBar = false;
             this.AzukiTextControl.Size = new System.Drawing.Size(150, 150);
             this.AzukiTextControl.TabIndex = 0;
-            this.AzukiTextControl.ViewWidth = 114;
+            this.AzukiTextControl.ViewWidth = 130;
+            // 
+            // SizeGripControl
+            // 
+            this.SizeGripControl.BackColor = System.Drawing.SystemColors.Control;
+            this.SizeGripControl.Image = ((System.Drawing.Image)(resources.GetObject("SizeGripControl.Image")));
+            this.SizeGripControl.Location = new System.Drawing.Point(137, 137);
+            this.SizeGripControl.Margin = new System.Windows.Forms.Padding(0);
+            this.SizeGripControl.Name = "SizeGripControl";
+            this.SizeGripControl.Size = new System.Drawing.Size(13, 13);
+            this.SizeGripControl.TabIndex = 1;
+            this.SizeGripControl.TabStop = false;
             // 
             // TextEditControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.SizeGripControl);
             this.Controls.Add(this.AzukiTextControl);
             this.Name = "TextEditControl";
+            ((System.ComponentModel.ISupportInitialize)(this.SizeGripControl)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -73,5 +89,6 @@
         #endregion
 
         private Sgry.Azuki.WinForms.AzukiControl AzukiTextControl;
+        private Cube.Forms.SizeGripControl SizeGripControl;
     }
 }

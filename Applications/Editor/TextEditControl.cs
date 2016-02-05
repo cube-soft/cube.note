@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Sgry.Azuki;
@@ -116,6 +117,64 @@ namespace Cube.Note.App.Editor
 
             AzukiTextControl.Font = dialog.Font;
             AzukiTextControl.ForeColor = dialog.Color;
+        }
+
+        #endregion
+
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCreateControl
+        ///
+        /// <summary>
+        /// コントロールの生成時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+
+            var width  = SystemInformation.VerticalScrollBarWidth;
+            var height = SystemInformation.HorizontalScrollBarHeight;
+            SizeGripControl.Size = new Size(width, height);
+            MoveSizeGripControl();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnResize
+        ///
+        /// <summary>
+        /// リサイズ時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            MoveSizeGripControl();
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MoveSizeGripControl
+        ///
+        /// <summary>
+        /// リサイズ用グリップを右下に配置します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void MoveSizeGripControl()
+        {
+            var x = Width  - SizeGripControl.Width;
+            var y = Height - SizeGripControl.Height;
+            SizeGripControl.Location = new Point(x, y);
         }
 
         #endregion
