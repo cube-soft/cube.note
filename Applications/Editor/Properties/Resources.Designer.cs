@@ -235,6 +235,24 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   このページを削除しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnRemove {
+            get {
+                return ResourceManager.GetString("WarnRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ページの削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnRemoveTitle {
+            get {
+                return ResourceManager.GetString("WarnRemoveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string WebUrl {

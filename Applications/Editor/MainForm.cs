@@ -350,7 +350,7 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

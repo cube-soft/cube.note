@@ -51,6 +51,7 @@ namespace Cube.Note.App.Editor
             View.NewPageRequired += View_NewPageRequired;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.Added += View_Added;
+            View.Pages.Removing += View_Removing;
             View.Pages.Removed += View_Removed;
 
             // NOTE: 暫定
@@ -111,6 +112,36 @@ namespace Cube.Note.App.Editor
         private void View_Added(object sender, DataEventArgs<int> e)
         {
             if (View.Pages.Count == 1) View.Pages.Select(0);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Removing
+        /// 
+        /// <summary>
+        /// ページが削除される直前に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Removing(object sender, DataCancelEventArgs<int[]> e)
+        {
+            if (e.Value == null || e.Value.Length <= 0) return;
+
+            var index = e.Value[0];
+            var message = new System.Text.StringBuilder();
+            message.AppendLine(Properties.Resources.WarnRemove);
+            message.AppendLine();
+            message.AppendLine(Model[index].GetAbstract());
+            message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
+
+            var result = System.Windows.Forms.MessageBox.Show(
+                message.ToString(),
+                Properties.Resources.WarnRemoveTitle,
+                System.Windows.Forms.MessageBoxButtons.YesNo,
+                System.Windows.Forms.MessageBoxIcon.Warning
+            );
+
+            e.Cancel = (result == System.Windows.Forms.DialogResult.No);
         }
 
         /* ----------------------------------------------------------------- */
