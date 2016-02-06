@@ -60,14 +60,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CanMaximize
+        /// MaximizeBox
         ///
         /// <summary>
-        /// 最大化可能かどうかを示す値を取得または設定します。
+        /// 最大化ボタンを表示するかどうかを示す値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool CanMaximize
+        public bool MaximizeBox
         {
             get { return MaximizeButton.Visible; }
             set { MaximizeButton.Visible = value; }
@@ -75,14 +75,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CanMinimize
+        /// MinimizeBox
         ///
         /// <summary>
-        /// 最小化可能かどうかを示す値を取得または設定します。
+        /// 最小化ボタンを表示するかどうかを示す値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool CanMinimize
+        public bool MinimizeBox
         {
             get { return MinimizeButton.Visible; }
             set { MinimizeButton.Visible = value; }

@@ -57,9 +57,6 @@ namespace Cube.Note.App.Editor
             TitleControl.MaximizeRequired += (s, e) => Maximize();
             TitleControl.MinimizeRequired += (s, e) => Minimize();
 
-            TitleControl.CanMaximize = MaximizeBox;
-            TitleControl.CanMinimize = MinimizeBox;
-
             Caption = TitleControl;
         }
 
@@ -78,6 +75,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public void Maximize()
         {
+            if (!Sizable || !MaximizeBox) return;
+
             WindowState = WindowState == FormWindowState.Normal ?
                           FormWindowState.Maximized :
                           FormWindowState.Normal;
@@ -101,6 +100,23 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        ///
+        /// <summary>
+        /// ロード時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            TitleControl.MaximizeBox = MaximizeBox && Sizable;
+            TitleControl.MinimizeBox = MinimizeBox;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
