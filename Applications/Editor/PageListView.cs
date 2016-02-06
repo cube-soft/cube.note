@@ -98,7 +98,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnAdded(DataEventArgs<int> e)
+        protected override void OnAdded(ValueEventArgs<int> e)
         {
             if (Columns.Count == 0) SetColumns();
             base.OnAdded(e);
@@ -160,7 +160,7 @@ namespace Cube.Note.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnRemoved(DataEventArgs<int[]> e)
+        protected override void OnRemoved(ValueEventArgs<int[]> e)
         {
             SetTileSize();
             base.OnRemoved(e);

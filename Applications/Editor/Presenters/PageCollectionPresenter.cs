@@ -110,7 +110,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Added(object sender, DataEventArgs<int> e)
+        private void View_Added(object sender, ValueEventArgs<int> e)
         {
             if (View.Pages.Count == 1) View.Pages.Select(0);
         }
@@ -124,7 +124,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Removing(object sender, DataCancelEventArgs<int[]> e)
+        private void View_Removing(object sender, ValueCancelEventArgs<int[]> e)
         {
             if (e.Value == null || e.Value.Length <= 0) return;
 
@@ -155,7 +155,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Removed(object sender, DataEventArgs<int[]> e)
+        private void View_Removed(object sender, ValueEventArgs<int[]> e)
         {
             if (e.Value == null || e.Value.Length <= 0) return;
 

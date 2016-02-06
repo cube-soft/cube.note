@@ -86,7 +86,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string>> Search;
+        public EventHandler<ValueEventArgs<string>> Search;
 
         #endregion
 
@@ -159,7 +159,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSearch(DataEventArgs<string> e)
+        protected virtual void OnSearch(ValueEventArgs<string> e)
         {
             if (Search != null) Search(this, e);
         }
@@ -179,7 +179,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RaiseSearchEvent()
         {
-            OnSearch(new DataEventArgs<string>(KeywordTextBox.Text));
+            OnSearch(new ValueEventArgs<string>(KeywordTextBox.Text));
         }
 
         #endregion

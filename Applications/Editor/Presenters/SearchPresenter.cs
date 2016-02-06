@@ -86,7 +86,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void View_Search(object sender, DataEventArgs<string> e)
+        private async void View_Search(object sender, ValueEventArgs<string> e)
         {
             if (string.IsNullOrEmpty(e.Value)) return;
 
