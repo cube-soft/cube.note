@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -69,16 +70,38 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            RunButton.Click  += (s, e) => Close();
+            // buttons
+            RunButton.Click += (s, e) => Close();
             ExitButton.Click += (s, e) => Close();
+            ApplyButton.Click += ApplyButton_Click;
 
+            // colors
             BackColorButton.Click += ColorButton_Click;
             ForeColorButton.Click += ColorButton_Click;
             LineNumberBackColorButton.Click += ColorButton_Click;
             LineNumberForeColorButton.Click += ColorButton_Click;
 
+            // fonts
             FontButton.Click += FontButton_Click;
 
+            // checkboxes
+            TabToSpaceCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            LineNumberCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            RulerCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            SpecialCharsCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            EolCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            TabCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            SpaceCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            FullSpaceCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            CurrentLineCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            ModifiedLineCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            RemoveWarningCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+
+            // numeric updown
+            TabWidthNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+            AutoSaveNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+
+            // others
             SpecialCharsCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
             RulerCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
@@ -101,11 +124,45 @@ namespace Cube.Note.App.Editor
             control.Description = string.Empty;
             control.Logo        = Properties.Resources.LogoLarge;
             control.Url         = Properties.Resources.WebUrl;
-            control.Dock        = DockStyle.Fill;
+            control.Dock        = DockStyle.Top;
             control.Resize     += (s, e) => ResizeVersionControl(control);
 
             ResizeVersionControl(control);
             VersionTabPage.Controls.Add(control);
+        }
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PropertyChanged
+        ///
+        /// <summary>
+        /// 各種プロパティが変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<KeyValueEventArgs<string, object>> PropertyChanged;
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPropertyChanged
+        ///
+        /// <summary>
+        /// PropertyChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPropertyChanged(KeyValueEventArgs<string, object> e)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, e);
+            ApplyButton.Enabled = true;
         }
 
         #endregion
@@ -139,6 +196,20 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ApplyButton_Click
+        ///
+        /// <summary>
+        /// 更新ボタンが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ApplyButton_Click(object sender, EventArgs e)
+        {
+            ApplyButton.Enabled = false;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ColorButton_Click
         ///
         /// <summary>
@@ -158,6 +229,8 @@ namespace Cube.Note.App.Editor
 
             control.BackColor = dialog.Color;
             control.ForeColor = dialog.Color;
+
+            UpdateControls();
         }
 
         /* ----------------------------------------------------------------- */
@@ -175,13 +248,120 @@ namespace Cube.Note.App.Editor
             if (control == null) return;
 
             var dialog = new FontDialog();
+            var font = control.Tag as Font;
+            if (font != null) dialog.Font = font;
             dialog.ShowEffects = false;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            control.Tag = dialog.Font;
+
+            UpdateControls();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CheckBox_CheckedChanged
+        ///
+        /// <summary>
+        /// チェックボックスの状態が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            var control = sender as CheckBox;
+            if (control == null) return;
+
+            var name = control.Tag as string;
+            if (name == null) return;
+
+            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, control.Checked));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NumericUpDown_ValueChanged
+        ///
+        /// <summary>
+        /// 数値変更ボックスの値が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void NumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            var control = sender as NumericUpDown;
+            if (control == null) return;
+
+            var name = control.Tag as string;
+            if (name == null) return;
+
+            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, (int)control.Value));
         }
 
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateControls
+        ///
+        /// <summary>
+        /// コントロールを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateControls()
+        {
+            UpdateColor(BackColorButton, BackColorLabel);
+            UpdateColor(ForeColorButton, ForeColorLabel);
+            UpdateColor(LineNumberBackColorButton, LineNumberBackColorLabel);
+            UpdateColor(LineNumberForeColorButton, LineNumberForeColorLabel);
+
+            UpdateFont(FontButton.Tag as Font, FontLabel);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateColor
+        ///
+        /// <summary>
+        /// 色設定を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateColor(Control control, Label label)
+        {
+            var color = control.BackColor;
+            var text = string.Format("({0}, {1}, {2})", color.R, color.G, color.B);
+            if (label.Text == text) return;
+            label.Text = text;
+
+            var name = control.Tag as string;
+            if (name == null) return;
+
+            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, color));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateFont
+        ///
+        /// <summary>
+        /// フォント設定を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateFont(Font font, Label label)
+        {
+            if (font == null) return;
+
+            var text = string.Format("({0}, {1}pt)", font.Name, font.Size);
+            if (label.Text == text) return;
+            label.Text = text;
+
+            OnPropertyChanged(new KeyValueEventArgs<string, object>("Font", font));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -234,11 +414,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ResizeVersionControl(Control control)
         {
-            var left   = Math.Max(Math.Min((int)(VersionTabPage.Width  * 0.1), 100), 20);
-            var top    = Math.Max(Math.Min((int)(VersionTabPage.Height * 0.1), 100), 20);
-            var bottom = Math.Max(Math.Min((int)(VersionTabPage.Height * 0.1), 100), 20);
-
-            control.Padding = new Padding(left, top, 0, bottom);
+            control.Padding = new Padding(40, 40, 0, 0);
+            control.Height = Math.Min(VersionTabPage.Height, 200);
         }
 
         #endregion

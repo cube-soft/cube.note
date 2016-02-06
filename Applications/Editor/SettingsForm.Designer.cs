@@ -194,6 +194,7 @@
             this.BackColorButton.Name = "BackColorButton";
             this.BackColorButton.Size = new System.Drawing.Size(50, 23);
             this.BackColorButton.TabIndex = 7;
+            this.BackColorButton.Tag = "BackColor";
             this.BackColorButton.UseVisualStyleBackColor = false;
             // 
             // BackColorLabel
@@ -227,6 +228,7 @@
             this.ForeColorButton.Name = "ForeColorButton";
             this.ForeColorButton.Size = new System.Drawing.Size(50, 23);
             this.ForeColorButton.TabIndex = 4;
+            this.ForeColorButton.Tag = "ForeColor";
             this.ForeColorButton.UseVisualStyleBackColor = false;
             // 
             // ForeColorLabel
@@ -256,6 +258,7 @@
             this.FontButton.Name = "FontButton";
             this.FontButton.Size = new System.Drawing.Size(50, 23);
             this.FontButton.TabIndex = 2;
+            this.FontButton.Tag = "Font";
             this.FontButton.Text = "...";
             this.FontButton.UseVisualStyleBackColor = true;
             // 
@@ -287,6 +290,7 @@
             this.TabWidthNumericUpDown.Name = "TabWidthNumericUpDown";
             this.TabWidthNumericUpDown.Size = new System.Drawing.Size(50, 23);
             this.TabWidthNumericUpDown.TabIndex = 12;
+            this.TabWidthNumericUpDown.Tag = "TabWidth";
             // 
             // TabToSpaceCheckBox
             // 
@@ -308,6 +312,7 @@
             this.LineNumberCheckBox.Name = "LineNumberCheckBox";
             this.LineNumberCheckBox.Size = new System.Drawing.Size(114, 19);
             this.LineNumberCheckBox.TabIndex = 9;
+            this.LineNumberCheckBox.Tag = "LineNumberVisible";
             this.LineNumberCheckBox.Text = "行番号を表示する";
             this.LineNumberCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -320,6 +325,7 @@
             this.RulerCheckBox.Name = "RulerCheckBox";
             this.RulerCheckBox.Size = new System.Drawing.Size(140, 19);
             this.RulerCheckBox.TabIndex = 10;
+            this.RulerCheckBox.Tag = "RulerVisible";
             this.RulerCheckBox.Text = "水平ルーラーを表示する";
             this.RulerCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -343,6 +349,7 @@
             this.LineNumberBackColorButton.Name = "LineNumberBackColorButton";
             this.LineNumberBackColorButton.Size = new System.Drawing.Size(50, 23);
             this.LineNumberBackColorButton.TabIndex = 25;
+            this.LineNumberBackColorButton.Tag = "LineNumberBackColor";
             this.LineNumberBackColorButton.UseVisualStyleBackColor = false;
             // 
             // LineNumberBackColorLabel
@@ -376,6 +383,7 @@
             this.LineNumberForeColorButton.Name = "LineNumberForeColorButton";
             this.LineNumberForeColorButton.Size = new System.Drawing.Size(50, 23);
             this.LineNumberForeColorButton.TabIndex = 22;
+            this.LineNumberForeColorButton.Tag = "LineNumberForeColor";
             this.LineNumberForeColorButton.UseVisualStyleBackColor = false;
             // 
             // LineNumberForeColorLabel
@@ -398,6 +406,7 @@
             this.SpecialCharsCheckBox.Name = "SpecialCharsCheckBox";
             this.SpecialCharsCheckBox.Size = new System.Drawing.Size(126, 19);
             this.SpecialCharsCheckBox.TabIndex = 16;
+            this.SpecialCharsCheckBox.Tag = "SpecialCharsVisible";
             this.SpecialCharsCheckBox.Text = "特殊文字を表示する";
             this.SpecialCharsCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -409,6 +418,7 @@
             this.EolCheckBox.Name = "EolCheckBox";
             this.EolCheckBox.Size = new System.Drawing.Size(50, 19);
             this.EolCheckBox.TabIndex = 17;
+            this.EolCheckBox.Tag = "EolVisible";
             this.EolCheckBox.Text = "改行";
             this.EolCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -420,6 +430,7 @@
             this.TabCheckBox.Name = "TabCheckBox";
             this.TabCheckBox.Size = new System.Drawing.Size(43, 19);
             this.TabCheckBox.TabIndex = 18;
+            this.TabCheckBox.Tag = "TabVisible";
             this.TabCheckBox.Text = "タブ";
             this.TabCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -431,6 +442,7 @@
             this.SpaceCheckBox.Name = "SpaceCheckBox";
             this.SpaceCheckBox.Size = new System.Drawing.Size(88, 19);
             this.SpaceCheckBox.TabIndex = 19;
+            this.SpaceCheckBox.Tag = "SpaceVisible";
             this.SpaceCheckBox.Text = "半角スペース";
             this.SpaceCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -443,6 +455,7 @@
             this.FullSpaceCheckBox.Name = "FullSpaceCheckBox";
             this.FullSpaceCheckBox.Size = new System.Drawing.Size(88, 19);
             this.FullSpaceCheckBox.TabIndex = 20;
+            this.FullSpaceCheckBox.Tag = "FullSpaceVisible";
             this.FullSpaceCheckBox.Text = "全角スペース";
             this.FullSpaceCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -455,6 +468,7 @@
             this.CurrentLineCheckBox.Name = "CurrentLineCheckBox";
             this.CurrentLineCheckBox.Size = new System.Drawing.Size(181, 19);
             this.CurrentLineCheckBox.TabIndex = 15;
+            this.CurrentLineCheckBox.Tag = "CurrentLineVisible";
             this.CurrentLineCheckBox.Text = "カーソルのある行を強調表示する";
             this.CurrentLineCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -466,6 +480,7 @@
             this.ModifiedLineCheckBox.Name = "ModifiedLineCheckBox";
             this.ModifiedLineCheckBox.Size = new System.Drawing.Size(156, 19);
             this.ModifiedLineCheckBox.TabIndex = 14;
+            this.ModifiedLineCheckBox.Tag = "ModifiedLineVisible";
             this.ModifiedLineCheckBox.Text = "修正した行を強調表示する";
             this.ModifiedLineCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -514,6 +529,7 @@
             this.AutoSaveNumericUpDown.Name = "AutoSaveNumericUpDown";
             this.AutoSaveNumericUpDown.Size = new System.Drawing.Size(80, 23);
             this.AutoSaveNumericUpDown.TabIndex = 1;
+            this.AutoSaveNumericUpDown.Tag = "AutoSaveTime";
             this.AutoSaveNumericUpDown.Value = new decimal(new int[] {
             10,
             0,
@@ -539,6 +555,7 @@
             this.RemoveWarningCheckBox.Name = "RemoveWarningCheckBox";
             this.RemoveWarningCheckBox.Size = new System.Drawing.Size(218, 19);
             this.RemoveWarningCheckBox.TabIndex = 3;
+            this.RemoveWarningCheckBox.Tag = "RemoveWarning";
             this.RemoveWarningCheckBox.Text = "ノート削除時に警告メッセージを表示する";
             this.RemoveWarningCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -603,7 +620,7 @@
             this.ClientSize = new System.Drawing.Size(500, 530);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
-            this.MinimumSize = new System.Drawing.Size(430, 350);
+            this.MinimumSize = new System.Drawing.Size(430, 360);
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
             this.Sizable = true;
