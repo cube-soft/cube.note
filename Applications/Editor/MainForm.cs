@@ -19,7 +19,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -33,7 +32,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.WidgetForm
+    public partial class MainForm : FormBase
     {
         #region Constructors
 
@@ -51,41 +50,8 @@ namespace Cube.Note.App.Editor
             InitializeComponent();
             InitializeEvents();
             InitializePresenters();
-        }
 
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Maximize
-        ///
-        /// <summary>
-        /// 最大化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Maximize()
-        {
-            WindowState = WindowState == FormWindowState.Normal ?
-                          FormWindowState.Maximized :
-                          FormWindowState.Normal;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Minimize
-        ///
-        /// <summary>
-        /// 最小化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Minimize()
-        {
-            if (WindowState == FormWindowState.Minimized) return;
-            WindowState = FormWindowState.Minimized;
+            Caption = TitleControl;
         }
 
         #endregion
@@ -103,13 +69,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            Activated  += (s, e) => BackColor = Color.FromArgb(  0, 169, 157);
-            Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
-
-            TitleControl.CloseRequired    += (s, e) => Close();
-            TitleControl.MaximizeRequired += (s, e) => Maximize();
-            TitleControl.MinimizeRequired += (s, e) => Minimize();
-
             NewPageMenuItem.Click  += NewPageMenuItem_Click;
             RemoveMenuItem.Click   += RemoveMenuItem_Click;
             SearchMenuItem.Click   += SearchMenuItem_Click;
@@ -135,7 +94,6 @@ namespace Cube.Note.App.Editor
             var area = Screen.FromControl(this).WorkingArea.Size;
             Width   = (int)(area.Width  * 0.7);
             Height  = (int)(area.Height * 0.7);
-            Caption = TitleControl;
         }
 
         /* ----------------------------------------------------------------- */
@@ -174,21 +132,6 @@ namespace Cube.Note.App.Editor
             base.OnLoad(e);
             InitializeLayout();
             Saver = new AutoSaver(Pages);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnBackColorChanged
-        ///
-        /// <summary>
-        /// 背景色が変更された時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnBackColorChanged(EventArgs e)
-        {
-            base.OnBackColorChanged(e);
-            TitleControl.BackColor = BackColor;
         }
 
         /* ----------------------------------------------------------------- */

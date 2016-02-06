@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -52,12 +51,6 @@ namespace Cube.Note.App.Editor
 
             Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
             Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
-
-            TitleControl.CloseRequired    += (s, e) => Close();
-            TitleControl.MaximizeRequired += (s, e) => Maximize();
-            TitleControl.MinimizeRequired += (s, e) => Minimize();
-
-            Caption = TitleControl;
         }
 
         #endregion
@@ -114,8 +107,15 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
 
-            TitleControl.MaximizeBox = MaximizeBox && Sizable;
-            TitleControl.MinimizeBox = MinimizeBox;
+            var control = Caption as TitleControl;
+            if (control == null) return;
+
+            control.CloseRequired    += (s, ev) => Close();
+            control.MaximizeRequired += (s, ev) => Maximize();
+            control.MinimizeRequired += (s, ev) => Minimize();
+
+            control.MaximizeBox = MaximizeBox && Sizable;
+            control.MinimizeBox = MinimizeBox;
         }
 
         /* ----------------------------------------------------------------- */
