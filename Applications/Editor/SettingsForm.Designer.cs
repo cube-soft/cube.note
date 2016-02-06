@@ -33,23 +33,23 @@
             this.TabControl = new System.Windows.Forms.TabControl();
             this.VisibleTabPage = new System.Windows.Forms.TabPage();
             this.VisibleSettinsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.Label3 = new System.Windows.Forms.Label();
+            this.Label11 = new System.Windows.Forms.Label();
             this.BackColorButton = new System.Windows.Forms.Button();
             this.BackColorLabel = new System.Windows.Forms.Label();
-            this.Label2 = new System.Windows.Forms.Label();
+            this.Label12 = new System.Windows.Forms.Label();
             this.ForeColorButton = new System.Windows.Forms.Button();
             this.ForeColorLabel = new System.Windows.Forms.Label();
-            this.Label1 = new System.Windows.Forms.Label();
+            this.Label13 = new System.Windows.Forms.Label();
             this.FontButton = new System.Windows.Forms.Button();
             this.FontLabel = new System.Windows.Forms.Label();
-            this.Label4 = new System.Windows.Forms.Label();
+            this.Label14 = new System.Windows.Forms.Label();
             this.TabNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.TabToSpaceCheckBox = new System.Windows.Forms.CheckBox();
             this.LineNumberCheckBox = new System.Windows.Forms.CheckBox();
-            this.Label5 = new System.Windows.Forms.Label();
+            this.Label15 = new System.Windows.Forms.Label();
             this.NumberBackColorButton = new System.Windows.Forms.Button();
             this.NumberBackColor = new System.Windows.Forms.Label();
-            this.Label6 = new System.Windows.Forms.Label();
+            this.Label16 = new System.Windows.Forms.Label();
             this.NumberForeColorButton = new System.Windows.Forms.Button();
             this.NumberForeColorLabel = new System.Windows.Forms.Label();
             this.RulerCheckBox = new System.Windows.Forms.CheckBox();
@@ -89,7 +89,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.LayoutPanel.Size = new System.Drawing.Size(498, 528);
+            this.LayoutPanel.Size = new System.Drawing.Size(498, 518);
             this.LayoutPanel.TabIndex = 0;
             // 
             // TitleControl
@@ -114,7 +114,7 @@
             this.TabControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 3);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(474, 423);
+            this.TabControl.Size = new System.Drawing.Size(474, 413);
             this.TabControl.TabIndex = 1;
             // 
             // VisibleTabPage
@@ -123,31 +123,31 @@
             this.VisibleTabPage.Location = new System.Drawing.Point(4, 24);
             this.VisibleTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleTabPage.Name = "VisibleTabPage";
-            this.VisibleTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.VisibleTabPage.Size = new System.Drawing.Size(466, 395);
+            this.VisibleTabPage.Size = new System.Drawing.Size(466, 385);
             this.VisibleTabPage.TabIndex = 0;
-            this.VisibleTabPage.Text = "表示";
+            this.VisibleTabPage.Text = "表 示";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
             // 
             // VisibleSettinsPanel
             // 
-            this.VisibleSettinsPanel.Controls.Add(this.Label3);
+            this.VisibleSettinsPanel.AutoScroll = true;
+            this.VisibleSettinsPanel.Controls.Add(this.Label11);
             this.VisibleSettinsPanel.Controls.Add(this.BackColorButton);
             this.VisibleSettinsPanel.Controls.Add(this.BackColorLabel);
-            this.VisibleSettinsPanel.Controls.Add(this.Label2);
+            this.VisibleSettinsPanel.Controls.Add(this.Label12);
             this.VisibleSettinsPanel.Controls.Add(this.ForeColorButton);
             this.VisibleSettinsPanel.Controls.Add(this.ForeColorLabel);
-            this.VisibleSettinsPanel.Controls.Add(this.Label1);
+            this.VisibleSettinsPanel.Controls.Add(this.Label13);
             this.VisibleSettinsPanel.Controls.Add(this.FontButton);
             this.VisibleSettinsPanel.Controls.Add(this.FontLabel);
-            this.VisibleSettinsPanel.Controls.Add(this.Label4);
+            this.VisibleSettinsPanel.Controls.Add(this.Label14);
             this.VisibleSettinsPanel.Controls.Add(this.TabNumericUpDown);
             this.VisibleSettinsPanel.Controls.Add(this.TabToSpaceCheckBox);
             this.VisibleSettinsPanel.Controls.Add(this.LineNumberCheckBox);
-            this.VisibleSettinsPanel.Controls.Add(this.Label5);
+            this.VisibleSettinsPanel.Controls.Add(this.Label15);
             this.VisibleSettinsPanel.Controls.Add(this.NumberBackColorButton);
             this.VisibleSettinsPanel.Controls.Add(this.NumberBackColor);
-            this.VisibleSettinsPanel.Controls.Add(this.Label6);
+            this.VisibleSettinsPanel.Controls.Add(this.Label16);
             this.VisibleSettinsPanel.Controls.Add(this.NumberForeColorButton);
             this.VisibleSettinsPanel.Controls.Add(this.NumberForeColorLabel);
             this.VisibleSettinsPanel.Controls.Add(this.RulerCheckBox);
@@ -159,22 +159,22 @@
             this.VisibleSettinsPanel.Controls.Add(this.SpaceCheckBox);
             this.VisibleSettinsPanel.Controls.Add(this.FullSpaceCheckBox);
             this.VisibleSettinsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VisibleSettinsPanel.Location = new System.Drawing.Point(3, 3);
+            this.VisibleSettinsPanel.Location = new System.Drawing.Point(0, 0);
             this.VisibleSettinsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleSettinsPanel.Name = "VisibleSettinsPanel";
             this.VisibleSettinsPanel.Padding = new System.Windows.Forms.Padding(12, 20, 0, 0);
-            this.VisibleSettinsPanel.Size = new System.Drawing.Size(460, 389);
+            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 385);
             this.VisibleSettinsPanel.TabIndex = 0;
             // 
-            // Label3
+            // Label11
             // 
-            this.Label3.Location = new System.Drawing.Point(15, 23);
-            this.Label3.Margin = new System.Windows.Forms.Padding(3);
-            this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(80, 23);
-            this.Label3.TabIndex = 6;
-            this.Label3.Text = "背景色";
-            this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label11.Location = new System.Drawing.Point(15, 23);
+            this.Label11.Margin = new System.Windows.Forms.Padding(3);
+            this.Label11.Name = "Label11";
+            this.Label11.Size = new System.Drawing.Size(80, 23);
+            this.Label11.TabIndex = 6;
+            this.Label11.Text = "背景色";
+            this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // BackColorButton
             // 
@@ -195,15 +195,15 @@
             this.BackColorLabel.Text = "(255, 255, 255)";
             this.BackColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label2
+            // Label12
             // 
-            this.Label2.Location = new System.Drawing.Point(15, 52);
-            this.Label2.Margin = new System.Windows.Forms.Padding(3);
-            this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(80, 23);
-            this.Label2.TabIndex = 3;
-            this.Label2.Text = "テキストの色";
-            this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label12.Location = new System.Drawing.Point(15, 52);
+            this.Label12.Margin = new System.Windows.Forms.Padding(3);
+            this.Label12.Name = "Label12";
+            this.Label12.Size = new System.Drawing.Size(80, 23);
+            this.Label12.TabIndex = 3;
+            this.Label12.Text = "テキストの色";
+            this.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ForeColorButton
             // 
@@ -224,15 +224,15 @@
             this.ForeColorLabel.Text = "(255, 255, 255)";
             this.ForeColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label1
+            // Label13
             // 
-            this.Label1.Location = new System.Drawing.Point(15, 81);
-            this.Label1.Margin = new System.Windows.Forms.Padding(3);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(80, 23);
-            this.Label1.TabIndex = 0;
-            this.Label1.Text = "フォント";
-            this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label13.Location = new System.Drawing.Point(15, 81);
+            this.Label13.Margin = new System.Windows.Forms.Padding(3);
+            this.Label13.Name = "Label13";
+            this.Label13.Size = new System.Drawing.Size(80, 23);
+            this.Label13.TabIndex = 0;
+            this.Label13.Text = "フォント";
+            this.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FontButton
             // 
@@ -245,6 +245,7 @@
             // 
             // FontLabel
             // 
+            this.FontLabel.AutoEllipsis = true;
             this.VisibleSettinsPanel.SetFlowBreak(this.FontLabel, true);
             this.FontLabel.Location = new System.Drawing.Point(157, 81);
             this.FontLabel.Margin = new System.Windows.Forms.Padding(3);
@@ -254,15 +255,15 @@
             this.FontLabel.Text = "(メイリオ, 11pt)";
             this.FontLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label4
+            // Label14
             // 
-            this.Label4.Location = new System.Drawing.Point(15, 110);
-            this.Label4.Margin = new System.Windows.Forms.Padding(3);
-            this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(80, 23);
-            this.Label4.TabIndex = 11;
-            this.Label4.Text = "タブ幅";
-            this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label14.Location = new System.Drawing.Point(15, 110);
+            this.Label14.Margin = new System.Windows.Forms.Padding(3);
+            this.Label14.Name = "Label14";
+            this.Label14.Size = new System.Drawing.Size(80, 23);
+            this.Label14.TabIndex = 11;
+            this.Label14.Text = "タブ幅";
+            this.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TabNumericUpDown
             // 
@@ -295,15 +296,15 @@
             this.LineNumberCheckBox.Text = "行番号を表示する";
             this.LineNumberCheckBox.UseVisualStyleBackColor = true;
             // 
-            // Label5
+            // Label15
             // 
-            this.Label5.Location = new System.Drawing.Point(40, 168);
-            this.Label5.Margin = new System.Windows.Forms.Padding(28, 3, 3, 3);
-            this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(80, 23);
-            this.Label5.TabIndex = 24;
-            this.Label5.Text = "背景色";
-            this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label15.Location = new System.Drawing.Point(40, 168);
+            this.Label15.Margin = new System.Windows.Forms.Padding(28, 3, 3, 3);
+            this.Label15.Name = "Label15";
+            this.Label15.Size = new System.Drawing.Size(80, 23);
+            this.Label15.TabIndex = 24;
+            this.Label15.Text = "背景色";
+            this.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // NumberBackColorButton
             // 
@@ -324,15 +325,15 @@
             this.NumberBackColor.Text = "(255, 255, 255)";
             this.NumberBackColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label6
+            // Label16
             // 
-            this.Label6.Location = new System.Drawing.Point(40, 197);
-            this.Label6.Margin = new System.Windows.Forms.Padding(28, 3, 3, 3);
-            this.Label6.Name = "Label6";
-            this.Label6.Size = new System.Drawing.Size(80, 23);
-            this.Label6.TabIndex = 21;
-            this.Label6.Text = "行番号の色";
-            this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label16.Location = new System.Drawing.Point(40, 197);
+            this.Label16.Margin = new System.Windows.Forms.Padding(28, 3, 3, 3);
+            this.Label16.Name = "Label16";
+            this.Label16.Size = new System.Drawing.Size(80, 23);
+            this.Label16.TabIndex = 21;
+            this.Label16.Text = "行番号の色";
+            this.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // NumberForeColorButton
             // 
@@ -444,8 +445,7 @@
             // 
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Name = "GeneralTabPage";
-            this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.GeneralTabPage.Size = new System.Drawing.Size(466, 395);
+            this.GeneralTabPage.Size = new System.Drawing.Size(466, 385);
             this.GeneralTabPage.TabIndex = 1;
             this.GeneralTabPage.Text = "その他";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -454,8 +454,7 @@
             // 
             this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
             this.VersionTabPage.Name = "VersionTabPage";
-            this.VersionTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.VersionTabPage.Size = new System.Drawing.Size(466, 395);
+            this.VersionTabPage.Size = new System.Drawing.Size(466, 385);
             this.VersionTabPage.TabIndex = 2;
             this.VersionTabPage.Text = "バージョン情報";
             this.VersionTabPage.UseVisualStyleBackColor = true;
@@ -467,7 +466,7 @@
             this.ButtonsPanel.Controls.Add(this.RunButton);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 468);
+            this.ButtonsPanel.Location = new System.Drawing.Point(0, 458);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
@@ -509,7 +508,7 @@
             this.AcceptButton = this.RunButton;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.CancelButton = this.ExitButton;
-            this.ClientSize = new System.Drawing.Size(500, 530);
+            this.ClientSize = new System.Drawing.Size(500, 520);
             this.Controls.Add(this.LayoutPanel);
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
@@ -537,18 +536,18 @@
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.Button RunButton;
         private System.Windows.Forms.FlowLayoutPanel VisibleSettinsPanel;
-        private System.Windows.Forms.Label Label1;
+        private System.Windows.Forms.Label Label13;
         private System.Windows.Forms.Label FontLabel;
         private System.Windows.Forms.Button FontButton;
-        private System.Windows.Forms.Label Label2;
+        private System.Windows.Forms.Label Label12;
         private System.Windows.Forms.Button ForeColorButton;
         private System.Windows.Forms.Label ForeColorLabel;
-        private System.Windows.Forms.Label Label3;
+        private System.Windows.Forms.Label Label11;
         private System.Windows.Forms.Button BackColorButton;
         private System.Windows.Forms.Label BackColorLabel;
         private System.Windows.Forms.CheckBox LineNumberCheckBox;
         private System.Windows.Forms.CheckBox RulerCheckBox;
-        private System.Windows.Forms.Label Label4;
+        private System.Windows.Forms.Label Label14;
         private System.Windows.Forms.NumericUpDown TabNumericUpDown;
         private System.Windows.Forms.CheckBox TabToSpaceCheckBox;
         private System.Windows.Forms.CheckBox ModifyCheckBox;
@@ -558,10 +557,10 @@
         private System.Windows.Forms.CheckBox TabCheckBox;
         private System.Windows.Forms.CheckBox SpaceCheckBox;
         private System.Windows.Forms.CheckBox FullSpaceCheckBox;
-        private System.Windows.Forms.Label Label5;
+        private System.Windows.Forms.Label Label15;
         private System.Windows.Forms.Button NumberBackColorButton;
         private System.Windows.Forms.Label NumberBackColor;
-        private System.Windows.Forms.Label Label6;
+        private System.Windows.Forms.Label Label16;
         private System.Windows.Forms.Button NumberForeColorButton;
         private System.Windows.Forms.Label NumberForeColorLabel;
     }
