@@ -72,6 +72,13 @@ namespace Cube.Note.App.Editor
             RunButton.Click  += (s, e) => Close();
             ExitButton.Click += (s, e) => Close();
 
+            BackColorButton.Click += ColorButton_Click;
+            ForeColorButton.Click += ColorButton_Click;
+            LineNumberBackColorButton.Click += ColorButton_Click;
+            LineNumberForeColorButton.Click += ColorButton_Click;
+
+            FontButton.Click += FontButton_Click;
+
             SpecialCharsCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
             RulerCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
@@ -132,6 +139,52 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ColorButton_Click
+        ///
+        /// <summary>
+        /// 色設定ボタンが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ColorButton_Click(object sender, EventArgs e)
+        {
+            var control = sender as Control;
+            if (control == null) return;
+
+            var dialog = new ColorDialog();
+            dialog.Color = control.BackColor;
+            dialog.FullOpen = true;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            control.BackColor = dialog.Color;
+            control.ForeColor = dialog.Color;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FontButton_Click
+        ///
+        /// <summary>
+        /// フォント設定ボタンが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void FontButton_Click(object sender, EventArgs e)
+        {
+            var control = sender as Control;
+            if (control == null) return;
+
+            var dialog = new FontDialog();
+            dialog.ShowEffects = false;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// EnableSpecialChars
         ///
         /// <summary>
@@ -181,9 +234,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ResizeVersionControl(Control control)
         {
-            var left   = Math.Max(Math.Min((int)(VersionTabPage.Width  * 0.15), 100), 20);
-            var top    = Math.Max(Math.Min((int)(VersionTabPage.Height * 0.20), 100), 20);
-            var bottom = Math.Max(Math.Min((int)(VersionTabPage.Height * 0.15), 100), 20);
+            var left   = Math.Max(Math.Min((int)(VersionTabPage.Width  * 0.1), 100), 20);
+            var top    = Math.Max(Math.Min((int)(VersionTabPage.Height * 0.1), 100), 20);
+            var bottom = Math.Max(Math.Min((int)(VersionTabPage.Height * 0.1), 100), 20);
 
             control.Padding = new Padding(left, top, 0, bottom);
         }

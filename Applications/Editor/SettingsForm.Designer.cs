@@ -603,7 +603,7 @@
             this.ClientSize = new System.Drawing.Size(500, 530);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
-            this.MinimumSize = new System.Drawing.Size(430, 380);
+            this.MinimumSize = new System.Drawing.Size(430, 350);
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
             this.Sizable = true;
