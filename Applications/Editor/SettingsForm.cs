@@ -85,26 +85,26 @@ namespace Cube.Note.App.Editor
             FontButton.Click += FontButton_Click;
 
             // checkboxes
-            TabToSpaceCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            LineNumberCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            RulerCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            SpecialCharsCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            EolCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            TabCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            SpaceCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            FullSpaceCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            CurrentLineCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            ModifiedLineCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            RemoveWarningCheckBox.CheckedChanged += CheckBox_CheckedChanged;
+            TabToSpaceCheckBox.CheckedChanged += CheckBoxChanged;
+            LineNumberVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            RulerVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            EolVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            TabVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            SpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            FullSpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            CurrentLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            ModifiedLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            RemoveWarningCheckBox.CheckedChanged += CheckBoxChanged;
 
             // numeric updown
-            TabWidthNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
-            AutoSaveNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+            TabWidthNumericUpDown.ValueChanged += NumericUpDownChanged;
+            AutoSaveTimeNumericUpDown.ValueChanged += NumericUpDownChanged;
 
             // others
-            SpecialCharsCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
-            LineNumberCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
-            RulerCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
+            SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
+            LineNumberVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
+            RulerVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
         }
 
         /* ----------------------------------------------------------------- */
@@ -137,6 +137,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Applied
+        ///
+        /// <summary>
+        /// 適用ボタンが押下された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Applied;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// PropertyChanged
         ///
         /// <summary>
@@ -149,6 +160,20 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnApplied
+        ///
+        /// <summary>
+        /// Applied イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnApplied(EventArgs e)
+        {
+            if (Applied != null) Applied(this, e);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -205,6 +230,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ApplyButton_Click(object sender, EventArgs e)
         {
+            OnApplied(e);
             ApplyButton.Enabled = false;
         }
 
@@ -258,49 +284,9 @@ namespace Cube.Note.App.Editor
             UpdateControls();
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckBox_CheckedChanged
-        ///
-        /// <summary>
-        /// チェックボックスの状態が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void CheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            var control = sender as CheckBox;
-            if (control == null) return;
-
-            var name = control.Tag as string;
-            if (name == null) return;
-
-            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, control.Checked));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NumericUpDown_ValueChanged
-        ///
-        /// <summary>
-        /// 数値変更ボックスの値が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void NumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            var control = sender as NumericUpDown;
-            if (control == null) return;
-
-            var name = control.Tag as string;
-            if (name == null) return;
-
-            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, (int)control.Value));
-        }
-
         #endregion
 
-        #region Others
+        #region Update methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -337,10 +323,7 @@ namespace Cube.Note.App.Editor
             if (label.Text == text) return;
             label.Text = text;
 
-            var name = control.Tag as string;
-            if (name == null) return;
-
-            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, color));
+            RaisePropertyChanged(control, color);
         }
 
         /* ----------------------------------------------------------------- */
@@ -374,12 +357,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void EnableSpecialChars()
         {
-            var enable = SpecialCharsCheckBox.Checked;
+            var enable = SpecialCharsVisibleCheckBox.Checked;
 
-            EolCheckBox.Enabled       = enable;
-            TabCheckBox.Enabled       = enable;
-            SpaceCheckBox.Enabled     = enable;
-            FullSpaceCheckBox.Enabled = enable;
+            EolVisibleCheckBox.Enabled       = enable;
+            TabVisibleCheckBox.Enabled       = enable;
+            SpaceVisibleCheckBox.Enabled     = enable;
+            FullSpaceVisibleCheckBox.Enabled = enable;
         }
 
         /* ----------------------------------------------------------------- */
@@ -393,7 +376,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void EnableLineNumber()
         {
-            var enable = LineNumberCheckBox.Checked || RulerCheckBox.Checked;
+            var enable = LineNumberVisibleCheckBox.Checked || RulerVisibleCheckBox.Checked;
 
             LineNumberBackColorButton.Enabled     = enable;
             LineNumberBackColorLabel.Enabled      = enable;
@@ -416,6 +399,129 @@ namespace Cube.Note.App.Editor
         {
             control.Padding = new Padding(40, 40, 0, 0);
             control.Height = Math.Min(VersionTabPage.Height, 200);
+        }
+
+        #endregion
+
+        #region RaiseEvent methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CheckBoxChanged
+        ///
+        /// <summary>
+        /// チェックボックスの状態が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Value には CheckBox.Checked が設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void CheckBoxChanged(object sender, EventArgs e)
+        {
+            var control = sender as CheckBox;
+            if (control == null) return;
+            RaisePropertyChanged(control, control.Checked);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ComboBoxChanged
+        ///
+        /// <summary>
+        /// コンボボックスの状態が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Value には ComboBox.SelectedIndex が設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void ComboBoxChanged(object sender, EventArgs e)
+        {
+            var control = sender as ComboBox;
+            if (control == null) return;
+            RaisePropertyChanged(control, control.SelectedIndex);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NumericUpDownChanged
+        ///
+        /// <summary>
+        /// NumericUpDown の状態が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Value には NumericUpDown.Value が設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void NumericUpDownChanged(object sender, EventArgs e)
+        {
+            var control = sender as NumericUpDown;
+            if (control == null) return;
+            RaisePropertyChanged(control, control.Value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RadioButtonChanged
+        ///
+        /// <summary>
+        /// ラジオボタンの状態が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Value には RadioButton.Checked が設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void RadioButtonChanged(object sender, EventArgs e)
+        {
+            var control = sender as RadioButton;
+            if (control == null) return;
+            RaisePropertyChanged(control, control.Checked);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TextBoxChanged
+        ///
+        /// <summary>
+        /// ラジオボタンの状態が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Value には TextBox.Text が設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void TextBoxChanged(object sender, EventArgs e)
+        {
+            var control = sender as TextBox;
+            if (control == null) return;
+            RaisePropertyChanged(control, control.Text);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaisePropertyChanged
+        ///
+        /// <summary>
+        /// PropertyChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void RaisePropertyChanged(Control control, object value)
+        {
+            var name = control.Tag is string ?
+                       control.Tag as string :
+                       control.Name.Replace(control.GetType().Name, string.Empty);
+            if (string.IsNullOrEmpty(name)) return;
+
+            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, value));
         }
 
         #endregion
