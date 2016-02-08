@@ -84,7 +84,6 @@ namespace Cube.Note.App.Editor
         {
             if (settings == null) return;
 
-            // colors
             BackColorButton.BackColor = settings.BackColor;
             BackColorButton.ForeColor = settings.BackColor;
             ForeColorButton.BackColor = settings.ForeColor;
@@ -102,10 +101,8 @@ namespace Cube.Note.App.Editor
             CurrentLineColorButton.BackColor = settings.CurrentLineColor;
             CurrentLineColorButton.ForeColor = settings.CurrentLineColor;
 
-            // fotns
             FontButton.Tag = settings.Font;
 
-            // checkboxes
             TabToSpaceCheckBox.Checked = settings.TabToSpace;
             LineNumberVisibleCheckBox.Checked = settings.LineNumberVisible;
             RulerVisibleCheckBox.Checked = settings.RulerVisible;
@@ -119,7 +116,6 @@ namespace Cube.Note.App.Editor
             BracketVisibleCheckBox.Checked = settings.BracketVisible;
             RemoveWarningCheckBox.Checked = settings.RemoveWarning;
 
-            // numeric updown
             TabWidthNumericUpDown.Value = settings.TabWidth;
             AutoSaveTimeNumericUpDown.Value = (int)settings.AutoSaveTime.TotalSeconds;
         }
@@ -139,13 +135,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            // buttons
             RunButton.Click += RunButton_Click;
             ExitButton.Click += ExitButton_Click;
             ApplyButton.Click += ApplyButton_Click;
             ResetButton.Click += (s, e) => OnReset(e);
 
-            // colors
             BackColorButton.Click += ColorButton_Click;
             ForeColorButton.Click += ColorButton_Click;
             HighlightBackColorButton.Click += ColorButton_Click;
@@ -155,10 +149,8 @@ namespace Cube.Note.App.Editor
             SpecialCharsColorButton.Click += ColorButton_Click;
             CurrentLineColorButton.Click += ColorButton_Click;
 
-            // fonts
             FontButton.Click += FontButton_Click;
 
-            // checkboxes
             TabToSpaceCheckBox.CheckedChanged += CheckBoxChanged;
             LineNumberVisibleCheckBox.CheckedChanged += CheckBoxChanged;
             RulerVisibleCheckBox.CheckedChanged += CheckBoxChanged;
@@ -172,11 +164,9 @@ namespace Cube.Note.App.Editor
             BracketVisibleCheckBox.CheckedChanged += CheckBoxChanged;
             RemoveWarningCheckBox.CheckedChanged += CheckBoxChanged;
 
-            // numeric updown
             TabWidthNumericUpDown.ValueChanged += NumericUpDownChanged;
             AutoSaveTimeNumericUpDown.ValueChanged += NumericUpDownChanged;
 
-            // others
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
             RulerVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();

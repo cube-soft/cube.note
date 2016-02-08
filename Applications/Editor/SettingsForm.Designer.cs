@@ -152,6 +152,7 @@
             // 
             // GeneralSettingsPanel
             // 
+            this.GeneralSettingsPanel.AutoScroll = true;
             this.GeneralSettingsPanel.Controls.Add(this.Label11);
             this.GeneralSettingsPanel.Controls.Add(this.FontButton);
             this.GeneralSettingsPanel.Controls.Add(this.FontLabel);
