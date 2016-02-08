@@ -124,7 +124,7 @@ namespace Cube.Note.App.Editor
             Margin        = new Padding(0);
             MultiSelect   = false;
             Theme         = Cube.Forms.WindowTheme.Explorer;
-            TileSize      = new Size(Width, 120);
+            TileSize      = new Size(Width, 115);
             View          = View.Tile;
         }
 
