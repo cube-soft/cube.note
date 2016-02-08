@@ -318,9 +318,9 @@
             this.RulerVisibleCheckBox.Location = new System.Drawing.Point(148, 152);
             this.RulerVisibleCheckBox.Margin = new System.Windows.Forms.Padding(16, 16, 3, 0);
             this.RulerVisibleCheckBox.Name = "RulerVisibleCheckBox";
-            this.RulerVisibleCheckBox.Size = new System.Drawing.Size(140, 19);
+            this.RulerVisibleCheckBox.Size = new System.Drawing.Size(110, 19);
             this.RulerVisibleCheckBox.TabIndex = 10;
-            this.RulerVisibleCheckBox.Text = "水平ルーラーを表示する";
+            this.RulerVisibleCheckBox.Text = "目盛りを表示する";
             this.RulerVisibleCheckBox.UseVisualStyleBackColor = true;
             // 
             // LineNumberBackColorTitleLabel
@@ -574,7 +574,6 @@
             this.ApplyButton.Size = new System.Drawing.Size(100, 30);
             this.ApplyButton.TabIndex = 2;
             this.ApplyButton.Text = "適用";
-            this.ApplyButton.UseVisualStyleBackColor = true;
             // 
             // ExitButton
             // 
@@ -584,7 +583,6 @@
             this.ExitButton.Size = new System.Drawing.Size(100, 30);
             this.ExitButton.TabIndex = 1;
             this.ExitButton.Text = "キャンセル";
-            this.ExitButton.UseVisualStyleBackColor = true;
             // 
             // RunButton
             // 
@@ -593,7 +591,6 @@
             this.RunButton.Size = new System.Drawing.Size(120, 30);
             this.RunButton.TabIndex = 0;
             this.RunButton.Text = "OK";
-            this.RunButton.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
