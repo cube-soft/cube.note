@@ -82,9 +82,11 @@ namespace Cube.Note.App.Editor
                             break;
                         case "LineNumberBackColor":
                             View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
+                            View.ColorScheme.CleanedLineBar = Model.LineNumberBackColor;
                             break;
                         case "LineNumberForeColor":
                             View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
+                            View.ColorScheme.HighlightColor = Model.LineNumberForeColor;
                             break;
                         case "TabWidth":
                             View.TabWidth = Model.TabWidth;
@@ -97,12 +99,6 @@ namespace Cube.Note.App.Editor
                             break;
                         case "RulerVisible":
                             View.ShowsHRuler = Model.RulerVisible;
-                            break;
-                        case "CurrentLineVisible":
-                            View.HighlightsCurrentLine = Model.CurrentLineVisible;
-                            break;
-                        case "ModifiedLineVisible":
-                            View.ShowsDirtBar = Model.ModifiedLineVisible;
                             break;
                         case "EolVisible":
                             View.DrawsEolCode = Model.SpecialCharsVisible && Model.EolVisible;
@@ -118,6 +114,15 @@ namespace Cube.Note.App.Editor
                             break;
                         case "SpecialCharsVisible":
                             UpdateSpecialCharsVisible();
+                            break;
+                        case "CurrentLineVisible":
+                            View.HighlightsCurrentLine = Model.CurrentLineVisible;
+                            break;
+                        case "ModifiedLineVisible":
+                            View.ShowsDirtBar = Model.ModifiedLineVisible;
+                            break;
+                        case "BracketVisible":
+                            View.HighlightsMatchedBracket = Model.BracketVisible;
                             break;
                         default:
                             return;
@@ -155,6 +160,7 @@ namespace Cube.Note.App.Editor
                 View.ShowsHRuler                = Model.RulerVisible;
                 View.HighlightsCurrentLine      = Model.CurrentLineVisible;
                 View.ShowsDirtBar               = Model.ModifiedLineVisible;
+                View.HighlightsMatchedBracket   = Model.BracketVisible;
 
                 UpdateSpecialCharsVisible();
 

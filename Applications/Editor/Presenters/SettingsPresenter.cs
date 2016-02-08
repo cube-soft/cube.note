@@ -211,6 +211,9 @@ namespace Cube.Note.App.Editor
                     case "ModifiedLineVisible":
                         Model.ModifiedLineVisible = (bool)e.Value;
                         break;
+                    case "BracketVisible":
+                        Model.BracketVisible = (bool)e.Value;
+                        break;
                     case "RemoveWarning":
                         Model.RemoveWarning = (bool)e.Value;
                         break;

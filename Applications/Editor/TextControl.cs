@@ -52,11 +52,17 @@ namespace Cube.Note.App.Editor
             LeftMargin  = 8;
             Margin      = new Padding(0);
 
-            ColorScheme.LineNumberBack = SystemColors.Control;
-            ColorScheme.LineNumberFore = SystemColors.ControlDark;
-            ColorScheme.SelectionBack  = SystemColors.Highlight;
-            ColorScheme.SelectionFore  = SystemColors.HighlightText;
-            ColorScheme.EolColor       = ColorScheme.WhiteSpaceColor;
+            ColorScheme.LineNumberBack     = SystemColors.Control;
+            ColorScheme.LineNumberFore     = SystemColors.ControlDark;
+            ColorScheme.HighlightColor     = ColorScheme.LineNumberFore;
+            ColorScheme.SelectionBack      = SystemColors.Highlight;
+            ColorScheme.SelectionFore      = SystemColors.HighlightText;
+            ColorScheme.MatchedBracketBack = SystemColors.Highlight;
+            ColorScheme.MatchedBracketFore = SystemColors.HighlightText;
+            ColorScheme.EolColor           = ColorScheme.WhiteSpaceColor;
+            ColorScheme.EofColor           = ColorScheme.WhiteSpaceColor;
+            ColorScheme.CleanedLineBar     = ColorScheme.LineNumberBack;
+            ColorScheme.DirtyLineBar       = Color.FromArgb(251, 180, 13);
         }
 
         #endregion

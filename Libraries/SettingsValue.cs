@@ -210,6 +210,48 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// HighlightBackColor
+        ///
+        /// <summary>
+        /// 強調表示時の背景色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color HighlightBackColor
+        {
+            get { return _highlightBackColor; }
+            set
+            {
+                if (_highlightBackColor == value) return;
+                _highlightBackColor = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("HighlightBackColor"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// HighlightForeColor
+        ///
+        /// <summary>
+        /// 強調表示時の前景色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color HighlightForeColor
+        {
+            get { return _highlightForeColor; }
+            set
+            {
+                if (_highlightForeColor == value) return;
+                _highlightForeColor = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("HighlightForeColor"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// LineNumberBackColor
         ///
         /// <summary>
@@ -506,6 +548,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// BracketVisible
+        ///
+        /// <summary>
+        /// 対応する括弧を強調表示するかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool BracketVisible
+        {
+            get { return _bracketVisible; }
+            set
+            {
+                if (_bracketVisible == value) return;
+                _bracketVisible = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("BracketVisible"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// RemoveWarning
         ///
         /// <summary>
@@ -564,6 +627,7 @@ namespace Cube.Note
             FullSpaceVisible    = src.FullSpaceVisible;
             CurrentLineVisible  = src.CurrentLineVisible;
             ModifiedLineVisible = src.ModifiedLineVisible;
+            BracketVisible      = src.BracketVisible;
             RemoveWarning       = src.RemoveWarning;
         }
 
@@ -683,6 +747,8 @@ namespace Cube.Note
             // colors
             BackColor = SystemColors.Window;
             ForeColor = SystemColors.WindowText;
+            HighlightBackColor = SystemColors.Highlight;
+            HighlightForeColor = SystemColors.HighlightText;
             LineNumberBackColor = SystemColors.Control;
             LineNumberForeColor = SystemColors.ControlDark;
 
@@ -700,6 +766,7 @@ namespace Cube.Note
             FullSpaceVisible = true;
             CurrentLineVisible = false;
             ModifiedLineVisible = false;
+            BracketVisible = false;
             RemoveWarning = true;
         }
 
@@ -708,6 +775,8 @@ namespace Cube.Note
         #region Fields
         public Color _backColor;
         public Color _foreColor;
+        public Color _highlightBackColor;
+        public Color _highlightForeColor;
         public Color _lineNumberBackColor;
         public Color _lineNumberForeColor;
         public TimeSpan _autoSaveTime;
@@ -725,6 +794,7 @@ namespace Cube.Note
         public bool _fullSpaceVisible;
         public bool _currentLineVisible;
         public bool _modifiedLineVisible;
+        public bool _bracketVisible;
         public bool _removeWarning;
         #endregion
     }

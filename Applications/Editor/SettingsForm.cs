@@ -20,7 +20,7 @@
 using System;
 using System.Reflection;
 using System.Drawing;
-using System.Windows.Forms;
+using System.Windows.Forms; 
 
 namespace Cube.Note.App.Editor
 {
@@ -90,6 +90,8 @@ namespace Cube.Note.App.Editor
             // colors
             BackColorButton.Click += ColorButton_Click;
             ForeColorButton.Click += ColorButton_Click;
+            HighlightBackColorButton.Click += ColorButton_Click;
+            HighlightForeColorButton.Click += ColorButton_Click;
             LineNumberBackColorButton.Click += ColorButton_Click;
             LineNumberForeColorButton.Click += ColorButton_Click;
 
@@ -107,6 +109,7 @@ namespace Cube.Note.App.Editor
             FullSpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
             CurrentLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
             ModifiedLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            BracketVisibleCheckBox.CheckedChanged += CheckBoxChanged;
             RemoveWarningCheckBox.CheckedChanged += CheckBoxChanged;
 
             // numeric updown
@@ -137,6 +140,10 @@ namespace Cube.Note.App.Editor
             BackColorButton.ForeColor = settings.BackColor;
             ForeColorButton.BackColor = settings.ForeColor;
             ForeColorButton.ForeColor = settings.ForeColor;
+            HighlightBackColorButton.BackColor = settings.HighlightBackColor;
+            HighlightBackColorButton.ForeColor = settings.HighlightBackColor;
+            HighlightForeColorButton.BackColor = settings.HighlightForeColor;
+            HighlightForeColorButton.ForeColor = settings.HighlightForeColor;
             LineNumberBackColorButton.BackColor = settings.LineNumberBackColor;
             LineNumberBackColorButton.ForeColor = settings.LineNumberBackColor;
             LineNumberForeColorButton.BackColor = settings.LineNumberForeColor;
@@ -156,6 +163,7 @@ namespace Cube.Note.App.Editor
             FullSpaceVisibleCheckBox.Checked = settings.FullSpaceVisible;
             CurrentLineVisibleCheckBox.Checked = settings.CurrentLineVisible;
             ModifiedLineVisibleCheckBox.Checked = settings.ModifiedLineVisible;
+            BracketVisibleCheckBox.Checked = settings.BracketVisible;
             RemoveWarningCheckBox.Checked = settings.RemoveWarning;
 
             // numeric updown
@@ -411,6 +419,8 @@ namespace Cube.Note.App.Editor
         {
             UpdateColor(BackColorButton, BackColorLabel);
             UpdateColor(ForeColorButton, ForeColorLabel);
+            UpdateColor(HighlightBackColorButton, HighlightBackColorLabel);
+            UpdateColor(HighlightForeColorButton, HighlightForeColorLabel);
             UpdateColor(LineNumberBackColorButton, LineNumberBackColorLabel);
             UpdateColor(LineNumberForeColorButton, LineNumberForeColorLabel);
 
@@ -493,10 +503,10 @@ namespace Cube.Note.App.Editor
 
             LineNumberBackColorButton.Enabled     = enable;
             LineNumberBackColorLabel.Enabled      = enable;
-            LineNumberBackColorTitleLabel.Enabled = enable;
+            Label22.Enabled = enable;
             LineNumberForeColorButton.Enabled     = enable;
             LineNumberForeColorLabel.Enabled      = enable;
-            LineNumberForeColorTitleLabel.Enabled = enable;
+            Label23.Enabled = enable;
         }
 
         /* ----------------------------------------------------------------- */
