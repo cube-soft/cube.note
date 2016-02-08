@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("CubeNote")]
-[assembly: AssemblyCopyright("Copyright © 2010 CubeSoft, Inc.")]
+[assembly: AssemblyCopyright("Copyright © 2016 CubeSoft, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
