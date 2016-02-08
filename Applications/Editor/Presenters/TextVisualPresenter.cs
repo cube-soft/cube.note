@@ -80,13 +80,31 @@ namespace Cube.Note.App.Editor
                         case "ForeColor":
                             View.ForeColor = Model.ForeColor;
                             break;
+                        case "HighlightBackColor":
+                            View.ColorScheme.SelectionBack = Model.HighlightBackColor;
+                            View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
+                            break;
+                        case "HighlightForeColor":
+                            View.ColorScheme.SelectionFore = Model.HighlightForeColor;
+                            View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
+                            break;
                         case "LineNumberBackColor":
                             View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
                             View.ColorScheme.CleanedLineBar = Model.LineNumberBackColor;
                             break;
                         case "LineNumberForeColor":
                             View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
-                            View.ColorScheme.HighlightColor = Model.LineNumberForeColor;
+                            break;
+                        case "SpecialCharsColor":
+                            View.ColorScheme.WhiteSpaceColor = Model.SpecialCharsColor;
+                            View.ColorScheme.EofColor = Model.SpecialCharsColor;
+                            View.ColorScheme.EolColor = Model.SpecialCharsColor;
+                            break;
+                        case "CurrentLineColor":
+                            View.ColorScheme.HighlightColor = Model.CurrentLineColor;
+                            break;
+                        case "ModifiedLineColor":
+                            View.ColorScheme.DirtyLineBar = Model.ModifiedLineColor;
                             break;
                         case "TabWidth":
                             View.TabWidth = Model.TabWidth;

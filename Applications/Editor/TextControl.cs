@@ -59,6 +59,7 @@ namespace Cube.Note.App.Editor
             ColorScheme.SelectionFore      = SystemColors.HighlightText;
             ColorScheme.MatchedBracketBack = SystemColors.Highlight;
             ColorScheme.MatchedBracketFore = SystemColors.HighlightText;
+            ColorScheme.WhiteSpaceColor    = SystemColors.ControlDark;
             ColorScheme.EolColor           = ColorScheme.WhiteSpaceColor;
             ColorScheme.EofColor           = ColorScheme.WhiteSpaceColor;
             ColorScheme.CleanedLineBar     = ColorScheme.LineNumberBack;

@@ -294,6 +294,69 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SpecialCharsColor
+        ///
+        /// <summary>
+        /// 特殊文字の表示色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color SpecialCharsColor
+        {
+            get { return _specialCharsColor; }
+            set
+            {
+                if (_specialCharsColor == value) return;
+                _specialCharsColor = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("SpecialCharsColor"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CurrentLineColor
+        ///
+        /// <summary>
+        /// 現在行の表示色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color CurrentLineColor
+        {
+            get { return _currentLineColor; }
+            set
+            {
+                if (_currentLineColor == value) return;
+                _currentLineColor = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("CurrentLineColor"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ModifiedLineColor
+        ///
+        /// <summary>
+        /// 修正行の表示色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color ModifiedLineColor
+        {
+            get { return _modifiedLineColor; }
+            set
+            {
+                if (_modifiedLineColor == value) return;
+                _modifiedLineColor = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("ModifiedLineColor"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// AutoSaveTime
         ///
         /// <summary>
@@ -606,15 +669,23 @@ namespace Cube.Note
         {
             Path = src.Path;
 
+            // fonts
             FontName  = src.FontName;
             FontSize  = src.FontSize;
             FontStyle = src.FontStyle;
 
-            BackColor = src.BackColor;
-            ForeColor = src.ForeColor;
+            // colors
+            BackColor           = src.BackColor;
+            ForeColor           = src.ForeColor;
+            HighlightBackColor  = src.HighlightBackColor;
+            HighlightForeColor  = src.HighlightForeColor;
             LineNumberBackColor = src.LineNumberBackColor;
             LineNumberForeColor = src.LineNumberForeColor;
+            SpecialCharsColor   = src.SpecialCharsColor;
+            CurrentLineColor    = src.CurrentLineColor;
+            ModifiedLineColor   = src.ModifiedLineColor;
 
+            // others
             AutoSaveTime        = src.AutoSaveTime;
             TabWidth            = src.TabWidth;
             TabToSpace          = src.TabToSpace;
@@ -751,6 +822,9 @@ namespace Cube.Note
             HighlightForeColor = SystemColors.HighlightText;
             LineNumberBackColor = SystemColors.Control;
             LineNumberForeColor = SystemColors.ControlDark;
+            SpecialCharsColor = SystemColors.ControlDark;
+            CurrentLineColor = SystemColors.ControlDark;
+            ModifiedLineColor = Color.FromArgb(251, 180, 13);
 
             // others
             AutoSaveTime = TimeSpan.FromSeconds(30);
@@ -779,6 +853,9 @@ namespace Cube.Note
         public Color _highlightForeColor;
         public Color _lineNumberBackColor;
         public Color _lineNumberForeColor;
+        public Color _specialCharsColor;
+        public Color _currentLineColor;
+        public Color _modifiedLineColor;
         public TimeSpan _autoSaveTime;
         public string _fontName;
         public double _fontSize;
