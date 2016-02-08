@@ -121,6 +121,24 @@ namespace Cube.Note.Tests
             );
         }
 
+        [TestCase("Highlight")]
+        public void HighlightBackColor(string expected)
+        {
+            Assert.That(
+                Settings.HighlightBackColor,
+                Is.EqualTo(Color.FromName(expected))
+            );
+        }
+
+        [TestCase("HighlightText")]
+        public void HighlightForeColor(string expected)
+        {
+            Assert.That(
+                Settings.HighlightForeColor,
+                Is.EqualTo(Color.FromName(expected))
+            );
+        }
+
         [TestCase("Control")]
         public void LineNumberBackColor(string expected)
         {
@@ -135,6 +153,24 @@ namespace Cube.Note.Tests
         {
             Assert.That(
                 Settings.LineNumberForeColor,
+                Is.EqualTo(Color.FromName(expected))
+            );
+        }
+
+        [TestCase("ControlDark")]
+        public void SpecialCharsColor(string expected)
+        {
+            Assert.That(
+                Settings.SpecialCharsColor,
+                Is.EqualTo(Color.FromName(expected))
+            );
+        }
+
+        [TestCase("ControlDark")]
+        public void CurrentLineColor(string expected)
+        {
+            Assert.That(
+                Settings.CurrentLineColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
