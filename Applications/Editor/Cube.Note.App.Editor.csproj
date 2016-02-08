@@ -92,6 +92,7 @@
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
     <Compile Include="Presenters\SearchPresenter.cs" />
     <Compile Include="Presenters\TextPresenter.cs" />
+    <Compile Include="Presenters\TextVisualPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsForm.cs">

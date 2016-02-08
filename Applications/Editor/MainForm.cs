@@ -113,6 +113,7 @@ namespace Cube.Note.App.Editor
         private void InitializePresenters()
         {
             new TextPresenter(TextEditControl, Pages);
+            new TextVisualPresenter(TextEditControl, Settings);
             new PageCollectionPresenter(PageCollectionControl, Pages);
             new SearchPresenter(SearchControl, Pages);
 

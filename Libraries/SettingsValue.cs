@@ -485,7 +485,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CurrentLineVisible
+        /// ModifiedLineVisible
         ///
         /// <summary>
         /// 修正行を強調表示するかどうかを示す値を取得または設定します。
