@@ -169,11 +169,23 @@ namespace Cube.Note.App.Editor
                     case "ForeColor":
                         Model.ForeColor = (Color)e.Value;
                         break;
+                    case "HighlightBackColor":
+                        Model.HighlightBackColor = (Color)e.Value;
+                        break;
+                    case "HighlightForeColor":
+                        Model.HighlightForeColor = (Color)e.Value;
+                        break;
                     case "LineNumberBackColor":
                         Model.LineNumberBackColor = (Color)e.Value;
                         break;
                     case "LineNumberForeColor":
                         Model.LineNumberForeColor = (Color)e.Value;
+                        break;
+                    case "SpecialCharsColor":
+                        Model.SpecialCharsColor = (Color)e.Value;
+                        break;
+                    case "CurrentLineColor":
+                        Model.CurrentLineColor = (Color)e.Value;
                         break;
                     case "AutoSaveTime":
                         Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));

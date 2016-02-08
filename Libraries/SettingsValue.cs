@@ -336,27 +336,6 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ModifiedLineColor
-        ///
-        /// <summary>
-        /// 修正行の表示色を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public Color ModifiedLineColor
-        {
-            get { return _modifiedLineColor; }
-            set
-            {
-                if (_modifiedLineColor == value) return;
-                _modifiedLineColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ModifiedLineColor"));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// AutoSaveTime
         ///
         /// <summary>
@@ -683,7 +662,6 @@ namespace Cube.Note
             LineNumberForeColor = src.LineNumberForeColor;
             SpecialCharsColor   = src.SpecialCharsColor;
             CurrentLineColor    = src.CurrentLineColor;
-            ModifiedLineColor   = src.ModifiedLineColor;
 
             // others
             AutoSaveTime        = src.AutoSaveTime;
@@ -824,7 +802,6 @@ namespace Cube.Note
             LineNumberForeColor = SystemColors.ControlDark;
             SpecialCharsColor = SystemColors.ControlDark;
             CurrentLineColor = SystemColors.ControlDark;
-            ModifiedLineColor = Color.FromArgb(251, 180, 13);
 
             // others
             AutoSaveTime = TimeSpan.FromSeconds(30);
@@ -855,7 +832,6 @@ namespace Cube.Note
         public Color _lineNumberForeColor;
         public Color _specialCharsColor;
         public Color _currentLineColor;
-        public Color _modifiedLineColor;
         public TimeSpan _autoSaveTime;
         public string _fontName;
         public double _fontSize;

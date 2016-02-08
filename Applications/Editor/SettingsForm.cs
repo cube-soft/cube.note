@@ -94,6 +94,8 @@ namespace Cube.Note.App.Editor
             HighlightForeColorButton.Click += ColorButton_Click;
             LineNumberBackColorButton.Click += ColorButton_Click;
             LineNumberForeColorButton.Click += ColorButton_Click;
+            SpecialCharsColorButton.Click += ColorButton_Click;
+            CurrentLineColorButton.Click += ColorButton_Click;
 
             // fonts
             FontButton.Click += FontButton_Click;
@@ -120,6 +122,7 @@ namespace Cube.Note.App.Editor
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
             RulerVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
+            CurrentLineVisibleCheckBox.CheckedChanged += (s, e) => EnableCurrentLine();
         }
 
         /* ----------------------------------------------------------------- */
@@ -148,6 +151,10 @@ namespace Cube.Note.App.Editor
             LineNumberBackColorButton.ForeColor = settings.LineNumberBackColor;
             LineNumberForeColorButton.BackColor = settings.LineNumberForeColor;
             LineNumberForeColorButton.ForeColor = settings.LineNumberForeColor;
+            SpecialCharsColorButton.BackColor = settings.SpecialCharsColor;
+            SpecialCharsColorButton.ForeColor = settings.SpecialCharsColor;
+            CurrentLineColorButton.BackColor = settings.CurrentLineColor;
+            CurrentLineColorButton.ForeColor = settings.CurrentLineColor;
 
             // fotns
             FontButton.Tag = settings.Font;
@@ -423,11 +430,14 @@ namespace Cube.Note.App.Editor
             UpdateColor(HighlightForeColorButton, HighlightForeColorLabel);
             UpdateColor(LineNumberBackColorButton, LineNumberBackColorLabel);
             UpdateColor(LineNumberForeColorButton, LineNumberForeColorLabel);
+            UpdateColor(SpecialCharsColorButton, SpecialCharsColorLabel);
+            UpdateColor(CurrentLineColorButton, CurrentLineColorLabel);
 
             UpdateFont(FontButton.Tag as Font, FontLabel);
 
             EnableLineNumber();
             EnableSpecialChars();
+            EnableCurrentLine();
         }
 
         /* ----------------------------------------------------------------- */
@@ -482,10 +492,31 @@ namespace Cube.Note.App.Editor
         {
             var enable = SpecialCharsVisibleCheckBox.Checked;
 
-            EolVisibleCheckBox.Enabled       = enable;
-            TabVisibleCheckBox.Enabled       = enable;
-            SpaceVisibleCheckBox.Enabled     = enable;
-            FullSpaceVisibleCheckBox.Enabled = enable;
+            SpecialCharsColorTitleLabel.Enabled = enable;
+            SpecialCharsColorButton.Enabled     = enable;
+            SpecialCharsColorLabel.Enabled      = enable;
+            EolVisibleCheckBox.Enabled          = enable;
+            TabVisibleCheckBox.Enabled          = enable;
+            SpaceVisibleCheckBox.Enabled        = enable;
+            FullSpaceVisibleCheckBox.Enabled    = enable;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnableCurrentLine
+        ///
+        /// <summary>
+        /// 現在行に関する設定の変更を可能にします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void EnableCurrentLine()
+        {
+            var enable = CurrentLineVisibleCheckBox.Checked;
+
+            CurrentLineColorTitleLabel.Enabled = enable;
+            CurrentLineColorButton.Enabled     = enable;
+            CurrentLineColorLabel.Enabled      = enable;
         }
 
         /* ----------------------------------------------------------------- */
@@ -503,10 +534,10 @@ namespace Cube.Note.App.Editor
 
             LineNumberBackColorButton.Enabled     = enable;
             LineNumberBackColorLabel.Enabled      = enable;
-            Label22.Enabled = enable;
+            LineNumberBackColorTitleLabel.Enabled = enable;
             LineNumberForeColorButton.Enabled     = enable;
             LineNumberForeColorLabel.Enabled      = enable;
-            Label23.Enabled = enable;
+            LineNumberForeColorTitleLabel.Enabled = enable;
         }
 
         /* ----------------------------------------------------------------- */

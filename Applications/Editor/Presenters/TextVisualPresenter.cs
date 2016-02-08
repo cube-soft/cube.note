@@ -81,11 +81,12 @@ namespace Cube.Note.App.Editor
                             View.ForeColor = Model.ForeColor;
                             break;
                         case "HighlightBackColor":
-                            View.ColorScheme.SelectionBack = Model.HighlightBackColor;
+                            View.ColorScheme.SelectionBack      = Model.HighlightBackColor;
                             View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
+                            View.ColorScheme.DirtyLineBar       = Model.HighlightBackColor;
                             break;
                         case "HighlightForeColor":
-                            View.ColorScheme.SelectionFore = Model.HighlightForeColor;
+                            View.ColorScheme.SelectionFore      = Model.HighlightForeColor;
                             View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
                             break;
                         case "LineNumberBackColor":
@@ -97,14 +98,11 @@ namespace Cube.Note.App.Editor
                             break;
                         case "SpecialCharsColor":
                             View.ColorScheme.WhiteSpaceColor = Model.SpecialCharsColor;
-                            View.ColorScheme.EofColor = Model.SpecialCharsColor;
-                            View.ColorScheme.EolColor = Model.SpecialCharsColor;
+                            View.ColorScheme.EofColor        = Model.SpecialCharsColor;
+                            View.ColorScheme.EolColor        = Model.SpecialCharsColor;
                             break;
                         case "CurrentLineColor":
                             View.ColorScheme.HighlightColor = Model.CurrentLineColor;
-                            break;
-                        case "ModifiedLineColor":
-                            View.ColorScheme.DirtyLineBar = Model.ModifiedLineColor;
                             break;
                         case "TabWidth":
                             View.TabWidth = Model.TabWidth;
@@ -145,6 +143,8 @@ namespace Cube.Note.App.Editor
                         default:
                             return;
                     }
+
+                    View.Refresh();
                 });
             }
             catch (Exception err) { Logger.Error(err); }
@@ -167,18 +167,28 @@ namespace Cube.Note.App.Editor
         {
             Sync(() =>
             {
-                View.Font                       = Model.Font;
-                View.BackColor                  = Model.BackColor;
-                View.ForeColor                  = Model.ForeColor;
-                View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
-                View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
-                View.TabWidth                   = Model.TabWidth;
-                View.ConvertsTabToSpaces        = Model.TabToSpace;
-                View.ShowsLineNumber            = Model.LineNumberVisible;
-                View.ShowsHRuler                = Model.RulerVisible;
-                View.HighlightsCurrentLine      = Model.CurrentLineVisible;
-                View.ShowsDirtBar               = Model.ModifiedLineVisible;
-                View.HighlightsMatchedBracket   = Model.BracketVisible;
+                View.Font                           = Model.Font;
+                View.BackColor                      = Model.BackColor;
+                View.ForeColor                      = Model.ForeColor;
+                View.ColorScheme.SelectionBack      = Model.HighlightBackColor;
+                View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
+                View.ColorScheme.DirtyLineBar       = Model.HighlightBackColor;
+                View.ColorScheme.SelectionFore      = Model.HighlightForeColor;
+                View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
+                View.ColorScheme.LineNumberBack     = Model.LineNumberBackColor;
+                View.ColorScheme.CleanedLineBar     = Model.LineNumberBackColor;
+                View.ColorScheme.LineNumberFore     = Model.LineNumberForeColor;
+                View.ColorScheme.WhiteSpaceColor    = Model.SpecialCharsColor;
+                View.ColorScheme.EolColor           = Model.SpecialCharsColor;
+                View.ColorScheme.EofColor           = Model.SpecialCharsColor;
+                View.ColorScheme.HighlightColor     = Model.CurrentLineColor;
+                View.TabWidth                       = Model.TabWidth;
+                View.ConvertsTabToSpaces            = Model.TabToSpace;
+                View.ShowsLineNumber                = Model.LineNumberVisible;
+                View.ShowsHRuler                    = Model.RulerVisible;
+                View.HighlightsCurrentLine          = Model.CurrentLineVisible;
+                View.ShowsDirtBar                   = Model.ModifiedLineVisible;
+                View.HighlightsMatchedBracket       = Model.BracketVisible;
 
                 UpdateSpecialCharsVisible();
 
