@@ -69,21 +69,59 @@ namespace Cube.Note.App.Editor
             {
                 Sync(() =>
                 {
-                    if (e.PropertyName == "Font") View.Font = Model.Font;
-                    else if (e.PropertyName == "BackColor") View.BackColor = Model.BackColor;
-                    else if (e.PropertyName == "ForeColor") View.ForeColor = Model.ForeColor;
-                    else if (e.PropertyName == "LineNumberBackColor") View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
-                    else if (e.PropertyName == "LineNumberForeColor") View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
-                    else if (e.PropertyName == "TabWidth") View.TabWidth = Model.TabWidth;
-                    else if (e.PropertyName == "TabToSpace") View.ConvertsTabToSpaces = Model.TabToSpace;
-                    else if (e.PropertyName == "LineNumberVisible") View.ShowsLineNumber = Model.LineNumberVisible;
-                    else if (e.PropertyName == "RulerVisible") View.ShowsHRuler = Model.RulerVisible;
-                    else if (e.PropertyName == "CurrentLineVisible") View.HighlightsCurrentLine = Model.CurrentLineVisible;
-                    else if (e.PropertyName == "ModifiedLineVisible") View.ShowsDirtBar = Model.ModifiedLineVisible;
-                    else if (e.PropertyName == "SpecialCharsVisible") UpdateSpecialCharsVisible();
-                    else if (e.PropertyName == "EolVisible") UpdateSpecialCharsVisible();
-                    else if (e.PropertyName == "SpaceVisible") UpdateSpecialCharsVisible();
-                    else if (e.PropertyName == "FullSpaceVisible") UpdateSpecialCharsVisible();
+                    switch (e.PropertyName)
+                    {
+                        case "Font":
+                            View.Font = Model.Font;
+                            break;
+                        case "BackColor":
+                            View.BackColor = Model.BackColor;
+                            break;
+                        case "ForeColor":
+                            View.ForeColor = Model.ForeColor;
+                            break;
+                        case "LineNumberBackColor":
+                            View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
+                            break;
+                        case "LineNumberForeColor":
+                            View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
+                            break;
+                        case "TabWidth":
+                            View.TabWidth = Model.TabWidth;
+                            break;
+                        case "TabToSpace":
+                            View.ConvertsTabToSpaces = Model.TabToSpace;
+                            break;
+                        case "LineNumberVisible":
+                            View.ShowsLineNumber = Model.LineNumberVisible;
+                            break;
+                        case "RulerVisible":
+                            View.ShowsHRuler = Model.RulerVisible;
+                            break;
+                        case "CurrentLineVisible":
+                            View.HighlightsCurrentLine = Model.CurrentLineVisible;
+                            break;
+                        case "ModifiedLineVisible":
+                            View.ShowsDirtBar = Model.ModifiedLineVisible;
+                            break;
+                        case "EolVisible":
+                            View.DrawsEolCode = Model.SpecialCharsVisible && Model.EolVisible;
+                            break;
+                        case "TabVisible":
+                            View.DrawsTab = Model.SpecialCharsVisible && Model.TabVisible;
+                            break;
+                        case "SpaceVisible":
+                            View.DrawsSpace = Model.SpecialCharsVisible && Model.SpaceVisible;
+                            break;
+                        case "FullSpaceVisible":
+                            View.DrawsFullWidthSpace = Model.SpecialCharsVisible && Model.FullSpaceVisible;
+                            break;
+                        case "SpecialCharsVisible":
+                            UpdateSpecialCharsVisible();
+                            break;
+                        default:
+                            return;
+                    }
 
                     View.ViewWidth = 0; // refresh
                 });
@@ -108,17 +146,17 @@ namespace Cube.Note.App.Editor
         {
             Sync(() =>
             {
-                View.Font = Model.Font;
-                View.BackColor = Model.BackColor;
-                View.ForeColor = Model.ForeColor;
+                View.Font                       = Model.Font;
+                View.BackColor                  = Model.BackColor;
+                View.ForeColor                  = Model.ForeColor;
                 View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
                 View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
-                View.TabWidth = Model.TabWidth;
-                View.ConvertsTabToSpaces = Model.TabToSpace;
-                View.ShowsLineNumber = Model.LineNumberVisible;
-                View.ShowsHRuler = Model.RulerVisible;
-                View.HighlightsCurrentLine = Model.CurrentLineVisible;
-                View.ShowsDirtBar = Model.ModifiedLineVisible;
+                View.TabWidth                   = Model.TabWidth;
+                View.ConvertsTabToSpaces        = Model.TabToSpace;
+                View.ShowsLineNumber            = Model.LineNumberVisible;
+                View.ShowsHRuler                = Model.RulerVisible;
+                View.HighlightsCurrentLine      = Model.CurrentLineVisible;
+                View.ShowsDirtBar               = Model.ModifiedLineVisible;
 
                 UpdateSpecialCharsVisible();
 
