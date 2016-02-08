@@ -83,8 +83,8 @@ namespace Cube.Note.App.Editor
         private void InitializeEvents()
         {
             // buttons
-            RunButton.Click += (s, e) => Close();
-            ExitButton.Click += (s, e) => Close();
+            RunButton.Click += RunButton_Click;
+            ExitButton.Click += ExitButton_Click;
             ApplyButton.Click += ApplyButton_Click;
 
             // colors
@@ -196,11 +196,22 @@ namespace Cube.Note.App.Editor
         /// Applied
         ///
         /// <summary>
-        /// 適用ボタンが押下された時に発生するイベントです。
+        /// OK または適用ボタンが押下された時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public event EventHandler Applied;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Canceled
+        ///
+        /// <summary>
+        /// キャンセルボタンが押下された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Canceled;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,6 +240,20 @@ namespace Cube.Note.App.Editor
         protected virtual void OnApplied(EventArgs e)
         {
             if (Applied != null) Applied(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCanceled
+        ///
+        /// <summary>
+        /// Canceled イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnCanceled(EventArgs e)
+        {
+            if (Canceled != null) Canceled(this, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -276,6 +301,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// RunButton_Click
+        ///
+        /// <summary>
+        /// OK ボタンが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RunButton_Click(object sender, EventArgs e)
+        {
+            ApplyButton_Click(sender, e);
+            Close();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ApplyButton_Click
         ///
         /// <summary>
@@ -287,6 +327,21 @@ namespace Cube.Note.App.Editor
         {
             OnApplied(e);
             ApplyButton.Enabled = false;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExitButton_Click
+        ///
+        /// <summary>
+        /// キャンセルボタンが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            OnCanceled(e);
+            Close();
         }
 
         /* ----------------------------------------------------------------- */
