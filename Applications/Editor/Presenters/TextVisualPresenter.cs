@@ -122,8 +122,6 @@ namespace Cube.Note.App.Editor
                         default:
                             return;
                     }
-
-                    View.ViewWidth = 0; // refresh
                 });
             }
             catch (Exception err) { Logger.Error(err); }

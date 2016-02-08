@@ -112,8 +112,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new TextPresenter(TextEditControl, Pages);
-            new TextVisualPresenter(TextEditControl, Settings);
+            new TextPresenter(TextControl, Pages);
+            new TextVisualPresenter(TextControl, Settings);
             new PageCollectionPresenter(PageCollectionControl, Pages);
             new SearchPresenter(SearchControl, Pages);
 
@@ -269,8 +269,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog = new SettingsForm(Settings);
-            dialog.ShowDialog(this);
+            var view = new SettingsForm(Settings);
+            using (var presenter = new SettingsPresenter(view, Settings))
+            {
+                view.ShowDialog(this);
+                TextControl.ViewWidth = 0; // refresh
+            }
         }
 
         /* ----------------------------------------------------------------- */

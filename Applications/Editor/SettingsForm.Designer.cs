@@ -284,9 +284,19 @@
             // TabWidthNumericUpDown
             // 
             this.TabWidthNumericUpDown.Location = new System.Drawing.Point(121, 110);
+            this.TabWidthNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.TabWidthNumericUpDown.Name = "TabWidthNumericUpDown";
             this.TabWidthNumericUpDown.Size = new System.Drawing.Size(50, 23);
             this.TabWidthNumericUpDown.TabIndex = 12;
+            this.TabWidthNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // TabToSpaceCheckBox
             // 

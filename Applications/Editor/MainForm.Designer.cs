@@ -34,7 +34,7 @@
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
             this.SizeGripControl = new Cube.Forms.SizeGripControl();
-            this.TextEditControl = new Cube.Note.App.Editor.TextControl();
+            this.TextControl = new Cube.Note.App.Editor.TextControl();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
@@ -94,7 +94,7 @@
             // ContentsPanel.Panel2
             // 
             this.ContentsPanel.Panel2.Controls.Add(this.SizeGripControl);
-            this.ContentsPanel.Panel2.Controls.Add(this.TextEditControl);
+            this.ContentsPanel.Panel2.Controls.Add(this.TextControl);
             this.ContentsPanel.Size = new System.Drawing.Size(782, 396);
             this.ContentsPanel.SplitterDistance = 270;
             this.ContentsPanel.SplitterWidth = 1;
@@ -122,33 +122,33 @@
             this.SizeGripControl.TabIndex = 1;
             this.SizeGripControl.TabStop = false;
             // 
-            // TextEditControl
+            // TextControl
             // 
-            this.TextEditControl.BackColor = System.Drawing.SystemColors.Window;
-            this.TextEditControl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TextEditControl.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.TextEditControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextEditControl.DrawingOption = ((Sgry.Azuki.DrawingOption)(((((((Sgry.Azuki.DrawingOption.DrawsFullWidthSpace | Sgry.Azuki.DrawingOption.DrawsTab) 
+            this.TextControl.BackColor = System.Drawing.SystemColors.Window;
+            this.TextControl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TextControl.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.TextControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextControl.DrawingOption = ((Sgry.Azuki.DrawingOption)(((((((Sgry.Azuki.DrawingOption.DrawsFullWidthSpace | Sgry.Azuki.DrawingOption.DrawsTab) 
             | Sgry.Azuki.DrawingOption.DrawsEol) 
             | Sgry.Azuki.DrawingOption.HighlightCurrentLine) 
             | Sgry.Azuki.DrawingOption.ShowsLineNumber) 
             | Sgry.Azuki.DrawingOption.ShowsDirtBar) 
             | Sgry.Azuki.DrawingOption.HighlightsMatchedBracket)));
-            this.TextEditControl.FirstVisibleLine = 0;
-            this.TextEditControl.Font = new System.Drawing.Font("MS UI Gothic", 9F);
+            this.TextControl.FirstVisibleLine = 0;
+            this.TextControl.Font = new System.Drawing.Font("MS UI Gothic", 9F);
             fontInfo1.Name = "MS UI Gothic";
             fontInfo1.Size = 9;
             fontInfo1.Style = System.Drawing.FontStyle.Regular;
-            this.TextEditControl.FontInfo = fontInfo1;
-            this.TextEditControl.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.TextEditControl.LeftMargin = 8;
-            this.TextEditControl.Location = new System.Drawing.Point(0, 0);
-            this.TextEditControl.Margin = new System.Windows.Forms.Padding(0);
-            this.TextEditControl.Name = "TextEditControl";
-            this.TextEditControl.ScrollPos = new System.Drawing.Point(0, 0);
-            this.TextEditControl.Size = new System.Drawing.Size(511, 396);
-            this.TextEditControl.TabIndex = 0;
-            this.TextEditControl.ViewWidth = 104;
+            this.TextControl.FontInfo = fontInfo1;
+            this.TextControl.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.TextControl.LeftMargin = 8;
+            this.TextControl.Location = new System.Drawing.Point(0, 0);
+            this.TextControl.Margin = new System.Windows.Forms.Padding(0);
+            this.TextControl.Name = "TextControl";
+            this.TextControl.ScrollPos = new System.Drawing.Point(0, 0);
+            this.TextControl.Size = new System.Drawing.Size(511, 396);
+            this.TextControl.TabIndex = 0;
+            this.TextControl.ViewWidth = 104;
             // 
             // MenuToolStrip
             // 
@@ -349,7 +349,7 @@
         private System.Windows.Forms.ToolStripButton MenuSeparator2;
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
         private TitleControl TitleControl;
-        private TextControl TextEditControl;
+        private TextControl TextControl;
         private Forms.SizeGripControl SizeGripControl;
     }
 }
