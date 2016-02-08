@@ -46,9 +46,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
-            : base(view, model)
+        public PageCollectionPresenter(PageCollectionControl view,
+            PageCollection model, SettingsValue settings) : base(view, model)
         {
+            Settings = settings;
+
             View.NewPageRequired += View_NewPageRequired;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.Added += View_Added;
@@ -62,6 +64,21 @@ namespace Cube.Note.App.Editor
             Model.ActiveChanged += Model_ActiveChanged;
             Model.CollectionChanged += Model_CollectionChanged;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        /// 
+        /// <summary>
+        /// 設定オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsValue Settings { get; }
 
         #endregion
 
@@ -127,6 +144,11 @@ namespace Cube.Note.App.Editor
         private void View_Removing(object sender, ValueCancelEventArgs<int[]> e)
         {
             if (e.Value == null || e.Value.Length <= 0) return;
+            if (!Settings.RemoveWarning)
+            {
+                e.Cancel = false;
+                return;
+            }
 
             var index = e.Value[0];
             var message = new System.Text.StringBuilder();

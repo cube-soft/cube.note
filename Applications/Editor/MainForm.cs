@@ -114,7 +114,7 @@ namespace Cube.Note.App.Editor
         {
             new TextPresenter(TextControl, Pages);
             new TextVisualPresenter(TextControl, Settings);
-            new PageCollectionPresenter(PageCollectionControl, Pages);
+            new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
             new SearchPresenter(SearchControl, Pages);
 
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
@@ -137,7 +137,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
             InitializeLayout();
-            Saver = new AutoSaver(Pages);
+            Saver = new AutoSaver(Pages, Settings);
         }
 
         /* ----------------------------------------------------------------- */
