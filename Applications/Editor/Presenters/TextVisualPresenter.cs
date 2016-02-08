@@ -81,12 +81,12 @@ namespace Cube.Note.App.Editor
                             View.ForeColor = Model.ForeColor;
                             break;
                         case "HighlightBackColor":
-                            View.ColorScheme.SelectionBack      = Model.HighlightBackColor;
+                            View.ColorScheme.SelectionBack = Model.HighlightBackColor;
                             View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
-                            View.ColorScheme.DirtyLineBar       = Model.HighlightBackColor;
+                            View.ColorScheme.DirtyLineBar = Model.HighlightBackColor;
                             break;
                         case "HighlightForeColor":
-                            View.ColorScheme.SelectionFore      = Model.HighlightForeColor;
+                            View.ColorScheme.SelectionFore = Model.HighlightForeColor;
                             View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
                             break;
                         case "LineNumberBackColor":
@@ -98,8 +98,8 @@ namespace Cube.Note.App.Editor
                             break;
                         case "SpecialCharsColor":
                             View.ColorScheme.WhiteSpaceColor = Model.SpecialCharsColor;
-                            View.ColorScheme.EofColor        = Model.SpecialCharsColor;
-                            View.ColorScheme.EolColor        = Model.SpecialCharsColor;
+                            View.ColorScheme.EofColor = Model.SpecialCharsColor;
+                            View.ColorScheme.EolColor = Model.SpecialCharsColor;
                             break;
                         case "CurrentLineColor":
                             View.ColorScheme.HighlightColor = Model.CurrentLineColor;

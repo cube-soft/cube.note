@@ -61,7 +61,7 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
             InitializeVersionControl();
-            InitializeControls(settings);
+            Update(settings);
             InitializeEvents();
 
             Caption = TitleControl;
@@ -69,72 +69,18 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Initialize methods
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeEvents
+        /// Update
         ///
         /// <summary>
-        /// 各種イベントを初期化します。
+        /// 各種コントロールの状態を更新します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitializeEvents()
-        {
-            // buttons
-            RunButton.Click += RunButton_Click;
-            ExitButton.Click += ExitButton_Click;
-            ApplyButton.Click += ApplyButton_Click;
-
-            // colors
-            BackColorButton.Click += ColorButton_Click;
-            ForeColorButton.Click += ColorButton_Click;
-            HighlightBackColorButton.Click += ColorButton_Click;
-            HighlightForeColorButton.Click += ColorButton_Click;
-            LineNumberBackColorButton.Click += ColorButton_Click;
-            LineNumberForeColorButton.Click += ColorButton_Click;
-            SpecialCharsColorButton.Click += ColorButton_Click;
-            CurrentLineColorButton.Click += ColorButton_Click;
-
-            // fonts
-            FontButton.Click += FontButton_Click;
-
-            // checkboxes
-            TabToSpaceCheckBox.CheckedChanged += CheckBoxChanged;
-            LineNumberVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            RulerVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            EolVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            TabVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            SpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            FullSpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            CurrentLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            ModifiedLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            BracketVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            RemoveWarningCheckBox.CheckedChanged += CheckBoxChanged;
-
-            // numeric updown
-            TabWidthNumericUpDown.ValueChanged += NumericUpDownChanged;
-            AutoSaveTimeNumericUpDown.ValueChanged += NumericUpDownChanged;
-
-            // others
-            SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
-            LineNumberVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
-            RulerVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
-            CurrentLineVisibleCheckBox.CheckedChanged += (s, e) => EnableCurrentLine();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeControls
-        ///
-        /// <summary>
-        /// 各種コントロールの状態を初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeControls(SettingsValue settings)
+        public void Update(SettingsValue settings)
         {
             if (settings == null) return;
 
@@ -176,6 +122,65 @@ namespace Cube.Note.App.Editor
             // numeric updown
             TabWidthNumericUpDown.Value = settings.TabWidth;
             AutoSaveTimeNumericUpDown.Value = (int)settings.AutoSaveTime.TotalSeconds;
+        }
+
+        #endregion
+
+        #region Initialize methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeEvents
+        ///
+        /// <summary>
+        /// 各種イベントを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeEvents()
+        {
+            // buttons
+            RunButton.Click += RunButton_Click;
+            ExitButton.Click += ExitButton_Click;
+            ApplyButton.Click += ApplyButton_Click;
+            ResetButton.Click += (s, e) => OnReset(e);
+
+            // colors
+            BackColorButton.Click += ColorButton_Click;
+            ForeColorButton.Click += ColorButton_Click;
+            HighlightBackColorButton.Click += ColorButton_Click;
+            HighlightForeColorButton.Click += ColorButton_Click;
+            LineNumberBackColorButton.Click += ColorButton_Click;
+            LineNumberForeColorButton.Click += ColorButton_Click;
+            SpecialCharsColorButton.Click += ColorButton_Click;
+            CurrentLineColorButton.Click += ColorButton_Click;
+
+            // fonts
+            FontButton.Click += FontButton_Click;
+
+            // checkboxes
+            TabToSpaceCheckBox.CheckedChanged += CheckBoxChanged;
+            LineNumberVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            RulerVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            EolVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            TabVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            SpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            FullSpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            CurrentLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            ModifiedLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            BracketVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            RemoveWarningCheckBox.CheckedChanged += CheckBoxChanged;
+
+            // numeric updown
+            TabWidthNumericUpDown.ValueChanged += NumericUpDownChanged;
+            AutoSaveTimeNumericUpDown.ValueChanged += NumericUpDownChanged;
+
+            // others
+            SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
+            LineNumberVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
+            RulerVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
+            CurrentLineVisibleCheckBox.CheckedChanged += (s, e) => EnableCurrentLine();
         }
 
         /* ----------------------------------------------------------------- */
@@ -230,6 +235,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Reset
+        ///
+        /// <summary>
+        /// リセットボタンが押下された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Reset;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// PropertyChanged
         ///
         /// <summary>
@@ -273,6 +289,20 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnReset
+        ///
+        /// <summary>
+        /// Reset イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnReset(EventArgs e)
+        {
+            if (Reset != null) Reset(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnPropertyChanged
         ///
         /// <summary>
@@ -304,6 +334,7 @@ namespace Cube.Note.App.Editor
             base.OnLoad(e);
 
             UpdateControls();
+            ApplyButton.Enabled = false;
 
             var area = Screen.FromControl(this).WorkingArea.Size;
             if (Width  > area.Width ) Width  = area.Width;

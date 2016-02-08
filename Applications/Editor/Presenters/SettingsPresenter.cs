@@ -48,6 +48,7 @@ namespace Cube.Note.App.Editor
         {
             View.Applied         += View_Applied;
             View.Canceled        += View_Canceled;
+            View.Reset           += View_Reset;
             View.PropertyChanged += View_PropertyChanged;
 
             _backup.Assign(Model);
@@ -107,6 +108,7 @@ namespace Cube.Note.App.Editor
 
             View.Applied         -= View_Applied;
             View.Canceled        -= View_Canceled;
+            View.Reset           -= View_Reset;
             View.PropertyChanged -= View_PropertyChanged;
         }
 
@@ -123,9 +125,13 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Applied(object sender, EventArgs e)
+        private async void View_Applied(object sender, EventArgs e)
         {
-            _backup.Assign(Model);
+            await Async(() =>
+            {
+                _backup.Assign(Model);
+                Model.Save();
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -140,6 +146,27 @@ namespace Cube.Note.App.Editor
         private void View_Canceled(object sender, EventArgs e)
         {
             Model.Assign(_backup);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Canceled
+        /// 
+        /// <summary>
+        /// キャンセルボタンが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private async void View_Reset(object sender, EventArgs e)
+        {
+            await Async(() =>
+            {
+                var reset = new SettingsValue();
+                reset.Path = Model.Path;
+                Model.Assign(reset);
+            });
+
+            Sync(() => View.Update(Model));
         }
 
         /* ----------------------------------------------------------------- */
