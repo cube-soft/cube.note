@@ -52,7 +52,7 @@ namespace Cube.Note.Tests
         public void OneTimeSetUp()
         {
             var src = IoEx.Path.Combine(Examples, "Settings.json");
-            Settings = Cube.Settings.Load<SettingsValue>(src, Cube.Settings.FileType.Json);
+            Settings = SettingsValue.Create(src);
         }
 
         #endregion
@@ -84,6 +84,15 @@ namespace Cube.Note.Tests
         ///
         /* ----------------------------------------------------------------- */
         #region Properties
+        
+        [TestCase("Settings.json")]
+        public void Path(string expected)
+        {
+            Assert.That(
+                Settings.Path,
+                Is.EqualTo(IoEx.Path.Combine(Examples, expected))
+            );
+        }
 
         [TestCase("MS Gothic UI", 9.0)]
         public void Font(string name, double size)
@@ -262,8 +271,7 @@ namespace Cube.Note.Tests
         public void Save(string filename)
         {
             var dest = IoEx.Path.Combine(Results, filename);
-            Settings.ForeColor = System.Drawing.Color.FromArgb(1, 1, 1);
-            Cube.Settings.Save(Settings, dest, Cube.Settings.FileType.Json);
+            Settings.Save(dest);
             Assert.That(
                 IoEx.File.Exists(dest),
                 Is.True

@@ -19,11 +19,22 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Drawing;
+using IoEx = System.IO;
 
 namespace Cube.Note
 {
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SettingsValue
+    /// 
+    /// <summary>
+    /// 各種設定を保持するためのクラスです。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
     [DataContract]
     public class SettingsValue : ObservableSettingsValue
     {
@@ -46,6 +57,31 @@ namespace Cube.Note
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Path
+        ///
+        /// <summary>
+        /// 設定ファイルの保存先を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Path { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileType
+        ///
+        /// <summary>
+        /// 設定ファイルのファイル形式を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Settings.FileType FileType
+        {
+            get { return Settings.FileType.Json; }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -492,6 +528,84 @@ namespace Cube.Note
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// SettingsValue オブジェクトを保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save()
+        {
+            Save(Path);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// SettingsValue オブジェクトを保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save(string path)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(path)) return;
+
+                var directory = IoEx.Path.GetDirectoryName(path);
+                if (string.IsNullOrEmpty(directory)) return;
+                if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
+
+                Settings.Save(this, path, FileType);
+            }
+            catch (Exception /* err */) { /* ignore errors */ }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// SettingsValue オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SettingsValue Create(Assembly assembly, string filename)
+        {
+            var reader  = new AssemblyReader(assembly);
+            var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var leaf    = string.Format(@"{0}\{1}\{2}", reader.Company, reader.Product, filename);
+            var path    = IoEx.Path.Combine(appdata, leaf);
+            return Create(path);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// SettingsValue オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SettingsValue Create(string path)
+        {
+            var dest = !string.IsNullOrEmpty(path) && IoEx.File.Exists(path) ?
+                       Settings.Load<SettingsValue>(path, Settings.FileType.Json) :
+                       new SettingsValue();
+            dest.Path = path;
+            return dest;
+        }
+
+        #endregion
+
         #region Others
 
         /* ----------------------------------------------------------------- */
@@ -520,6 +634,10 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private void InitializeValues()
         {
+            // path
+            var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            Path = IoEx.Path.Combine(appdata, @"CubeSoft\CubeNote\Settings.json");
+
             // fonts
             FontName = "メイリオ";
             FontSize = 11.0;
