@@ -532,6 +532,43 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Assign
+        ///
+        /// <summary>
+        /// プロパティの内容を代入します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Assign(SettingsValue src)
+        {
+            Path = src.Path;
+
+            FontName  = src.FontName;
+            FontSize  = src.FontSize;
+            FontStyle = src.FontStyle;
+
+            BackColor = src.BackColor;
+            ForeColor = src.ForeColor;
+            LineNumberBackColor = src.LineNumberBackColor;
+            LineNumberForeColor = src.LineNumberForeColor;
+
+            AutoSaveTime        = src.AutoSaveTime;
+            TabWidth            = src.TabWidth;
+            TabToSpace          = src.TabToSpace;
+            LineNumberVisible   = src.LineNumberVisible;
+            RulerVisible        = src.RulerVisible;
+            SpecialCharsVisible = src.SpecialCharsVisible;
+            EolVisible          = src.EolVisible;
+            TabVisible          = src.TabVisible;
+            SpaceVisible        = src.SpaceVisible;
+            FullSpaceVisible    = src.FullSpaceVisible;
+            CurrentLineVisible  = src.CurrentLineVisible;
+            ModifiedLineVisible = src.ModifiedLineVisible;
+            RemoveWarning       = src.RemoveWarning;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Save
         ///
         /// <summary>
