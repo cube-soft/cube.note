@@ -100,7 +100,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Update()
         {
-            View.Font = Model.Font;
+            View.Font                           = Model.Font;
             View.BackColor                      = Model.BackColor;
             View.ForeColor                      = Model.ForeColor;
             View.ColorScheme.SelectionBack      = Model.HighlightBackColor;
