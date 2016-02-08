@@ -31,9 +31,9 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SettingsPresenter : Cube.Forms.PresenterBase<SettingsForm, SettingsValue>, IDisposable
+    public class SettingsPresenter : Cube.Forms.PresenterBase<SettingsForm, SettingsValue>
     {
-        #region Constructors and destructors
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
@@ -54,39 +54,6 @@ namespace Cube.Note.App.Editor
             _backup.Assign(Model);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~SettingsPresenter()
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~SettingsPresenter()
-        {
-            Dispose(false);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         #endregion
 
         #region Virtual methods
@@ -100,7 +67,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (_disposed) return;
             _disposed = true;
