@@ -84,40 +84,40 @@ namespace Cube.Note.App.Editor
         {
             if (settings == null) return;
 
-            BackColorButton.BackColor = settings.BackColor;
-            BackColorButton.ForeColor = settings.BackColor;
-            ForeColorButton.BackColor = settings.ForeColor;
-            ForeColorButton.ForeColor = settings.ForeColor;
-            HighlightBackColorButton.BackColor = settings.HighlightBackColor;
-            HighlightBackColorButton.ForeColor = settings.HighlightBackColor;
-            HighlightForeColorButton.BackColor = settings.HighlightForeColor;
-            HighlightForeColorButton.ForeColor = settings.HighlightForeColor;
+            BackColorButton.BackColor           = settings.BackColor;
+            BackColorButton.ForeColor           = settings.BackColor;
+            ForeColorButton.BackColor           = settings.ForeColor;
+            ForeColorButton.ForeColor           = settings.ForeColor;
+            HighlightBackColorButton.BackColor  = settings.HighlightBackColor;
+            HighlightBackColorButton.ForeColor  = settings.HighlightBackColor;
+            HighlightForeColorButton.BackColor  = settings.HighlightForeColor;
+            HighlightForeColorButton.ForeColor  = settings.HighlightForeColor;
             LineNumberBackColorButton.BackColor = settings.LineNumberBackColor;
             LineNumberBackColorButton.ForeColor = settings.LineNumberBackColor;
             LineNumberForeColorButton.BackColor = settings.LineNumberForeColor;
             LineNumberForeColorButton.ForeColor = settings.LineNumberForeColor;
-            SpecialCharsColorButton.BackColor = settings.SpecialCharsColor;
-            SpecialCharsColorButton.ForeColor = settings.SpecialCharsColor;
-            CurrentLineColorButton.BackColor = settings.CurrentLineColor;
-            CurrentLineColorButton.ForeColor = settings.CurrentLineColor;
+            SpecialCharsColorButton.BackColor   = settings.SpecialCharsColor;
+            SpecialCharsColorButton.ForeColor   = settings.SpecialCharsColor;
+            CurrentLineColorButton.BackColor    = settings.CurrentLineColor;
+            CurrentLineColorButton.ForeColor    = settings.CurrentLineColor;
 
-            FontButton.Tag = settings.Font;
+            FontButton.Tag                      = settings.Font;
 
-            TabToSpaceCheckBox.Checked = settings.TabToSpace;
-            LineNumberVisibleCheckBox.Checked = settings.LineNumberVisible;
-            RulerVisibleCheckBox.Checked = settings.RulerVisible;
+            TabToSpaceCheckBox.Checked          = settings.TabToSpace;
+            LineNumberVisibleCheckBox.Checked   = settings.LineNumberVisible;
+            RulerVisibleCheckBox.Checked        = settings.RulerVisible;
             SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
-            EolVisibleCheckBox.Checked = settings.EolVisible;
-            TabVisibleCheckBox.Checked = settings.TabVisible;
-            SpaceVisibleCheckBox.Checked = settings.SpaceVisible;
-            FullSpaceVisibleCheckBox.Checked = settings.FullSpaceVisible;
-            CurrentLineVisibleCheckBox.Checked = settings.CurrentLineVisible;
+            EolVisibleCheckBox.Checked          = settings.EolVisible;
+            TabVisibleCheckBox.Checked          = settings.TabVisible;
+            SpaceVisibleCheckBox.Checked        = settings.SpaceVisible;
+            FullSpaceVisibleCheckBox.Checked    = settings.FullSpaceVisible;
+            CurrentLineVisibleCheckBox.Checked  = settings.CurrentLineVisible;
             ModifiedLineVisibleCheckBox.Checked = settings.ModifiedLineVisible;
-            BracketVisibleCheckBox.Checked = settings.BracketVisible;
-            RemoveWarningCheckBox.Checked = settings.RemoveWarning;
+            BracketVisibleCheckBox.Checked      = settings.BracketVisible;
+            RemoveWarningCheckBox.Checked       = settings.RemoveWarning;
 
-            TabWidthNumericUpDown.Value = settings.TabWidth;
-            AutoSaveTimeNumericUpDown.Value = (int)settings.AutoSaveTime.TotalSeconds;
+            TabWidthNumericUpDown.Value         = settings.TabWidth;
+            AutoSaveTimeNumericUpDown.Value     = (int)settings.AutoSaveTime.TotalSeconds;
         }
 
         #endregion
@@ -135,42 +135,42 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            RunButton.Click += RunButton_Click;
-            ExitButton.Click += ExitButton_Click;
-            ApplyButton.Click += ApplyButton_Click;
-            ResetButton.Click += (s, e) => OnReset(e);
+            RunButton.Click                            += RunButton_Click;
+            ExitButton.Click                           += ExitButton_Click;
+            ApplyButton.Click                          += ApplyButton_Click;
+            ResetButton.Click                          += (s, e) => OnReset(e);
 
-            BackColorButton.Click += ColorButton_Click;
-            ForeColorButton.Click += ColorButton_Click;
-            HighlightBackColorButton.Click += ColorButton_Click;
-            HighlightForeColorButton.Click += ColorButton_Click;
-            LineNumberBackColorButton.Click += ColorButton_Click;
-            LineNumberForeColorButton.Click += ColorButton_Click;
-            SpecialCharsColorButton.Click += ColorButton_Click;
-            CurrentLineColorButton.Click += ColorButton_Click;
+            FontButton.Click                           += FontButton_Click;
 
-            FontButton.Click += FontButton_Click;
+            BackColorButton.Click                      += ColorButton_Click;
+            ForeColorButton.Click                      += ColorButton_Click;
+            HighlightBackColorButton.Click             += ColorButton_Click;
+            HighlightForeColorButton.Click             += ColorButton_Click;
+            LineNumberBackColorButton.Click            += ColorButton_Click;
+            LineNumberForeColorButton.Click            += ColorButton_Click;
+            SpecialCharsColorButton.Click              += ColorButton_Click;
+            CurrentLineColorButton.Click               += ColorButton_Click;
 
-            TabToSpaceCheckBox.CheckedChanged += CheckBoxChanged;
-            LineNumberVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            RulerVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            TabToSpaceCheckBox.CheckedChanged          += CheckBoxChanged;
+            LineNumberVisibleCheckBox.CheckedChanged   += CheckBoxChanged;
+            RulerVisibleCheckBox.CheckedChanged        += CheckBoxChanged;
             SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            EolVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            TabVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            SpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            FullSpaceVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            CurrentLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
+            EolVisibleCheckBox.CheckedChanged          += CheckBoxChanged;
+            TabVisibleCheckBox.CheckedChanged          += CheckBoxChanged;
+            SpaceVisibleCheckBox.CheckedChanged        += CheckBoxChanged;
+            FullSpaceVisibleCheckBox.CheckedChanged    += CheckBoxChanged;
+            CurrentLineVisibleCheckBox.CheckedChanged  += CheckBoxChanged;
             ModifiedLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            BracketVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            RemoveWarningCheckBox.CheckedChanged += CheckBoxChanged;
+            BracketVisibleCheckBox.CheckedChanged      += CheckBoxChanged;
+            RemoveWarningCheckBox.CheckedChanged       += CheckBoxChanged;
 
-            TabWidthNumericUpDown.ValueChanged += NumericUpDownChanged;
-            AutoSaveTimeNumericUpDown.ValueChanged += NumericUpDownChanged;
+            TabWidthNumericUpDown.ValueChanged         += NumericUpDownChanged;
+            AutoSaveTimeNumericUpDown.ValueChanged     += NumericUpDownChanged;
 
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
-            LineNumberVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
-            RulerVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
-            CurrentLineVisibleCheckBox.CheckedChanged += (s, e) => EnableCurrentLine();
+            LineNumberVisibleCheckBox.CheckedChanged   += (s, e) => EnableLineNumber();
+            RulerVisibleCheckBox.CheckedChanged        += (s, e) => EnableLineNumber();
+            CurrentLineVisibleCheckBox.CheckedChanged  += (s, e) => EnableCurrentLine();
         }
 
         /* ----------------------------------------------------------------- */

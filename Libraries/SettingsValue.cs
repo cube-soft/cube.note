@@ -648,12 +648,10 @@ namespace Cube.Note
         {
             Path = src.Path;
 
-            // fonts
-            FontName  = src.FontName;
-            FontSize  = src.FontSize;
-            FontStyle = src.FontStyle;
+            FontName            = src.FontName;
+            FontSize            = src.FontSize;
+            FontStyle           = src.FontStyle;
 
-            // colors
             BackColor           = src.BackColor;
             ForeColor           = src.ForeColor;
             HighlightBackColor  = src.HighlightBackColor;
@@ -663,7 +661,6 @@ namespace Cube.Note
             SpecialCharsColor   = src.SpecialCharsColor;
             CurrentLineColor    = src.CurrentLineColor;
 
-            // others
             AutoSaveTime        = src.AutoSaveTime;
             TabWidth            = src.TabWidth;
             TabToSpace          = src.TabToSpace;
@@ -784,41 +781,37 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private void InitializeValues()
         {
-            // path
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Path = IoEx.Path.Combine(appdata, @"CubeSoft\CubeNote\Settings.json");
 
-            // fonts
-            FontName = "メイリオ";
-            FontSize = 11.0;
-            FontStyle = FontStyle.Regular;
+            FontName            = "メイリオ";
+            FontSize            = 11.0;
+            FontStyle           = FontStyle.Regular;
 
-            // colors
-            BackColor = SystemColors.Window;
-            ForeColor = SystemColors.WindowText;
-            HighlightBackColor = SystemColors.Highlight;
-            HighlightForeColor = SystemColors.HighlightText;
+            BackColor           = SystemColors.Window;
+            ForeColor           = SystemColors.WindowText;
+            HighlightBackColor  = SystemColors.Highlight;
+            HighlightForeColor  = SystemColors.HighlightText;
             LineNumberBackColor = SystemColors.Control;
             LineNumberForeColor = SystemColors.ControlDark;
-            SpecialCharsColor = SystemColors.ControlDark;
-            CurrentLineColor = SystemColors.ControlDark;
+            SpecialCharsColor   = SystemColors.ControlDark;
+            CurrentLineColor    = SystemColors.ControlDark;
 
-            // others
-            AutoSaveTime = TimeSpan.FromSeconds(30);
-            TabWidth = 8;
+            AutoSaveTime        = TimeSpan.FromSeconds(30);
+            TabWidth            = 8;
 
-            TabToSpace = false;
-            LineNumberVisible = true;
-            RulerVisible = false;
+            TabToSpace          = false;
+            LineNumberVisible   = true;
+            RulerVisible        = false;
             SpecialCharsVisible = true;
-            EolVisible = true;
-            TabVisible = true;
-            SpaceVisible = false;
-            FullSpaceVisible = true;
-            CurrentLineVisible = false;
+            EolVisible          = true;
+            TabVisible          = true;
+            SpaceVisible        = false;
+            FullSpaceVisible    = true;
+            CurrentLineVisible  = false;
             ModifiedLineVisible = false;
-            BracketVisible = false;
-            RemoveWarning = true;
+            BracketVisible      = false;
+            RemoveWarning       = true;
         }
 
         #endregion
