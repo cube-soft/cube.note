@@ -784,7 +784,7 @@ namespace Cube.Note
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Path = IoEx.Path.Combine(appdata, @"CubeSoft\CubeNote\Settings.json");
 
-            FontName            = "メイリオ";
+            FontName            = "Meiryo";
             FontSize            = 11.0;
             FontStyle           = FontStyle.Regular;
 

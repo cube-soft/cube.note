@@ -323,12 +323,12 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
 
-            UpdateControls();
-            ApplyButton.Enabled = false;
-
             var area = Screen.FromControl(this).WorkingArea.Size;
             if (Width  > area.Width ) Width  = area.Width;
             if (Height > area.Height) Height = area.Height;
+
+            UpdateControls();
+            ApplyButton.Enabled = false;
         }
 
         #endregion

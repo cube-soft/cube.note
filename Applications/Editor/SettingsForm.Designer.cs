@@ -192,6 +192,7 @@
             // 
             // FontButton
             // 
+            this.FontButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.FontButton.Location = new System.Drawing.Point(121, 23);
             this.FontButton.Name = "FontButton";
             this.FontButton.Size = new System.Drawing.Size(50, 23);
@@ -224,6 +225,7 @@
             // BackColorButton
             // 
             this.BackColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BackColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.BackColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -257,6 +259,7 @@
             // ForeColorButton
             // 
             this.ForeColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.ForeColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForeColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.ForeColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ForeColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -290,6 +293,7 @@
             // HighlightBackColorButton
             // 
             this.HighlightBackColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.HighlightBackColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HighlightBackColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.HighlightBackColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HighlightBackColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -323,6 +327,7 @@
             // HighlightForeColorButton
             // 
             this.HighlightForeColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.HighlightForeColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HighlightForeColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.HighlightForeColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HighlightForeColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -516,6 +521,7 @@
             // LineNumberBackColorButton
             // 
             this.LineNumberBackColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.LineNumberBackColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LineNumberBackColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.LineNumberBackColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberBackColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -550,6 +556,7 @@
             // LineNumberForeColorButton
             // 
             this.LineNumberForeColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.LineNumberForeColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LineNumberForeColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.LineNumberForeColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberForeColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -617,6 +624,7 @@
             // CurrentLineColorButton
             // 
             this.CurrentLineColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.CurrentLineColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CurrentLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.CurrentLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CurrentLineColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -705,6 +713,7 @@
             // SpecialCharsColorButton
             // 
             this.SpecialCharsColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SpecialCharsColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SpecialCharsColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.SpecialCharsColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SpecialCharsColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -731,7 +740,7 @@
             this.VersionTabPage.Name = "VersionTabPage";
             this.VersionTabPage.Size = new System.Drawing.Size(466, 395);
             this.VersionTabPage.TabIndex = 2;
-            this.VersionTabPage.Text = "バージョン情報";
+            this.VersionTabPage.Text = "CubeNote について";
             this.VersionTabPage.UseVisualStyleBackColor = true;
             // 
             // ButtonsPanel
