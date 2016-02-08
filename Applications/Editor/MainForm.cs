@@ -263,7 +263,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog = new SettingsForm();
+            var dialog = new SettingsForm(new SettingsValue());
             dialog.ShowDialog(this);
         }
 

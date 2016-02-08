@@ -46,11 +46,23 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsForm()
+        public SettingsForm() : this(null) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsForm
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsForm(SettingsValue settings)
         {
             InitializeComponent();
-            InitializeEvents();
             InitializeVersionControl();
+            InitializeControls(settings);
+            InitializeEvents();
 
             Caption = TitleControl;
         }
@@ -105,6 +117,50 @@ namespace Cube.Note.App.Editor
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
             RulerVisibleCheckBox.CheckedChanged += (s, e) => EnableLineNumber();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeControls
+        ///
+        /// <summary>
+        /// 各種コントロールの状態を初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeControls(SettingsValue settings)
+        {
+            if (settings == null) return;
+
+            // colors
+            BackColorButton.BackColor = settings.BackColor;
+            BackColorButton.ForeColor = settings.BackColor;
+            ForeColorButton.BackColor = settings.ForeColor;
+            ForeColorButton.ForeColor = settings.ForeColor;
+            LineNumberBackColorButton.BackColor = settings.LineNumberBackColor;
+            LineNumberBackColorButton.ForeColor = settings.LineNumberBackColor;
+            LineNumberForeColorButton.BackColor = settings.LineNumberForeColor;
+            LineNumberForeColorButton.ForeColor = settings.LineNumberForeColor;
+
+            // fotns
+            FontButton.Tag = settings.Font;
+
+            // checkboxes
+            TabToSpaceCheckBox.Checked = settings.TabToSpace;
+            LineNumberVisibleCheckBox.Checked = settings.LineNumberVisible;
+            RulerVisibleCheckBox.Checked = settings.RulerVisible;
+            SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
+            EolVisibleCheckBox.Checked = settings.EolVisible;
+            TabVisibleCheckBox.Checked = settings.TabVisible;
+            SpaceVisibleCheckBox.Checked = settings.SpaceVisible;
+            FullSpaceVisibleCheckBox.Checked = settings.FullSpaceVisible;
+            CurrentLineVisibleCheckBox.Checked = settings.CurrentLineVisible;
+            ModifiedLineVisibleCheckBox.Checked = settings.ModifiedLineVisible;
+            RemoveWarningCheckBox.Checked = settings.RemoveWarning;
+
+            // numeric updown
+            TabWidthNumericUpDown.Value = settings.TabWidth;
+            AutoSaveTimeNumericUpDown.Value = (int)settings.AutoSaveTime.TotalSeconds;
         }
 
         /* ----------------------------------------------------------------- */
@@ -207,8 +263,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
 
-            EnableSpecialChars();
-            EnableLineNumber();
+            UpdateControls();
 
             var area = Screen.FromControl(this).WorkingArea.Size;
             if (Width  > area.Width ) Width  = area.Width;
@@ -305,6 +360,9 @@ namespace Cube.Note.App.Editor
             UpdateColor(LineNumberForeColorButton, LineNumberForeColorLabel);
 
             UpdateFont(FontButton.Tag as Font, FontLabel);
+
+            EnableLineNumber();
+            EnableSpecialChars();
         }
 
         /* ----------------------------------------------------------------- */
