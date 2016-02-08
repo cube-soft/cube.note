@@ -156,6 +156,7 @@ namespace Cube.Note.App.Editor
             message.AppendLine();
             message.AppendLine(Model[index].GetAbstract());
             message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
+            message.AppendLine(Model[index].LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
 
             var result = MessageBox.Show(
                 message.ToString(),
