@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -91,6 +92,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
+            var width = SystemInformation.VerticalScrollBarWidth;
+            var height = SystemInformation.HorizontalScrollBarHeight;
+            SizeGripControl.Size = new Size(width, height);
+
             var area = Screen.FromControl(this).WorkingArea.Size;
             Width   = (int)(area.Width  * 0.7);
             Height  = (int)(area.Height * 0.7);
@@ -107,7 +112,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new TextEditPresenter(TextEditControl, Pages);
+            new TextPresenter(TextEditControl, Pages);
             new PageCollectionPresenter(PageCollectionControl, Pages);
             new SearchPresenter(SearchControl, Pages);
 
@@ -288,7 +293,7 @@ namespace Cube.Note.App.Editor
         /// ContentsPanel2_ClientSizeChanged
         ///
         /// <summary>
-        /// ページリストの表示方法が変更された時に実行されるハンドラです。
+        /// Panel2 のサイズが変更された時に実行されるハンドラです。
         /// </summary>
         /// 
         /// <remarks>
@@ -299,6 +304,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ContentsPanel2_ClientSizeChanged(object sender, EventArgs e)
         {
+            var control = sender as Control;
+            if (control == null) return;
+            MoveSizeGripControl(control);
+
+            // see remarks
             var hidden = ContentsPanel.Panel1Collapsed;
             var text   = hidden ?
                          Properties.Resources.VisibleMenu :
@@ -324,6 +334,27 @@ namespace Cube.Note.App.Editor
         private bool IsActive(Control control)
         {
             return control.Parent == ContentsPanel.Panel1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MoveSizeGripControl
+        ///
+        /// <summary>
+        /// リサイズ用グリップを右下に配置します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 現在のところ SizeGripControl は ContentsPanel.Panel2 上に
+        /// 配置されています。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void MoveSizeGripControl(Control parent)
+        {
+            var x = parent.Width  - SizeGripControl.Width;
+            var y = parent.Height - SizeGripControl.Height;
+            SizeGripControl.Location = new Point(x, y);
         }
 
         #endregion

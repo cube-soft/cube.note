@@ -91,7 +91,7 @@
     </Compile>
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
     <Compile Include="Presenters\SearchPresenter.cs" />
-    <Compile Include="Presenters\TextEditPresenter.cs" />
+    <Compile Include="Presenters\TextPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsForm.cs">
@@ -100,11 +100,8 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TextEditControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextEditControl.Designer.cs">
-      <DependentUpon>TextEditControl.cs</DependentUpon>
+    <Compile Include="TextControl.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SearchControl.cs">
       <SubType>UserControl</SubType>
@@ -142,9 +139,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextEditControl.resx">
-      <DependentUpon>TextEditControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TitleControl.resx">
       <DependentUpon>TitleControl.cs</DependentUpon>

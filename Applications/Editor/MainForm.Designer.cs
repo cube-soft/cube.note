@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Sgry.Azuki.Document document1 = new Sgry.Azuki.Document();
-            Sgry.Azuki.DefaultWordProc defaultWordProc1 = new Sgry.Azuki.DefaultWordProc();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            Sgry.Azuki.FontInfo fontInfo1 = new Sgry.Azuki.FontInfo();
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
-            this.TextEditControl = new Cube.Note.App.Editor.TextEditControl();
+            this.SizeGripControl = new Cube.Forms.SizeGripControl();
+            this.TextEditControl = new Cube.Note.App.Editor.TextControl();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
@@ -52,6 +52,7 @@
             this.ContentsPanel.Panel1.SuspendLayout();
             this.ContentsPanel.Panel2.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SizeGripControl)).BeginInit();
             this.MenuToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).BeginInit();
             this.SuspendLayout();
@@ -92,6 +93,7 @@
             // 
             // ContentsPanel.Panel2
             // 
+            this.ContentsPanel.Panel2.Controls.Add(this.SizeGripControl);
             this.ContentsPanel.Panel2.Controls.Add(this.TextEditControl);
             this.ContentsPanel.Size = new System.Drawing.Size(782, 396);
             this.ContentsPanel.SplitterDistance = 270;
@@ -109,149 +111,44 @@
             this.PageCollectionControl.Size = new System.Drawing.Size(270, 396);
             this.PageCollectionControl.TabIndex = 0;
             // 
+            // SizeGripControl
+            // 
+            this.SizeGripControl.BackColor = System.Drawing.SystemColors.Control;
+            this.SizeGripControl.Image = ((System.Drawing.Image)(resources.GetObject("SizeGripControl.Image")));
+            this.SizeGripControl.Location = new System.Drawing.Point(495, 380);
+            this.SizeGripControl.Margin = new System.Windows.Forms.Padding(0);
+            this.SizeGripControl.Name = "SizeGripControl";
+            this.SizeGripControl.Size = new System.Drawing.Size(16, 16);
+            this.SizeGripControl.TabIndex = 1;
+            this.SizeGripControl.TabStop = false;
+            // 
             // TextEditControl
             // 
+            this.TextEditControl.BackColor = System.Drawing.SystemColors.Window;
+            this.TextEditControl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TextEditControl.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.TextEditControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            document1.Capacity = 5120;
-            document1.EolCode = "\r\n";
-            document1.Highlighter = null;
-            document1.IsDirty = false;
-            document1.IsReadOnly = false;
-            document1.IsRecordingHistory = true;
-            document1.MarksUri = false;
-            document1.RectSelectRanges = null;
-            document1.SelectionMode = Sgry.Azuki.TextDataType.Normal;
-            document1.Tag = null;
-            document1.Text = "";
-            defaultWordProc1.CharsForbiddenToEndLine = new char[] {
-        '(',
-        '[',
-        '{',
-        '«',
-        '—',
-        '‘',
-        '“',
-        '‥',
-        '…',
-        '〈',
-        '《',
-        '「',
-        '『',
-        '【',
-        '〔',
-        '〖',
-        '〘',
-        '〚',
-        '〝',
-        '〳',
-        '〴',
-        '（',
-        '［',
-        '｛',
-        '｟'};
-            defaultWordProc1.CharsForbiddenToStartLine = new char[] {
-        ')',
-        ',',
-        '.',
-        ':',
-        ';',
-        ']',
-        '»',
-        '‐',
-        '–',
-        '’',
-        '”',
-        '、',
-        '。',
-        '々',
-        '〉',
-        '》',
-        '」',
-        '』',
-        '】',
-        '〕',
-        '〗',
-        '〙',
-        '〛',
-        '〜',
-        '〟',
-        '〵',
-        '〻',
-        'ぁ',
-        'ぃ',
-        'ぅ',
-        'ぇ',
-        'ぉ',
-        'っ',
-        'ゃ',
-        'ゅ',
-        'ょ',
-        'ゎ',
-        'ゕ',
-        'ゖ',
-        '゠',
-        'ァ',
-        'ィ',
-        'ゥ',
-        'ェ',
-        'ォ',
-        'ッ',
-        'ャ',
-        'ュ',
-        'ョ',
-        'ヮ',
-        'ヵ',
-        'ヶ',
-        '・',
-        'ー',
-        'ヽ',
-        'ヾ',
-        'ㇰ',
-        'ㇱ',
-        'ㇲ',
-        'ㇳ',
-        'ㇴ',
-        'ㇵ',
-        'ㇶ',
-        'ㇷ',
-        'ㇸ',
-        'ㇹ',
-        'ㇺ',
-        'ㇻ',
-        'ㇼ',
-        'ㇽ',
-        'ㇾ',
-        'ㇿ',
-        '）',
-        '，',
-        '－',
-        '：',
-        '；',
-        '＝',
-        '］',
-        '｝',
-        '｠'};
-            defaultWordProc1.CharsToBeHanged = new char[] {
-        ',',
-        '.',
-        '、',
-        '。',
-        '，',
-        '．'};
-            defaultWordProc1.EnableCharacterHanging = true;
-            defaultWordProc1.EnableEolHanging = true;
-            defaultWordProc1.EnableLineEndRestriction = true;
-            defaultWordProc1.EnableLineHeadRestriction = true;
-            defaultWordProc1.EnableWordWrap = true;
-            defaultWordProc1.KinsokuDepth = 8;
-            document1.WordProc = defaultWordProc1;
-            this.TextEditControl.Document = document1;
-            this.TextEditControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.TextEditControl.DrawingOption = ((Sgry.Azuki.DrawingOption)(((((((Sgry.Azuki.DrawingOption.DrawsFullWidthSpace | Sgry.Azuki.DrawingOption.DrawsTab) 
+            | Sgry.Azuki.DrawingOption.DrawsEol) 
+            | Sgry.Azuki.DrawingOption.HighlightCurrentLine) 
+            | Sgry.Azuki.DrawingOption.ShowsLineNumber) 
+            | Sgry.Azuki.DrawingOption.ShowsDirtBar) 
+            | Sgry.Azuki.DrawingOption.HighlightsMatchedBracket)));
+            this.TextEditControl.FirstVisibleLine = 0;
+            this.TextEditControl.Font = new System.Drawing.Font("MS UI Gothic", 9F);
+            fontInfo1.Name = "MS UI Gothic";
+            fontInfo1.Size = 9;
+            fontInfo1.Style = System.Drawing.FontStyle.Regular;
+            this.TextEditControl.FontInfo = fontInfo1;
+            this.TextEditControl.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.TextEditControl.LeftMargin = 8;
             this.TextEditControl.Location = new System.Drawing.Point(0, 0);
-            this.TextEditControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TextEditControl.Margin = new System.Windows.Forms.Padding(0);
             this.TextEditControl.Name = "TextEditControl";
+            this.TextEditControl.ScrollPos = new System.Drawing.Point(0, 0);
             this.TextEditControl.Size = new System.Drawing.Size(511, 396);
             this.TextEditControl.TabIndex = 0;
+            this.TextEditControl.ViewWidth = 104;
             // 
             // MenuToolStrip
             // 
@@ -427,6 +324,7 @@
             this.ContentsPanel.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).EndInit();
             this.ContentsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SizeGripControl)).EndInit();
             this.MenuToolStrip.ResumeLayout(false);
             this.MenuToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).EndInit();
@@ -448,10 +346,11 @@
         private System.Windows.Forms.ToolStripButton SettingsMenuItem;
         private System.Windows.Forms.ToolStripButton MenuSeparator1;
         private System.Windows.Forms.ToolStripButton MenuSeparator3;
-        private TextEditControl TextEditControl;
         private System.Windows.Forms.ToolStripButton MenuSeparator2;
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
         private TitleControl TitleControl;
+        private TextControl TextEditControl;
+        private Forms.SizeGripControl SizeGripControl;
     }
 }
 

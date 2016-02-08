@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// TextEditPresenter.cs
+/// TextPresenter.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -24,14 +24,14 @@ namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// TextEditPresenter
+    /// TextPresenter
     /// 
     /// <summary>
-    /// TextEditControl とモデルを関連付けるためのクラスです。
+    /// TextControl とモデルを関連付けるためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class TextEditPresenter : Cube.Forms.PresenterBase<TextEditControl, PageCollection>
+    public class TextPresenter : Cube.Forms.PresenterBase<TextControl, PageCollection>
     {
         #region Constructors
 
@@ -44,7 +44,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TextEditPresenter(TextEditControl view, PageCollection model)
+        public TextPresenter(TextControl view, PageCollection model)
             : base(view, model)
         {
             Model.ActiveChanged += Model_ActiveChanged;
@@ -75,7 +75,8 @@ namespace Cube.Note.App.Editor
             Sync(() =>
             {
                 View.Document = document;
-                View.Refresh();
+                View.ViewWidth = 0;
+                View.ScrollToCaret();
             });
 
             Clean(e.OldPage);
