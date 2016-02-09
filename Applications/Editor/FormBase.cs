@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// TextEditControl.cs
+/// FormBase
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,63 +17,40 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// TextEditControl
+    /// FormBase
     /// 
     /// <summary>
-    /// テキストエディタを表示するクラスです。
+    /// フォーム外観の共通部分を定義したクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class TextEditControl : Cube.Forms.UserControl
+    public partial class FormBase : Cube.Forms.WidgetForm
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TextEditControl
+        /// FormBase
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TextEditControl()
+        public FormBase()
         {
             InitializeComponent();
 
-            var colors = AzukiTextControl.ColorScheme;
-            colors.LineNumberBack = SystemColors.Control;
-            colors.LineNumberFore = SystemColors.ControlDark;
-            colors.SelectionBack  = SystemColors.Highlight;
-            colors.SelectionFore  = SystemColors.HighlightText;
-            colors.EolColor       = colors.WhiteSpaceColor;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Document
-        ///
-        /// <summary>
-        /// Document オブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Document Document
-        {
-            get { return AzukiTextControl.Document; }
-            set { AzukiTextControl.Document = value; }
+            Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
+            Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
         }
 
         #endregion
@@ -82,40 +59,79 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Refresh
+        /// Maximize
         ///
         /// <summary>
-        /// コントロールを再描画します。
+        /// 最大化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public override void Refresh()
+        public void Maximize()
         {
-            AzukiTextControl.ScrollToCaret();
-            AzukiTextControl.ViewWidth = 0;
+            if (!Sizable || !MaximizeBox) return;
 
-            base.Refresh();
+            WindowState = WindowState == FormWindowState.Normal ?
+                          FormWindowState.Maximized :
+                          FormWindowState.Normal;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectFont
+        /// Minimize
         ///
         /// <summary>
-        /// 使用するフォントを選択します。
+        /// 最小化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectFont()
+        public void Minimize()
         {
-            var dialog = new FontDialog();
-            dialog.Font = AzukiTextControl.Font;
-            dialog.Color = AzukiTextControl.ForeColor;
-            dialog.ShowEffects = false;
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+            if (WindowState == FormWindowState.Minimized) return;
+            WindowState = FormWindowState.Minimized;
+        }
 
-            AzukiTextControl.Font = dialog.Font;
-            AzukiTextControl.ForeColor = dialog.Color;
+        #endregion
+
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        ///
+        /// <summary>
+        /// ロード時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            var control = Caption as TitleControl;
+            if (control == null) return;
+
+            control.CloseRequired    += (s, ev) => Close();
+            control.MaximizeRequired += (s, ev) => Maximize();
+            control.MinimizeRequired += (s, ev) => Minimize();
+
+            control.MaximizeBox = MaximizeBox && Sizable;
+            control.MinimizeBox = MinimizeBox;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnBackColorChanged
+        ///
+        /// <summary>
+        /// 背景色が変更された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            if (Caption == null) return;
+            Caption.BackColor = BackColor;
         }
 
         #endregion

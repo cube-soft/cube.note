@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -48,7 +47,6 @@ namespace Cube.Note.App.Editor
         public PageCollectionControl()
         {
             InitializeComponent();
-            InitializeLayout();
         }
 
         #endregion
@@ -57,35 +55,30 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectedIndex
+        /// Pages
         /// 
         /// <summary>
-        /// 選択されている項目のインデックスを取得します。
+        /// ページ一覧を表示する ListView オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int SelectedIndex
+        public PageListView Pages
         {
-            get
-            {
-                return PageListView.SelectedIndices.Count > 0 ?
-                       PageListView.SelectedIndices[0] :
-                       -1;
-            }
+            get { return PageListView; }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Count
+        /// Tags
         /// 
         /// <summary>
-        /// 表示項目の数を取得します。
+        /// タグ一覧を表示する ComboBox オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count
+        public ComboBox Tags
         {
-            get { return PageListView.Items.Count; }
+            get { return TagComboBox; }
         }
 
         #endregion
@@ -103,67 +96,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public event EventHandler NewPageRequired;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Added
-        ///
-        /// <summary>
-        /// ページが追加された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler<DataEventArgs<int>> Added;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Removed
-        ///
-        /// <summary>
-        /// ページが削除された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler<DataEventArgs<int>> Removed;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Cleared
-        ///
-        /// <summary>
-        /// ページが全て削除された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler Cleared;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SelectedIndexChanged
-        ///
-        /// <summary>
-        /// 選択項目が変更された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler SelectedIndexChanged;
-
         #endregion
 
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateText
-        /// 
-        /// <summary>
-        /// テキスト内容を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void UpdateText(int index, string text)
-        {
-            PageListView.Items[index].Text = text;
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -177,83 +112,6 @@ namespace Cube.Note.App.Editor
         public void NewPage()
         {
             OnNewPageRequired(new EventArgs());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        /// 
-        /// <summary>
-        /// ページを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Add(Page item)
-        {
-            var index = PageListView.Items.Count;
-            Insert(index, item);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Insert
-        /// 
-        /// <summary>
-        /// 指定されたインデックスにページを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Insert(int index, Page item)
-        {
-            PageListView.Insert(index, item);
-            OnAdded(new DataEventArgs<int>(index));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        /// 
-        /// <summary>
-        /// ページを削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Remove(int index)
-        {
-            if (index < 0 || index >= PageListView.Items.Count) return;
-            PageListView.Items.RemoveAt(index);
-            OnRemoved(new DataEventArgs<int>(index));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Clear
-        /// 
-        /// <summary>
-        /// ページを全て削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Clear()
-        {
-            if (PageListView.Items.Count == 0) return;
-            PageListView.Items.Clear();
-            OnCleared(new EventArgs());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Select
-        /// 
-        /// <summary>
-        /// ページを削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Select(int index)
-        {
-            if (index < 0 || index >= PageListView.Items.Count) return;
-            PageListView.Items[index].Selected = true;
         }
 
         #endregion
@@ -272,147 +130,6 @@ namespace Cube.Note.App.Editor
         protected virtual void OnNewPageRequired(EventArgs e)
         {
             if (NewPageRequired != null) NewPageRequired(this, e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnAdded
-        ///
-        /// <summary>
-        /// Added イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnAdded(DataEventArgs<int> e)
-        {
-            if (Added != null) Added(this, e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnRemoved
-        ///
-        /// <summary>
-        /// Removed イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnRemoved(DataEventArgs<int> e)
-        {
-            if (Removed != null) Removed(this, e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCleared
-        ///
-        /// <summary>
-        /// Cleared イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnCleared(EventArgs e)
-        {
-            if (Cleared != null) Cleared(this, e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnSelectedIndexChanged
-        ///
-        /// <summary>
-        /// SelectedIndexChanged イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnSelectedIndexChanged(EventArgs e)
-        {
-            if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageListView_Resize
-        /// 
-        /// <summary>
-        /// ListView のリサイズ時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageListView_Resize(object sender, EventArgs e)
-        {
-            var count  = PageListView.Items.Count;
-            var height = PageListView.TileSize.Height;
-            var width  = PageListView.ClientSize.Height < height * count ?
-                         PageListView.Width - SystemInformation.VerticalScrollBarWidth :
-                         PageListView.Width;
-            PageListView.TileSize = new Size(width, height);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageListView_SelectedIndexChanged
-        /// 
-        /// <summary>
-        /// 選択項目が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (PageListView.SelectedIndices.Count == 0) return;
-            OnSelectedIndexChanged(e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageListView_MouseUp
-        /// 
-        /// <summary>
-        /// マウスのボタンから手が離れた時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 項目がまったく選択されない状態になる事を防止します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageListView_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (PageListView.FocusedItem != null &&
-                PageListView.SelectedIndices.Count == 0)
-            {
-                PageListView.FocusedItem.Selected = true;
-            }
-        }
-
-        #endregion
-
-        #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeLayout
-        /// 
-        /// <summary>
-        /// レイアウトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeLayout()
-        {
-            PageListView.View = View.Tile;
-            PageListView.TileSize = new Size(PageListView.Width, 70);
-            PageListView.Converter = new PageConverter();
-            PageListView.Columns.AddRange(new ColumnHeader[]
-            {
-                new ColumnHeader(), // Title
-                new ColumnHeader(), // CreationTime
-            });
         }
 
         #endregion

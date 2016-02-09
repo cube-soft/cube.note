@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
@@ -45,17 +46,39 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollectionPresenter(PageCollectionControl view, PageCollection model)
-            : base(view, model)
+        public PageCollectionPresenter(PageCollectionControl view,
+            PageCollection model, SettingsValue settings) : base(view, model)
         {
-            View.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.NewPageRequired      += View_NewPageRequired;
-            View.Added                += View_Added;
-            View.Removed              += View_Removed;
+            Settings = settings;
 
-            Model.ActiveChanged       += Model_ActiveChanged;
-            Model.CollectionChanged   += Model_CollectionChanged;
+            View.NewPageRequired += View_NewPageRequired;
+            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Pages.Added += View_Added;
+            View.Pages.Removing += View_Removing;
+            View.Pages.Removed += View_Removed;
+
+            // NOTE: 暫定
+            View.Tags.Items.Add(Properties.Resources.AllTag);
+            View.Tags.SelectedIndex = 0;
+
+            Model.ActiveChanged += Model_ActiveChanged;
+            Model.CollectionChanged += Model_CollectionChanged;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        /// 
+        /// <summary>
+        /// 設定オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsValue Settings { get; }
 
         #endregion
 
@@ -74,8 +97,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var index = View.SelectedIndex;
+            var index = View.Pages.SelectedIndices[0];
             if (index < 0 || index >= Model.Count) return;
+
             Model.Active = Model[index];
         }
 
@@ -91,7 +115,7 @@ namespace Cube.Note.App.Editor
         private void View_NewPageRequired(object sender, EventArgs e)
         {
             Model.NewPage();
-            View.Select(0);
+            View.Pages.Select(0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -103,9 +127,46 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Added(object sender, EventArgs e)
+        private void View_Added(object sender, ValueEventArgs<int> e)
         {
-            if (View.Count == 1) View.Select(0);
+            if (View.Pages.Count == 1) View.Pages.Select(0);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Removing
+        /// 
+        /// <summary>
+        /// ページが削除される直前に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Removing(object sender, ValueCancelEventArgs<int[]> e)
+        {
+            if (e.Value == null || e.Value.Length <= 0) return;
+            if (!Settings.RemoveWarning)
+            {
+                e.Cancel = false;
+                return;
+            }
+
+            var index = e.Value[0];
+            var message = new System.Text.StringBuilder();
+            message.AppendLine(Properties.Resources.WarnRemove);
+            message.AppendLine();
+            message.AppendLine(Model[index].GetAbstract());
+            message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
+            message.AppendLine(Model[index].LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
+
+            var result = MessageBox.Show(
+                message.ToString(),
+                Properties.Resources.WarnRemoveTitle,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button1
+            );
+
+            e.Cancel = (result == DialogResult.No);
         }
 
         /* ----------------------------------------------------------------- */
@@ -117,14 +178,16 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Removed(object sender, DataEventArgs<int> e)
+        private void View_Removed(object sender, ValueEventArgs<int[]> e)
         {
-            var index = e.Value;
+            if (e.Value == null || e.Value.Length <= 0) return;
+
+            var index = e.Value[0];
             if (index < 0 || index >= Model.Count) return;
-            if (View.Count > 0) View.Select(Math.Min(index, View.Count - 1));
 
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model.RemoveAt(index);
+            Model.Active = Model[Math.Min(index, Model.Count - 1)];
         }
 
         #endregion
@@ -144,13 +207,14 @@ namespace Cube.Note.App.Editor
         {
             if (Model.Active == null) return;
 
-            var index = View.SelectedIndex;
+            var index = View.Pages.SelectedIndices.Count > 0 ?
+                        View.Pages.SelectedIndices[0] : -1;
             if (index >= 0 && index < Model.Count && Model.Active == Model[index]) return;
 
             var changed = Model.IndexOf(Model.Active);
             if (changed == -1) return;
 
-            Sync(() => View.Select(changed));
+            Sync(() => View.Pages.Select(changed));
         }
 
         /* ----------------------------------------------------------------- */
@@ -189,7 +253,7 @@ namespace Cube.Note.App.Editor
             var index = e.NewStartingIndex;
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model[index].PropertyChanged += Model_PropertyChanged;
-            SyncWait(() => View.Insert(index, Model[index]));
+            SyncWait(() => View.Pages.Insert(index, Model[index]));
         }
 
         /* ----------------------------------------------------------------- */
@@ -199,19 +263,26 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// プロパティの値が変化した時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 項目全体を置換すると画面のちらつき目立つため、概要の更新に
+        /// ついては Text 部分のみを置換します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != "Abstract") return;
-
             var page = sender as Page;
             if (page == null) return;
 
             var index = Model.IndexOf(page);
             if (index == -1) return;
 
-            Sync(() => View.UpdateText(index, page.GetAbstract()));
+            Sync(() =>
+            {
+                if (e.PropertyName == "Abstract") View.Pages.ReplaceText(index, page.GetAbstract());
+                else View.Pages.Replace(index, page);
+            });
         }
 
         #endregion

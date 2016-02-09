@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -32,7 +33,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.Form
+    public partial class MainForm : FormBase
     {
         #region Constructors
 
@@ -50,6 +51,8 @@ namespace Cube.Note.App.Editor
             InitializeComponent();
             InitializeEvents();
             InitializePresenters();
+
+            Caption = TitleControl;
         }
 
         #endregion
@@ -67,12 +70,15 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
+            NewPageMenuItem.Click  += NewPageMenuItem_Click;
+            RemoveMenuItem.Click   += RemoveMenuItem_Click;
+            SearchMenuItem.Click   += SearchMenuItem_Click;
+            VisibleMenuItem.Click  += VisibleMenuItem_Click;
+            LogoMenuItem.Click     += LogoMenuItem_Click;
+            SettingsMenuItem.Click += SettingsMenuItem_Click;
+
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
-            RemoveMenuItem.Click += RemoveMenuItem_Click;
-            SearchMenuItem.Click += SearchMenuItem_Click;
-            FontMenuItem.Click += (s, e) => TextEditControl.SelectFont();
-            VisibleMenuItem.Click += (s, e) => ChangeMenuPanelVisibility();
-            NewPageMenuItem.Click += (s, e) => PageCollectionControl.NewPage();
+            ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -86,11 +92,13 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            VisibleMenuItem.Tag = true;
+            var width = SystemInformation.VerticalScrollBarWidth;
+            var height = SystemInformation.HorizontalScrollBarHeight;
+            SizeGripControl.Size = new Size(width, height);
 
             var area = Screen.FromControl(this).WorkingArea.Size;
-            Width  = (int)(area.Width  * 0.7);
-            Height = (int)(area.Height * 0.7);
+            Width   = (int)(area.Width  * 0.7);
+            Height  = (int)(area.Height * 0.7);
         }
 
         /* ----------------------------------------------------------------- */
@@ -104,9 +112,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new TextEditPresenter(TextEditControl, Pages);
-            new PageCollectionPresenter(PageCollectionControl, Pages);
+            new TextPresenter(TextControl, Pages);
+            new TextVisualPresenter(TextControl, Settings);
+            new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
             new SearchPresenter(SearchControl, Pages);
+
+            new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
         #endregion
@@ -126,12 +137,145 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
             InitializeLayout();
-            Saver = new AutoSaver(Pages);
+            Saver = new AutoSaver(Pages, Settings);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        ///
+        /// <summary>
+        /// キーが押下された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                if (!e.Control) return;
+
+                var result = true;
+                switch (e.KeyCode)
+                {
+                    case Keys.D:
+                        RemoveMenuItem_Click(this, e);
+                        break;
+                    case Keys.F:
+                        SearchMenuItem_Click(this, e);
+                        break;
+                    case Keys.N:
+                        NewPageMenuItem_Click(this, e);
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+                e.Handled = result;
+            }
+            finally { base.OnKeyDown(e); }
         }
 
         #endregion
 
         #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewPageMenuItem_Click
+        ///
+        /// <summary>
+        /// 新規追加メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void NewPageMenuItem_Click(object sender, EventArgs e)
+        {
+            PageCollectionControl.NewPage();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveMenuItem_Click
+        ///
+        /// <summary>
+        /// 削除メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveMenuItem_Click(object sender, EventArgs e)
+        {
+            PageCollectionControl.Pages.RemoveItems();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchMenuItem_Click
+        ///
+        /// <summary>
+        /// 検索メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SearchMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchControl.Switch(ContentsPanel.Panel1);
+
+            if (IsActive(SearchControl))
+            {
+                SearchMenuItem.Image = Properties.Resources.SearchEnd;
+                ContentsPanel.Panel1Collapsed = false;
+            }
+            else SearchMenuItem.Image = Properties.Resources.Search;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// VisibleMenuItem_Click
+        ///
+        /// <summary>
+        /// 表示方法の変更メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void VisibleMenuItem_Click(object sender, EventArgs e)
+        {
+            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LogoMenuItem_Click
+        ///
+        /// <summary>
+        /// ロゴが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void LogoMenuItem_Click(object sender, EventArgs e)
+        {
+            try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
+            catch (Exception /* err */) { /* ignore errors */ }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsMenuItem_Click
+        ///
+        /// <summary>
+        /// 設定メニューが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SettingsMenuItem_Click(object sender, EventArgs e)
+        {
+            var view = new SettingsForm(Settings);
+            using (var presenter = new SettingsPresenter(view, Settings))
+            {
+                view.ShowDialog(this);
+                TextControl.ViewWidth = 0; // refresh
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -151,39 +295,37 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RemoveMenuItem_Click
+        /// ContentsPanel2_ClientSizeChanged
         ///
         /// <summary>
-        /// 削除メニューが押下された時に実行されるハンドラです。
+        /// Panel2 のサイズが変更された時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// ContentsPanel.Panel1Collapsed の変更を通知するイベントが
+        /// 存在しないため Panel2 側のサイズ変更イベントで代替します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void RemoveMenuItem_Click(object sender, EventArgs e)
+        private void ContentsPanel2_ClientSizeChanged(object sender, EventArgs e)
         {
-            var index = PageCollectionControl.SelectedIndex;
-            PageCollectionControl.Remove(index);
-        }
+            var control = sender as Control;
+            if (control == null) return;
+            MoveSizeGripControl(control);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SearchMenuItem_Click
-        ///
-        /// <summary>
-        /// 検索メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SearchMenuItem_Click(object sender, EventArgs e)
-        {
-            SearchControl.Switch(ContentsPanel.Panel1);
-            SearchMenuItem.Image = IsActive(SearchControl) ?
-                                   Properties.Resources.SearchEnd :
-                                   Properties.Resources.Search;
+            // see remarks
+            var hidden = ContentsPanel.Panel1Collapsed;
+            var text   = hidden ?
+                         Properties.Resources.VisibleMenu :
+                         Properties.Resources.HideMenu;
+
+            VisibleMenuItem.Text = text;
+            VisibleMenuItem.ToolTipText = text;
         }
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
@@ -201,34 +343,30 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ChangeMenuPanelVisibility
+        /// MoveSizeGripControl
         ///
         /// <summary>
-        /// 左側のメニューパネルの表示状態を変更します。
+        /// リサイズ用グリップを右下に配置します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 現在のところ SizeGripControl は ContentsPanel.Panel2 上に
+        /// 配置されています。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void ChangeMenuPanelVisibility()
+        private void MoveSizeGripControl(Control parent)
         {
-            var visible = !(bool)VisibleMenuItem.Tag;
-            var text    = visible ?
-                          Properties.Resources.HideMenu :
-                          Properties.Resources.VisibleMenu;
-            var image   = visible ?
-                          Properties.Resources.ArrowLeft :
-                          Properties.Resources.ArrowRight;
-
-            VisibleMenuItem.Image = image;
-            VisibleMenuItem.Text = text;
-            VisibleMenuItem.ToolTipText = text;
-            VisibleMenuItem.Tag = visible;
-            ContentsPanel.Panel1Collapsed = !visible;
+            var x = parent.Width  - SizeGripControl.Width;
+            var y = parent.Height - SizeGripControl.Height;
+            SizeGripControl.Location = new Point(x, y);
         }
 
         #endregion
 
         #region Models
         private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
+        private SettingsValue Settings = SettingsValue.Create(Assembly.GetEntryAssembly(), Properties.Resources.SettingsFileName);
         private AutoSaver Saver = null;
         #endregion
 

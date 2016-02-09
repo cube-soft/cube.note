@@ -49,10 +49,8 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            SearchButton.Click += (s, e) => OnSearch(new DataEventArgs<string>(KeywordTextBox.Text));
-            PageCollectionControl.Added += (s, e) => OnAdded(e);
-            PageCollectionControl.Cleared += (s, e) => OnCleared(e);
-            PageCollectionControl.SelectedIndexChanged += (s, e) => OnSelectedIndexChanged(e);
+            SearchButton.Click += (s, e) => RaiseSearchEvent();
+            KeywordTextBox.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) RaiseSearchEvent(); };
 
             Dock = DockStyle.Fill;
         }
@@ -63,43 +61,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectedIndex
+        /// Pages
         ///
         /// <summary>
-        /// 選択されている項目を取得します。
+        /// ページ一覧を表示する ListView オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int SelectedIndex
+        public PageListView Pages
         {
-            get { return PageCollectionControl.SelectedIndex; }
+            get { return PageListView; }
         }
 
         #endregion
 
         #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Added
-        ///
-        /// <summary>
-        /// ページが追加された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler<DataEventArgs<int>> Added;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Cleared
-        ///
-        /// <summary>
-        /// ページが全て削除された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler Cleared;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -110,78 +86,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string>> Search;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SelectedIndexChanged
-        ///
-        /// <summary>
-        /// 選択項目が変更された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler SelectedIndexChanged;
+        public EventHandler<ValueEventArgs<string>> Search;
 
         #endregion
 
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        /// 
-        /// <summary>
-        /// ページを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Add(Page item)
-        {
-            PageCollectionControl.Add(item);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Insert
-        /// 
-        /// <summary>
-        /// 指定されたインデックスにページを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Insert(int index, Page item)
-        {
-            PageCollectionControl.Insert(index, item);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Clear
-        /// 
-        /// <summary>
-        /// ページを全て削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Clear()
-        {
-            PageCollectionControl.Clear();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Select
-        /// 
-        /// <summary>
-        /// ページを削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Select(int index)
-        {
-            PageCollectionControl.Select(index);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -234,6 +143,7 @@ namespace Cube.Note.App.Editor
             Parent.Controls.Remove(this);
             foreach (var control in _controls) parent.Controls.Add(control);
             _controls.Clear();
+            Pages.Clear();
         }
 
         #endregion
@@ -242,58 +152,34 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnAdded
-        ///
-        /// <summary>
-        /// Added イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnAdded(DataEventArgs<int> e)
-        {
-            if (Added != null) Added(this, e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCleared
-        ///
-        /// <summary>
-        /// Cleared イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnCleared(EventArgs e)
-        {
-            if (Cleared != null) Cleared(this, e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// OnSearch
         /// 
         /// <summary>
-        /// 検索時に実行されます。
+        /// Search イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSearch(DataEventArgs<string> e)
+        protected virtual void OnSearch(ValueEventArgs<string> e)
         {
             if (Search != null) Search(this, e);
         }
 
+        #endregion
+
+        #region Other private methods
+
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSelectedIndexChanged
+        /// RaiseSearchEvent
         ///
         /// <summary>
-        /// SelectedIndexChanged イベントを発生させます。
+        /// Search イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSelectedIndexChanged(EventArgs e)
+        private void RaiseSearchEvent()
         {
-            if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
+            OnSearch(new ValueEventArgs<string>(KeywordTextBox.Text));
         }
 
         #endregion

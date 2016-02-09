@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Timers;
 using Cube.Note.Azuki;
@@ -50,12 +51,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public AutoSaver(PageCollection target)
+        public AutoSaver(PageCollection target, SettingsValue settings)
         {
             Target = target;
+            Settings = settings;
             Interval = TimeSpan.FromSeconds(30);
 
             Target.ActiveChanged += Target_ActiveChanged;
+            Settings.PropertyChanged += Settings_PropertyChanged;
             _timer.Elapsed += Timer_Elapsed;
 
             Task35.Run(() => InitializeTarget());
@@ -89,6 +92,17 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PageCollection Target { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        /// 
+        /// <summary>
+        /// 設定オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsValue Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -159,6 +173,21 @@ namespace Cube.Note.App.Editor
         private async void Target_ActiveChanged(object sender, PageChangedEventArgs e)
         {
             await Task35.Run(() => SaveDocument(e.OldPage));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_PropertyChanged
+        /// 
+        /// <summary>
+        /// 設定内容が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "AutoSaveTime") return;
+            Interval = Settings.AutoSaveTime;
         }
 
         #endregion

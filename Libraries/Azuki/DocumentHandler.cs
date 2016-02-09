@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using Sgry.Azuki;
 using IoEx = System.IO;
@@ -74,6 +75,7 @@ namespace Cube.Note.Azuki
             
             var path = IoEx.Path.Combine(directory, page.FileName);
             SaveDocument(doc, path);
+            page.LastUpdate = DateTime.Now;
         }
 
         #endregion

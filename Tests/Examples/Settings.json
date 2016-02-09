@@ -1,0 +1,46 @@
+{
+	"AutoSaveTime":"PT10S",
+	"BackColor":
+	{
+		"knownColor":24,
+		"name":null,
+		"state":1,
+		"value":0
+	},
+	"CurrentLineVisible":false,
+	"EolVisible":true,
+	"FontName":"MS Gothic UI",
+	"FontSize":9,
+	"FontStyle":0,
+	"ForeColor":
+	{
+		"knownColor":0,
+		"name":null,
+		"state":2,
+		"value":4278255873
+	},
+	"FullSpaceVisible":true,
+	"LineNumberBackColor":
+	{
+		"knownColor":5,
+		"name":null,
+		"state":1,
+		"value":0
+	},
+	"LineNumberForeColor":
+	{
+		"knownColor":6,
+		"name":null,
+		"state":1,
+		"value":0
+	},
+	"LineNumberVisible":true,
+	"ModifiedLineVisible":false,
+	"RemoveWarning":true,
+	"RulerVisible":true,
+	"SpaceVisible":false,
+	"SpecialCharsVisible":false,
+	"TabToSpace":false,
+	"TabVisible":true,
+	"TabWidth":4
+}

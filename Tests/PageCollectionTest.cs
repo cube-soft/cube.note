@@ -93,6 +93,15 @@ namespace Cube.Note.Tests
             );
         }
 
+        [TestCase(2016, 2, 5, 19, 52, 52, 418)]
+        public void LastUpdate_Last(int y, int m, int d, int hh, int mm, int ss, int ms)
+        {
+            Assert.That(
+                Pages[Pages.Count - 1].LastUpdate,
+                Is.EqualTo(new DateTime(y, m, d, hh, mm, ss, ms))
+            );
+        }
+
         [Test]
         public void Document_Last_IsNull()
         {

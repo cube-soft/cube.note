@@ -49,9 +49,9 @@ namespace Cube.Note.App.Editor
         public SearchPresenter(SearchControl view, PageCollection model)
             : base(view, model)
         {
-            View.Cleared += (s, e) => Results.Clear();
             View.Search += View_Search;
-            View.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Pages.Cleared += (s, e) => Results.Clear();
+            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
 
             Results.CollectionChanged += Results_CollectionChanged;
         }
@@ -86,7 +86,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void View_Search(object sender, DataEventArgs<string> e)
+        private async void View_Search(object sender, ValueEventArgs<string> e)
         {
             if (string.IsNullOrEmpty(e.Value)) return;
 
@@ -108,7 +108,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var index = View.SelectedIndex;
+            if (!View.Pages.AnyItemsSelected) return;
+
+            var index = View.Pages.SelectedIndices[0];
             if (index < 0 || index >= Results.Count) return;
 
             var real = Model.IndexOf(Results[index]);
@@ -136,10 +138,10 @@ namespace Cube.Note.App.Editor
             {
                 case NotifyCollectionChangedAction.Add:
                     var index = e.NewStartingIndex;
-                    SyncWait(() => View.Insert(index, Results[index]));
+                    SyncWait(() => View.Pages.Insert(index, Results[index]));
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    if (Results.Count == 0) SyncWait(() => View.Clear());
+                    if (Results.Count == 0) SyncWait(() => View.Pages.Clear());
                     break;
             }
         }

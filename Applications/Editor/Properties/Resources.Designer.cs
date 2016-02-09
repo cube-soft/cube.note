@@ -71,21 +71,20 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        ///   すべてのノート に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowLeft {
+        internal static string AllTag {
             get {
-                object obj = ResourceManager.GetObject("ArrowLeft", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("AllTag", resourceCulture);
             }
         }
         
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowRight {
+        internal static System.Drawing.Bitmap Close {
             get {
-                object obj = ResourceManager.GetObject("ArrowRight", resourceCulture);
+                object obj = ResourceManager.GetObject("Close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -109,21 +108,70 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Font {
-            get {
-                object obj = ResourceManager.GetObject("Font", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   ノート一覧を非表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HideMenu {
             get {
                 return ResourceManager.GetString("HideMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   yyyy/MM/dd HH:mm 更新 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LastUpdateFormat {
+            get {
+                return ResourceManager.GetString("LastUpdateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Left {
+            get {
+                object obj = ResourceManager.GetObject("Left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LogoLarge {
+            get {
+                object obj = ResourceManager.GetObject("LogoLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Maximize {
+            get {
+                object obj = ResourceManager.GetObject("Maximize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Minimize {
+            get {
+                object obj = ResourceManager.GetObject("Minimize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -169,9 +217,38 @@ namespace Cube.Note.App.Editor.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap SearchSmall {
+        internal static System.Drawing.Bitmap SearchPale {
             get {
-                object obj = ResourceManager.GetObject("SearchSmall", resourceCulture);
+                object obj = ResourceManager.GetObject("SearchPale", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Settings {
+            get {
+                object obj = ResourceManager.GetObject("Settings", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Settings.json に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SettingsFileName {
+            get {
+                return ResourceManager.GetString("SettingsFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Title {
+            get {
+                object obj = ResourceManager.GetObject("Title", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -182,6 +259,33 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string VisibleMenu {
             get {
                 return ResourceManager.GetString("VisibleMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   このノートを削除しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnRemove {
+            get {
+                return ResourceManager.GetString("WarnRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノートの削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnRemoveTitle {
+            get {
+                return ResourceManager.GetString("WarnRemoveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WebUrl {
+            get {
+                return ResourceManager.GetString("WebUrl", resourceCulture);
             }
         }
     }
