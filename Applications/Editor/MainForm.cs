@@ -116,8 +116,6 @@ namespace Cube.Note.App.Editor
             new TextVisualPresenter(TextControl, Settings);
             new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
             new SearchPresenter(SearchControl, Pages);
-
-            new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
         #endregion
@@ -129,7 +127,7 @@ namespace Cube.Note.App.Editor
         /// OnLoad
         ///
         /// <summary>
-        /// ロード時に実行されるハンドラです。
+        /// ロード時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -138,6 +136,21 @@ namespace Cube.Note.App.Editor
             base.OnLoad(e);
             InitializeLayout();
             Saver = new AutoSaver(Pages, Settings);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnShown
+        ///
+        /// <summary>
+        /// 初回表示時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
         /* ----------------------------------------------------------------- */
