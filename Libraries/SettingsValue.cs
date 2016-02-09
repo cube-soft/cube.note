@@ -400,6 +400,28 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// WardWrap
+        ///
+        /// <summary>
+        /// テキストを折り返し表示するかどうかを示す値を取得または
+        /// 設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool WardWrap
+        {
+            get { return _wardWrap; }
+            set
+            {
+                if (_wardWrap == value) return;
+                _wardWrap = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("WardWrap"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// LineNumberVisible
         ///
         /// <summary>
@@ -664,6 +686,7 @@ namespace Cube.Note
             AutoSaveTime        = src.AutoSaveTime;
             TabWidth            = src.TabWidth;
             TabToSpace          = src.TabToSpace;
+            WardWrap            = src.WardWrap;
             LineNumberVisible   = src.LineNumberVisible;
             RulerVisible        = src.RulerVisible;
             SpecialCharsVisible = src.SpecialCharsVisible;
@@ -801,6 +824,7 @@ namespace Cube.Note
             TabWidth            = 8;
 
             TabToSpace          = false;
+            WardWrap            = false;
             LineNumberVisible   = true;
             RulerVisible        = false;
             SpecialCharsVisible = true;
@@ -817,31 +841,32 @@ namespace Cube.Note
         #endregion
 
         #region Fields
-        public Color _backColor;
-        public Color _foreColor;
-        public Color _highlightBackColor;
-        public Color _highlightForeColor;
-        public Color _lineNumberBackColor;
-        public Color _lineNumberForeColor;
-        public Color _specialCharsColor;
-        public Color _currentLineColor;
-        public TimeSpan _autoSaveTime;
-        public string _fontName;
-        public double _fontSize;
-        public FontStyle _fontStyle;
-        public int _tabWidth;
-        public bool _tabToSpace;
-        public bool _lineNumberVisible;
-        public bool _rulerVisible;
-        public bool _specialCharsVisible;
-        public bool _eolVisible;
-        public bool _tabVisible;
-        public bool _spaceVisible;
-        public bool _fullSpaceVisible;
-        public bool _currentLineVisible;
-        public bool _modifiedLineVisible;
-        public bool _bracketVisible;
-        public bool _removeWarning;
+        private Color _backColor;
+        private Color _foreColor;
+        private Color _highlightBackColor;
+        private Color _highlightForeColor;
+        private Color _lineNumberBackColor;
+        private Color _lineNumberForeColor;
+        private Color _specialCharsColor;
+        private Color _currentLineColor;
+        private TimeSpan _autoSaveTime;
+        private string _fontName;
+        private double _fontSize;
+        private FontStyle _fontStyle;
+        private int _tabWidth;
+        private bool _tabToSpace;
+        private bool _wardWrap;
+        private bool _lineNumberVisible;
+        private bool _rulerVisible;
+        private bool _specialCharsVisible;
+        private bool _eolVisible;
+        private bool _tabVisible;
+        private bool _spaceVisible;
+        private bool _fullSpaceVisible;
+        private bool _currentLineVisible;
+        private bool _modifiedLineVisible;
+        private bool _bracketVisible;
+        private bool _removeWarning;
         #endregion
     }
 }

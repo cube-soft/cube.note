@@ -53,7 +53,7 @@ namespace Cube.Note.App.Editor
                 try
                 {
                     Update();
-                    View.ViewWidth = 0;
+                    View.ResetViewWidth();
                 }
                 catch (Exception err) { Logger.Error(err); }
             });
@@ -62,6 +62,20 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Resize
+        ///
+        /// <summary>
+        /// View のリサイズ時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Resize(object sender, EventArgs e)
+        {
+            View.ResetViewWidth();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -79,7 +93,7 @@ namespace Cube.Note.App.Editor
                 try
                 {
                     Update(e.PropertyName);
-                    View.Refresh();
+                    View.ResetViewWidth();
                 }
                 catch (Exception err) { Logger.Error(err); }
             });
@@ -124,6 +138,7 @@ namespace Cube.Note.App.Editor
             View.HighlightsMatchedBracket       = Model.BracketVisible;
 
             UpdateSpecialCharsVisible();
+            UpdateWardWrap();
         }
 
         /* ----------------------------------------------------------------- */
@@ -178,6 +193,9 @@ namespace Cube.Note.App.Editor
                 case "TabToSpace":
                     View.ConvertsTabToSpaces = Model.TabToSpace;
                     break;
+                case "WardWrap":
+                    UpdateWardWrap();
+                    break;
                 case "LineNumberVisible":
                     View.ShowsLineNumber = Model.LineNumberVisible;
                     break;
@@ -230,6 +248,24 @@ namespace Cube.Note.App.Editor
             View.DrawsTab            = enable && Model.TabVisible;
             View.DrawsSpace          = enable && Model.SpaceVisible;
             View.DrawsFullWidthSpace = enable && Model.FullSpaceVisible;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateWardWrap
+        ///
+        /// <summary>
+        /// 折り返し表示に関する設定を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateWardWrap()
+        {
+            View.Resize  -= View_Resize;
+            View.ViewType = Model.WardWrap ?
+                            Sgry.Azuki.ViewType.WrappedProportional :
+                            Sgry.Azuki.ViewType.Proportional;
+            if (Model.WardWrap) View.Resize += View_Resize;
         }
 
         #endregion

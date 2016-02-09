@@ -67,5 +67,23 @@ namespace Cube.Note.App.Editor
         }
 
         #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetViewWidth
+        ///
+        /// <summary>
+        /// ViewWidth をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ResetViewWidth()
+        {
+            ViewWidth = ClientSize.Width;
+        }
+
+        #endregion
     }
 }

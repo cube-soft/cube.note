@@ -104,6 +104,7 @@ namespace Cube.Note.App.Editor
             FontButton.Tag                      = settings.Font;
 
             TabToSpaceCheckBox.Checked          = settings.TabToSpace;
+            WardWrapCheckBox.Checked            = settings.WardWrap;
             LineNumberVisibleCheckBox.Checked   = settings.LineNumberVisible;
             RulerVisibleCheckBox.Checked        = settings.RulerVisible;
             SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
@@ -152,6 +153,7 @@ namespace Cube.Note.App.Editor
             CurrentLineColorButton.Click               += ColorButton_Click;
 
             TabToSpaceCheckBox.CheckedChanged          += CheckBoxChanged;
+            WardWrapCheckBox.CheckedChanged            += CheckBoxChanged;
             LineNumberVisibleCheckBox.CheckedChanged   += CheckBoxChanged;
             RulerVisibleCheckBox.CheckedChanged        += CheckBoxChanged;
             SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;

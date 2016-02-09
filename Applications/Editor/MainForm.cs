@@ -286,7 +286,7 @@ namespace Cube.Note.App.Editor
             using (var presenter = new SettingsPresenter(view, Settings))
             {
                 view.ShowDialog(this);
-                TextControl.ViewWidth = 0; // refresh
+                TextControl.ResetViewWidth(); // refresh
             }
         }
 

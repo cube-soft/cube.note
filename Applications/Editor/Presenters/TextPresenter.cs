@@ -75,7 +75,7 @@ namespace Cube.Note.App.Editor
             Sync(() =>
             {
                 View.Document = document;
-                View.ViewWidth = 0;
+                View.ResetViewWidth();
                 View.ScrollToCaret();
             });
 
