@@ -90,6 +90,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   全 {0} 文字（{1} 行） に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CountFormat {
+            get {
+                return ResourceManager.GetString("CountFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   yyyy/MM/dd HH:mm 作成 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CreationFormat {
@@ -181,6 +190,15 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string OrderFileName {
             get {
                 return ResourceManager.GetString("OrderFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   カーソル {0} 行 {1} 桁 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PositionFormat {
+            get {
+                return ResourceManager.GetString("PositionFormat", resourceCulture);
             }
         }
         

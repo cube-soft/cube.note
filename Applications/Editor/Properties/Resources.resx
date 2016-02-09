@@ -127,6 +127,9 @@
   <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CountFormat" xml:space="preserve">
+    <value>全 {0} 文字（{1} 行）</value>
+  </data>
   <data name="CreationFormat" xml:space="preserve">
     <value>yyyy/MM/dd HH:mm 作成</value>
   </data>
@@ -156,6 +159,9 @@
   </data>
   <data name="OrderFileName" xml:space="preserve">
     <value>Order.json</value>
+  </data>
+  <data name="PositionFormat" xml:space="preserve">
+    <value>カーソル {0} 行 {1} 桁</value>
   </data>
   <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

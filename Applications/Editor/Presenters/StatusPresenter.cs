@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// TextPresenter.cs
+/// StatusPresenter.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -24,35 +24,41 @@ namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// TextPresenter
+    /// StatusPresenter
     /// 
     /// <summary>
-    /// TextControl とモデルを関連付けるためのクラスです。
+    /// StatusControl とモデルを関連付けるためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class TextPresenter : Cube.Forms.PresenterBase<TextControl, PageCollection>
+    public class StatusPresenter : Cube.Forms.PresenterBase<StatusControl, PageCollection>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TextEditPresenter
+        /// StatusPresenter
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: TextControl を引数に渡さない方法がないか検討する。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public TextPresenter(TextControl view, PageCollection model)
-            : base(view, model)
+        public StatusPresenter(StatusControl view, PageCollection model, TextControl control) : base(view, model)
         {
             Model.ActiveChanged += Model_ActiveChanged;
+            control.CaretMoved  += (s, e) => UpdatePosition(control.Document);
         }
 
         #endregion
 
         #region Event handlers
+
+        #region Model
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,22 +72,16 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_ActiveChanged(object sender, PageChangedEventArgs e)
         {
-            try
+            lock (e.NewPage)
             {
-                if (e.NewPage == null) return;
-
-                lock (e.NewPage) e.NewPage.CreateDocument(Model.Directory);
-                System.Diagnostics.Debug.Assert(e.NewPage.Document != null);
-
-                Sync(() =>
-                {
-                    View.Document = e.NewPage.Document as Document;
-                    View.ResetViewWidth();
-                    View.ScrollToCaret();
-                    View.Focus();
-                });
+                Sync(() => UpdateView(
+                    e.NewPage != null ?
+                    e.NewPage.CreateDocument(Model.Directory) :
+                    null
+                ));
             }
-            finally { UpdateModel(e.NewPage, e.OldPage); }
+
+            UpdateModel(e.NewPage, e.OldPage);
         }
 
         /* ----------------------------------------------------------------- */
@@ -95,13 +95,57 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
         {
-            if (Model.Active == null || Model.Active.Document != sender) return;
-            Model.Active.Abstract = Abstract(Model.Active.Document as Document);
+            Sync(() => UpdateView(
+                Model.Active != null ?
+                Model.Active.Document as Document :
+                null
+            ));
         }
 
         #endregion
 
-        #region Implementations
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateView
+        ///
+        /// <summary>
+        /// View の状態を更新します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void UpdateView(Document src)
+        {
+            var count = (src != null) ? src.Length    : 0;
+            var line  = (src != null) ? src.LineCount : 0;
+
+            View.Count     = count - line + 1;
+            View.LineCount = line;
+
+            UpdatePosition(src);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdatePosition
+        ///
+        /// <summary>
+        /// キャレット位置の表示を更新します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void UpdatePosition(Document src)
+        {
+            var line   = 0;
+            var column = 0;
+            if (src != null) src.GetCaretIndex(out line, out column);
+
+            View.LineNumber   = line + 1;
+            View.ColumnNumber = column + 1;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,27 +173,6 @@ namespace Cube.Note.App.Editor
                 var document = oldpage.Document as Document;
                 if (document != null) document.ContentChanged -= Model_ContentChanged;
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Abstract
-        ///
-        /// <summary>
-        /// 概要を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string Abstract(Document document)
-        {
-            if (document == null) return string.Empty;
-
-            for (var i = 0; i < document.LineCount; ++i)
-            {
-                var content = document.GetLineContent(i).Trim();
-                if (content.Length > 0) return content;
-            }
-            return string.Empty;
         }
 
         #endregion

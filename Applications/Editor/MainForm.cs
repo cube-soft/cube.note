@@ -19,7 +19,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -112,6 +111,7 @@ namespace Cube.Note.App.Editor
             new TextVisualPresenter(TextControl, Settings);
             new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
             new SearchPresenter(SearchControl, Pages);
+            new StatusPresenter(FooterStatusControl, Pages, TextControl);
         }
 
         #endregion

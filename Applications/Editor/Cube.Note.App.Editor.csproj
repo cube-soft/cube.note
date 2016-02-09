@@ -92,6 +92,7 @@
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
     <Compile Include="Presenters\SearchPresenter.cs" />
     <Compile Include="Presenters\SettingsPresenter.cs" />
+    <Compile Include="Presenters\StatusPresenter.cs" />
     <Compile Include="Presenters\TextPresenter.cs" />
     <Compile Include="Presenters\TextVisualPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -110,6 +111,9 @@
     </Compile>
     <Compile Include="SearchControl.Designer.cs">
       <DependentUpon>SearchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StatusControl.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="TitleControl.cs">
       <SubType>UserControl</SubType>

@@ -46,7 +46,7 @@
             this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
-            this.FooterStatusStrip = new Cube.Forms.StatusStrip();
+            this.FooterStatusControl = new Cube.Note.App.Editor.StatusControl();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -65,7 +65,7 @@
             this.LayoutPanel.Controls.Add(this.MenuToolStrip, 0, 1);
             this.LayoutPanel.Controls.Add(this.VerticalSeparator, 0, 2);
             this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
-            this.LayoutPanel.Controls.Add(this.FooterStatusStrip, 0, 4);
+            this.LayoutPanel.Controls.Add(this.FooterStatusControl, 0, 4);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -296,15 +296,16 @@
             this.TitleControl.Size = new System.Drawing.Size(782, 30);
             this.TitleControl.TabIndex = 4;
             // 
-            // FooterStatusStrip
+            // FooterStatusControl
             // 
-            this.FooterStatusStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.FooterStatusStrip.GripMargin = new System.Windows.Forms.Padding(0);
-            this.FooterStatusStrip.Location = new System.Drawing.Point(0, 437);
-            this.FooterStatusStrip.Name = "FooterStatusStrip";
-            this.FooterStatusStrip.Size = new System.Drawing.Size(782, 22);
-            this.FooterStatusStrip.TabIndex = 5;
+            this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FooterStatusControl.GripMargin = new System.Windows.Forms.Padding(0);
+            this.FooterStatusControl.Location = new System.Drawing.Point(0, 437);
+            this.FooterStatusControl.Message = "";
+            this.FooterStatusControl.Name = "FooterStatusControl";
+            this.FooterStatusControl.Size = new System.Drawing.Size(782, 22);
+            this.FooterStatusControl.TabIndex = 5;
+            this.FooterStatusControl.Text = "statusControl1";
             // 
             // MainForm
             // 
@@ -348,7 +349,7 @@
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
         private TitleControl TitleControl;
         private TextControl TextControl;
-        private Cube.Forms.StatusStrip FooterStatusStrip;
+        private StatusControl FooterStatusControl;
     }
 }
 
