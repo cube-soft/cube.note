@@ -194,7 +194,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   カーソル {0} 行 {1} 桁 に類似しているローカライズされた文字列を検索します。
+        ///   カーソル {0} 行 {1} 列 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PositionFormat {
             get {

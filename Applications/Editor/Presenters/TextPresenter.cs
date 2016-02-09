@@ -70,12 +70,12 @@ namespace Cube.Note.App.Editor
             {
                 if (e.NewPage == null) return;
 
-                lock (e.NewPage) e.NewPage.CreateDocument(Model.Directory);
-                System.Diagnostics.Debug.Assert(e.NewPage.Document != null);
+                var document = e.NewPage.CreateDocument(Model.Directory);
+                System.Diagnostics.Debug.Assert(document != null);
 
                 Sync(() =>
                 {
-                    View.Document = e.NewPage.Document as Document;
+                    View.Document = document;
                     View.ResetViewWidth();
                     View.ScrollToCaret();
                     View.Focus();
