@@ -48,9 +48,9 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            ExitButton.Click += (s, e) => OnCloseRequired(e);
-            MaximizeButton.Click += (s, e) => OnMaximizeRequired(e);
-            MinimizeButton.Click += (s, e) => OnMinimizeRequired(e);
+            ExitButton.Click += (s, e) => OnCloseExecuted(e);
+            MaximizeButton.Click += (s, e) => OnMaximizeExecuted(e);
+            MinimizeButton.Click += (s, e) => OnMinimizeExecuted(e);
             ButtonsPanel.Resize += ButtonsPanel_Resize;
         }
 
@@ -94,36 +94,36 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CloseRequired
+        /// CloseExecuted
         ///
         /// <summary>
         /// 終了の要求時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler CloseRequired;
+        public event EventHandler CloseExecuted;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MaximizeRequired
+        /// MaximizeExecuted
         ///
         /// <summary>
         /// 最大化の要求時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler MaximizeRequired;
+        public event EventHandler MaximizeExecuted;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MinimizeRequired
+        /// MinimizeExecuted
         ///
         /// <summary>
         /// 最小化の要求時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler MinimizeRequired;
+        public event EventHandler MinimizeExecuted;
 
         #endregion
 
@@ -131,49 +131,79 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnCloseRequired
+        /// OnCloseExecuted
         ///
         /// <summary>
-        /// Close イベントを発生させます。
+        /// CloseExecuted イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnCloseRequired(EventArgs e)
+        protected virtual void OnCloseExecuted(EventArgs e)
         {
-            if (CloseRequired != null) CloseRequired(this, e);
+            if (CloseExecuted != null) CloseExecuted(this, e);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnMaximizeRequired
+        /// OnMaximizeExecuted
         ///
         /// <summary>
-        /// MaximizeRequired イベントを発生させます。
+        /// MaximizeExecuted イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnMaximizeRequired(EventArgs e)
+        protected virtual void OnMaximizeExecuted(EventArgs e)
         {
-            if (MaximizeRequired != null) MaximizeRequired(this, e);
+            if (MaximizeExecuted != null) MaximizeExecuted(this, e);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnMinimizeRequired
+        /// OnMinimizeExecuted
         ///
         /// <summary>
-        /// MinimizeRequired イベントを発生させます。
+        /// MinimizeExecuted イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnMinimizeRequired(EventArgs e)
+        protected virtual void OnMinimizeExecuted(EventArgs e)
         {
-            if (MinimizeRequired != null) MinimizeRequired(this, e);
+            if (MinimizeExecuted != null) MinimizeExecuted(this, e);
         }
 
         #endregion
 
         #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCreateControl
+        ///
+        /// <summary>
+        /// コントロールが生成された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            ResetEvents();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnParentChanged
+        ///
+        /// <summary>
+        /// 親コントロールが変更された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            ResetEvents();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -199,6 +229,25 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Form_Resize
+        ///
+        /// <summary>
+        /// フォームのリサイズ時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            var form = sender as Form;
+            if (form == null) return;
+
+            MaximizeButton.Image = form.WindowState == FormWindowState.Maximized ?
+                                   Properties.Resources.Normalize :
+                                   Properties.Resources.Maximize;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ButtonsPanel_Resize
         ///
         /// <summary>
@@ -215,6 +264,28 @@ namespace Cube.Note.App.Editor
             ExitButton.Height = height;
             MaximizeButton.Height = height;
             MinimizeButton.Height = height;
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetEvents
+        ///
+        /// <summary>
+        /// イベントに関する設定をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetEvents()
+        {
+            var form = FindForm();
+            if (form == null) return;
+
+            form.Resize -= Form_Resize;
+            form.Resize += Form_Resize;
         }
 
         #endregion

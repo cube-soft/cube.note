@@ -185,6 +185,16 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Normalize {
+            get {
+                object obj = ResourceManager.GetObject("Normalize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Order.json に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string OrderFileName {

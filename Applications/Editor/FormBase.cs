@@ -110,9 +110,9 @@ namespace Cube.Note.App.Editor
             var control = Caption as TitleControl;
             if (control == null) return;
 
-            control.CloseRequired    += (s, ev) => Close();
-            control.MaximizeRequired += (s, ev) => Maximize();
-            control.MinimizeRequired += (s, ev) => Minimize();
+            control.CloseExecuted    += (s, ev) => Close();
+            control.MaximizeExecuted += (s, ev) => Maximize();
+            control.MinimizeExecuted += (s, ev) => Minimize();
 
             control.MaximizeBox = MaximizeBox && Sizable;
             control.MinimizeBox = MinimizeBox;
