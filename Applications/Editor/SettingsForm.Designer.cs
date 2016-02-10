@@ -57,6 +57,7 @@
             this.Label21 = new System.Windows.Forms.Label();
             this.TabWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.TabToSpaceCheckBox = new System.Windows.Forms.CheckBox();
+            this.WardWrapCheckBox = new System.Windows.Forms.CheckBox();
             this.LineNumberVisibleCheckBox = new System.Windows.Forms.CheckBox();
             this.RulerVisibleCheckBox = new System.Windows.Forms.CheckBox();
             this.LineNumberBackColorTitleLabel = new System.Windows.Forms.Label();
@@ -85,7 +86,6 @@
             this.ApplyButton = new Cube.Forms.Button();
             this.ExitButton = new Cube.Forms.Button();
             this.RunButton = new Cube.Forms.Button();
-            this.WardWrapCheckBox = new System.Windows.Forms.CheckBox();
             this.LayoutPanel.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
@@ -487,6 +487,18 @@
             this.TabToSpaceCheckBox.Text = "タブの代わりにスペースを挿入する";
             this.TabToSpaceCheckBox.UseVisualStyleBackColor = true;
             // 
+            // WardWrapCheckBox
+            // 
+            this.WardWrapCheckBox.AutoSize = true;
+            this.VisibleSettinsPanel.SetFlowBreak(this.WardWrapCheckBox, true);
+            this.WardWrapCheckBox.Location = new System.Drawing.Point(15, 55);
+            this.WardWrapCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.WardWrapCheckBox.Name = "WardWrapCheckBox";
+            this.WardWrapCheckBox.Size = new System.Drawing.Size(147, 19);
+            this.WardWrapCheckBox.TabIndex = 43;
+            this.WardWrapCheckBox.Text = "テキストを右端で折り返す";
+            this.WardWrapCheckBox.UseVisualStyleBackColor = true;
+            // 
             // LineNumberVisibleCheckBox
             // 
             this.LineNumberVisibleCheckBox.AutoSize = true;
@@ -738,6 +750,7 @@
             // VersionTabPage
             // 
             this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
+            this.VersionTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VersionTabPage.Name = "VersionTabPage";
             this.VersionTabPage.Size = new System.Drawing.Size(466, 395);
             this.VersionTabPage.TabIndex = 2;
@@ -794,18 +807,6 @@
             this.RunButton.Size = new System.Drawing.Size(120, 30);
             this.RunButton.TabIndex = 0;
             this.RunButton.Text = "OK";
-            // 
-            // WardWrapCheckBox
-            // 
-            this.WardWrapCheckBox.AutoSize = true;
-            this.VisibleSettinsPanel.SetFlowBreak(this.WardWrapCheckBox, true);
-            this.WardWrapCheckBox.Location = new System.Drawing.Point(15, 55);
-            this.WardWrapCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.WardWrapCheckBox.Name = "WardWrapCheckBox";
-            this.WardWrapCheckBox.Size = new System.Drawing.Size(147, 19);
-            this.WardWrapCheckBox.TabIndex = 43;
-            this.WardWrapCheckBox.Text = "テキストを右端で折り返す";
-            this.WardWrapCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 

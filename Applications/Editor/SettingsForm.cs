@@ -188,14 +188,14 @@ namespace Cube.Note.App.Editor
         {
             var control = new Cube.Forms.VersionControl();
 
-            control.Assembly    = Assembly.GetEntryAssembly();
-            control.Description = string.Empty;
-            control.Logo        = Properties.Resources.LogoLarge;
-            control.Url         = Properties.Resources.WebUrl;
-            control.Dock        = DockStyle.Top;
-            control.Resize     += (s, e) => ResizeVersionControl(control);
+            control.Assembly     = Assembly.GetEntryAssembly();
+            control.VersionDigit = 3;
+            control.Description  = string.Empty;
+            control.Logo         = Properties.Resources.LogoLarge;
+            control.Url          = Properties.Resources.WebUrl;
+            control.Dock         = DockStyle.Fill;
+            control.Padding      = new Padding(40, 40, 0, 0);
 
-            ResizeVersionControl(control);
             VersionTabPage.Controls.Add(control);
         }
 
@@ -561,21 +561,6 @@ namespace Cube.Note.App.Editor
             LineNumberForeColorButton.Enabled     = enable;
             LineNumberForeColorLabel.Enabled      = enable;
             LineNumberForeColorTitleLabel.Enabled = enable;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ResizeVersionControl
-        ///
-        /// <summary>
-        /// バージョン画面のレイアウトを調整します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ResizeVersionControl(Control control)
-        {
-            control.Padding = new Padding(40, 40, 0, 0);
-            control.Height = Math.Min(VersionTabPage.Height, 200);
         }
 
         #endregion
