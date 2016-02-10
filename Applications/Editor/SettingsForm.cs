@@ -105,6 +105,7 @@ namespace Cube.Note.App.Editor
 
             TabToSpaceCheckBox.Checked          = settings.TabToSpace;
             WordWrapCheckBox.Checked            = settings.WordWrap;
+            WordWrapAsWindowCheckBox.Checked    = settings.WordWrapAsWindow;
             LineNumberVisibleCheckBox.Checked   = settings.LineNumberVisible;
             RulerVisibleCheckBox.Checked        = settings.RulerVisible;
             SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
@@ -119,6 +120,7 @@ namespace Cube.Note.App.Editor
 
             TabWidthNumericUpDown.Value         = settings.TabWidth;
             AutoSaveTimeNumericUpDown.Value     = (int)settings.AutoSaveTime.TotalSeconds;
+            WordWrapCountNumericUpDown.Value    = settings.WordWrapCount;
         }
 
         #endregion
