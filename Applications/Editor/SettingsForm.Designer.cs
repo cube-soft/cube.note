@@ -58,7 +58,10 @@
             this.Label21 = new System.Windows.Forms.Label();
             this.TabWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.TabToSpaceCheckBox = new System.Windows.Forms.CheckBox();
-            this.WardWrapCheckBox = new System.Windows.Forms.CheckBox();
+            this.WordWrapCheckBox = new System.Windows.Forms.CheckBox();
+            this.WordWrapLabel = new System.Windows.Forms.Label();
+            this.WordWrapCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.WordWrapAsWindowCheckBox = new System.Windows.Forms.CheckBox();
             this.LineNumberVisibleCheckBox = new System.Windows.Forms.CheckBox();
             this.RulerVisibleCheckBox = new System.Windows.Forms.CheckBox();
             this.LineNumberBackColorTitleLabel = new System.Windows.Forms.Label();
@@ -95,6 +98,7 @@
             this.VisibleTabPage.SuspendLayout();
             this.VisibleSettinsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabWidthNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WordWrapCountNumericUpDown)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
             this.ApplyButtonShadow.SuspendLayout();
@@ -117,7 +121,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.LayoutPanel.Size = new System.Drawing.Size(498, 528);
+            this.LayoutPanel.Size = new System.Drawing.Size(498, 548);
             this.LayoutPanel.TabIndex = 0;
             // 
             // ResetButton
@@ -126,7 +130,7 @@
             this.ResetButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
             this.ResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.ResetButton.Location = new System.Drawing.Point(12, 448);
+            this.ResetButton.Location = new System.Drawing.Point(12, 468);
             this.ResetButton.Margin = new System.Windows.Forms.Padding(12, 1, 0, 1);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(120, 24);
@@ -156,7 +160,7 @@
             this.TabControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 1);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(474, 404);
+            this.TabControl.Size = new System.Drawing.Size(474, 424);
             this.TabControl.TabIndex = 1;
             // 
             // GeneralTabPage
@@ -165,7 +169,7 @@
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.GeneralTabPage.Size = new System.Drawing.Size(466, 376);
+            this.GeneralTabPage.Size = new System.Drawing.Size(466, 396);
             this.GeneralTabPage.TabIndex = 3;
             this.GeneralTabPage.Text = "一 般";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -197,7 +201,7 @@
             this.GeneralSettingsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.GeneralSettingsPanel.Name = "GeneralSettingsPanel";
             this.GeneralSettingsPanel.Padding = new System.Windows.Forms.Padding(12, 20, 0, 0);
-            this.GeneralSettingsPanel.Size = new System.Drawing.Size(460, 370);
+            this.GeneralSettingsPanel.Size = new System.Drawing.Size(460, 390);
             this.GeneralSettingsPanel.TabIndex = 0;
             // 
             // Label11
@@ -425,7 +429,7 @@
             this.VisibleTabPage.Location = new System.Drawing.Point(4, 24);
             this.VisibleTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleTabPage.Name = "VisibleTabPage";
-            this.VisibleTabPage.Size = new System.Drawing.Size(466, 376);
+            this.VisibleTabPage.Size = new System.Drawing.Size(466, 396);
             this.VisibleTabPage.TabIndex = 0;
             this.VisibleTabPage.Text = "表示オプション";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
@@ -436,7 +440,10 @@
             this.VisibleSettinsPanel.Controls.Add(this.Label21);
             this.VisibleSettinsPanel.Controls.Add(this.TabWidthNumericUpDown);
             this.VisibleSettinsPanel.Controls.Add(this.TabToSpaceCheckBox);
-            this.VisibleSettinsPanel.Controls.Add(this.WardWrapCheckBox);
+            this.VisibleSettinsPanel.Controls.Add(this.WordWrapCheckBox);
+            this.VisibleSettinsPanel.Controls.Add(this.WordWrapLabel);
+            this.VisibleSettinsPanel.Controls.Add(this.WordWrapCountNumericUpDown);
+            this.VisibleSettinsPanel.Controls.Add(this.WordWrapAsWindowCheckBox);
             this.VisibleSettinsPanel.Controls.Add(this.LineNumberVisibleCheckBox);
             this.VisibleSettinsPanel.Controls.Add(this.RulerVisibleCheckBox);
             this.VisibleSettinsPanel.Controls.Add(this.LineNumberBackColorTitleLabel);
@@ -464,7 +471,7 @@
             this.VisibleSettinsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleSettinsPanel.Name = "VisibleSettinsPanel";
             this.VisibleSettinsPanel.Padding = new System.Windows.Forms.Padding(12, 20, 0, 0);
-            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 376);
+            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 396);
             this.VisibleSettinsPanel.TabIndex = 0;
             // 
             // Label21
@@ -506,22 +513,63 @@
             this.TabToSpaceCheckBox.Text = "タブの代わりにスペースを挿入する";
             this.TabToSpaceCheckBox.UseVisualStyleBackColor = true;
             // 
-            // WardWrapCheckBox
+            // WordWrapCheckBox
             // 
-            this.WardWrapCheckBox.AutoSize = true;
-            this.VisibleSettinsPanel.SetFlowBreak(this.WardWrapCheckBox, true);
-            this.WardWrapCheckBox.Location = new System.Drawing.Point(15, 55);
-            this.WardWrapCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.WardWrapCheckBox.Name = "WardWrapCheckBox";
-            this.WardWrapCheckBox.Size = new System.Drawing.Size(147, 19);
-            this.WardWrapCheckBox.TabIndex = 43;
-            this.WardWrapCheckBox.Text = "テキストを右端で折り返す";
-            this.WardWrapCheckBox.UseVisualStyleBackColor = true;
+            this.WordWrapCheckBox.AutoSize = true;
+            this.VisibleSettinsPanel.SetFlowBreak(this.WordWrapCheckBox, true);
+            this.WordWrapCheckBox.Location = new System.Drawing.Point(15, 55);
+            this.WordWrapCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.WordWrapCheckBox.Name = "WordWrapCheckBox";
+            this.WordWrapCheckBox.Size = new System.Drawing.Size(147, 19);
+            this.WordWrapCheckBox.TabIndex = 43;
+            this.WordWrapCheckBox.Text = "テキストを右端で折り返す";
+            this.WordWrapCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // WordWrapLabel
+            // 
+            this.WordWrapLabel.Location = new System.Drawing.Point(30, 77);
+            this.WordWrapLabel.Margin = new System.Windows.Forms.Padding(18, 0, 3, 3);
+            this.WordWrapLabel.Name = "WordWrapLabel";
+            this.WordWrapLabel.Size = new System.Drawing.Size(85, 23);
+            this.WordWrapLabel.TabIndex = 44;
+            this.WordWrapLabel.Text = "文字数";
+            this.WordWrapLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // WordWrapCountNumericUpDown
+            // 
+            this.WordWrapCountNumericUpDown.Location = new System.Drawing.Point(121, 77);
+            this.WordWrapCountNumericUpDown.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.WordWrapCountNumericUpDown.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.WordWrapCountNumericUpDown.Name = "WordWrapCountNumericUpDown";
+            this.WordWrapCountNumericUpDown.Size = new System.Drawing.Size(50, 23);
+            this.WordWrapCountNumericUpDown.TabIndex = 45;
+            this.WordWrapCountNumericUpDown.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
+            // WordWrapAsWindowCheckBox
+            // 
+            this.WordWrapAsWindowCheckBox.AutoSize = true;
+            this.VisibleSettinsPanel.SetFlowBreak(this.WordWrapAsWindowCheckBox, true);
+            this.WordWrapAsWindowCheckBox.Location = new System.Drawing.Point(186, 79);
+            this.WordWrapAsWindowCheckBox.Margin = new System.Windows.Forms.Padding(12, 2, 3, 0);
+            this.WordWrapAsWindowCheckBox.Name = "WordWrapAsWindowCheckBox";
+            this.WordWrapAsWindowCheckBox.Size = new System.Drawing.Size(130, 19);
+            this.WordWrapAsWindowCheckBox.TabIndex = 46;
+            this.WordWrapAsWindowCheckBox.Text = "ウィンドウ幅に合わせる";
+            this.WordWrapAsWindowCheckBox.UseVisualStyleBackColor = true;
             // 
             // LineNumberVisibleCheckBox
             // 
             this.LineNumberVisibleCheckBox.AutoSize = true;
-            this.LineNumberVisibleCheckBox.Location = new System.Drawing.Point(15, 80);
+            this.LineNumberVisibleCheckBox.Location = new System.Drawing.Point(15, 109);
+            this.LineNumberVisibleCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.LineNumberVisibleCheckBox.Name = "LineNumberVisibleCheckBox";
             this.LineNumberVisibleCheckBox.Size = new System.Drawing.Size(114, 19);
             this.LineNumberVisibleCheckBox.TabIndex = 9;
@@ -532,8 +580,8 @@
             // 
             this.RulerVisibleCheckBox.AutoSize = true;
             this.VisibleSettinsPanel.SetFlowBreak(this.RulerVisibleCheckBox, true);
-            this.RulerVisibleCheckBox.Location = new System.Drawing.Point(148, 80);
-            this.RulerVisibleCheckBox.Margin = new System.Windows.Forms.Padding(16, 3, 3, 0);
+            this.RulerVisibleCheckBox.Location = new System.Drawing.Point(148, 109);
+            this.RulerVisibleCheckBox.Margin = new System.Windows.Forms.Padding(16, 6, 3, 0);
             this.RulerVisibleCheckBox.Name = "RulerVisibleCheckBox";
             this.RulerVisibleCheckBox.Size = new System.Drawing.Size(110, 19);
             this.RulerVisibleCheckBox.TabIndex = 10;
@@ -542,7 +590,7 @@
             // 
             // LineNumberBackColorTitleLabel
             // 
-            this.LineNumberBackColorTitleLabel.Location = new System.Drawing.Point(30, 102);
+            this.LineNumberBackColorTitleLabel.Location = new System.Drawing.Point(30, 131);
             this.LineNumberBackColorTitleLabel.Margin = new System.Windows.Forms.Padding(18, 0, 3, 3);
             this.LineNumberBackColorTitleLabel.Name = "LineNumberBackColorTitleLabel";
             this.LineNumberBackColorTitleLabel.Size = new System.Drawing.Size(85, 23);
@@ -557,7 +605,7 @@
             this.LineNumberBackColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.LineNumberBackColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberBackColorButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.LineNumberBackColorButton.Location = new System.Drawing.Point(121, 102);
+            this.LineNumberBackColorButton.Location = new System.Drawing.Point(121, 131);
             this.LineNumberBackColorButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.LineNumberBackColorButton.Name = "LineNumberBackColorButton";
             this.LineNumberBackColorButton.Size = new System.Drawing.Size(50, 23);
@@ -567,7 +615,7 @@
             // LineNumberBackColorLabel
             // 
             this.VisibleSettinsPanel.SetFlowBreak(this.LineNumberBackColorLabel, true);
-            this.LineNumberBackColorLabel.Location = new System.Drawing.Point(177, 102);
+            this.LineNumberBackColorLabel.Location = new System.Drawing.Point(177, 131);
             this.LineNumberBackColorLabel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.LineNumberBackColorLabel.Name = "LineNumberBackColorLabel";
             this.LineNumberBackColorLabel.Size = new System.Drawing.Size(190, 23);
@@ -577,7 +625,7 @@
             // 
             // LineNumberForeColorTitleLabel
             // 
-            this.LineNumberForeColorTitleLabel.Location = new System.Drawing.Point(30, 131);
+            this.LineNumberForeColorTitleLabel.Location = new System.Drawing.Point(30, 160);
             this.LineNumberForeColorTitleLabel.Margin = new System.Windows.Forms.Padding(18, 3, 3, 3);
             this.LineNumberForeColorTitleLabel.Name = "LineNumberForeColorTitleLabel";
             this.LineNumberForeColorTitleLabel.Size = new System.Drawing.Size(85, 23);
@@ -592,7 +640,7 @@
             this.LineNumberForeColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.LineNumberForeColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberForeColorButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.LineNumberForeColorButton.Location = new System.Drawing.Point(121, 131);
+            this.LineNumberForeColorButton.Location = new System.Drawing.Point(121, 160);
             this.LineNumberForeColorButton.Name = "LineNumberForeColorButton";
             this.LineNumberForeColorButton.Size = new System.Drawing.Size(50, 23);
             this.LineNumberForeColorButton.TabIndex = 22;
@@ -601,7 +649,7 @@
             // LineNumberForeColorLabel
             // 
             this.VisibleSettinsPanel.SetFlowBreak(this.LineNumberForeColorLabel, true);
-            this.LineNumberForeColorLabel.Location = new System.Drawing.Point(177, 131);
+            this.LineNumberForeColorLabel.Location = new System.Drawing.Point(177, 160);
             this.LineNumberForeColorLabel.Margin = new System.Windows.Forms.Padding(3);
             this.LineNumberForeColorLabel.Name = "LineNumberForeColorLabel";
             this.LineNumberForeColorLabel.Size = new System.Drawing.Size(190, 23);
@@ -613,7 +661,7 @@
             // 
             this.BracketVisibleCheckBox.AutoSize = true;
             this.VisibleSettinsPanel.SetFlowBreak(this.BracketVisibleCheckBox, true);
-            this.BracketVisibleCheckBox.Location = new System.Drawing.Point(15, 165);
+            this.BracketVisibleCheckBox.Location = new System.Drawing.Point(15, 194);
             this.BracketVisibleCheckBox.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.BracketVisibleCheckBox.Name = "BracketVisibleCheckBox";
             this.BracketVisibleCheckBox.Size = new System.Drawing.Size(169, 19);
@@ -625,7 +673,7 @@
             // 
             this.ModifiedLineVisibleCheckBox.AutoSize = true;
             this.VisibleSettinsPanel.SetFlowBreak(this.ModifiedLineVisibleCheckBox, true);
-            this.ModifiedLineVisibleCheckBox.Location = new System.Drawing.Point(15, 190);
+            this.ModifiedLineVisibleCheckBox.Location = new System.Drawing.Point(15, 219);
             this.ModifiedLineVisibleCheckBox.Name = "ModifiedLineVisibleCheckBox";
             this.ModifiedLineVisibleCheckBox.Size = new System.Drawing.Size(156, 19);
             this.ModifiedLineVisibleCheckBox.TabIndex = 14;
@@ -636,7 +684,7 @@
             // 
             this.CurrentLineVisibleCheckBox.AutoSize = true;
             this.VisibleSettinsPanel.SetFlowBreak(this.CurrentLineVisibleCheckBox, true);
-            this.CurrentLineVisibleCheckBox.Location = new System.Drawing.Point(15, 215);
+            this.CurrentLineVisibleCheckBox.Location = new System.Drawing.Point(15, 244);
             this.CurrentLineVisibleCheckBox.Name = "CurrentLineVisibleCheckBox";
             this.CurrentLineVisibleCheckBox.Size = new System.Drawing.Size(181, 19);
             this.CurrentLineVisibleCheckBox.TabIndex = 15;
@@ -645,7 +693,7 @@
             // 
             // CurrentLineColorTitleLabel
             // 
-            this.CurrentLineColorTitleLabel.Location = new System.Drawing.Point(30, 238);
+            this.CurrentLineColorTitleLabel.Location = new System.Drawing.Point(30, 267);
             this.CurrentLineColorTitleLabel.Margin = new System.Windows.Forms.Padding(18, 0, 3, 3);
             this.CurrentLineColorTitleLabel.Name = "CurrentLineColorTitleLabel";
             this.CurrentLineColorTitleLabel.Size = new System.Drawing.Size(85, 23);
@@ -660,7 +708,7 @@
             this.CurrentLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.CurrentLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CurrentLineColorButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.CurrentLineColorButton.Location = new System.Drawing.Point(121, 238);
+            this.CurrentLineColorButton.Location = new System.Drawing.Point(121, 267);
             this.CurrentLineColorButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.CurrentLineColorButton.Name = "CurrentLineColorButton";
             this.CurrentLineColorButton.Size = new System.Drawing.Size(50, 23);
@@ -670,7 +718,7 @@
             // CurrentLineColorLabel
             // 
             this.VisibleSettinsPanel.SetFlowBreak(this.CurrentLineColorLabel, true);
-            this.CurrentLineColorLabel.Location = new System.Drawing.Point(177, 238);
+            this.CurrentLineColorLabel.Location = new System.Drawing.Point(177, 267);
             this.CurrentLineColorLabel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.CurrentLineColorLabel.Name = "CurrentLineColorLabel";
             this.CurrentLineColorLabel.Size = new System.Drawing.Size(190, 23);
@@ -682,7 +730,7 @@
             // 
             this.SpecialCharsVisibleCheckBox.AutoSize = true;
             this.VisibleSettinsPanel.SetFlowBreak(this.SpecialCharsVisibleCheckBox, true);
-            this.SpecialCharsVisibleCheckBox.Location = new System.Drawing.Point(15, 272);
+            this.SpecialCharsVisibleCheckBox.Location = new System.Drawing.Point(15, 301);
             this.SpecialCharsVisibleCheckBox.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.SpecialCharsVisibleCheckBox.Name = "SpecialCharsVisibleCheckBox";
             this.SpecialCharsVisibleCheckBox.Size = new System.Drawing.Size(126, 19);
@@ -693,7 +741,7 @@
             // EolVisibleCheckBox
             // 
             this.EolVisibleCheckBox.AutoSize = true;
-            this.EolVisibleCheckBox.Location = new System.Drawing.Point(32, 297);
+            this.EolVisibleCheckBox.Location = new System.Drawing.Point(32, 326);
             this.EolVisibleCheckBox.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.EolVisibleCheckBox.Name = "EolVisibleCheckBox";
             this.EolVisibleCheckBox.Size = new System.Drawing.Size(50, 19);
@@ -704,7 +752,7 @@
             // TabVisibleCheckBox
             // 
             this.TabVisibleCheckBox.AutoSize = true;
-            this.TabVisibleCheckBox.Location = new System.Drawing.Point(88, 297);
+            this.TabVisibleCheckBox.Location = new System.Drawing.Point(88, 326);
             this.TabVisibleCheckBox.Name = "TabVisibleCheckBox";
             this.TabVisibleCheckBox.Size = new System.Drawing.Size(43, 19);
             this.TabVisibleCheckBox.TabIndex = 18;
@@ -714,7 +762,7 @@
             // SpaceVisibleCheckBox
             // 
             this.SpaceVisibleCheckBox.AutoSize = true;
-            this.SpaceVisibleCheckBox.Location = new System.Drawing.Point(137, 297);
+            this.SpaceVisibleCheckBox.Location = new System.Drawing.Point(137, 326);
             this.SpaceVisibleCheckBox.Name = "SpaceVisibleCheckBox";
             this.SpaceVisibleCheckBox.Size = new System.Drawing.Size(88, 19);
             this.SpaceVisibleCheckBox.TabIndex = 19;
@@ -725,7 +773,7 @@
             // 
             this.FullSpaceVisibleCheckBox.AutoSize = true;
             this.VisibleSettinsPanel.SetFlowBreak(this.FullSpaceVisibleCheckBox, true);
-            this.FullSpaceVisibleCheckBox.Location = new System.Drawing.Point(231, 297);
+            this.FullSpaceVisibleCheckBox.Location = new System.Drawing.Point(231, 326);
             this.FullSpaceVisibleCheckBox.Name = "FullSpaceVisibleCheckBox";
             this.FullSpaceVisibleCheckBox.Size = new System.Drawing.Size(88, 19);
             this.FullSpaceVisibleCheckBox.TabIndex = 20;
@@ -734,7 +782,7 @@
             // 
             // SpecialCharsColorTitleLabel
             // 
-            this.SpecialCharsColorTitleLabel.Location = new System.Drawing.Point(30, 322);
+            this.SpecialCharsColorTitleLabel.Location = new System.Drawing.Point(30, 351);
             this.SpecialCharsColorTitleLabel.Margin = new System.Windows.Forms.Padding(18, 3, 3, 3);
             this.SpecialCharsColorTitleLabel.Name = "SpecialCharsColorTitleLabel";
             this.SpecialCharsColorTitleLabel.Size = new System.Drawing.Size(85, 23);
@@ -749,7 +797,7 @@
             this.SpecialCharsColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.SpecialCharsColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SpecialCharsColorButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.SpecialCharsColorButton.Location = new System.Drawing.Point(121, 322);
+            this.SpecialCharsColorButton.Location = new System.Drawing.Point(121, 351);
             this.SpecialCharsColorButton.Name = "SpecialCharsColorButton";
             this.SpecialCharsColorButton.Size = new System.Drawing.Size(50, 23);
             this.SpecialCharsColorButton.TabIndex = 38;
@@ -758,7 +806,7 @@
             // SpecialCharsColorLabel
             // 
             this.VisibleSettinsPanel.SetFlowBreak(this.SpecialCharsColorLabel, true);
-            this.SpecialCharsColorLabel.Location = new System.Drawing.Point(177, 322);
+            this.SpecialCharsColorLabel.Location = new System.Drawing.Point(177, 351);
             this.SpecialCharsColorLabel.Margin = new System.Windows.Forms.Padding(3);
             this.SpecialCharsColorLabel.Name = "SpecialCharsColorLabel";
             this.SpecialCharsColorLabel.Size = new System.Drawing.Size(190, 23);
@@ -771,7 +819,7 @@
             this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
             this.VersionTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VersionTabPage.Name = "VersionTabPage";
-            this.VersionTabPage.Size = new System.Drawing.Size(466, 376);
+            this.VersionTabPage.Size = new System.Drawing.Size(466, 396);
             this.VersionTabPage.TabIndex = 2;
             this.VersionTabPage.Text = "CubeNote について";
             this.VersionTabPage.UseVisualStyleBackColor = true;
@@ -782,7 +830,7 @@
             this.ButtonsPanel.Controls.Add(this.ApplyButtonShadow);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 473);
+            this.ButtonsPanel.Location = new System.Drawing.Point(0, 493);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
@@ -842,7 +890,7 @@
             // SettingsForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
-            this.ClientSize = new System.Drawing.Size(500, 530);
+            this.ClientSize = new System.Drawing.Size(500, 550);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(500, 360);
@@ -859,6 +907,7 @@
             this.VisibleSettinsPanel.ResumeLayout(false);
             this.VisibleSettinsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabWidthNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WordWrapCountNumericUpDown)).EndInit();
             this.ButtonsPanel.ResumeLayout(false);
             this.ExitButtonShadow.ResumeLayout(false);
             this.ApplyButtonShadow.ResumeLayout(false);
@@ -921,11 +970,14 @@
         private System.Windows.Forms.Label SpecialCharsColorTitleLabel;
         private Forms.Button SpecialCharsColorButton;
         private System.Windows.Forms.Label SpecialCharsColorLabel;
-        private System.Windows.Forms.CheckBox WardWrapCheckBox;
+        private System.Windows.Forms.CheckBox WordWrapCheckBox;
         private System.Windows.Forms.Button ResetButton;
         private System.Windows.Forms.Panel ExitButtonShadow;
         private Forms.Button ExitButton;
         private System.Windows.Forms.Panel ApplyButtonShadow;
         private Forms.Button ApplyButton;
+        private System.Windows.Forms.Label WordWrapLabel;
+        private System.Windows.Forms.NumericUpDown WordWrapCountNumericUpDown;
+        private System.Windows.Forms.CheckBox WordWrapAsWindowCheckBox;
     }
 }

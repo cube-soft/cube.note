@@ -400,7 +400,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WardWrap
+        /// WordWrap
         ///
         /// <summary>
         /// テキストを折り返し表示するかどうかを示す値を取得または
@@ -409,14 +409,57 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public bool WardWrap
+        public bool WordWrap
         {
-            get { return _wardWrap; }
+            get { return _wordWrap; }
             set
             {
-                if (_wardWrap == value) return;
-                _wardWrap = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("WardWrap"));
+                if (_wordWrap == value) return;
+                _wordWrap = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("WordWrap"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrapAsWindow
+        ///
+        /// <summary>
+        /// ウィンドウ幅でテキストを折り返し表示するかどうかを示す値を
+        /// 取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool WordWrapAsWindow
+        {
+            get { return _wordWrapAsWindow; }
+            set
+            {
+                if (_wordWrapAsWindow == value) return;
+                _wordWrapAsWindow = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("WordWrapAsWindow"));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrapCount
+        ///
+        /// <summary>
+        /// 折り返し表示する文字数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int WordWrapCount
+        {
+            get { return _wordWrapCount; }
+            set
+            {
+                if (_wordWrapCount == value) return;
+                _wordWrapCount = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("WordWrapCount"));
             }
         }
 
@@ -686,7 +729,9 @@ namespace Cube.Note
             AutoSaveTime        = src.AutoSaveTime;
             TabWidth            = src.TabWidth;
             TabToSpace          = src.TabToSpace;
-            WardWrap            = src.WardWrap;
+            WordWrap            = src.WordWrap;
+            WordWrapAsWindow    = src.WordWrapAsWindow;
+            WordWrapCount       = src.WordWrapCount;
             LineNumberVisible   = src.LineNumberVisible;
             RulerVisible        = src.RulerVisible;
             SpecialCharsVisible = src.SpecialCharsVisible;
@@ -822,9 +867,11 @@ namespace Cube.Note
 
             AutoSaveTime        = TimeSpan.FromSeconds(30);
             TabWidth            = 8;
+            WordWrapCount       = 80;
 
             TabToSpace          = false;
-            WardWrap            = false;
+            WordWrap            = false;
+            WordWrapAsWindow    = false;
             LineNumberVisible   = true;
             RulerVisible        = false;
             SpecialCharsVisible = true;
@@ -854,8 +901,10 @@ namespace Cube.Note
         private double _fontSize;
         private FontStyle _fontStyle;
         private int _tabWidth;
+        private int _wordWrapCount;
         private bool _tabToSpace;
-        private bool _wardWrap;
+        private bool _wordWrap;
+        private bool _wordWrapAsWindow;
         private bool _lineNumberVisible;
         private bool _rulerVisible;
         private bool _specialCharsVisible;

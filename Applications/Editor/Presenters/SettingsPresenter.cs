@@ -190,8 +190,14 @@ namespace Cube.Note.App.Editor
                     case "TabToSpace":
                         Model.TabToSpace = (bool)e.Value;
                         break;
-                    case "WardWrap":
-                        Model.WardWrap = (bool)e.Value;
+                    case "WordWrap":
+                        Model.WordWrap = (bool)e.Value;
+                        break;
+                    case "WordWrapAsWindow":
+                        Model.WordWrapAsWindow = (bool)e.Value;
+                        break;
+                    case "WordWrapCount":
+                        Model.WordWrapCount = (int)((decimal)e.Value);
                         break;
                     case "LineNumberVisible":
                         Model.LineNumberVisible = (bool)e.Value;

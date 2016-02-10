@@ -64,7 +64,8 @@ namespace Cube.Note.App.Editor
             ColorScheme.EolColor           = ColorScheme.WhiteSpaceColor;
             ColorScheme.EofColor           = ColorScheme.WhiteSpaceColor;
             ColorScheme.CleanedLineBar     = ColorScheme.LineNumberBack;
-            ColorScheme.DirtyLineBar       = Color.FromArgb(251, 180, 13);
+            ColorScheme.DirtyLineBar       = SystemColors.Highlight;
+            ColorScheme.RightEdgeColor     = BackColor;
 
             CaretMoved += (s, e) => Report();
         }
@@ -72,6 +73,17 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrapCount
+        ///
+        /// <summary>
+        /// 折り返し文字数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int WordWrapCount { get; set; } = -1;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +111,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public void ResetViewWidth()
         {
-            ViewWidth = ClientSize.Width;
+            ViewWidth = WordWrapCount > 0 ?
+                        WordWrapCount * View.HRulerUnitWidth :
+                        ClientSize.Width;
         }
 
         #endregion

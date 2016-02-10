@@ -138,7 +138,7 @@ namespace Cube.Note.App.Editor
             View.HighlightsMatchedBracket       = Model.BracketVisible;
 
             UpdateSpecialCharsVisible();
-            UpdateWardWrap();
+            UpdateWordWrap();
         }
 
         /* ----------------------------------------------------------------- */
@@ -159,6 +159,7 @@ namespace Cube.Note.App.Editor
                     break;
                 case "BackColor":
                     View.BackColor = Model.BackColor;
+                    View.ColorScheme.RightEdgeColor = Model.BackColor;
                     break;
                 case "ForeColor":
                     View.ForeColor = Model.ForeColor;
@@ -193,8 +194,10 @@ namespace Cube.Note.App.Editor
                 case "TabToSpace":
                     View.ConvertsTabToSpaces = Model.TabToSpace;
                     break;
-                case "WardWrap":
-                    UpdateWardWrap();
+                case "WordWrap":
+                case "WordWrapCount":
+                case "WordWrapAsWindow":
+                    UpdateWordWrap();
                     break;
                 case "LineNumberVisible":
                     View.ShowsLineNumber = Model.LineNumberVisible;
@@ -252,20 +255,28 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateWardWrap
+        /// UpdateWordWrap
         ///
         /// <summary>
         /// 折り返し表示に関する設定を更新します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateWardWrap()
+        private void UpdateWordWrap()
         {
             View.Resize  -= View_Resize;
-            View.ViewType = Model.WardWrap ?
-                            Sgry.Azuki.ViewType.WrappedProportional :
-                            Sgry.Azuki.ViewType.Proportional;
-            if (Model.WardWrap) View.Resize += View_Resize;
+
+            if (Model.WordWrap)
+            {
+                View.ViewType      = Sgry.Azuki.ViewType.WrappedProportional;
+                View.WordWrapCount = Model.WordWrapAsWindow ? -1 : Model.WordWrapCount;
+                View.Resize       += View_Resize;
+            }
+            else
+            {
+                View.ViewType      = Sgry.Azuki.ViewType.Proportional;
+                View.WordWrapCount = -1;
+            }
         }
 
         #endregion

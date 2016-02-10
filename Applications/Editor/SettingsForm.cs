@@ -104,7 +104,7 @@ namespace Cube.Note.App.Editor
             FontButton.Tag                      = settings.Font;
 
             TabToSpaceCheckBox.Checked          = settings.TabToSpace;
-            WardWrapCheckBox.Checked            = settings.WardWrap;
+            WordWrapCheckBox.Checked            = settings.WordWrap;
             LineNumberVisibleCheckBox.Checked   = settings.LineNumberVisible;
             RulerVisibleCheckBox.Checked        = settings.RulerVisible;
             SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
@@ -152,7 +152,8 @@ namespace Cube.Note.App.Editor
             CurrentLineColorButton.Click               += ColorButton_Click;
 
             TabToSpaceCheckBox.CheckedChanged          += CheckBoxChanged;
-            WardWrapCheckBox.CheckedChanged            += CheckBoxChanged;
+            WordWrapCheckBox.CheckedChanged            += CheckBoxChanged;
+            WordWrapAsWindowCheckBox.CheckedChanged    += CheckBoxChanged;
             LineNumberVisibleCheckBox.CheckedChanged   += CheckBoxChanged;
             RulerVisibleCheckBox.CheckedChanged        += CheckBoxChanged;
             SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;
@@ -167,11 +168,14 @@ namespace Cube.Note.App.Editor
 
             TabWidthNumericUpDown.ValueChanged         += NumericUpDownChanged;
             AutoSaveTimeNumericUpDown.ValueChanged     += NumericUpDownChanged;
+            WordWrapCountNumericUpDown.ValueChanged    += NumericUpDownChanged;
 
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberVisibleCheckBox.CheckedChanged   += (s, e) => EnableLineNumber();
             RulerVisibleCheckBox.CheckedChanged        += (s, e) => EnableLineNumber();
             CurrentLineVisibleCheckBox.CheckedChanged  += (s, e) => EnableCurrentLine();
+            WordWrapCheckBox.CheckedChanged            += (s, e) => EnableWordWrap();
+            WordWrapAsWindowCheckBox.CheckedChanged    += (s, e) => EnableWordWrap();
         }
 
         /* ----------------------------------------------------------------- */
@@ -443,6 +447,7 @@ namespace Cube.Note.App.Editor
             EnableLineNumber();
             EnableSpecialChars();
             EnableCurrentLine();
+            EnableWordWrap();
         }
 
         /* ----------------------------------------------------------------- */
@@ -543,6 +548,25 @@ namespace Cube.Note.App.Editor
             LineNumberForeColorButton.Enabled     = enable;
             LineNumberForeColorLabel.Enabled      = enable;
             LineNumberForeColorTitleLabel.Enabled = enable;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnableWordWrap
+        ///
+        /// <summary>
+        /// 行番号および水平ルーラーに関する設定の変更を可能にします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void EnableWordWrap()
+        {
+            var enable = WordWrapCheckBox.Checked;
+            var cmode  = WordWrapCheckBox.Checked && !WordWrapAsWindowCheckBox.Checked;
+
+            WordWrapLabel.Enabled              = enable;
+            WordWrapAsWindowCheckBox.Enabled   = enable;
+            WordWrapCountNumericUpDown.Enabled = cmode;
         }
 
         #endregion
