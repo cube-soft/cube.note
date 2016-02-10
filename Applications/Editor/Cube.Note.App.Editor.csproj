@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Shadow.png" />
     <None Include="Resources\Normalize.png" />
     <None Include="Resources\LogoLarge.png" />
     <None Include="Resources\SearchPale.png" />

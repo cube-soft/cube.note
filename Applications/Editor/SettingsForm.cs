@@ -136,9 +136,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            RunButton.Click                            += RunButton_Click;
-            ExitButton.Click                           += ExitButton_Click;
             ApplyButton.Click                          += ApplyButton_Click;
+            ExitButton.Click                           += ExitButton_Click;
             ResetButton.Click                          += (s, e) => OnReset(e);
 
             FontButton.Click                           += FontButton_Click;
@@ -305,7 +304,6 @@ namespace Cube.Note.App.Editor
         protected virtual void OnPropertyChanged(KeyValueEventArgs<string, object> e)
         {
             if (PropertyChanged != null) PropertyChanged(this, e);
-            ApplyButton.Enabled = true;
         }
 
         #endregion
@@ -330,7 +328,6 @@ namespace Cube.Note.App.Editor
             if (Height > area.Height) Height = area.Height;
 
             UpdateControls();
-            ApplyButton.Enabled = false;
         }
 
         #endregion
@@ -339,32 +336,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RunButton_Click
+        /// ApplyButton_Click
         ///
         /// <summary>
         /// OK ボタンが押下された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RunButton_Click(object sender, EventArgs e)
-        {
-            ApplyButton_Click(sender, e);
-            Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ApplyButton_Click
-        ///
-        /// <summary>
-        /// 更新ボタンが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
         private void ApplyButton_Click(object sender, EventArgs e)
         {
             OnApplied(e);
-            ApplyButton.Enabled = false;
+            Close();
         }
 
         /* ----------------------------------------------------------------- */

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
+            this.ResetButton = new System.Windows.Forms.Button();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
@@ -82,10 +83,10 @@
             this.SpecialCharsColorLabel = new System.Windows.Forms.Label();
             this.VersionTabPage = new System.Windows.Forms.TabPage();
             this.ButtonsPanel = new Cube.Forms.FlowLayoutPanel();
-            this.ResetButton = new System.Windows.Forms.Button();
-            this.ApplyButton = new Cube.Forms.Button();
+            this.ExitButtonShadow = new System.Windows.Forms.Panel();
             this.ExitButton = new Cube.Forms.Button();
-            this.RunButton = new Cube.Forms.Button();
+            this.ApplyButtonShadow = new System.Windows.Forms.Panel();
+            this.ApplyButton = new Cube.Forms.Button();
             this.LayoutPanel.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
@@ -95,6 +96,8 @@
             this.VisibleSettinsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabWidthNumericUpDown)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
+            this.ExitButtonShadow.SuspendLayout();
+            this.ApplyButtonShadow.SuspendLayout();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -102,18 +105,34 @@
             this.LayoutPanel.BackColor = System.Drawing.SystemColors.Control;
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.LayoutPanel.Controls.Add(this.ResetButton, 0, 2);
             this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
             this.LayoutPanel.Controls.Add(this.TabControl, 0, 1);
-            this.LayoutPanel.Controls.Add(this.ButtonsPanel, 0, 2);
+            this.LayoutPanel.Controls.Add(this.ButtonsPanel, 0, 3);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 3;
+            this.LayoutPanel.RowCount = 4;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.LayoutPanel.Size = new System.Drawing.Size(498, 528);
             this.LayoutPanel.TabIndex = 0;
+            // 
+            // ResetButton
+            // 
+            this.ResetButton.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ResetButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.ResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ResetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.ResetButton.Location = new System.Drawing.Point(12, 448);
+            this.ResetButton.Margin = new System.Windows.Forms.Padding(12, 1, 0, 1);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(120, 24);
+            this.ResetButton.TabIndex = 4;
+            this.ResetButton.Text = "初期値にリセット";
+            this.ResetButton.UseVisualStyleBackColor = false;
             // 
             // TitleControl
             // 
@@ -134,10 +153,10 @@
             this.TabControl.Controls.Add(this.VersionTabPage);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl.Location = new System.Drawing.Point(12, 42);
-            this.TabControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 3);
+            this.TabControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 1);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(474, 423);
+            this.TabControl.Size = new System.Drawing.Size(474, 404);
             this.TabControl.TabIndex = 1;
             // 
             // GeneralTabPage
@@ -146,7 +165,7 @@
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.GeneralTabPage.Size = new System.Drawing.Size(466, 395);
+            this.GeneralTabPage.Size = new System.Drawing.Size(466, 376);
             this.GeneralTabPage.TabIndex = 3;
             this.GeneralTabPage.Text = "一 般";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -178,7 +197,7 @@
             this.GeneralSettingsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.GeneralSettingsPanel.Name = "GeneralSettingsPanel";
             this.GeneralSettingsPanel.Padding = new System.Windows.Forms.Padding(12, 20, 0, 0);
-            this.GeneralSettingsPanel.Size = new System.Drawing.Size(460, 389);
+            this.GeneralSettingsPanel.Size = new System.Drawing.Size(460, 370);
             this.GeneralSettingsPanel.TabIndex = 0;
             // 
             // Label11
@@ -406,7 +425,7 @@
             this.VisibleTabPage.Location = new System.Drawing.Point(4, 24);
             this.VisibleTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleTabPage.Name = "VisibleTabPage";
-            this.VisibleTabPage.Size = new System.Drawing.Size(466, 395);
+            this.VisibleTabPage.Size = new System.Drawing.Size(466, 376);
             this.VisibleTabPage.TabIndex = 0;
             this.VisibleTabPage.Text = "表示オプション";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
@@ -445,7 +464,7 @@
             this.VisibleSettinsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleSettinsPanel.Name = "VisibleSettinsPanel";
             this.VisibleSettinsPanel.Padding = new System.Windows.Forms.Padding(12, 20, 0, 0);
-            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 395);
+            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 376);
             this.VisibleSettinsPanel.TabIndex = 0;
             // 
             // Label21
@@ -752,67 +771,77 @@
             this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
             this.VersionTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VersionTabPage.Name = "VersionTabPage";
-            this.VersionTabPage.Size = new System.Drawing.Size(466, 395);
+            this.VersionTabPage.Size = new System.Drawing.Size(466, 376);
             this.VersionTabPage.TabIndex = 2;
             this.VersionTabPage.Text = "CubeNote について";
             this.VersionTabPage.UseVisualStyleBackColor = true;
             // 
             // ButtonsPanel
             // 
-            this.ButtonsPanel.Controls.Add(this.ResetButton);
-            this.ButtonsPanel.Controls.Add(this.ApplyButton);
-            this.ButtonsPanel.Controls.Add(this.ExitButton);
-            this.ButtonsPanel.Controls.Add(this.RunButton);
+            this.ButtonsPanel.Controls.Add(this.ExitButtonShadow);
+            this.ButtonsPanel.Controls.Add(this.ApplyButtonShadow);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 468);
+            this.ButtonsPanel.Location = new System.Drawing.Point(0, 473);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
-            this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.ButtonsPanel.Size = new System.Drawing.Size(498, 60);
+            this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
+            this.ButtonsPanel.Size = new System.Drawing.Size(498, 55);
             this.ButtonsPanel.TabIndex = 2;
             // 
-            // ResetButton
+            // ExitButtonShadow
             // 
-            this.ResetButton.Location = new System.Drawing.Point(358, 13);
-            this.ResetButton.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
-            this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(120, 30);
-            this.ResetButton.TabIndex = 3;
-            this.ResetButton.Text = "初期値にリセット";
-            this.ResetButton.UseVisualStyleBackColor = true;
-            // 
-            // ApplyButton
-            // 
-            this.ApplyButton.Enabled = false;
-            this.ApplyButton.Location = new System.Drawing.Point(252, 13);
-            this.ApplyButton.Name = "ApplyButton";
-            this.ApplyButton.Size = new System.Drawing.Size(100, 30);
-            this.ApplyButton.TabIndex = 2;
-            this.ApplyButton.Text = "適用";
+            this.ExitButtonShadow.BackgroundImage = global::Cube.Note.App.Editor.Properties.Resources.Shadow;
+            this.ExitButtonShadow.Controls.Add(this.ExitButton);
+            this.ExitButtonShadow.Location = new System.Drawing.Point(372, 4);
+            this.ExitButtonShadow.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
+            this.ExitButtonShadow.Name = "ExitButtonShadow";
+            this.ExitButtonShadow.Size = new System.Drawing.Size(110, 37);
+            this.ExitButtonShadow.TabIndex = 2;
             // 
             // ExitButton
             // 
+            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ExitButton.Location = new System.Drawing.Point(146, 13);
+            this.ExitButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ExitButton.FlatAppearance.BorderSize = 0;
+            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExitButton.ForeColor = System.Drawing.Color.White;
+            this.ExitButton.Location = new System.Drawing.Point(0, 0);
+            this.ExitButton.Margin = new System.Windows.Forms.Padding(0);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(100, 30);
-            this.ExitButton.TabIndex = 1;
+            this.ExitButton.Size = new System.Drawing.Size(110, 35);
+            this.ExitButton.TabIndex = 2;
             this.ExitButton.Text = "キャンセル";
+            this.ExitButton.UseVisualStyleBackColor = false;
             // 
-            // RunButton
+            // ApplyButtonShadow
             // 
-            this.RunButton.Location = new System.Drawing.Point(20, 13);
-            this.RunButton.Name = "RunButton";
-            this.RunButton.Size = new System.Drawing.Size(120, 30);
-            this.RunButton.TabIndex = 0;
-            this.RunButton.Text = "OK";
+            this.ApplyButtonShadow.BackgroundImage = global::Cube.Note.App.Editor.Properties.Resources.Shadow;
+            this.ApplyButtonShadow.Controls.Add(this.ApplyButton);
+            this.ApplyButtonShadow.Location = new System.Drawing.Point(236, 4);
+            this.ApplyButtonShadow.Name = "ApplyButtonShadow";
+            this.ApplyButtonShadow.Size = new System.Drawing.Size(130, 37);
+            this.ApplyButtonShadow.TabIndex = 3;
+            // 
+            // ApplyButton
+            // 
+            this.ApplyButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ApplyButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ApplyButton.FlatAppearance.BorderSize = 0;
+            this.ApplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ApplyButton.ForeColor = System.Drawing.Color.White;
+            this.ApplyButton.Location = new System.Drawing.Point(0, 0);
+            this.ApplyButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ApplyButton.Name = "ApplyButton";
+            this.ApplyButton.Size = new System.Drawing.Size(130, 35);
+            this.ApplyButton.TabIndex = 1;
+            this.ApplyButton.Text = "OK";
+            this.ApplyButton.UseVisualStyleBackColor = false;
             // 
             // SettingsForm
             // 
-            this.AcceptButton = this.RunButton;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
-            this.CancelButton = this.ExitButton;
             this.ClientSize = new System.Drawing.Size(500, 530);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
@@ -831,6 +860,8 @@
             this.VisibleSettinsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabWidthNumericUpDown)).EndInit();
             this.ButtonsPanel.ResumeLayout(false);
+            this.ExitButtonShadow.ResumeLayout(false);
+            this.ApplyButtonShadow.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -844,9 +875,6 @@
         private System.Windows.Forms.TabPage VisibleTabPage;
         private System.Windows.Forms.TabPage VersionTabPage;
         private Cube.Forms.FlowLayoutPanel ButtonsPanel;
-        private Cube.Forms.Button ApplyButton;
-        private Cube.Forms.Button ExitButton;
-        private Cube.Forms.Button RunButton;
         private System.Windows.Forms.FlowLayoutPanel GeneralSettingsPanel;
         private System.Windows.Forms.Label Label11;
         private Forms.Button FontButton;
@@ -893,7 +921,11 @@
         private System.Windows.Forms.Label SpecialCharsColorTitleLabel;
         private Forms.Button SpecialCharsColorButton;
         private System.Windows.Forms.Label SpecialCharsColorLabel;
-        private System.Windows.Forms.Button ResetButton;
         private System.Windows.Forms.CheckBox WardWrapCheckBox;
+        private System.Windows.Forms.Button ResetButton;
+        private System.Windows.Forms.Panel ExitButtonShadow;
+        private Forms.Button ExitButton;
+        private System.Windows.Forms.Panel ApplyButtonShadow;
+        private Forms.Button ApplyButton;
     }
 }
