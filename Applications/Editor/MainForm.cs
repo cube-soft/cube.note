@@ -52,6 +52,7 @@ namespace Cube.Note.App.Editor
             InitializePresenters();
 
             Caption = TitleControl;
+            TextControl.Status = FooterStatusControl;
         }
 
         #endregion
@@ -111,7 +112,6 @@ namespace Cube.Note.App.Editor
             new TextVisualPresenter(TextControl, Settings);
             new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
             new SearchPresenter(SearchControl, Pages);
-            new StatusPresenter(FooterStatusControl, TextControl);
         }
 
         #endregion
