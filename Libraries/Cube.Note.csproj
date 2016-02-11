@@ -49,10 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Azuki\DocumentHandler.cs" />
+    <Compile Include="ConditionsValue.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="PageChangedEventArgs.cs" />
     <Compile Include="PageCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsFolder.cs" />
     <Compile Include="SettingsValue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

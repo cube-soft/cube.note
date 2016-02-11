@@ -51,14 +51,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public AutoSaver(PageCollection target, SettingsValue settings)
+        public AutoSaver(PageCollection target, SettingsFolder settings)
         {
             Target = target;
             Settings = settings;
             Interval = TimeSpan.FromSeconds(30);
 
             Target.ActiveChanged += Target_ActiveChanged;
-            Settings.PropertyChanged += Settings_PropertyChanged;
+            Settings.User.PropertyChanged += Settings_PropertyChanged;
             _timer.Elapsed += Timer_Elapsed;
 
             Task.Run(() => InitializeTarget());
@@ -102,7 +102,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue Settings { get; }
+        public SettingsFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -187,7 +187,7 @@ namespace Cube.Note.App.Editor
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != "AutoSaveTime") return;
-            Interval = Settings.AutoSaveTime;
+            Interval = Settings.User.AutoSaveTime;
         }
 
         #endregion

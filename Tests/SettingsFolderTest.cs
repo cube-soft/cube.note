@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// SettingsValueTest.cs
+/// SettingsFolderTest.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -27,15 +27,15 @@ namespace Cube.Note.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsValueTest
+    /// SettingsFolderTest
     /// 
     /// <summary>
-    /// SettingsValue のテスト用クラスです。
+    /// SettingsFolder のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SettingsValueTest : FileResource
+    class SettingsFolderTest : FileResource
     {
         #region SetUp and TearDown
 
@@ -52,7 +52,8 @@ namespace Cube.Note.Tests
         public void OneTimeSetUp()
         {
             var src = IoEx.Path.Combine(Examples, "Settings.json");
-            Settings = SettingsValue.Create(src);
+            Settings = new SettingsFolder(src);
+            Settings.Load();
         }
 
         #endregion
@@ -68,7 +69,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private SettingsValue Settings { get; set; }
+        private SettingsFolder Settings { get; set; }
 
         #endregion
 
@@ -98,7 +99,7 @@ namespace Cube.Note.Tests
         public void Font(string name, double size)
         {
             Assert.That(
-                Settings.Font,
+                Settings.User.Font,
                 Is.EqualTo(new Font(name, (float)size, FontStyle.Regular, GraphicsUnit.Point))
             );
         }
@@ -107,7 +108,7 @@ namespace Cube.Note.Tests
         public void ForeColor(int red, int green, int blue)
         {
             Assert.That(
-                Settings.ForeColor,
+                Settings.User.ForeColor,
                 Is.EqualTo(Color.FromArgb(red, green, blue))
             );
         }
@@ -116,7 +117,7 @@ namespace Cube.Note.Tests
         public void BackColor(string expected)
         {
             Assert.That(
-                Settings.BackColor,
+                Settings.User.BackColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
@@ -125,7 +126,7 @@ namespace Cube.Note.Tests
         public void HighlightBackColor(string expected)
         {
             Assert.That(
-                Settings.HighlightBackColor,
+                Settings.User.HighlightBackColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
@@ -134,7 +135,7 @@ namespace Cube.Note.Tests
         public void HighlightForeColor(string expected)
         {
             Assert.That(
-                Settings.HighlightForeColor,
+                Settings.User.HighlightForeColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
@@ -143,7 +144,7 @@ namespace Cube.Note.Tests
         public void LineNumberBackColor(string expected)
         {
             Assert.That(
-                Settings.LineNumberBackColor,
+                Settings.User.LineNumberBackColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
@@ -152,7 +153,7 @@ namespace Cube.Note.Tests
         public void LineNumberForeColor(string expected)
         {
             Assert.That(
-                Settings.LineNumberForeColor,
+                Settings.User.LineNumberForeColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
@@ -161,7 +162,7 @@ namespace Cube.Note.Tests
         public void SpecialCharsColor(string expected)
         {
             Assert.That(
-                Settings.SpecialCharsColor,
+                Settings.User.SpecialCharsColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
@@ -170,7 +171,7 @@ namespace Cube.Note.Tests
         public void CurrentLineColor(string expected)
         {
             Assert.That(
-                Settings.CurrentLineColor,
+                Settings.User.CurrentLineColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
@@ -179,7 +180,7 @@ namespace Cube.Note.Tests
         public void AutoSaveTime(int expected)
         {
             Assert.That(
-                Settings.AutoSaveTime,
+                Settings.User.AutoSaveTime,
                 Is.EqualTo(TimeSpan.FromSeconds(expected))
             );
         }
@@ -188,7 +189,7 @@ namespace Cube.Note.Tests
         public void TabWidth(int expected)
         {
             Assert.That(
-                Settings.TabWidth,
+                Settings.User.TabWidth,
                 Is.EqualTo(expected)
             );
         }
@@ -197,7 +198,7 @@ namespace Cube.Note.Tests
         public void TabToSpace(bool expected)
         {
             Assert.That(
-                Settings.TabToSpace,
+                Settings.User.TabToSpace,
                 Is.EqualTo(expected)
             );
         }
@@ -206,7 +207,7 @@ namespace Cube.Note.Tests
         public void LineNumberVisible(bool expected)
         {
             Assert.That(
-                Settings.LineNumberVisible,
+                Settings.User.LineNumberVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -215,7 +216,7 @@ namespace Cube.Note.Tests
         public void RulerVisible(bool expected)
         {
             Assert.That(
-                Settings.RulerVisible,
+                Settings.User.RulerVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -224,7 +225,7 @@ namespace Cube.Note.Tests
         public void SpecialCharsVisible(bool expected)
         {
             Assert.That(
-                Settings.SpecialCharsVisible,
+                Settings.User.SpecialCharsVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -233,7 +234,7 @@ namespace Cube.Note.Tests
         public void EolVisible(bool expected)
         {
             Assert.That(
-                Settings.EolVisible,
+                Settings.User.EolVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -242,7 +243,7 @@ namespace Cube.Note.Tests
         public void TabVisible(bool expected)
         {
             Assert.That(
-                Settings.TabVisible,
+                Settings.User.TabVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -251,7 +252,7 @@ namespace Cube.Note.Tests
         public void SpaceVisible(bool expected)
         {
             Assert.That(
-                Settings.SpaceVisible,
+                Settings.User.SpaceVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -260,7 +261,7 @@ namespace Cube.Note.Tests
         public void FullSpaceVisible(bool expected)
         {
             Assert.That(
-                Settings.FullSpaceVisible,
+                Settings.User.FullSpaceVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -269,7 +270,7 @@ namespace Cube.Note.Tests
         public void CurrentLineVisible(bool expected)
         {
             Assert.That(
-                Settings.CurrentLineVisible,
+                Settings.User.CurrentLineVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -278,7 +279,7 @@ namespace Cube.Note.Tests
         public void ModifiedLineVisible(bool expected)
         {
             Assert.That(
-                Settings.ModifiedLineVisible,
+                Settings.User.ModifiedLineVisible,
                 Is.EqualTo(expected)
             );
         }
@@ -287,7 +288,7 @@ namespace Cube.Note.Tests
         public void RemoveWarning(bool expected)
         {
             Assert.That(
-                Settings.RemoveWarning,
+                Settings.User.RemoveWarning,
                 Is.EqualTo(expected)
             );
         }
@@ -306,15 +307,14 @@ namespace Cube.Note.Tests
         [TestCase("NewSettings.json")]
         public void Save(string filename)
         {
-            var dest = IoEx.Path.Combine(Results, filename);
-            Settings.Save(dest);
+            Settings.Path = IoEx.Path.Combine(Results, filename);
+            Settings.Save();
             Assert.That(
-                IoEx.File.Exists(dest),
+                IoEx.File.Exists(Settings.Path),
                 Is.True
             );
         }
 
         #endregion
-
     }
 }

@@ -58,7 +58,7 @@
     <Compile Include="PageCollectionTest.cs" />
     <Compile Include="Detail\FileResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsValueTest.cs" />
+    <Compile Include="SettingsFolderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

@@ -278,7 +278,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
-            var view = new SettingsForm(Settings);
+            var view = new SettingsForm(Settings.User);
             using (var presenter = new SettingsPresenter(view, Settings))
             {
                 view.ShowDialog(this);
@@ -353,7 +353,7 @@ namespace Cube.Note.App.Editor
 
         #region Models
         private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
-        private SettingsValue Settings = SettingsValue.Create(Assembly.GetEntryAssembly(), Properties.Resources.SettingsFileName);
+        private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly(), Properties.Resources.SettingsFileName);
         private AutoSaver Saver = null;
         #endregion
 

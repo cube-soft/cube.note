@@ -31,7 +31,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SettingsPresenter : Cube.Forms.PresenterBase<SettingsForm, SettingsValue>
+    public class SettingsPresenter : Cube.Forms.PresenterBase<SettingsForm, SettingsFolder>
     {
         #region Constructors
 
@@ -44,14 +44,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsPresenter(SettingsForm view, SettingsValue model) : base(view, model)
+        public SettingsPresenter(SettingsForm view, SettingsFolder model) : base(view, model)
         {
             View.Applied         += View_Applied;
             View.Canceled        += View_Canceled;
             View.Reset           += View_Reset;
             View.PropertyChanged += View_PropertyChanged;
 
-            _backup.Assign(Model);
+            _backup.Assign(Model.User);
         }
 
         #endregion
@@ -96,7 +96,7 @@ namespace Cube.Note.App.Editor
         {
             await Async(() =>
             {
-                _backup.Assign(Model);
+                _backup.Assign(Model.User);
                 Model.Save();
             });
         }
@@ -112,7 +112,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_Canceled(object sender, EventArgs e)
         {
-            Model.Assign(_backup);
+            Model.User.Assign(_backup);
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,14 +126,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void View_Reset(object sender, EventArgs e)
         {
-            await Async(() =>
-            {
-                var reset = new SettingsValue();
-                reset.Path = Model.Path;
-                Model.Assign(reset);
-            });
-
-            Sync(() => View.Update(Model));
+            await Async(() => Model.User.Assign(new SettingsValue()));
+            Sync(() => View.Update(Model.User));
         }
 
         /* ----------------------------------------------------------------- */
@@ -153,84 +147,84 @@ namespace Cube.Note.App.Editor
                 {
                     case "Font":
                         var font = (Font)e.Value;
-                        Model.FontName = font.Name;
-                        Model.FontSize = font.Size;
-                        Model.FontStyle = font.Style;
+                        Model.User.FontName = font.Name;
+                        Model.User.FontSize = font.Size;
+                        Model.User.FontStyle = font.Style;
                         break;
                     case "BackColor":
-                        Model.BackColor = (Color)e.Value;
+                        Model.User.BackColor = (Color)e.Value;
                         break;
                     case "ForeColor":
-                        Model.ForeColor = (Color)e.Value;
+                        Model.User.ForeColor = (Color)e.Value;
                         break;
                     case "HighlightBackColor":
-                        Model.HighlightBackColor = (Color)e.Value;
+                        Model.User.HighlightBackColor = (Color)e.Value;
                         break;
                     case "HighlightForeColor":
-                        Model.HighlightForeColor = (Color)e.Value;
+                        Model.User.HighlightForeColor = (Color)e.Value;
                         break;
                     case "LineNumberBackColor":
-                        Model.LineNumberBackColor = (Color)e.Value;
+                        Model.User.LineNumberBackColor = (Color)e.Value;
                         break;
                     case "LineNumberForeColor":
-                        Model.LineNumberForeColor = (Color)e.Value;
+                        Model.User.LineNumberForeColor = (Color)e.Value;
                         break;
                     case "SpecialCharsColor":
-                        Model.SpecialCharsColor = (Color)e.Value;
+                        Model.User.SpecialCharsColor = (Color)e.Value;
                         break;
                     case "CurrentLineColor":
-                        Model.CurrentLineColor = (Color)e.Value;
+                        Model.User.CurrentLineColor = (Color)e.Value;
                         break;
                     case "AutoSaveTime":
-                        Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
+                        Model.User.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
                     case "TabWidth":
-                        Model.TabWidth = (int)((decimal)e.Value);
+                        Model.User.TabWidth = (int)((decimal)e.Value);
                         break;
                     case "TabToSpace":
-                        Model.TabToSpace = (bool)e.Value;
+                        Model.User.TabToSpace = (bool)e.Value;
                         break;
                     case "WordWrap":
-                        Model.WordWrap = (bool)e.Value;
+                        Model.User.WordWrap = (bool)e.Value;
                         break;
                     case "WordWrapAsWindow":
-                        Model.WordWrapAsWindow = (bool)e.Value;
+                        Model.User.WordWrapAsWindow = (bool)e.Value;
                         break;
                     case "WordWrapCount":
-                        Model.WordWrapCount = (int)((decimal)e.Value);
+                        Model.User.WordWrapCount = (int)((decimal)e.Value);
                         break;
                     case "LineNumberVisible":
-                        Model.LineNumberVisible = (bool)e.Value;
+                        Model.User.LineNumberVisible = (bool)e.Value;
                         break;
                     case "RulerVisible":
-                        Model.RulerVisible = (bool)e.Value;
+                        Model.User.RulerVisible = (bool)e.Value;
                         break;
                     case "SpecialCharsVisible":
-                        Model.SpecialCharsVisible = (bool)e.Value;
+                        Model.User.SpecialCharsVisible = (bool)e.Value;
                         break;
                     case "EolVisible":
-                        Model.EolVisible = (bool)e.Value;
+                        Model.User.EolVisible = (bool)e.Value;
                         break;
                     case "TabVisible":
-                        Model.TabVisible = (bool)e.Value;
+                        Model.User.TabVisible = (bool)e.Value;
                         break;
                     case "SpaceVisible":
-                        Model.SpaceVisible = (bool)e.Value;
+                        Model.User.SpaceVisible = (bool)e.Value;
                         break;
                     case "FullSpaceVisible":
-                        Model.FullSpaceVisible = (bool)e.Value;
+                        Model.User.FullSpaceVisible = (bool)e.Value;
                         break;
                     case "CurrentLineVisible":
-                        Model.CurrentLineVisible = (bool)e.Value;
+                        Model.User.CurrentLineVisible = (bool)e.Value;
                         break;
                     case "ModifiedLineVisible":
-                        Model.ModifiedLineVisible = (bool)e.Value;
+                        Model.User.ModifiedLineVisible = (bool)e.Value;
                         break;
                     case "BracketVisible":
-                        Model.BracketVisible = (bool)e.Value;
+                        Model.User.BracketVisible = (bool)e.Value;
                         break;
                     case "RemoveWarning":
-                        Model.RemoveWarning = (bool)e.Value;
+                        Model.User.RemoveWarning = (bool)e.Value;
                         break;
                     default:
                         break;

@@ -47,7 +47,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PageCollectionPresenter(PageCollectionControl view,
-            PageCollection model, SettingsValue settings) : base(view, model)
+            PageCollection model, SettingsFolder settings) : base(view, model)
         {
             Settings = settings;
 
@@ -78,7 +78,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue Settings { get; }
+        public SettingsFolder Settings { get; }
 
         #endregion
 
@@ -144,7 +144,7 @@ namespace Cube.Note.App.Editor
         private void View_Removing(object sender, ValueCancelEventArgs<int[]> e)
         {
             if (e.Value == null || e.Value.Length <= 0) return;
-            if (!Settings.RemoveWarning)
+            if (!Settings.User.RemoveWarning)
             {
                 e.Cancel = false;
                 return;
