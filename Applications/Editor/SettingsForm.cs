@@ -266,9 +266,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnApplied(EventArgs e)
-        {
-            if (Applied != null) Applied(this, e);
-        }
+            => Applied?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -280,9 +278,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnCanceled(EventArgs e)
-        {
-            if (Canceled != null) Canceled(this, e);
-        }
+            => Canceled?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -294,9 +290,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset(EventArgs e)
-        {
-            if (Reset != null) Reset(this, e);
-        }
+            => Reset?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -308,9 +302,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnPropertyChanged(KeyValueEventArgs<string, object> e)
-        {
-            if (PropertyChanged != null) PropertyChanged(this, e);
-        }
+            => PropertyChanged?.Invoke(this, e);
 
         #endregion
 

@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace Cube.Note
 {
@@ -72,7 +73,7 @@ namespace Cube.Note
             {
                 if (_filename == value) return;
                 _filename = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("FileName"));
+                OnPropertyChanged(nameof(FileName));
             }
         }
 
@@ -93,7 +94,7 @@ namespace Cube.Note
             {
                 if (_abstract == value) return;
                 _abstract = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Abstract"));
+                OnPropertyChanged(nameof(Abstract));
             }
         }
 
@@ -114,7 +115,7 @@ namespace Cube.Note
             {
                 if (_creation == value) return;
                 _creation = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Creation"));
+                OnPropertyChanged(nameof(Creation));
             }
         }
 
@@ -135,7 +136,7 @@ namespace Cube.Note
             {
                 if (_update == value) return;
                 _update = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("LastUpdate"));
+                OnPropertyChanged(nameof(LastUpdate));
             }
         }
 
@@ -155,7 +156,7 @@ namespace Cube.Note
             {
                 if (_document == value) return;
                 _document = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Document"));
+                OnPropertyChanged(nameof(Document));
             }
         }
 
@@ -187,10 +188,8 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            if (PropertyChanged != null) PropertyChanged(this, e);
-        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         #endregion
 
@@ -206,10 +205,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [OnDeserializing]
-        private void OnDeserializing(StreamingContext context)
-        {
-            InitializeValues();
-        }
+        private void OnDeserializing(StreamingContext context) => InitializeValues();
 
         /* ----------------------------------------------------------------- */
         ///

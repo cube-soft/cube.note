@@ -128,9 +128,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnNewPageRequired(EventArgs e)
-        {
-            if (NewPageRequired != null) NewPageRequired(this, e);
-        }
+            => NewPageRequired?.Invoke(this, e);
 
         #endregion
     }

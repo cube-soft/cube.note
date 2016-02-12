@@ -160,9 +160,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnSearch(ValueEventArgs<string> e)
-        {
-            if (Search != null) Search(this, e);
-        }
+            => Search?.Invoke(this, e);
 
         #endregion
 

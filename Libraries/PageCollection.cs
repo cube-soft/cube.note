@@ -220,9 +220,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnActiveChanged(PageChangedEventArgs e)
-        {
-            if (ActiveChanged != null) ActiveChanged(this, e);
-        }
+            => ActiveChanged?.Invoke(this, e);
 
         #endregion
 

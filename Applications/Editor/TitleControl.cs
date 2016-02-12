@@ -139,9 +139,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnCloseExecuted(EventArgs e)
-        {
-            if (CloseExecuted != null) CloseExecuted(this, e);
-        }
+            => CloseExecuted?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,9 +151,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnMaximizeExecuted(EventArgs e)
-        {
-            if (MaximizeExecuted != null) MaximizeExecuted(this, e);
-        }
+            => MaximizeExecuted?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -167,9 +163,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnMinimizeExecuted(EventArgs e)
-        {
-            if (MinimizeExecuted != null) MinimizeExecuted(this, e);
-        }
+            => MinimizeExecuted?.Invoke(this, e);
 
         #endregion
 
