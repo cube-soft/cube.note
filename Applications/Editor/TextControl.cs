@@ -122,16 +122,16 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnGotFocus
+        /// Refresh
         ///
         /// <summary>
-        /// フォーカスを得た時に実行されます。
+        /// 再描画します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnGotFocus(EventArgs e)
+        public override void Refresh()
         {
-            base.OnGotFocus(e);
+            base.Refresh();
             Report();
         }
 

@@ -90,7 +90,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   全 {0} 文字（{1} 行） に類似しているローカライズされた文字列を検索します。
+        ///   全 {0:#,0} 文字（{1:#,0} 行） に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CountFormat {
             get {
@@ -195,7 +195,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   カーソル {0} 行 {1} 列 に類似しているローカライズされた文字列を検索します。
+        ///   カーソル {0:#,0} 行 {1:#,0} 列 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PositionFormat {
             get {

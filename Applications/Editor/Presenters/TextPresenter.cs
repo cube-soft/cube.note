@@ -78,7 +78,6 @@ namespace Cube.Note.App.Editor
                     View.Document = document;
                     View.ResetViewWidth();
                     View.ScrollToCaret();
-                    View.Focus();
                 });
             }
             finally { UpdateModel(e.NewPage, e.OldPage); }
