@@ -210,11 +210,12 @@ namespace Cube.Note
         public void Save() => Save(Path);
         public void Save(string path)
         {
-            var dest = new List<string>();
-            foreach (var tag in Items) dest.Add(tag.Name);
-
             CreateDirectory(path);
-            Settings.Save(dest, path, FileType);
+            Settings.Save(
+                Items.Select(x => x.Name).OrderBy(x => x).ToList(),
+                path,
+                FileType
+            );
         }
 
         #endregion

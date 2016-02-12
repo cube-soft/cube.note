@@ -64,8 +64,10 @@ namespace Cube.Note
             var reader = new AssemblyReader(assembly);
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var folder = $@"{reader.Company}\{reader.Product}\Inbox";
+
             Directory = IoEx.Path.Combine(appdata, folder);
             Tags = new TagCollection(assembly);
+            SystemTags = new TagCollection(assembly, "SystemTags.json");
         }
 
         /* ----------------------------------------------------------------- */
@@ -81,6 +83,7 @@ namespace Cube.Note
         {
             Directory = directory;
             Tags = new TagCollection(IoEx.Path.Combine(directory, TagCollection.DefaultFileName));
+            SystemTags = new TagCollection(IoEx.Path.Combine(directory, "SystemTags.json"));
         }
 
         #endregion
@@ -152,6 +155,17 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public TagCollection Tags { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SystemTags
+        ///
+        /// <summary>
+        /// タグ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public TagCollection SystemTags { get; }
 
         #endregion
 
@@ -228,7 +242,7 @@ namespace Cube.Note
         {
             Tags.Save();
             CreateDirectory(Directory);
-            Settings.Save(this.ToList(), ToPath(filename), FileType);
+            Settings.Save(Items, ToPath(filename), FileType);
         }
 
         #endregion
