@@ -96,7 +96,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("MS Gothic UI", 9.0)]
-        public void Font(string name, double size)
+        public void User_Font(string name, double size)
         {
             Assert.That(
                 Settings.User.Font,
@@ -105,7 +105,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(1, 1, 1)]
-        public void ForeColor(int red, int green, int blue)
+        public void User_ForeColor(int red, int green, int blue)
         {
             Assert.That(
                 Settings.User.ForeColor,
@@ -114,7 +114,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("Window")]
-        public void BackColor(string expected)
+        public void User_BackColor(string expected)
         {
             Assert.That(
                 Settings.User.BackColor,
@@ -123,7 +123,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("Highlight")]
-        public void HighlightBackColor(string expected)
+        public void User_HighlightBackColor(string expected)
         {
             Assert.That(
                 Settings.User.HighlightBackColor,
@@ -132,7 +132,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("HighlightText")]
-        public void HighlightForeColor(string expected)
+        public void User_HighlightForeColor(string expected)
         {
             Assert.That(
                 Settings.User.HighlightForeColor,
@@ -141,7 +141,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("Control")]
-        public void LineNumberBackColor(string expected)
+        public void User_LineNumberBackColor(string expected)
         {
             Assert.That(
                 Settings.User.LineNumberBackColor,
@@ -150,7 +150,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("ControlDark")]
-        public void LineNumberForeColor(string expected)
+        public void User_LineNumberForeColor(string expected)
         {
             Assert.That(
                 Settings.User.LineNumberForeColor,
@@ -159,7 +159,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("ControlDark")]
-        public void SpecialCharsColor(string expected)
+        public void User_SpecialCharsColor(string expected)
         {
             Assert.That(
                 Settings.User.SpecialCharsColor,
@@ -168,7 +168,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("ControlDark")]
-        public void CurrentLineColor(string expected)
+        public void User_CurrentLineColor(string expected)
         {
             Assert.That(
                 Settings.User.CurrentLineColor,
@@ -177,7 +177,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(10)]
-        public void AutoSaveTime(int expected)
+        public void User_AutoSaveTime(int expected)
         {
             Assert.That(
                 Settings.User.AutoSaveTime,
@@ -186,7 +186,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(4)]
-        public void TabWidth(int expected)
+        public void User_TabWidth(int expected)
         {
             Assert.That(
                 Settings.User.TabWidth,
@@ -194,8 +194,35 @@ namespace Cube.Note.Tests
             );
         }
 
+        [TestCase(80)]
+        public void User_WordWrapCount(int expected)
+        {
+            Assert.That(
+                Settings.User.WordWrapCount,
+                Is.EqualTo(80)
+            );
+        }
+
         [TestCase(false)]
-        public void TabToSpace(bool expected)
+        public void User_WordWrap(bool expected)
+        {
+            Assert.That(
+                Settings.User.WordWrap,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(false)]
+        public void User_WordWrapAsWindow(bool expected)
+        {
+            Assert.That(
+                Settings.User.WordWrapAsWindow,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(false)]
+        public void User_TabToSpace(bool expected)
         {
             Assert.That(
                 Settings.User.TabToSpace,
@@ -204,7 +231,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(true)]
-        public void LineNumberVisible(bool expected)
+        public void User_LineNumberVisible(bool expected)
         {
             Assert.That(
                 Settings.User.LineNumberVisible,
@@ -213,7 +240,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(true)]
-        public void RulerVisible(bool expected)
+        public void User_RulerVisible(bool expected)
         {
             Assert.That(
                 Settings.User.RulerVisible,
@@ -222,7 +249,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(false)]
-        public void SpecialCharsVisible(bool expected)
+        public void User_SpecialCharsVisible(bool expected)
         {
             Assert.That(
                 Settings.User.SpecialCharsVisible,
@@ -231,7 +258,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(true)]
-        public void EolVisible(bool expected)
+        public void User_EolVisible(bool expected)
         {
             Assert.That(
                 Settings.User.EolVisible,
@@ -240,7 +267,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(true)]
-        public void TabVisible(bool expected)
+        public void User_TabVisible(bool expected)
         {
             Assert.That(
                 Settings.User.TabVisible,
@@ -249,7 +276,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(false)]
-        public void SpaceVisible(bool expected)
+        public void User_SpaceVisible(bool expected)
         {
             Assert.That(
                 Settings.User.SpaceVisible,
@@ -258,7 +285,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(true)]
-        public void FullSpaceVisible(bool expected)
+        public void User_FullSpaceVisible(bool expected)
         {
             Assert.That(
                 Settings.User.FullSpaceVisible,
@@ -267,7 +294,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(false)]
-        public void CurrentLineVisible(bool expected)
+        public void User_CurrentLineVisible(bool expected)
         {
             Assert.That(
                 Settings.User.CurrentLineVisible,
@@ -276,7 +303,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(false)]
-        public void ModifiedLineVisible(bool expected)
+        public void User_ModifiedLineVisible(bool expected)
         {
             Assert.That(
                 Settings.User.ModifiedLineVisible,
@@ -285,7 +312,7 @@ namespace Cube.Note.Tests
         }
 
         [TestCase(true)]
-        public void RemoveWarning(bool expected)
+        public void User_RemoveWarning(bool expected)
         {
             Assert.That(
                 Settings.User.RemoveWarning,
