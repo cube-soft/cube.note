@@ -73,7 +73,7 @@ namespace Cube.Note
             {
                 if (_filename == value) return;
                 _filename = value;
-                OnPropertyChanged(nameof(FileName));
+                RaisePropertyChanged(nameof(FileName));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Cube.Note
             {
                 if (_abstract == value) return;
                 _abstract = value;
-                OnPropertyChanged(nameof(Abstract));
+                RaisePropertyChanged(nameof(Abstract));
             }
         }
 
@@ -115,7 +115,7 @@ namespace Cube.Note
             {
                 if (_creation == value) return;
                 _creation = value;
-                OnPropertyChanged(nameof(Creation));
+                RaisePropertyChanged(nameof(Creation));
             }
         }
 
@@ -136,7 +136,7 @@ namespace Cube.Note
             {
                 if (_update == value) return;
                 _update = value;
-                OnPropertyChanged(nameof(LastUpdate));
+                RaisePropertyChanged(nameof(LastUpdate));
             }
         }
 
@@ -156,7 +156,7 @@ namespace Cube.Note
             {
                 if (_document == value) return;
                 _document = value;
-                OnPropertyChanged(nameof(Document));
+                RaisePropertyChanged(nameof(Document));
             }
         }
 
@@ -184,12 +184,28 @@ namespace Cube.Note
         /// OnPropertyChanged
         ///
         /// <summary>
-        /// プロパティの内容が変更された時に実行されるハンドラです。
+        /// PropertyChanged イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPropertyChanged([CallerMemberName] string name = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+            => PropertyChanged?.Invoke(this, e);
+
+        #endregion
+
+        #region Non-virtual protected methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaisePropertyChanged
+        ///
+        /// <summary>
+        /// PropertyChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void RaisePropertyChanged([CallerMemberName] string name = null)
+            => OnPropertyChanged(new PropertyChangedEventArgs(name));
 
         #endregion
 
