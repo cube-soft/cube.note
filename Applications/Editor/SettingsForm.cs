@@ -464,7 +464,7 @@ namespace Cube.Note.App.Editor
         private void UpdateColor(Control control, Label label)
         {
             var color = control.BackColor;
-            var text = string.Format("({0}, {1}, {2})", color.R, color.G, color.B);
+            var text = $"({color.R}, {color.G}, {color.B})";
             if (label.Text == text) return;
             label.Text = text;
 
@@ -484,7 +484,7 @@ namespace Cube.Note.App.Editor
         {
             if (font == null) return;
 
-            var text = string.Format("({0}, {1}pt)", font.Name, font.Size);
+            var text = $"({font.Name}, {font.Size}pt)";
             if (label.Text == text) return;
             label.Text = text;
 
@@ -686,9 +686,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected void RaisePropertyChanged(Control control, object value)
         {
-            var name = control.Tag is string ?
-                       control.Tag as string :
-                       control.Name.Replace(control.GetType().Name, string.Empty);
+            var name = control.Name.Replace(control.GetType().Name, string.Empty);
             if (string.IsNullOrEmpty(name)) return;
 
             OnPropertyChanged(new KeyValueEventArgs<string, object>(name, value));

@@ -145,85 +145,85 @@ namespace Cube.Note.App.Editor
             {
                 switch (e.Key)
                 {
-                    case "Font":
+                    case nameof(Model.User.Font):
                         var font = (Font)e.Value;
                         Model.User.FontName = font.Name;
                         Model.User.FontSize = font.Size;
                         Model.User.FontStyle = font.Style;
                         break;
-                    case "BackColor":
+                    case nameof(Model.User.BackColor):
                         Model.User.BackColor = (Color)e.Value;
                         break;
-                    case "ForeColor":
+                    case nameof(Model.User.ForeColor):
                         Model.User.ForeColor = (Color)e.Value;
                         break;
-                    case "HighlightBackColor":
+                    case nameof(Model.User.HighlightBackColor):
                         Model.User.HighlightBackColor = (Color)e.Value;
                         break;
-                    case "HighlightForeColor":
+                    case nameof(Model.User.HighlightForeColor):
                         Model.User.HighlightForeColor = (Color)e.Value;
                         break;
-                    case "LineNumberBackColor":
+                    case nameof(Model.User.LineNumberBackColor):
                         Model.User.LineNumberBackColor = (Color)e.Value;
                         break;
-                    case "LineNumberForeColor":
+                    case nameof(Model.User.LineNumberForeColor):
                         Model.User.LineNumberForeColor = (Color)e.Value;
                         break;
-                    case "SpecialCharsColor":
+                    case nameof(Model.User.SpecialCharsColor):
                         Model.User.SpecialCharsColor = (Color)e.Value;
                         break;
-                    case "CurrentLineColor":
+                    case nameof(Model.User.CurrentLineColor):
                         Model.User.CurrentLineColor = (Color)e.Value;
                         break;
-                    case "AutoSaveTime":
+                    case nameof(Model.User.AutoSaveTime):
                         Model.User.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
-                    case "TabWidth":
+                    case nameof(Model.User.TabWidth):
                         Model.User.TabWidth = (int)((decimal)e.Value);
                         break;
-                    case "TabToSpace":
+                    case nameof(Model.User.TabToSpace):
                         Model.User.TabToSpace = (bool)e.Value;
                         break;
-                    case "WordWrap":
+                    case nameof(Model.User.WordWrap):
                         Model.User.WordWrap = (bool)e.Value;
                         break;
-                    case "WordWrapAsWindow":
+                    case nameof(Model.User.WordWrapAsWindow):
                         Model.User.WordWrapAsWindow = (bool)e.Value;
                         break;
-                    case "WordWrapCount":
+                    case nameof(Model.User.WordWrapCount):
                         Model.User.WordWrapCount = (int)((decimal)e.Value);
                         break;
-                    case "LineNumberVisible":
+                    case nameof(Model.User.LineNumberVisible):
                         Model.User.LineNumberVisible = (bool)e.Value;
                         break;
-                    case "RulerVisible":
+                    case nameof(Model.User.RulerVisible):
                         Model.User.RulerVisible = (bool)e.Value;
                         break;
-                    case "SpecialCharsVisible":
+                    case nameof(Model.User.SpecialCharsVisible):
                         Model.User.SpecialCharsVisible = (bool)e.Value;
                         break;
-                    case "EolVisible":
+                    case nameof(Model.User.EolVisible):
                         Model.User.EolVisible = (bool)e.Value;
                         break;
-                    case "TabVisible":
+                    case nameof(Model.User.TabVisible):
                         Model.User.TabVisible = (bool)e.Value;
                         break;
-                    case "SpaceVisible":
+                    case nameof(Model.User.SpaceVisible):
                         Model.User.SpaceVisible = (bool)e.Value;
                         break;
-                    case "FullSpaceVisible":
+                    case nameof(Model.User.FullSpaceVisible):
                         Model.User.FullSpaceVisible = (bool)e.Value;
                         break;
-                    case "CurrentLineVisible":
+                    case nameof(Model.User.CurrentLineVisible):
                         Model.User.CurrentLineVisible = (bool)e.Value;
                         break;
-                    case "ModifiedLineVisible":
+                    case nameof(Model.User.ModifiedLineVisible):
                         Model.User.ModifiedLineVisible = (bool)e.Value;
                         break;
-                    case "BracketVisible":
+                    case nameof(Model.User.BracketVisible):
                         Model.User.BracketVisible = (bool)e.Value;
                         break;
-                    case "RemoveWarning":
+                    case nameof(Model.User.RemoveWarning):
                         Model.User.RemoveWarning = (bool)e.Value;
                         break;
                     default:

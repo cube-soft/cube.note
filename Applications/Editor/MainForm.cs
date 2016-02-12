@@ -48,6 +48,9 @@ namespace Cube.Note.App.Editor
         public MainForm()
         {
             InitializeComponent();
+
+            Settings.Load();
+
             InitializeEvents();
             InitializePresenters();
 

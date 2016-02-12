@@ -48,7 +48,7 @@ namespace Cube.Note.Tests
         {
             var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
             Root = IoEx.Path.GetDirectoryName(reader.Location);
-            _folder = GetType().FullName.Replace(string.Format("{0}.", reader.Product), "");
+            _folder = GetType().FullName.Replace($"{reader.Product}.", "");
             Initialize();
         }
 
@@ -77,10 +77,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Examples
-        {
-            get { return IoEx.Path.Combine(Root, "Examples"); }
-        }
+        protected string Examples => IoEx.Path.Combine(Root, "Examples");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,14 +88,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Results
-        {
-            get
-            {
-                var folder = string.Format(@"Results\{0}", _folder);
-                return IoEx.Path.Combine(Root, folder);
-            }
-        }
+        protected string Results => IoEx.Path.Combine(Root, $@"Results\{_folder}");
 
         #endregion
 
