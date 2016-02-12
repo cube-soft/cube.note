@@ -51,9 +51,7 @@ namespace Cube.Note.App.Editor
             Logger = LogManager.GetLogger(GetType());
 
             InitializeComponent();
-
-            Settings.Load();
-
+            InitializeModels();
             InitializeEvents();
             InitializePresenters();
 
@@ -105,6 +103,25 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// InitializeModels
+        ///
+        /// <summary>
+        /// 各種モデルの初期化を行います。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// MainForm にはモデルに関する初期化処理は最低限に留めます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeModels()
+        {
+            Pages.SystemTags.Create(Properties.Resources.AllTag);
+            Settings.Load();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// InitializePresenters
         ///
         /// <summary>
@@ -117,6 +134,7 @@ namespace Cube.Note.App.Editor
             new TextPresenter(TextControl, Pages);
             new TextVisualPresenter(TextControl, Settings);
             new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
+            new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings);
             new SearchPresenter(SearchControl, Pages);
         }
 

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ConditionsValue.cs
+/// TagCollectionPresenter.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,40 +17,46 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Collections.Specialized;
+using System.Windows.Forms;
 
-namespace Cube.Note
+namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ConditionsValue
+    /// TagCollectionPresenter
     /// 
     /// <summary>
-    /// アプリケーションの状態を表す値を保持するためのクラスです。
+    /// タグ一覧と Model を関連付けるためのクラスです。
     /// </summary>
     /// 
-    /// <remarks>
-    /// このクラスが保持する値は、アプリケーション終了時に破棄されます。
-    /// アプリケーションの次回起動時にも必要な値に関しては SettingsValue に
-    /// 定義して下さい。
-    /// </remarks>
-    /// 
     /* --------------------------------------------------------------------- */
-    public class ConditionsValue : INotifyPropertyChanged
+    public class TagCollectionPresenter : Cube.Forms.PresenterBase<ComboBox, TagCollection>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ConditionsValue
+        /// TagCollectionPresenter
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ConditionsValue() { }
+        public TagCollectionPresenter(ComboBox view, 
+            PageCollection pages, SettingsFolder settings) : base(view, pages.Tags)
+        {
+            Settings = settings;
+            SystemTags = pages.SystemTags;
+
+            Model.CollectionChanged += Model_CollectionChanged;
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
+
+            System.Diagnostics.Debug.Assert(SystemTags.Count > 0);
+            foreach (var tag in SystemTags) View.Items.Add(tag);
+            View.SelectedIndex = 0;
+        }
 
         #endregion
 
@@ -58,75 +64,65 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Tag
+        /// Settings
         ///
         /// <summary>
-        /// アクティブな Tag オブジェクトを取得します。
+        /// 設定情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Tag Tag
+        public SettingsFolder Settings { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SystemTags
+        ///
+        /// <summary>
+        /// システムで予約されているタグ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public TagCollection SystemTags { get; }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_SelectedIndexChanged
+        ///
+        /// <summary>
+        /// 選択されている項目が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            get { return _tag; }
-            set
+            Settings.Current.Tag = View.SelectedItem as Tag;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_CollectionChanged
+        ///
+        /// <summary>
+        /// タグの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
             {
-                if (_tag == value) return;
-                _tag = value;
-                RaisePropertyChanged(nameof(Tag));
+                case NotifyCollectionChangedAction.Add:
+                    SyncWait(() => View.Items.Add(Model[e.NewStartingIndex]));
+                    break;
+                default:
+                    break;
             }
         }
 
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PropertyChanged
-        ///
-        /// <summary>
-        /// プロパティの内容が変更された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPropertyChanged
-        ///
-        /// <summary>
-        /// PropertyChanged イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-            => PropertyChanged?.Invoke(this, e);
-
-        #endregion
-
-        #region Non-virtual protected methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RaisePropertyChanged
-        ///
-        /// <summary>
-        /// PropertyChanged イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void RaisePropertyChanged([CallerMemberName] string name = null)
-            => OnPropertyChanged(new PropertyChangedEventArgs(name));
-
-        #endregion
-
-        #region Fields
-        private Tag _tag;
         #endregion
     }
 }

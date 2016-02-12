@@ -57,12 +57,10 @@ namespace Cube.Note.App.Editor
             View.Pages.Removing += View_Removing;
             View.Pages.Removed += View_Removed;
 
-            // NOTE: 暫定
-            View.Tags.Items.Add(Properties.Resources.AllTag);
-            View.Tags.SelectedIndex = 0;
-
             Model.ActiveChanged += Model_ActiveChanged;
             Model.CollectionChanged += Model_CollectionChanged;
+
+            Settings.Current.PropertyChanged += Settings_PropertyChanged;
         }
 
         #endregion
@@ -280,9 +278,34 @@ namespace Cube.Note.App.Editor
 
             Sync(() =>
             {
-                if (e.PropertyName == "Abstract") View.Pages.ReplaceText(index, page.GetAbstract());
+                if (e.PropertyName == nameof(page.Abstract)) View.Pages.ReplaceText(index, page.GetAbstract());
                 else View.Pages.Replace(index, page);
             });
+        }
+
+        #endregion
+
+        #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_PropertyChanged
+        /// 
+        /// <summary>
+        /// プロパティの値が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(Settings.Current.Tag):
+                    // TODO: implementations
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion
