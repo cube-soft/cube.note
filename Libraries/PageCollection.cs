@@ -125,28 +125,6 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Active
-        ///
-        /// <summary>
-        /// アクティブ状態の Page オブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Page Active
-        {
-            get { return _active; }
-            set
-            {
-                if (_active == value) return;
-
-                var before = _active;
-                _active = value;
-                OnActiveChanged(new ValueChangedEventArgs<Page>(before, value));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Tags
         ///
         /// <summary>
@@ -166,22 +144,6 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public TagCollection SystemTags { get; }
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ActiveChanged
-        ///
-        /// <summary>
-        /// アクティブ状態の Page オブジェクトが変更された時に発生する
-        /// イベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EventHandler<ValueChangedEventArgs<Page>> ActiveChanged;
 
         #endregion
 
@@ -244,23 +206,6 @@ namespace Cube.Note
             CreateDirectory(Directory);
             Settings.Save(Items, ToPath(filename), FileType);
         }
-
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnActiveChanged
-        ///
-        /// <summary>
-        /// アクティブ状態の Page オブジェクトが変更された時に実行される
-        /// ハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnActiveChanged(ValueChangedEventArgs<Page> e)
-            => ActiveChanged?.Invoke(this, e);
 
         #endregion
 
@@ -358,10 +303,6 @@ namespace Cube.Note
             IoEx.Directory.CreateDirectory(path);
         }
 
-        #endregion
-
-        #region Fields
-        private Page _active = null;
         #endregion
     }
 }

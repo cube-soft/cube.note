@@ -131,11 +131,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new TextPresenter(TextControl, Pages);
+            new TextPresenter(TextControl, Pages, Settings);
             new TextVisualPresenter(TextControl, Settings);
             new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings);
-            new SearchPresenter(SearchControl, Pages);
+            new SearchPresenter(SearchControl, Pages, Settings);
         }
 
         #endregion

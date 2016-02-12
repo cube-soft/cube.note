@@ -44,11 +44,27 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TextPresenter(TextControl view, PageCollection model)
+        public TextPresenter(TextControl view, PageCollection model, SettingsFolder settings)
             : base(view, model)
         {
-            Model.ActiveChanged += Model_ActiveChanged;
+            Settings = settings;
+            Settings.Current.PageChanged += Model_ActiveChanged;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        /// 
+        /// <summary>
+        /// 設定オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsFolder Settings { get; }
 
         #endregion
 
@@ -92,10 +108,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
+        private void Settings_PageChanged(object sender, ContentChangedEventArgs e)
         {
-            if (Model.Active == null || Model.Active.Document != sender) return;
-            Model.Active.Abstract = Abstract(Model.Active.Document as Document);
+            if (Settings.Current.Page == null || Settings.Current.Page.Document != sender) return;
+            Settings.Current.Page.Abstract = Abstract(Settings.Current.Page.Document as Document);
         }
 
         #endregion
@@ -116,12 +132,12 @@ namespace Cube.Note.App.Editor
             var newdoc = newpage?.Document as Document;
             if (newdoc != null)
             {
-                newdoc.ContentChanged -= Model_ContentChanged;
-                newdoc.ContentChanged += Model_ContentChanged;
+                newdoc.ContentChanged -= Settings_PageChanged;
+                newdoc.ContentChanged += Settings_PageChanged;
             }
 
             var olddoc = oldpage?.Document as Document;
-            if (olddoc != null) olddoc.ContentChanged -= Model_ContentChanged;
+            if (olddoc != null) olddoc.ContentChanged -= Settings_PageChanged;
         }
 
         /* ----------------------------------------------------------------- */

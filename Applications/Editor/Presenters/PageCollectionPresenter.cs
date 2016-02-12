@@ -57,9 +57,9 @@ namespace Cube.Note.App.Editor
             View.Pages.Removing += View_Removing;
             View.Pages.Removed += View_Removed;
 
-            Model.ActiveChanged += Model_ActiveChanged;
             Model.CollectionChanged += Model_CollectionChanged;
 
+            Settings.Current.PageChanged += Settings_PageChanged;
             Settings.Current.TagChanged += Settings_TagChanged;
         }
 
@@ -98,7 +98,7 @@ namespace Cube.Note.App.Editor
             var index = View.Pages.SelectedIndices[0];
             if (index < 0 || index >= Model.Count) return;
 
-            Model.Active = Model[index];
+            Settings.Current.Page = Model[index];
         }
 
         /* ----------------------------------------------------------------- */
@@ -185,35 +185,13 @@ namespace Cube.Note.App.Editor
 
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model.RemoveAt(index);
-            Model.Active = Model[Math.Min(index, Model.Count - 1)];
+
+            Settings.Current.Page = Model[Math.Min(index, Model.Count - 1)];
         }
 
         #endregion
 
         #region Model
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_ActiveChanged
-        /// 
-        /// <summary>
-        /// アクティブな Page が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_ActiveChanged(object sender, EventArgs e)
-        {
-            if (Model.Active == null) return;
-
-            var index = View.Pages.SelectedIndices.Count > 0 ?
-                        View.Pages.SelectedIndices[0] : -1;
-            if (index >= 0 && index < Model.Count && Model.Active == Model[index]) return;
-
-            var changed = Model.IndexOf(Model.Active);
-            if (changed == -1) return;
-
-            Sync(() => View.Pages.Select(changed));
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -286,6 +264,29 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_ActiveChanged
+        /// 
+        /// <summary>
+        /// アクティブな Page が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_PageChanged(object sender, EventArgs e)
+        {
+            if (Settings.Current.Page == null) return;
+
+            var index = View.Pages.SelectedIndices.Count > 0 ?
+                        View.Pages.SelectedIndices[0] : -1;
+            if (index >= 0 && index < Model.Count && Settings.Current.Page == Model[index]) return;
+
+            var changed = Model.IndexOf(Settings.Current.Page);
+            if (changed == -1) return;
+
+            Sync(() => View.Pages.Select(changed));
+        }
 
         /* ----------------------------------------------------------------- */
         ///

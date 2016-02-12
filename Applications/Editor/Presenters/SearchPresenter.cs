@@ -46,9 +46,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SearchPresenter(SearchControl view, PageCollection model)
+        public SearchPresenter(SearchControl view, PageCollection model, SettingsFolder settings)
             : base(view, model)
         {
+            Settings = settings;
+
             View.SearchExecuted += View_Search;
             View.Pages.Cleared += (s, e) => Results.Clear();
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
@@ -59,6 +61,17 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        /// 
+        /// <summary>
+        /// 設定オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -116,7 +129,7 @@ namespace Cube.Note.App.Editor
             var real = Model.IndexOf(Results[index]);
             if (real < 0 || real >= Model.Count) return;
 
-            Model.Active = Model[real];
+            Settings.Current.Page = Model[real];
         }
 
         #endregion

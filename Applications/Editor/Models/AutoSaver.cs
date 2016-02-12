@@ -57,7 +57,7 @@ namespace Cube.Note.App.Editor
             Settings = settings;
             Interval = TimeSpan.FromSeconds(30);
 
-            Target.ActiveChanged += Target_ActiveChanged;
+            Settings.Current.PageChanged += Settings_PageChanged;
             Settings.User.PropertyChanged += Settings_PropertyChanged;
             _timer.Elapsed += Timer_Elapsed;
 
@@ -155,7 +155,7 @@ namespace Cube.Note.App.Editor
         {
             await Task.Run(() =>
             {
-                SaveDocument(Target.Active);
+                SaveDocument(Settings.Current.Page);
                 SaveOrderFile();
             });
         }
@@ -170,7 +170,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Target_ActiveChanged(object sender, ValueChangedEventArgs<Page> e)
+        private async void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
             await Task.Run(() => SaveDocument(e.OldValue));
         }
@@ -209,7 +209,7 @@ namespace Cube.Note.App.Editor
             _disposed = true;
 
             _timer.Stop();
-            Target.ActiveChanged -= Target_ActiveChanged;
+            Settings.Current.PageChanged -= Settings_PageChanged;
             SaveAllDocuments();
             SaveOrderFile();
 

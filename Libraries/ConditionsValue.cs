@@ -59,6 +59,28 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Page
+        ///
+        /// <summary>
+        /// アクティブな Page オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Page Page
+        {
+            get { return _page; }
+            set
+            {
+                if (_page == value) return;
+
+                var before = _page;
+                _page = value;
+                OnPageChanged(new ValueChangedEventArgs<Page>(before, value));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Tag
         ///
         /// <summary>
@@ -96,6 +118,17 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// PageChanged
+        ///
+        /// <summary>
+        /// ページが変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<ValueChangedEventArgs<Page>> PageChanged;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// TagChanged
         ///
         /// <summary>
@@ -120,6 +153,18 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
             => PropertyChanged?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPageChanged
+        ///
+        /// <summary>
+        /// TagChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPageChanged(ValueChangedEventArgs<Page> e)
+            => PageChanged?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -152,6 +197,7 @@ namespace Cube.Note
         #endregion
 
         #region Fields
+        private Page _page;
         private Tag _tag;
         #endregion
     }
