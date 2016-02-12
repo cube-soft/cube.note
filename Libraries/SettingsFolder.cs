@@ -106,7 +106,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; set; }
+        public string Path { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -159,15 +159,16 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save()
+        public void Save() => Save(Path);
+        public void Save(string path)
         {
-            if (string.IsNullOrEmpty(Path)) return;
+            if (string.IsNullOrEmpty(path)) return;
 
-            var directory = IoEx.Path.GetDirectoryName(Path);
+            var directory = IoEx.Path.GetDirectoryName(path);
             if (string.IsNullOrEmpty(directory)) return;
             if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
 
-            Settings.Save(User, Path, FileType);
+            Settings.Save(User, path, FileType);
         }
 
         #endregion

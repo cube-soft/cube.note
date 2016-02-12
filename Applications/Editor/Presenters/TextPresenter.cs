@@ -114,21 +114,15 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateModel(Page newpage, Page oldpage)
         {
-            if (newpage != null)
+            var newdoc = newpage?.Document as Document;
+            if (newdoc != null)
             {
-                var document = newpage.Document as Document;
-                if (document != null)
-                {
-                    document.ContentChanged -= Model_ContentChanged;
-                    document.ContentChanged += Model_ContentChanged;
-                }
+                newdoc.ContentChanged -= Model_ContentChanged;
+                newdoc.ContentChanged += Model_ContentChanged;
             }
 
-            if (oldpage != null)
-            {
-                var document = oldpage.Document as Document;
-                if (document != null) document.ContentChanged -= Model_ContentChanged;
-            }
+            var olddoc = oldpage?.Document as Document;
+            if (olddoc != null) olddoc.ContentChanged -= Model_ContentChanged;
         }
 
         /* ----------------------------------------------------------------- */

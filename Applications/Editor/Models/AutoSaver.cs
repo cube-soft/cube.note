@@ -186,7 +186,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != "AutoSaveTime") return;
+            if (e.PropertyName != nameof(Settings.User.AutoSaveTime)) return;
             Interval = Settings.User.AutoSaveTime;
         }
 
@@ -245,11 +245,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveDocument(Page page)
-        {
-            if (page == null) return;
-            page.SaveDocument(Target.Directory);
-        }
+        private void SaveDocument(Page page) => page?.SaveDocument(Target.Directory);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -274,10 +270,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveOrderFile()
-        {
-            Target.Save(Properties.Resources.OrderFileName);
-        }
+        private void SaveOrderFile() => Target.Save(Properties.Resources.OrderFileName);
 
         #endregion
 

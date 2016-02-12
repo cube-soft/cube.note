@@ -94,10 +94,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings.FileType FileType
-        {
-            get { return Settings.FileType.Json; }
-        }
+        public Settings.FileType FileType => Settings.FileType.Json;
 
         /* ----------------------------------------------------------------- */
         ///

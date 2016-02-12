@@ -49,8 +49,8 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            SearchButton.Click += (s, e) => RaiseSearchEvent();
-            KeywordTextBox.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) RaiseSearchEvent(); };
+            SearchButton.Click += (s, e) => RaiseSearchExecuted();
+            KeywordTextBox.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) RaiseSearchExecuted(); };
 
             Dock = DockStyle.Fill;
         }
@@ -68,10 +68,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageListView Pages
-        {
-            get { return PageListView; }
-        }
+        public PageListView Pages => PageListView;
 
         #endregion
 
@@ -79,14 +76,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Search
+        /// SearchExecuted
         /// 
         /// <summary>
         /// 検索が実行された時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<ValueEventArgs<string>> Search;
+        public EventHandler<ValueEventArgs<string>> SearchExecuted;
 
         #endregion
 
@@ -152,33 +149,31 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSearch
+        /// OnSearchExecuted
         /// 
         /// <summary>
         /// Search イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSearch(ValueEventArgs<string> e)
-            => Search?.Invoke(this, e);
+        protected virtual void OnSearchExecuted(ValueEventArgs<string> e)
+            => SearchExecuted?.Invoke(this, e);
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseSearchEvent
+        /// RaiseSearchExecuted
         ///
         /// <summary>
         /// Search イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseSearchEvent()
-        {
-            OnSearch(new ValueEventArgs<string>(KeywordTextBox.Text));
-        }
+        private void RaiseSearchExecuted()
+            => OnSearchExecuted(new ValueEventArgs<string>(KeywordTextBox.Text));
 
         #endregion
 

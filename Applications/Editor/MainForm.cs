@@ -20,6 +20,7 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using log4net;
 
 namespace Cube.Note.App.Editor
 {
@@ -47,6 +48,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MainForm()
         {
+            Logger = LogManager.GetLogger(GetType());
+
             InitializeComponent();
 
             Settings.Load();
@@ -116,6 +119,21 @@ namespace Cube.Note.App.Editor
             new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
             new SearchPresenter(SearchControl, Pages);
         }
+
+        #endregion
+
+        #region Properties
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Logger
+        /// 
+        /// <summary>
+        /// ログ出力用オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public ILog Logger { get; }
 
         #endregion
 
@@ -202,9 +220,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void NewPageMenuItem_Click(object sender, EventArgs e)
-        {
-            PageCollectionControl.NewPage();
-        }
+            => PageCollectionControl.NewPage();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -216,9 +232,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void RemoveMenuItem_Click(object sender, EventArgs e)
-        {
-            PageCollectionControl.Pages.RemoveItems();
-        }
+            => PageCollectionControl.Pages.RemoveItems();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -267,7 +281,7 @@ namespace Cube.Note.App.Editor
         private void LogoMenuItem_Click(object sender, EventArgs e)
         {
             try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
-            catch (Exception /* err */) { /* ignore errors */ }
+            catch (Exception err) { Logger.Error(err); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -347,10 +361,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool IsActive(Control control)
-        {
-            return control.Parent == ContentsPanel.Panel1;
-        }
+        private bool IsActive(Control control) => control.Parent == ContentsPanel.Panel1;
 
         #endregion
 

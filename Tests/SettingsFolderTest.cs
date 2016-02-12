@@ -307,8 +307,7 @@ namespace Cube.Note.Tests
         [TestCase("NewSettings.json")]
         public void Save(string filename)
         {
-            Settings.Path = IoEx.Path.Combine(Results, filename);
-            Settings.Save();
+            Settings.Save(IoEx.Path.Combine(Results, filename));
             Assert.That(
                 IoEx.File.Exists(Settings.Path),
                 Is.True

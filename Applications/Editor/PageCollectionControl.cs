@@ -62,10 +62,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageListView Pages
-        {
-            get { return PageListView; }
-        }
+        public PageListView Pages => PageListView;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,10 +73,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ComboBox Tags
-        {
-            get { return TagComboBox; }
-        }
+        public ComboBox Tags => TagComboBox;
 
         #endregion
 
@@ -94,7 +88,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler NewPageRequired;
+        public event EventHandler NewPageExecuted;
 
         #endregion
 
@@ -109,10 +103,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage()
-        {
-            OnNewPageRequired(new EventArgs());
-        }
+        public void NewPage() => OnNewPageExecuted(EventArgs.Empty);
 
         #endregion
 
@@ -120,15 +111,15 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnNewPageRequired
+        /// OnNewPageExecuted
         ///
         /// <summary>
-        /// NewPageRequired イベントを発生させます。
+        /// NewPageExecuted イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnNewPageRequired(EventArgs e)
-            => NewPageRequired?.Invoke(this, e);
+        protected virtual void OnNewPageExecuted(EventArgs e)
+            => NewPageExecuted?.Invoke(this, e);
 
         #endregion
     }

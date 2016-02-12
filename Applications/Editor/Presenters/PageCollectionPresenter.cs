@@ -51,7 +51,7 @@ namespace Cube.Note.App.Editor
         {
             Settings = settings;
 
-            View.NewPageRequired += View_NewPageRequired;
+            View.NewPageExecuted += View_NewPageExecuted;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.Added += View_Added;
             View.Pages.Removing += View_Removing;
@@ -105,14 +105,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_NewPageRequired
+        /// View_NewPageExecuted
         /// 
         /// <summary>
         /// 新しいページの作成要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_NewPageRequired(object sender, EventArgs e)
+        private void View_NewPageExecuted(object sender, EventArgs e)
         {
             Model.NewPage();
             View.Pages.Select(0);

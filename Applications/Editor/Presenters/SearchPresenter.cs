@@ -49,7 +49,7 @@ namespace Cube.Note.App.Editor
         public SearchPresenter(SearchControl view, PageCollection model)
             : base(view, model)
         {
-            View.Search += View_Search;
+            View.SearchExecuted += View_Search;
             View.Pages.Cleared += (s, e) => Results.Clear();
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
 
