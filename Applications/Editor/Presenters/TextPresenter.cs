@@ -64,13 +64,13 @@ namespace Cube.Note.App.Editor
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Model_ActiveChanged(object sender, PageChangedEventArgs e)
+        private void Model_ActiveChanged(object sender, ValueChangedEventArgs<Page> e)
         {
             try
             {
-                if (e.NewPage == null) return;
+                if (e.NewValue == null) return;
 
-                var document = e.NewPage.CreateDocument(Model.Directory);
+                var document = e.NewValue.CreateDocument(Model.Directory);
                 System.Diagnostics.Debug.Assert(document != null);
 
                 Sync(() =>
@@ -80,7 +80,7 @@ namespace Cube.Note.App.Editor
                     View.ScrollToCaret();
                 });
             }
-            finally { UpdateModel(e.NewPage, e.OldPage); }
+            finally { UpdateModel(e.NewValue, e.OldValue); }
         }
 
         /* ----------------------------------------------------------------- */

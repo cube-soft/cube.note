@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageChangedEventArgs.cs
+/// ValueChangedEventArgs.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -23,14 +23,14 @@ namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageChangedEventArgs
+    /// ValueChangedEventArgs
     /// 
     /// <summary>
     /// ページの変更に関連するイベントの内容を保持するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class PageChangedEventArgs : EventArgs
+    public class ValueChangedEventArgs<TValue> : EventArgs
     {
         #region Constructors
 
@@ -43,10 +43,10 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageChangedEventArgs(Page before, Page after)
+        public ValueChangedEventArgs(TValue before, TValue after)
         {
-            OldPage = before;
-            NewPage = after;
+            OldValue = before;
+            NewValue = after;
         }
 
         #endregion
@@ -55,25 +55,25 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OldPage
+        /// OldValue
         /// 
         /// <summary>
         /// 変更前のオブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page OldPage { get; }
+        public TValue OldValue { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// NewPage
+        /// NewValue
         /// 
         /// <summary>
         /// 変更後のオブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page NewPage { get; }
+        public TValue NewValue { get; }
 
         #endregion
     }

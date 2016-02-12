@@ -141,7 +141,7 @@ namespace Cube.Note
 
                 var before = _active;
                 _active = value;
-                OnActiveChanged(new PageChangedEventArgs(before, value));
+                OnActiveChanged(new ValueChangedEventArgs<Page>(before, value));
             }
         }
 
@@ -181,7 +181,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<PageChangedEventArgs> ActiveChanged;
+        public EventHandler<ValueChangedEventArgs<Page>> ActiveChanged;
 
         #endregion
 
@@ -259,7 +259,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnActiveChanged(PageChangedEventArgs e)
+        protected virtual void OnActiveChanged(ValueChangedEventArgs<Page> e)
             => ActiveChanged?.Invoke(this, e);
 
         #endregion

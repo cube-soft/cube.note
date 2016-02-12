@@ -60,7 +60,7 @@ namespace Cube.Note.App.Editor
             Model.ActiveChanged += Model_ActiveChanged;
             Model.CollectionChanged += Model_CollectionChanged;
 
-            Settings.Current.PropertyChanged += Settings_PropertyChanged;
+            Settings.Current.TagChanged += Settings_TagChanged;
         }
 
         #endregion
@@ -289,24 +289,18 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings_PropertyChanged
+        /// Settings_TagChanged
         /// 
         /// <summary>
-        /// プロパティの値が変化した時に実行されるハンドラです。
+        /// タグが変化した時に実行されるハンドラです。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
         {
-            switch (e.PropertyName)
-            {
-                case nameof(Settings.Current.Tag):
-                    // TODO: implementations
-                    break;
-                default:
-                    break;
-            }
+            // TODO: implementations
         }
+
 
         #endregion
 

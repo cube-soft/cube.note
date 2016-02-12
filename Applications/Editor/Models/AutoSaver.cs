@@ -170,9 +170,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Target_ActiveChanged(object sender, PageChangedEventArgs e)
+        private async void Target_ActiveChanged(object sender, ValueChangedEventArgs<Page> e)
         {
-            await Task.Run(() => SaveDocument(e.OldPage));
+            await Task.Run(() => SaveDocument(e.OldValue));
         }
 
         /* ----------------------------------------------------------------- */

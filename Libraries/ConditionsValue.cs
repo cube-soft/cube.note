@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -71,8 +72,10 @@ namespace Cube.Note
             set
             {
                 if (_tag == value) return;
+
+                var before = _tag;
                 _tag = value;
-                RaisePropertyChanged(nameof(Tag));
+                OnTagChanged(new ValueChangedEventArgs<Tag>(before, value));
             }
         }
 
@@ -91,6 +94,17 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TagChanged
+        ///
+        /// <summary>
+        /// タグが変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<ValueChangedEventArgs<Tag>> TagChanged;
+
         #endregion
 
         #region Virtual methods
@@ -106,6 +120,18 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
             => PropertyChanged?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnTagChanged
+        ///
+        /// <summary>
+        /// TagChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnTagChanged(ValueChangedEventArgs<Tag> e)
+            => TagChanged?.Invoke(this, e);
 
         #endregion
 
