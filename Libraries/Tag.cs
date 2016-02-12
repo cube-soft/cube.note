@@ -77,5 +77,20 @@ namespace Cube.Note
         public int Count { get; set; }
 
         #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToString
+        ///
+        /// <summary>
+        /// 文字列に変換します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override string ToString() => Name;
+
+        #endregion
     }
 }
