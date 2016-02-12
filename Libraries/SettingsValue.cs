@@ -75,8 +75,8 @@ namespace Cube.Note
             {
                 if (_fontName == value) return;
                 _fontName = value;
-                OnPropertyChanged(nameof(FontName));
-                OnPropertyChanged(nameof(Font));
+                RaisePropertyChanged(nameof(FontName));
+                RaisePropertyChanged(nameof(Font));
             }
         }
 
@@ -97,8 +97,8 @@ namespace Cube.Note
             {
                 if (_fontSize == value) return;
                 _fontSize = value;
-                OnPropertyChanged(nameof(FontSize));
-                OnPropertyChanged(nameof(Font));
+                RaisePropertyChanged(nameof(FontSize));
+                RaisePropertyChanged(nameof(Font));
             }
         }
 
@@ -119,8 +119,8 @@ namespace Cube.Note
             {
                 if (_fontStyle == value) return;
                 _fontStyle = value;
-                OnPropertyChanged(nameof(FontStyle));
-                OnPropertyChanged(nameof(Font));
+                RaisePropertyChanged(nameof(FontStyle));
+                RaisePropertyChanged(nameof(Font));
             }
         }
 
@@ -152,7 +152,7 @@ namespace Cube.Note
             {
                 if (_backColor == value) return;
                 _backColor = value;
-                OnPropertyChanged(nameof(BackColor));
+                RaisePropertyChanged(nameof(BackColor));
             }
         }
 
@@ -173,7 +173,7 @@ namespace Cube.Note
             {
                 if (_foreColor == value) return;
                 _foreColor = value;
-                OnPropertyChanged(nameof(ForeColor));
+                RaisePropertyChanged(nameof(ForeColor));
             }
         }
 
@@ -194,7 +194,7 @@ namespace Cube.Note
             {
                 if (_highlightBackColor == value) return;
                 _highlightBackColor = value;
-                OnPropertyChanged(nameof(HighlightBackColor));
+                RaisePropertyChanged(nameof(HighlightBackColor));
             }
         }
 
@@ -215,7 +215,7 @@ namespace Cube.Note
             {
                 if (_highlightForeColor == value) return;
                 _highlightForeColor = value;
-                OnPropertyChanged(nameof(HighlightForeColor));
+                RaisePropertyChanged(nameof(HighlightForeColor));
             }
         }
 
@@ -236,7 +236,7 @@ namespace Cube.Note
             {
                 if (_lineNumberBackColor == value) return;
                 _lineNumberBackColor = value;
-                OnPropertyChanged(nameof(LineNumberBackColor));
+                RaisePropertyChanged(nameof(LineNumberBackColor));
             }
         }
 
@@ -257,7 +257,7 @@ namespace Cube.Note
             {
                 if (_lineNumberForeColor == value) return;
                 _lineNumberForeColor = value;
-                OnPropertyChanged(nameof(LineNumberForeColor));
+                RaisePropertyChanged(nameof(LineNumberForeColor));
             }
         }
 
@@ -278,7 +278,7 @@ namespace Cube.Note
             {
                 if (_specialCharsColor == value) return;
                 _specialCharsColor = value;
-                OnPropertyChanged(nameof(SpecialCharsColor));
+                RaisePropertyChanged(nameof(SpecialCharsColor));
             }
         }
 
@@ -299,7 +299,7 @@ namespace Cube.Note
             {
                 if (_currentLineColor == value) return;
                 _currentLineColor = value;
-                OnPropertyChanged(nameof(CurrentLineColor));
+                RaisePropertyChanged(nameof(CurrentLineColor));
             }
         }
 
@@ -320,7 +320,7 @@ namespace Cube.Note
             {
                 if (_autoSaveTime == value) return;
                 _autoSaveTime = value;
-                OnPropertyChanged(nameof(AutoSaveTime));
+                RaisePropertyChanged(nameof(AutoSaveTime));
             }
         }
 
@@ -341,7 +341,7 @@ namespace Cube.Note
             {
                 if (_tabWidth == value) return;
                 _tabWidth = value;
-                OnPropertyChanged(nameof(TabWidth));
+                RaisePropertyChanged(nameof(TabWidth));
             }
         }
 
@@ -363,7 +363,7 @@ namespace Cube.Note
             {
                 if (_tabToSpace == value) return;
                 _tabToSpace = value;
-                OnPropertyChanged(nameof(TabToSpace));
+                RaisePropertyChanged(nameof(TabToSpace));
             }
         }
 
@@ -385,7 +385,7 @@ namespace Cube.Note
             {
                 if (_wordWrap == value) return;
                 _wordWrap = value;
-                OnPropertyChanged(nameof(WordWrap));
+                RaisePropertyChanged(nameof(WordWrap));
             }
         }
 
@@ -407,7 +407,7 @@ namespace Cube.Note
             {
                 if (_wordWrapAsWindow == value) return;
                 _wordWrapAsWindow = value;
-                OnPropertyChanged(nameof(WordWrapAsWindow));
+                RaisePropertyChanged(nameof(WordWrapAsWindow));
             }
         }
 
@@ -428,7 +428,7 @@ namespace Cube.Note
             {
                 if (_wordWrapCount == value) return;
                 _wordWrapCount = value;
-                OnPropertyChanged(nameof(WordWrapCount));
+                RaisePropertyChanged(nameof(WordWrapCount));
             }
         }
 
@@ -449,7 +449,7 @@ namespace Cube.Note
             {
                 if (_lineNumberVisible == value) return;
                 _lineNumberVisible = value;
-                OnPropertyChanged(nameof(LineNumberVisible));
+                RaisePropertyChanged(nameof(LineNumberVisible));
             }
         }
 
@@ -471,7 +471,7 @@ namespace Cube.Note
             {
                 if (_rulerVisible == value) return;
                 _rulerVisible = value;
-                OnPropertyChanged(nameof(RulerVisible));
+                RaisePropertyChanged(nameof(RulerVisible));
             }
         }
 
@@ -492,7 +492,7 @@ namespace Cube.Note
             {
                 if (_specialCharsVisible == value) return;
                 _specialCharsVisible = value;
-                OnPropertyChanged(nameof(SpecialCharsVisible));
+                RaisePropertyChanged(nameof(SpecialCharsVisible));
             }
         }
 
@@ -513,7 +513,7 @@ namespace Cube.Note
             {
                 if (_eolVisible == value) return;
                 _eolVisible = value;
-                OnPropertyChanged(nameof(EolVisible));
+                RaisePropertyChanged(nameof(EolVisible));
             }
         }
 
@@ -534,7 +534,7 @@ namespace Cube.Note
             {
                 if (_tabVisible == value) return;
                 _tabVisible = value;
-                OnPropertyChanged(nameof(TabVisible));
+                RaisePropertyChanged(nameof(TabVisible));
             }
         }
 
@@ -555,7 +555,7 @@ namespace Cube.Note
             {
                 if (_spaceVisible == value) return;
                 _spaceVisible = value;
-                OnPropertyChanged(nameof(SpaceVisible));
+                RaisePropertyChanged(nameof(SpaceVisible));
             }
         }
 
@@ -576,7 +576,7 @@ namespace Cube.Note
             {
                 if (_fullSpaceVisible == value) return;
                 _fullSpaceVisible = value;
-                OnPropertyChanged(nameof(FullSpaceVisible));
+                RaisePropertyChanged(nameof(FullSpaceVisible));
             }
         }
 
@@ -597,7 +597,7 @@ namespace Cube.Note
             {
                 if (_currentLineVisible == value) return;
                 _currentLineVisible = value;
-                OnPropertyChanged(nameof(CurrentLineVisible));
+                RaisePropertyChanged(nameof(CurrentLineVisible));
             }
         }
 
@@ -618,7 +618,7 @@ namespace Cube.Note
             {
                 if (_modifiedLineVisible == value) return;
                 _modifiedLineVisible = value;
-                OnPropertyChanged(nameof(ModifiedLineVisible));
+                RaisePropertyChanged(nameof(ModifiedLineVisible));
             }
         }
 
@@ -639,7 +639,7 @@ namespace Cube.Note
             {
                 if (_bracketVisible == value) return;
                 _bracketVisible = value;
-                OnPropertyChanged(nameof(BracketVisible));
+                RaisePropertyChanged(nameof(BracketVisible));
             }
         }
 
@@ -661,7 +661,7 @@ namespace Cube.Note
             {
                 if (_removeWarning == value) return;
                 _removeWarning = value;
-                OnPropertyChanged(nameof(RemoveWarning));
+                RaisePropertyChanged(nameof(RemoveWarning));
             }
         }
 
