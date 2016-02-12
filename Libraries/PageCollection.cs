@@ -59,7 +59,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollection(Assembly assembly)
+        public PageCollection(Assembly assembly) : base()
         {
             var reader = new AssemblyReader(assembly);
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);

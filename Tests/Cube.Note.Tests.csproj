@@ -59,6 +59,7 @@
     <Compile Include="Detail\FileResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsFolderTest.cs" />
+    <Compile Include="TagCollectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

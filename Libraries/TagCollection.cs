@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// SettingsFolder.cs
+/// TagCollection.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -18,59 +18,62 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Linq;
 using IoEx = System.IO;
 
 namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsFolder
+    /// TagCollection
     /// 
     /// <summary>
-    /// 各種設定を保持するためのクラスです。
+    /// タグ一覧を管理するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SettingsFolder
+    public class TagCollection : ObservableCollection<Tag>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// TagCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(string path)
+        public TagCollection(string path) : base()
         {
             Path = path;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// TagCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly) : this(assembly, "Settings.json") { }
+        public TagCollection(Assembly assembly) : this(assembly, "Tags.json") { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// TagCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly, string filename)
+        public TagCollection(Assembly assembly, string filename) : base()
         {
             var reader = new AssemblyReader(assembly);
             var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -95,36 +98,14 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
+        /// Directory
         ///
         /// <summary>
-        /// 設定ファイルの保存先を取得または設定します。
+        /// タグ一覧を保持しているファイルへのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public string Path { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// User
-        ///
-        /// <summary>
-        /// アプリケーション終了後も内容を保持する設定を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsValue User { get; private set; } = null;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Current
-        ///
-        /// <summary>
-        /// アプリケーション実行中のみ内容を保持する設定を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ConditionsValue Current { get; } = new ConditionsValue();
 
         #endregion
 
@@ -132,18 +113,78 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Contains
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグが存在するかどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Contains(string name) => Items.Any(x => x.Name == name);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Get
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Get(string name) => Items.FirstOrDefault(x => x.Name == name);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグを生成します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 同名のタグが既に存在する場合は、該当タグを返します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Create(string name)
+        {
+            var dest = Get(name);
+            if (dest != null) return dest;
+
+            var newtag = new Tag(name);
+            Add(newtag);
+            return newtag;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove(string name)
+        {
+            var dest = Get(name);
+            if (dest == null) return;
+            Remove(dest);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Load
         ///
         /// <summary>
-        /// 設定をロードします。
+        /// 定義ファイルを読み込みます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public void Load()
         {
-            User = !string.IsNullOrEmpty(Path) && IoEx.File.Exists(Path) ?
-                   Settings.Load<SettingsValue>(Path, Settings.FileType.Json) :
-                   new SettingsValue();
+            if (!IoEx.File.Exists(Path)) return;
+            foreach (var name in Settings.Load<List<string>>(Path, FileType)) Create(name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -151,20 +192,38 @@ namespace Cube.Note
         /// Save
         ///
         /// <summary>
-        /// 設定を保存します。
+        /// 定義ファイルを保存します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public void Save() => Save(Path);
         public void Save(string path)
         {
-            if (string.IsNullOrEmpty(path)) return;
+            var dest = new List<string>();
+            foreach (var tag in Items) dest.Add(tag.Name);
 
+            CreateDirectory(path);
+            Settings.Save(dest, path, FileType);
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateDirectory
+        ///
+        /// <summary>
+        /// ディレクトリを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void CreateDirectory(string path)
+        {
             var directory = IoEx.Path.GetDirectoryName(path);
-            if (string.IsNullOrEmpty(directory)) return;
-            if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
-
-            Settings.Save(User, path, FileType);
+            if (IoEx.Directory.Exists(directory)) return;
+            IoEx.Directory.CreateDirectory(directory);
         }
 
         #endregion
