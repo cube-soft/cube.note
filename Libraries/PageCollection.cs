@@ -201,14 +201,16 @@ namespace Cube.Note
         public void Load() => Load(DefaultFileName);
         public void Load(string filename)
         {
-            var def = ToPath(filename);
-            if (!IoEx.File.Exists(def)) return;
+            Tags.Load();
 
-            var pages = Settings.Load<List<Page>>(def, FileType);
-            foreach (var page in pages)
+            var order = ToPath(filename);
+            if (!IoEx.File.Exists(order)) return;
+
+            foreach (var page in Settings.Load<List<Page>>(order, FileType))
             {
                 if (!IoEx.File.Exists(ToPath(page))) continue;
                 Add(page);
+                foreach (var tag in page.Tags) Tags.Create(tag).Count++;
             }
         }
 
@@ -224,6 +226,7 @@ namespace Cube.Note
         public void Save() => Save(DefaultFileName);
         public void Save(string filename)
         {
+            Tags.Save();
             CreateDirectory(Directory);
             Settings.Save(this.ToList(), ToPath(filename), FileType);
         }

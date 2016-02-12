@@ -93,12 +93,12 @@ namespace Cube.Note.Tests
             );
         }
 
-        [TestCase(3)]
-        public void Tags_Last(int expected)
+        [TestCase("Tag2", 2)]
+        public void Tags_Count(string name, int expected)
         {
             Assert.That(
-                Pages[Pages.Count - 1].Tags.Count,
-                Is.EqualTo(3)
+                Pages.Tags.Create(name).Count,
+                Is.EqualTo(expected)
             );
         }
 
