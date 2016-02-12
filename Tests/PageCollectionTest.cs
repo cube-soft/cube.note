@@ -102,6 +102,15 @@ namespace Cube.Note.Tests
             );
         }
 
+        [TestCase(3)]
+        public void Tags_Last(int expected)
+        {
+            Assert.That(
+                Pages[Pages.Count - 1].Tags.Count,
+                Is.EqualTo(3)
+            );
+        }
+
         [Test]
         public void Document_Last_IsNull()
         {

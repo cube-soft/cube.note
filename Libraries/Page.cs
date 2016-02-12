@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
 
@@ -142,6 +143,18 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Tags
+        ///
+        /// <summary>
+        /// タグ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public ObservableCollection<string> Tags { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Document
         ///
         /// <summary>
@@ -238,6 +251,7 @@ namespace Cube.Note
             Abstract   = string.Empty;
             Creation   = DateTime.Now;
             LastUpdate = DateTime.Now;
+            Tags       = new ObservableCollection<string>();
             Document   = null;
         }
 

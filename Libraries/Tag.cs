@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageCollectionResource.cs
+/// Tag.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,41 +17,36 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using IoEx = System.IO;
+using System;
 
-namespace Cube.Note.Tests
+namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageCollectionResource
+    /// Tag
     /// 
     /// <summary>
-    /// PageCollection のテストを補助するクラスです。
+    /// タグ情報を保持するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    class PageCollectionResource : FileResource
+    public class Tag
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCollectionResource
+        /// Tag
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PageCollectionResource() : base()
+        public Tag(string name)
         {
-            Copy("Order.json");
-            Copy("05859d5f90094ab0b8ec739b6150f455");
-            Copy("2e0eee1d20d143db882e5fe63c225a9d");
-            Copy("a65006b41d3c47a8981a8feaec7523bc");
-
-            Pages = new PageCollection(Results);
-            Pages.Load("Order.json");
+            Name = name;
+            Count = 0;
         }
 
         #endregion
@@ -60,36 +55,26 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pages
+        /// Name
         ///
         /// <summary>
-        /// PageCollection オブジェクトを取得または設定します。
+        /// タグ名を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PageCollection Pages { get; set; }
-
-        #endregion
-
-        #region Implementations
+        public string Name { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Copy
+        /// Count
         ///
         /// <summary>
-        /// Examples フォルダから Results フォルダへファイルをコピーします。
+        /// このタグに関連付けられている Page オブジェクトの個数を取得
+        /// または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Copy(string filename)
-        {
-            IoEx.File.Copy(
-                IoEx.Path.Combine(Examples, filename),
-                IoEx.Path.Combine(Results, filename),
-                true
-            );
-        }
+        public int Count { get; set; }
 
         #endregion
     }
