@@ -51,7 +51,7 @@ namespace Cube.Note.Tests
             Copy("a65006b41d3c47a8981a8feaec7523bc");
 
             Pages = new PageCollection(Results);
-            Pages.Load("Order.json");
+            Pages.Load();
         }
 
         #endregion

@@ -165,7 +165,7 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         public TagCollection Create()
         {
-            var dest = new TagCollection(IoEx.Path.Combine(Examples, "Tags.json"));
+            var dest = new TagCollection(IoEx.Path.Combine(Examples, TagCollection.DefaultFileName));
             dest.Load();
             return dest;
         }

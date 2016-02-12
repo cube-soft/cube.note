@@ -195,15 +195,6 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Order.json に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string OrderFileName {
-            get {
-                return ResourceManager.GetString("OrderFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   カーソル {0} 行 {1} 列 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PositionFormat {
@@ -259,15 +250,6 @@ namespace Cube.Note.App.Editor.Properties {
             get {
                 object obj = ResourceManager.GetObject("Settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Settings.json に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SettingsFileName {
-            get {
-                return ResourceManager.GetString("SettingsFileName", resourceCulture);
             }
         }
         

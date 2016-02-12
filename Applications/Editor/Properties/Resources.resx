@@ -160,9 +160,6 @@
   <data name="Normalize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Normalize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="OrderFileName" xml:space="preserve">
-    <value>Order.json</value>
-  </data>
   <data name="PositionFormat" xml:space="preserve">
     <value>カーソル {0} 行 {1} 列</value>
   </data>
@@ -180,9 +177,6 @@
   </data>
   <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SettingsFileName" xml:space="preserve">
-    <value>Settings.json</value>
   </data>
   <data name="Shadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Shadow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

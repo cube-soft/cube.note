@@ -231,7 +231,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeTarget()
         {
-            Target.Load(Properties.Resources.OrderFileName);
+            Target.Load();
             if (Target.Count <= 0) Target.NewPage();
             _timer.Start();
         }
@@ -270,7 +270,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveOrderFile() => Target.Save(Properties.Resources.OrderFileName);
+        private void SaveOrderFile() => Target.Save();
 
         #endregion
 

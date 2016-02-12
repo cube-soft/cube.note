@@ -48,21 +48,30 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         #region Properties
 
+        [TestCase("Order.json")]
+        public void DefaultFileName(string expected)
+        {
+            Assert.That(
+                PageCollection.DefaultFileName,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(Cube.Settings.FileType.Json)]
+        public void FileType(Cube.Settings.FileType expected)
+        {
+            Assert.That(
+                PageCollection.FileType,
+                Is.EqualTo(expected)
+            );
+        }
+
         [Test]
         public void Directory_IsResults()
         {
             Assert.That(
                 Pages.Directory,
                 Is.EqualTo(Results)
-            );
-        }
-
-        [Test]
-        public void FileType_IsJson()
-        {
-            Assert.That(
-                Pages.FileType,
-                Is.EqualTo(Cube.Settings.FileType.Json)
             );
         }
 

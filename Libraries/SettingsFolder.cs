@@ -59,7 +59,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly) : this(assembly, "Settings.json") { }
+        public SettingsFolder(Assembly assembly) : this(assembly, DefaultFileName) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -84,6 +84,17 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// DefaultFileName
+        ///
+        /// <summary>
+        /// 設定ファイルのデフォルト名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string DefaultFileName => "Settings.json";
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// FileType
         ///
         /// <summary>
@@ -91,7 +102,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings.FileType FileType => Settings.FileType.Json;
+        public static Settings.FileType FileType => Settings.FileType.Json;
 
         /* ----------------------------------------------------------------- */
         ///

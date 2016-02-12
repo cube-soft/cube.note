@@ -65,6 +65,7 @@ namespace Cube.Note
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var folder = $@"{reader.Company}\{reader.Product}\Inbox";
             Directory = IoEx.Path.Combine(appdata, folder);
+            Tags = new TagCollection(assembly);
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,11 +80,23 @@ namespace Cube.Note
         public PageCollection(string directory)
         {
             Directory = directory;
+            Tags = new TagCollection(IoEx.Path.Combine(directory, TagCollection.DefaultFileName));
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DefaultFileName
+        ///
+        /// <summary>
+        /// 設定ファイルのデフォルト名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string DefaultFileName => "Order.json";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -94,7 +107,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings.FileType FileType => Settings.FileType.Json;
+        public static Settings.FileType FileType => Settings.FileType.Json;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -128,6 +141,17 @@ namespace Cube.Note
                 OnActiveChanged(new PageChangedEventArgs(before, value));
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Tags
+        ///
+        /// <summary>
+        /// タグ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public TagCollection Tags { get; }
 
         #endregion
 
@@ -174,6 +198,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        public void Load() => Load(DefaultFileName);
         public void Load(string filename)
         {
             var def = ToPath(filename);
@@ -196,6 +221,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        public void Save() => Save(DefaultFileName);
         public void Save(string filename)
         {
             CreateDirectory(Directory);

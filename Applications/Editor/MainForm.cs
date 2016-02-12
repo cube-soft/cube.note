@@ -367,7 +367,7 @@ namespace Cube.Note.App.Editor
 
         #region Models
         private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
-        private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly(), Properties.Resources.SettingsFileName);
+        private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
         private AutoSaver Saver = null;
         #endregion
 
