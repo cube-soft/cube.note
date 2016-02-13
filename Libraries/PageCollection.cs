@@ -167,6 +167,23 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Subset
+        ///
+        /// <summary>
+        /// タグに合致する項目一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Page> Subset(Tag tag)
+        {
+            return Items.Where(item
+                => item.Tags.Contains(tag.Name) ||
+                   SystemTags.Contains(tag)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Load
         ///
         /// <summary>

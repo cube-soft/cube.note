@@ -19,6 +19,8 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -65,6 +67,35 @@ namespace Cube.Note.App.Editor
         [Browsable(true)]
         [DefaultValue(true)]
         public bool AllowNoSelect { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DataSource
+        /// 
+        /// <summary>
+        /// 同期するデータを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ObservableCollection<Page> DataSource
+        {
+            get { return _source; }
+            set
+            {
+                if (_source == value) return;
+                if (_source != null) _source.CollectionChanged -= DataSource_CollectionChanged;
+
+                ClearItems();
+                _source = value;
+
+                if (_source != null)
+                {
+                    _source.CollectionChanged -= DataSource_CollectionChanged;
+                    _source.CollectionChanged += DataSource_CollectionChanged;
+                    foreach (var page in value) Add(page);
+                }
+            }
+        }
 
         #endregion
 
@@ -198,6 +229,37 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DataSource_CollectionChanged
+        /// 
+        /// <summary>
+        /// コレクションの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DataSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    var index = e.NewStartingIndex;
+                    Insert(index, DataSource[index]);
+                    if (Count == 1 && !AllowNoSelect) Select(0);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemoveItems(new int[] { e.OldStartingIndex });
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    if (DataSource.Count == 0) ClearItems();
+                    break;
+            }
+        }
+
+        #endregion
+
         #region Others
 
         /* ----------------------------------------------------------------- */
@@ -243,6 +305,10 @@ namespace Cube.Note.App.Editor
             TileSize = new Size(width, height);
         }
 
+        #endregion
+
+        #region Fields
+        private ObservableCollection<Page> _source;
         #endregion
     }
 }

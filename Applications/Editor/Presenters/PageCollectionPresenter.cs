@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 
@@ -54,8 +55,8 @@ namespace Cube.Note.App.Editor
             Events.NewPage.Handled += NewPage_Handled;
             Events.Remove.Handled += Remove_Handled;
 
+            View.DataSource = new ObservableCollection<Page>();
             View.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.Added += View_Added;
 
             Model.CollectionChanged += Model_CollectionChanged;
 
@@ -127,20 +128,6 @@ namespace Cube.Note.App.Editor
             Settings.Current.Page = Model[index];
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Added
-        /// 
-        /// <summary>
-        /// 項目が追加された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Added(object sender, ValueEventArgs<int> e)
-        {
-            if (View.Count == 1) View.Select(0);
-        }
-
         #endregion
 
         #region Model
@@ -179,9 +166,12 @@ namespace Cube.Note.App.Editor
         private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
         {
             var index = e.NewStartingIndex;
-            Model[index].PropertyChanged -= Model_PropertyChanged;
-            Model[index].PropertyChanged += Model_PropertyChanged;
-            SyncWait(() => View.Insert(index, Model[index]));
+            var page  = Model[index];
+
+            page.PropertyChanged -= Model_PropertyChanged;
+            page.PropertyChanged += Model_PropertyChanged;
+
+            if (ViewContains(page)) SyncWait(() => View.DataSource.Insert(index, page));
         }
 
         /* ----------------------------------------------------------------- */
@@ -196,7 +186,9 @@ namespace Cube.Note.App.Editor
         private void Model_Removed(object sender, NotifyCollectionChangedEventArgs e)
         {
             var index = e.OldStartingIndex;
-            SyncWait(() => View.RemoveItems(new int[] { index }));
+            var page  = Model[index];
+
+            if (ViewContains(page)) SyncWait(() => View.DataSource.RemoveAt(index));
             if (Model.Count <= 0) Model.NewPage();
         }
 
@@ -303,6 +295,22 @@ namespace Cube.Note.App.Editor
                 MessageBoxDefaultButton.Button1
             ));
             return result == DialogResult.No;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewContains
+        /// 
+        /// <summary>
+        /// View にページが含まれている（または含まれるべき）かどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool ViewContains(Page page)
+        {
+            return Settings.Current.Tag == null ||
+                   Model.SystemTags.Contains(Settings.Current.Tag) ||
+                   page.Tags.Contains(Settings.Current.Tag.Name);
         }
 
         #endregion
