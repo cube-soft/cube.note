@@ -61,6 +61,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Found
+        ///
+        /// <summary>
+        /// 検索に一致した件数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Found { get; set; } = 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Pages
         ///
         /// <summary>
@@ -70,20 +81,42 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public PageListView Pages => PageListView;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Aggregator
+        ///
+        /// <summary>
+        /// イベントを集約するオブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventAggregator Aggregator { get; set; }
+
         #endregion
 
         #region Events
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SearchExecuted
-        /// 
+        /// Attached
+        ///
         /// <summary>
-        /// 検索が実行された時に発生するイベントです。
+        /// コントロールがパネルに追加された時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<ValueEventArgs<string>> SearchExecuted;
+        public event EventHandler Attached;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attached
+        ///
+        /// <summary>
+        /// コントロールがパネルから削除された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Detached;
 
         #endregion
 
@@ -122,6 +155,8 @@ namespace Cube.Note.App.Editor
             parent.Controls.Clear();
             parent.Controls.Add(this);
             KeywordTextBox.Focus();
+
+            OnAttached(EventArgs.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -136,11 +171,13 @@ namespace Cube.Note.App.Editor
         public void Detach()
         {
             if (Parent == null) return;
+
             var parent = Parent;
             Parent.Controls.Remove(this);
             foreach (var control in _controls) parent.Controls.Add(control);
             _controls.Clear();
-            Pages.Clear();
+
+            OnDetached(EventArgs.Empty);
         }
 
         #endregion
@@ -149,15 +186,27 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSearchExecuted
+        /// OnAttached
         /// 
         /// <summary>
-        /// Search イベントを発生させます。
+        /// Attached イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSearchExecuted(ValueEventArgs<string> e)
-            => SearchExecuted?.Invoke(this, e);
+        protected virtual void OnAttached(EventArgs e)
+            => Attached?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDetached
+        /// 
+        /// <summary>
+        /// Detached イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnDetached(EventArgs e)
+            => Detached?.Invoke(this, e);
 
         #endregion
 
@@ -173,7 +222,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void RaiseSearchExecuted()
-            => OnSearchExecuted(new ValueEventArgs<string>(KeywordTextBox.Text));
+            => Aggregator?.Search.Raise(new ValueEventArgs<string>(KeywordTextBox.Text));
 
         #endregion
 

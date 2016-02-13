@@ -18,7 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Cube.Note.Azuki;
 
@@ -91,11 +91,8 @@ namespace Cube.Note.Tests.Azuki
         [TestCase("Hello", 1)]
         public void Search_Count(string keyword, int expected)
         {
-            var results = new List<Page>();
-            Pages.Search(keyword, results);
-
             Assert.That(
-                results.Count,
+                Pages.Search(keyword).Count(),
                 Is.EqualTo(expected)
             );
         }

@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sgry.Azuki;
 using IoEx = System.IO;
 
@@ -91,13 +92,11 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Search(this PageCollection pages, string keyword, IList<Page> results)
+        public static IEnumerable<Page> Search(this PageCollection pages, string keyword)
         {
-            foreach (var page in pages)
-            {
-                var document = page.CreateDocument(pages.Directory);
-                if (document.FindNext(keyword, 0) != null) results.Add(page);
-            }
+            return pages.Where(page
+                => page.CreateDocument(pages.Directory).FindNext(keyword, 0) != null
+            );
         }
 
         #endregion

@@ -19,7 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+using System.Linq;
 using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
@@ -51,52 +51,62 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
-            View.SearchExecuted += View_Search;
-            View.Pages.Cleared += (s, e) => Results.Clear();
+            Events.Search.Handled += Search_Handled;
+
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
-
-            Results.CollectionChanged += Results_CollectionChanged;
+            View.Detached += View_Detached;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Results
-        /// 
-        /// <summary>
-        /// 検索結果を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ObservableCollection<Page> Results { get; } = new ObservableCollection<Page>();
 
         #endregion
 
         #region Event handlers
 
-        #region View
+        #region EventAggregator
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Search
+        /// Search_Handled
         /// 
         /// <summary>
-        /// 検索時に実行されるハンドラです。
+        /// 検索を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void View_Search(object sender, ValueEventArgs<string> e)
+        private async void Search_Handled(object sender, ValueEventArgs<string> e)
         {
             if (string.IsNullOrEmpty(e.Value)) return;
 
             await Async(() =>
             {
-                Results.Clear();
-                Model.Search(e.Value, Results);
+                var results = Model.Search(e.Value);
+                if (!results.Any()) return;
+
+                var source = new ObservableCollection<Page>(results);
+                Sync(() =>
+                {
+                    View.Found = source.Count;
+                    View.Pages.DataSource = source;
+                });
             });
+        }
+
+        #endregion
+
+        #region View
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Detached
+        /// 
+        /// <summary>
+        /// メイン画面から削除された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Detached(object sender, EventArgs e)
+        {
+            View.Pages.DataSource = null;
+            View.Found = -1;
         }
 
         /* ----------------------------------------------------------------- */
@@ -112,40 +122,16 @@ namespace Cube.Note.App.Editor
         {
             if (!View.Pages.AnyItemsSelected) return;
 
-            var index = View.Pages.SelectedIndices[0];
-            if (index < 0 || index >= Results.Count) return;
+            var pages = View.Pages.DataSource;
+            if (pages == null) return;
 
-            var real = Model.IndexOf(Results[index]);
+            var index = View.Pages.SelectedIndices[0];
+            if (index < 0 || index >= pages.Count) return;
+
+            var real = Model.IndexOf(pages[index]);
             if (real < 0 || real >= Model.Count) return;
 
             Settings.Current.Page = Model[real];
-        }
-
-        #endregion
-
-        #region Results
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Results_CollectionChanged
-        /// 
-        /// <summary>
-        /// 検索結果に変更があった時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    var index = e.NewStartingIndex;
-                    SyncWait(() => View.Pages.Insert(index, Results[index]));
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    if (Results.Count == 0) SyncWait(() => View.Pages.Clear());
-                    break;
-            }
         }
 
         #endregion

@@ -85,8 +85,8 @@ namespace Cube.Note.App.Editor
                 if (_source == value) return;
                 if (_source != null) _source.CollectionChanged -= DataSource_CollectionChanged;
 
-                ClearItems();
                 _source = value;
+                ClearItems();
 
                 if (_source != null)
                 {
