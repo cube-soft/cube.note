@@ -43,8 +43,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Raise()
-            => Raise(this);
+        public void Raise() => Raise(this);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -55,8 +54,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Raise(object sender)
-            => Handled?.Invoke(sender, EventArgs.Empty);
+        public void Raise(object sender) => Handled?.Invoke(sender, EventArgs.Empty);
 
         #endregion
 
