@@ -83,15 +83,15 @@ namespace Cube.Note.App.Editor
             set
             {
                 if (_source == value) return;
-                if (_source != null) _source.CollectionChanged -= DataSource_CollectionChanged;
+                if (_source != null) _source.CollectionChanged -= DS_CollectionChanged;
 
-                _source = value;
                 ClearItems();
+                _source = value;
 
                 if (_source != null)
                 {
-                    _source.CollectionChanged -= DataSource_CollectionChanged;
-                    _source.CollectionChanged += DataSource_CollectionChanged;
+                    _source.CollectionChanged -= DS_CollectionChanged;
+                    _source.CollectionChanged += DS_CollectionChanged;
                     foreach (var page in value) Add(page);
                 }
             }
@@ -233,14 +233,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DataSource_CollectionChanged
+        /// DS_CollectionChanged
         /// 
         /// <summary>
         /// コレクションの内容が変化した時に実行されるハンドラです。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void DataSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void DS_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {

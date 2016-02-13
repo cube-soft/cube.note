@@ -18,9 +18,9 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Cube.Note.Azuki;
+using Cube.Extensions;
 
 namespace Cube.Note.App.Editor
 {
@@ -81,7 +81,7 @@ namespace Cube.Note.App.Editor
                 var results = Model.Search(e.Value);
                 if (!results.Any()) return;
 
-                var source = new ObservableCollection<Page>(results);
+                var source = results.ToObservable();
                 Sync(() =>
                 {
                     View.Found = source.Count;
