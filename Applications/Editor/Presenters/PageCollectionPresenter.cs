@@ -33,7 +33,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class PageCollectionPresenter : Cube.Forms.PresenterBase<PageCollectionControl, PageCollection>
+    public class PageCollectionPresenter :
+        PresenterBase<PageCollectionControl, PageCollection>
     {
         #region Constructors
 
@@ -46,11 +47,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollectionPresenter(PageCollectionControl view,
-            PageCollection model, SettingsFolder settings) : base(view, model)
+        public PageCollectionPresenter(PageCollectionControl view,　PageCollection model,
+            SettingsFolder settings, EventAggregator events)
+            : base(view, model, settings, events)
         {
-            Settings = settings;
-
             View.NewPageExecuted += View_NewPageExecuted;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.Added += View_Added;
@@ -62,21 +62,6 @@ namespace Cube.Note.App.Editor
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.Current.TagChanged += Settings_TagChanged;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        /// 
-        /// <summary>
-        /// 設定オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
 
         #endregion
 

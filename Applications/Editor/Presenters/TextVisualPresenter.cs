@@ -31,7 +31,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class TextVisualPresenter : Cube.Forms.PresenterBase<TextControl, SettingsFolder>
+    public class TextVisualPresenter
+        : PresenterBase<TextControl, SettingsValue>
     {
         #region Constructors
 
@@ -44,9 +45,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TextVisualPresenter(TextControl view, SettingsFolder model) : base(view, model)
+        public TextVisualPresenter(TextControl view, SettingsFolder model,
+            EventAggregator events)
+            : base(view, model.User, model, events)
         {
-            Model.User.PropertyChanged += Model_PropertyChanged;
+            Model.PropertyChanged += Model_PropertyChanged;
 
             Sync(() =>
             {
@@ -114,28 +117,28 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Update()
         {
-            View.Font                           = Model.User.Font;
-            View.BackColor                      = Model.User.BackColor;
-            View.ForeColor                      = Model.User.ForeColor;
-            View.ColorScheme.SelectionBack      = Model.User.HighlightBackColor;
-            View.ColorScheme.MatchedBracketBack = Model.User.HighlightBackColor;
-            View.ColorScheme.DirtyLineBar       = Model.User.HighlightBackColor;
-            View.ColorScheme.SelectionFore      = Model.User.HighlightForeColor;
-            View.ColorScheme.MatchedBracketFore = Model.User.HighlightForeColor;
-            View.ColorScheme.LineNumberBack     = Model.User.LineNumberBackColor;
-            View.ColorScheme.CleanedLineBar     = Model.User.LineNumberBackColor;
-            View.ColorScheme.LineNumberFore     = Model.User.LineNumberForeColor;
-            View.ColorScheme.WhiteSpaceColor    = Model.User.SpecialCharsColor;
-            View.ColorScheme.EolColor           = Model.User.SpecialCharsColor;
-            View.ColorScheme.EofColor           = Model.User.SpecialCharsColor;
-            View.ColorScheme.HighlightColor     = Model.User.CurrentLineColor;
-            View.TabWidth                       = Model.User.TabWidth;
-            View.ConvertsTabToSpaces            = Model.User.TabToSpace;
-            View.ShowsLineNumber                = Model.User.LineNumberVisible;
-            View.ShowsHRuler                    = Model.User.RulerVisible;
-            View.HighlightsCurrentLine          = Model.User.CurrentLineVisible;
-            View.ShowsDirtBar                   = Model.User.ModifiedLineVisible;
-            View.HighlightsMatchedBracket       = Model.User.BracketVisible;
+            View.Font                           = Model.Font;
+            View.BackColor                      = Model.BackColor;
+            View.ForeColor                      = Model.ForeColor;
+            View.ColorScheme.SelectionBack      = Model.HighlightBackColor;
+            View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
+            View.ColorScheme.DirtyLineBar       = Model.HighlightBackColor;
+            View.ColorScheme.SelectionFore      = Model.HighlightForeColor;
+            View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
+            View.ColorScheme.LineNumberBack     = Model.LineNumberBackColor;
+            View.ColorScheme.CleanedLineBar     = Model.LineNumberBackColor;
+            View.ColorScheme.LineNumberFore     = Model.LineNumberForeColor;
+            View.ColorScheme.WhiteSpaceColor    = Model.SpecialCharsColor;
+            View.ColorScheme.EolColor           = Model.SpecialCharsColor;
+            View.ColorScheme.EofColor           = Model.SpecialCharsColor;
+            View.ColorScheme.HighlightColor     = Model.CurrentLineColor;
+            View.TabWidth                       = Model.TabWidth;
+            View.ConvertsTabToSpaces            = Model.TabToSpace;
+            View.ShowsLineNumber                = Model.LineNumberVisible;
+            View.ShowsHRuler                    = Model.RulerVisible;
+            View.HighlightsCurrentLine          = Model.CurrentLineVisible;
+            View.ShowsDirtBar                   = Model.ModifiedLineVisible;
+            View.HighlightsMatchedBracket       = Model.BracketVisible;
 
             UpdateSpecialCharsVisible();
             UpdateWordWrap();
@@ -154,74 +157,75 @@ namespace Cube.Note.App.Editor
         {
             switch (name)
             {
-                case nameof(Model.User.Font):
-                    View.Font = Model.User.Font;
+                case nameof(Model.Font):
+                    View.Font = Model.Font;
                     break;
-                case nameof(Model.User.BackColor):
-                    View.BackColor = Model.User.BackColor;
-                    View.ColorScheme.RightEdgeColor = Model.User.BackColor;
+                case nameof(Model.BackColor):
+                    View.BackColor = Model.BackColor;
+                    View.ColorScheme.RightEdgeColor = Model.BackColor;
                     break;
-                case nameof(Model.User.ForeColor):
-                    View.ForeColor = Model.User.ForeColor;
+                case nameof(Model.ForeColor):
+                    View.ForeColor = Model.ForeColor;
                     break;
-                case nameof(Model.User.HighlightBackColor):
-                    View.ColorScheme.SelectionBack = Model.User.HighlightBackColor;
-                    View.ColorScheme.MatchedBracketBack = Model.User.HighlightBackColor;
-                    View.ColorScheme.DirtyLineBar = Model.User.HighlightBackColor;
+                case nameof(Model.HighlightBackColor):
+                    View.ColorScheme.SelectionBack = Model.HighlightBackColor;
+                    View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
+                    View.ColorScheme.DirtyLineBar = Model.HighlightBackColor;
                     break;
-                case nameof(Model.User.HighlightForeColor):
-                    View.ColorScheme.SelectionFore = Model.User.HighlightForeColor;
-                    View.ColorScheme.MatchedBracketFore = Model.User.HighlightForeColor;
+                case nameof(Model.HighlightForeColor):
+                    View.ColorScheme.SelectionFore = Model.HighlightForeColor;
+                    View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
                     break;
-                case nameof(Model.User.LineNumberBackColor):
-                    View.ColorScheme.LineNumberBack = Model.User.LineNumberBackColor;
-                    View.ColorScheme.CleanedLineBar = Model.User.LineNumberBackColor;
+                case nameof(Model.LineNumberBackColor):
+                    View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
+                    View.ColorScheme.CleanedLineBar = Model.LineNumberBackColor;
                     break;
-                case nameof(Model.User.LineNumberForeColor):
-                    View.ColorScheme.LineNumberFore = Model.User.LineNumberForeColor;
+                case nameof(Model.LineNumberForeColor):
+                    View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
                     break;
-                case nameof(Model.User.SpecialCharsColor):
-                    View.ColorScheme.WhiteSpaceColor = Model.User.SpecialCharsColor;
-                    View.ColorScheme.EofColor = Model.User.SpecialCharsColor;
-                    View.ColorScheme.EolColor = Model.User.SpecialCharsColor;
+                case nameof(Model.SpecialCharsColor):
+                    View.ColorScheme.WhiteSpaceColor = Model.SpecialCharsColor;
+                    View.ColorScheme.EofColor = Model.SpecialCharsColor;
+                    View.ColorScheme.EolColor = Model.SpecialCharsColor;
                     break;
-                case nameof(Model.User.CurrentLineColor):
-                    View.ColorScheme.HighlightColor = Model.User.CurrentLineColor;
+                case nameof(Model.CurrentLineColor):
+                    View.ColorScheme.HighlightColor = Model.CurrentLineColor;
                     break;
-                case nameof(Model.User.TabWidth):
-                    View.TabWidth = Model.User.TabWidth;
+                case nameof(Model.TabWidth):
+                    View.TabWidth = Model.TabWidth;
                     break;
-                case nameof(Model.User.TabToSpace):
-                    View.ConvertsTabToSpaces = Model.User.TabToSpace;
+                case nameof(Model.TabToSpace):
+                    View.ConvertsTabToSpaces = Model.TabToSpace;
                     break;
-                case nameof(Model.User.WordWrap):
-                case nameof(Model.User.WordWrapCount):
-                case nameof(Model.User.WordWrapAsWindow):
+                case nameof(Model.WordWrap):
+                case nameof(Model.WordWrapCount):
+                case nameof(Model.WordWrapAsWindow):
                     UpdateWordWrap();
                     break;
-                case nameof(Model.User.LineNumberVisible):
-                    View.ShowsLineNumber = Model.User.LineNumberVisible;
+                case nameof(Model.LineNumberVisible):
+                    View.ShowsLineNumber = Model.LineNumberVisible;
                     break;
-                case nameof(Model.User.RulerVisible):
-                    View.ShowsHRuler = Model.User.RulerVisible;
+                case nameof(Model.RulerVisible):
+                    View.ShowsHRuler = Model.RulerVisible;
                     break;
-                case nameof(Model.User.SpecialCharsVisible):
-                case nameof(Model.User.EolVisible):
-                case nameof(Model.User.TabVisible):
-                case nameof(Model.User.SpaceVisible):
-                case nameof(Model.User.FullSpaceVisible):
+                case nameof(Model.SpecialCharsVisible):
+                case nameof(Model.EolVisible):
+                case nameof(Model.TabVisible):
+                case nameof(Model.SpaceVisible):
+                case nameof(Model.FullSpaceVisible):
                     UpdateSpecialCharsVisible();
                     break;
-                case nameof(Model.User.CurrentLineVisible):
-                    View.HighlightsCurrentLine = Model.User.CurrentLineVisible;
+                case nameof(Model.CurrentLineVisible):
+                    View.HighlightsCurrentLine = Model.CurrentLineVisible;
                     break;
-                case nameof(Model.User.ModifiedLineVisible):
-                    View.ShowsDirtBar = Model.User.ModifiedLineVisible;
+                case nameof(Model.ModifiedLineVisible):
+                    View.ShowsDirtBar = Model.ModifiedLineVisible;
                     break;
-                case nameof(Model.User.BracketVisible):
-                    View.HighlightsMatchedBracket = Model.User.BracketVisible;
+                case nameof(Model.BracketVisible):
+                    View.HighlightsMatchedBracket = Model.BracketVisible;
                     break;
                 default:
+                    Logger.Debug($"Skip:{name}");
                     break;
             }
         }
@@ -237,12 +241,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateSpecialCharsVisible()
         {
-            var enable = Model.User.SpecialCharsVisible;
+            var enable = Model.SpecialCharsVisible;
 
-            View.DrawsEolCode        = enable && Model.User.EolVisible;
-            View.DrawsTab            = enable && Model.User.TabVisible;
-            View.DrawsSpace          = enable && Model.User.SpaceVisible;
-            View.DrawsFullWidthSpace = enable && Model.User.FullSpaceVisible;
+            View.DrawsEolCode        = enable && Model.EolVisible;
+            View.DrawsTab            = enable && Model.TabVisible;
+            View.DrawsSpace          = enable && Model.SpaceVisible;
+            View.DrawsFullWidthSpace = enable && Model.FullSpaceVisible;
         }
 
         /* ----------------------------------------------------------------- */
@@ -258,10 +262,10 @@ namespace Cube.Note.App.Editor
         {
             View.Resize  -= View_Resize;
 
-            if (Model.User.WordWrap)
+            if (Model.WordWrap)
             {
                 View.ViewType      = Sgry.Azuki.ViewType.WrappedProportional;
-                View.WordWrapCount = Model.User.WordWrapAsWindow ? -1 : Model.User.WordWrapCount;
+                View.WordWrapCount = Model.WordWrapAsWindow ? -1 : Model.WordWrapCount;
                 View.Resize       += View_Resize;
             }
             else

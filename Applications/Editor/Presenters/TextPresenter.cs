@@ -31,7 +31,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class TextPresenter : Cube.Forms.PresenterBase<TextControl, PageCollection>
+    public class TextPresenter
+        : PresenterBase<TextControl, PageCollection>
     {
         #region Constructors
 
@@ -44,27 +45,12 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TextPresenter(TextControl view, PageCollection model, SettingsFolder settings)
-            : base(view, model)
+        public TextPresenter(TextControl view, PageCollection model,
+            SettingsFolder settings, EventAggregator events)
+            : base(view, model, settings, events)
         {
-            Settings = settings;
-            Settings.Current.PageChanged += Model_ActiveChanged;
+            Settings.Current.PageChanged += Settings_PageChanged;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        /// 
-        /// <summary>
-        /// 設定オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
 
         #endregion
 
@@ -72,22 +58,19 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_ActiveChanged
+        /// Settings_PageChanged
         ///
         /// <summary>
-        /// 編集対象となる Page オブジェクトが変更された時に実行される
-        /// ハンドラです。
+        /// 編集対象となる Page オブジェクトが変更された時に実行されるハンドラです。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Model_ActiveChanged(object sender, ValueChangedEventArgs<Page> e)
+        private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
             try
             {
+                var document = e.NewValue?.CreateDocument(Model.Directory);
                 if (e.NewValue == null) return;
-
-                var document = e.NewValue.CreateDocument(Model.Directory);
-                System.Diagnostics.Debug.Assert(document != null);
 
                 Sync(() =>
                 {
@@ -108,10 +91,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Settings_PageChanged(object sender, ContentChangedEventArgs e)
+        private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
         {
-            if (Settings.Current.Page == null || Settings.Current.Page.Document != sender) return;
-            Settings.Current.Page.Abstract = Abstract(Settings.Current.Page.Document as Document);
+            var document = Settings.Current?.Page?.Document as Document;
+            if (document == null || document != sender) return;
+            Settings.Current.Page.Abstract = GetAbstract(document);
         }
 
         #endregion
@@ -132,27 +116,25 @@ namespace Cube.Note.App.Editor
             var newdoc = newpage?.Document as Document;
             if (newdoc != null)
             {
-                newdoc.ContentChanged -= Settings_PageChanged;
-                newdoc.ContentChanged += Settings_PageChanged;
+                newdoc.ContentChanged -= Model_ContentChanged;
+                newdoc.ContentChanged += Model_ContentChanged;
             }
 
             var olddoc = oldpage?.Document as Document;
-            if (olddoc != null) olddoc.ContentChanged -= Settings_PageChanged;
+            if (olddoc != null) olddoc.ContentChanged -= Model_ContentChanged;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Abstract
+        /// GetAbstract
         ///
         /// <summary>
         /// 概要を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Abstract(Document document)
+        private string GetAbstract(Document document)
         {
-            if (document == null) return string.Empty;
-
             for (var i = 0; i < document.LineCount; ++i)
             {
                 var content = document.GetLineContent(i).Trim();

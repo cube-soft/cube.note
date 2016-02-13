@@ -31,7 +31,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class TagCollectionPresenter : Cube.Forms.PresenterBase<ComboBox, TagCollection>
+    public class TagCollectionPresenter
+        : PresenterBase<ComboBox, TagCollection>
     {
         #region Constructors
 
@@ -44,10 +45,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagCollectionPresenter(ComboBox view, 
-            PageCollection pages, SettingsFolder settings) : base(view, pages.Tags)
+        public TagCollectionPresenter(ComboBox view, PageCollection pages,
+            SettingsFolder settings, EventAggregator events)
+            : base(view, pages.Tags, settings, events)
         {
-            Settings = settings;
             SystemTags = pages.SystemTags;
 
             Model.CollectionChanged += Model_CollectionChanged;
@@ -61,17 +62,6 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        ///
-        /// <summary>
-        /// 設定情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///

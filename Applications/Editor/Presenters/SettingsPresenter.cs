@@ -31,7 +31,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SettingsPresenter : Cube.Forms.PresenterBase<SettingsForm, SettingsFolder>
+    public class SettingsPresenter
+        : PresenterBase<SettingsForm, SettingsValue>
     {
         #region Constructors
 
@@ -44,14 +45,16 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsPresenter(SettingsForm view, SettingsFolder model) : base(view, model)
+        public SettingsPresenter(SettingsForm view, SettingsFolder settings,
+            EventAggregator events)
+            : base(view, settings.User, settings, events)
         {
             View.Applied         += View_Applied;
             View.Canceled        += View_Canceled;
             View.Reset           += View_Reset;
             View.PropertyChanged += View_PropertyChanged;
 
-            _backup.Assign(Model.User);
+            _backup.Assign(Model);
         }
 
         #endregion
@@ -96,8 +99,8 @@ namespace Cube.Note.App.Editor
         {
             await Async(() =>
             {
-                _backup.Assign(Model.User);
-                Model.Save();
+                _backup.Assign(Model);
+                Settings.Save();
             });
         }
 
@@ -112,7 +115,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_Canceled(object sender, EventArgs e)
         {
-            Model.User.Assign(_backup);
+            Settings.User.Assign(_backup);
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,8 +129,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void View_Reset(object sender, EventArgs e)
         {
-            await Async(() => Model.User.Assign(new SettingsValue()));
-            Sync(() => View.Update(Model.User));
+            await Async(() => Model.Assign(new SettingsValue()));
+            Sync(() => View.Update(Model));
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,88 +148,89 @@ namespace Cube.Note.App.Editor
             {
                 switch (e.Key)
                 {
-                    case nameof(Model.User.Font):
+                    case nameof(Model.Font):
                         var font = (Font)e.Value;
-                        Model.User.FontName = font.Name;
-                        Model.User.FontSize = font.Size;
-                        Model.User.FontStyle = font.Style;
+                        Model.FontName = font.Name;
+                        Model.FontSize = font.Size;
+                        Model.FontStyle = font.Style;
                         break;
-                    case nameof(Model.User.BackColor):
-                        Model.User.BackColor = (Color)e.Value;
+                    case nameof(Model.BackColor):
+                        Model.BackColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.ForeColor):
-                        Model.User.ForeColor = (Color)e.Value;
+                    case nameof(Model.ForeColor):
+                        Model.ForeColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.HighlightBackColor):
-                        Model.User.HighlightBackColor = (Color)e.Value;
+                    case nameof(Model.HighlightBackColor):
+                        Model.HighlightBackColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.HighlightForeColor):
-                        Model.User.HighlightForeColor = (Color)e.Value;
+                    case nameof(Model.HighlightForeColor):
+                        Model.HighlightForeColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.LineNumberBackColor):
-                        Model.User.LineNumberBackColor = (Color)e.Value;
+                    case nameof(Model.LineNumberBackColor):
+                        Model.LineNumberBackColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.LineNumberForeColor):
-                        Model.User.LineNumberForeColor = (Color)e.Value;
+                    case nameof(Model.LineNumberForeColor):
+                        Model.LineNumberForeColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.SpecialCharsColor):
-                        Model.User.SpecialCharsColor = (Color)e.Value;
+                    case nameof(Model.SpecialCharsColor):
+                        Model.SpecialCharsColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.CurrentLineColor):
-                        Model.User.CurrentLineColor = (Color)e.Value;
+                    case nameof(Model.CurrentLineColor):
+                        Model.CurrentLineColor = (Color)e.Value;
                         break;
-                    case nameof(Model.User.AutoSaveTime):
-                        Model.User.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
+                    case nameof(Model.AutoSaveTime):
+                        Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
-                    case nameof(Model.User.TabWidth):
-                        Model.User.TabWidth = (int)((decimal)e.Value);
+                    case nameof(Model.TabWidth):
+                        Model.TabWidth = (int)((decimal)e.Value);
                         break;
-                    case nameof(Model.User.TabToSpace):
-                        Model.User.TabToSpace = (bool)e.Value;
+                    case nameof(Model.TabToSpace):
+                        Model.TabToSpace = (bool)e.Value;
                         break;
-                    case nameof(Model.User.WordWrap):
-                        Model.User.WordWrap = (bool)e.Value;
+                    case nameof(Model.WordWrap):
+                        Model.WordWrap = (bool)e.Value;
                         break;
-                    case nameof(Model.User.WordWrapAsWindow):
-                        Model.User.WordWrapAsWindow = (bool)e.Value;
+                    case nameof(Model.WordWrapAsWindow):
+                        Model.WordWrapAsWindow = (bool)e.Value;
                         break;
-                    case nameof(Model.User.WordWrapCount):
-                        Model.User.WordWrapCount = (int)((decimal)e.Value);
+                    case nameof(Model.WordWrapCount):
+                        Model.WordWrapCount = (int)((decimal)e.Value);
                         break;
-                    case nameof(Model.User.LineNumberVisible):
-                        Model.User.LineNumberVisible = (bool)e.Value;
+                    case nameof(Model.LineNumberVisible):
+                        Model.LineNumberVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.RulerVisible):
-                        Model.User.RulerVisible = (bool)e.Value;
+                    case nameof(Model.RulerVisible):
+                        Model.RulerVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.SpecialCharsVisible):
-                        Model.User.SpecialCharsVisible = (bool)e.Value;
+                    case nameof(Model.SpecialCharsVisible):
+                        Model.SpecialCharsVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.EolVisible):
-                        Model.User.EolVisible = (bool)e.Value;
+                    case nameof(Model.EolVisible):
+                        Model.EolVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.TabVisible):
-                        Model.User.TabVisible = (bool)e.Value;
+                    case nameof(Model.TabVisible):
+                        Model.TabVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.SpaceVisible):
-                        Model.User.SpaceVisible = (bool)e.Value;
+                    case nameof(Model.SpaceVisible):
+                        Model.SpaceVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.FullSpaceVisible):
-                        Model.User.FullSpaceVisible = (bool)e.Value;
+                    case nameof(Model.FullSpaceVisible):
+                        Model.FullSpaceVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.CurrentLineVisible):
-                        Model.User.CurrentLineVisible = (bool)e.Value;
+                    case nameof(Model.CurrentLineVisible):
+                        Model.CurrentLineVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.ModifiedLineVisible):
-                        Model.User.ModifiedLineVisible = (bool)e.Value;
+                    case nameof(Model.ModifiedLineVisible):
+                        Model.ModifiedLineVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.BracketVisible):
-                        Model.User.BracketVisible = (bool)e.Value;
+                    case nameof(Model.BracketVisible):
+                        Model.BracketVisible = (bool)e.Value;
                         break;
-                    case nameof(Model.User.RemoveWarning):
-                        Model.User.RemoveWarning = (bool)e.Value;
+                    case nameof(Model.RemoveWarning):
+                        Model.RemoveWarning = (bool)e.Value;
                         break;
                     default:
+                        Logger.Warn($"Skip:{e.Key}");
                         break;
                 }
             }

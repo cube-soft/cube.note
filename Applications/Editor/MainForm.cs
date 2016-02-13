@@ -131,11 +131,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new TextPresenter(TextControl, Pages, Settings);
-            new TextVisualPresenter(TextControl, Settings);
-            new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
-            new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings);
-            new SearchPresenter(SearchControl, Pages, Settings);
+            new TextPresenter(TextControl, Pages, Settings, Aggregator);
+            new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
+            new PageCollectionPresenter(PageCollectionControl, Pages, Settings, Aggregator);
+            new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
+            new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
         }
 
         #endregion
@@ -314,7 +314,7 @@ namespace Cube.Note.App.Editor
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
             var view = new SettingsForm(Settings.User);
-            using (var presenter = new SettingsPresenter(view, Settings))
+            using (var presenter = new SettingsPresenter(view, /* User, */ Settings, Aggregator))
             {
                 view.ShowDialog(this);
                 TextControl.ResetViewWidth(); // refresh
@@ -334,7 +334,7 @@ namespace Cube.Note.App.Editor
         {
             var active = IsActive(PageCollectionControl);
             NewPageMenuItem.Enabled = active;
-            RemoveMenuItem.Enabled = active;
+            RemoveMenuItem.Enabled  = active;
         }
 
         /* ----------------------------------------------------------------- */
@@ -353,9 +353,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ContentsPanel2_ClientSizeChanged(object sender, EventArgs e)
         {
-            var control = sender as Control;
-            if (control == null) return;
-
             // see remarks
             var hidden = ContentsPanel.Panel1Collapsed;
             var text   = hidden ?
