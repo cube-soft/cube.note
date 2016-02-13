@@ -122,10 +122,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var pages = View.DataSource;
             var index = View.SelectedIndices[0];
-            if (index < 0 || index >= Model.Count) return;
+            if (pages == null || index < 0 || index >= pages.Count) return;
 
-            Settings.Current.Page = Model[index];
+            var real = Model.IndexOf(pages[index]);
+            if (real < 0 || index >= Model.Count) return;
+
+            Settings.Current.Page = Model[real];
         }
 
         #endregion
@@ -308,8 +312,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private bool ViewContains(Page page)
         {
+            if (View.DataSource == null) return false;
+
             return Settings.Current.Tag == null ||
-                   Model.SystemTags.Contains(Settings.Current.Tag) ||
+                   Settings.Current.Tag == Model.Everyone ||
                    page.Tags.Contains(Settings.Current.Tag.Name);
         }
 

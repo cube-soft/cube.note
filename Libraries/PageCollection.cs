@@ -67,7 +67,6 @@ namespace Cube.Note
 
             Directory = IoEx.Path.Combine(appdata, folder);
             Tags = new TagCollection(assembly);
-            SystemTags = new TagCollection(assembly, "SystemTags.json");
         }
 
         /* ----------------------------------------------------------------- */
@@ -83,7 +82,6 @@ namespace Cube.Note
         {
             Directory = directory;
             Tags = new TagCollection(IoEx.Path.Combine(directory, TagCollection.DefaultFileName));
-            SystemTags = new TagCollection(IoEx.Path.Combine(directory, "SystemTags.json"));
         }
 
         #endregion
@@ -136,14 +134,14 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SystemTags
+        /// Everyone
         ///
         /// <summary>
-        /// タグ一覧を取得します。
+        /// すべてのノートを表示する事に該当するタグを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagCollection SystemTags { get; }
+        public Tag Everyone { get; set; }
 
         #endregion
 
@@ -167,18 +165,18 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Subset
+        /// Search
         ///
         /// <summary>
         /// タグに合致する項目一覧を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Subset(Tag tag)
+        public IEnumerable<Page> Search(Tag tag)
         {
             return Items.Where(item
                 => item.Tags.Contains(tag.Name) ||
-                   SystemTags.Contains(tag)
+                   tag == Everyone
             );
         }
 

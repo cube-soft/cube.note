@@ -49,13 +49,12 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, pages.Tags, settings, events)
         {
-            SystemTags = pages.SystemTags;
+            Everyone = pages.Everyone;
 
             Model.CollectionChanged += Model_CollectionChanged;
-            View.SelectedIndexChanged += View_SelectedIndexChanged;
 
-            System.Diagnostics.Debug.Assert(SystemTags.Count > 0);
-            foreach (var tag in SystemTags) View.Items.Add(tag);
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Items.Add(Everyone);
             View.SelectedIndex = 0;
         }
 
@@ -65,14 +64,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SystemTags
+        /// Everyone
         ///
         /// <summary>
-        /// システムで予約されているタグ一覧を取得します。
+        /// すべてのノートを表示する事を表すタグを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagCollection SystemTags { get; }
+        public Tag Everyone { get; }
 
         #endregion
 
