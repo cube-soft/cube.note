@@ -386,6 +386,7 @@ namespace Cube.Note.App.Editor
         #region Models
         private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
         private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
+        private EventAggregator Aggregator = new EventAggregator();
         private AutoSaver Saver = null;
         #endregion
 

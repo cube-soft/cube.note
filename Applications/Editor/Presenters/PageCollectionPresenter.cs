@@ -302,7 +302,6 @@ namespace Cube.Note.App.Editor
             // TODO: implementations
         }
 
-
         #endregion
 
         #endregion
