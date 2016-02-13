@@ -30,6 +30,61 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
+    public class RelayEvent
+    {
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Raise
+        /// 
+        /// <summary>
+        /// イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Raise()
+            => Raise(this);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Raise
+        /// 
+        /// <summary>
+        /// イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Raise(object sender)
+            => Handled?.Invoke(sender, EventArgs.Empty);
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Handled
+        /// 
+        /// <summary>
+        /// Raise によって発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Handled;
+
+        #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// RelayEvent
+    /// 
+    /// <summary>
+    /// イベントを伝搬させるためのクラスです。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
     public class RelayEvent<TEvent> where TEvent : EventArgs
     {
         #region Methods
@@ -60,6 +115,8 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Events
+
         /* ----------------------------------------------------------------- */
         ///
         /// Handled
@@ -70,5 +127,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public event EventHandler<TEvent> Handled;
+
+        #endregion
     }
 }

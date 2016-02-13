@@ -34,7 +34,7 @@ namespace Cube.Note.App.Editor
     /// 
     /* --------------------------------------------------------------------- */
     public class PageCollectionPresenter :
-        PresenterBase<PageCollectionControl, PageCollection>
+        PresenterBase<PageListView, PageCollection>
     {
         #region Constructors
 
@@ -47,15 +47,15 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollectionPresenter(PageCollectionControl view,　PageCollection model,
+        public PageCollectionPresenter(PageListView view,　PageCollection model,
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
-            View.NewPageExecuted += View_NewPageExecuted;
-            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.Pages.Added += View_Added;
-            View.Pages.Removing += View_Removing;
-            View.Pages.Removed += View_Removed;
+            Events.NewPage.Handled += NewPage_Handled;
+            Events.Remove.Handled += Remove_Handled;
+
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Added += View_Added;
 
             Model.CollectionChanged += Model_CollectionChanged;
 
@@ -66,6 +66,47 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Event handlers
+
+        #region EventAggregator
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewPage_Handled
+        /// 
+        /// <summary>
+        /// 新しいページの作成要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void NewPage_Handled(object sender, EventArgs e)
+        {
+            Model.NewPage();
+            Sync(() => View.Select(0));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove_Handled
+        /// 
+        /// <summary>
+        /// 選択ページの削除要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Remove_Handled(object sender, EventArgs e)
+        {
+            if (View.SelectedIndices.Count <= 0) return;
+
+            var index = View.SelectedIndices[0];
+            if (Settings.User.RemoveWarning && IsRemoveCanceled(index)) return;
+
+            Model[index].PropertyChanged -= Model_PropertyChanged;
+            Model.RemoveAt(index);
+
+            Settings.Current.Page = Model[Math.Min(index, Model.Count - 1)];
+        }
+
+        #endregion
 
         #region View
 
@@ -80,25 +121,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var index = View.Pages.SelectedIndices[0];
+            var index = View.SelectedIndices[0];
             if (index < 0 || index >= Model.Count) return;
 
             Settings.Current.Page = Model[index];
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_NewPageExecuted
-        /// 
-        /// <summary>
-        /// 新しいページの作成要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_NewPageExecuted(object sender, EventArgs e)
-        {
-            Model.NewPage();
-            View.Pages.Select(0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -112,66 +138,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_Added(object sender, ValueEventArgs<int> e)
         {
-            if (View.Pages.Count == 1) View.Pages.Select(0);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Removing
-        /// 
-        /// <summary>
-        /// ページが削除される直前に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Removing(object sender, ValueCancelEventArgs<int[]> e)
-        {
-            if (e.Value == null || e.Value.Length <= 0) return;
-            if (!Settings.User.RemoveWarning)
-            {
-                e.Cancel = false;
-                return;
-            }
-
-            var index = e.Value[0];
-            var message = new System.Text.StringBuilder();
-            message.AppendLine(Properties.Resources.WarnRemove);
-            message.AppendLine();
-            message.AppendLine(Model[index].GetAbstract());
-            message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
-            message.AppendLine(Model[index].LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
-
-            var result = MessageBox.Show(
-                message.ToString(),
-                Properties.Resources.WarnRemoveTitle,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button1
-            );
-
-            e.Cancel = (result == DialogResult.No);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Removed
-        /// 
-        /// <summary>
-        /// ページが削除された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Removed(object sender, ValueEventArgs<int[]> e)
-        {
-            if (e.Value == null || e.Value.Length <= 0) return;
-
-            var index = e.Value[0];
-            if (index < 0 || index >= Model.Count) return;
-
-            Model[index].PropertyChanged -= Model_PropertyChanged;
-            Model.RemoveAt(index);
-
-            Settings.Current.Page = Model[Math.Min(index, Model.Count - 1)];
+            if (View.Count == 1) View.Select(0);
         }
 
         #endregion
@@ -195,7 +162,7 @@ namespace Cube.Note.App.Editor
                     Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    if (Model.Count <= 0) Model.NewPage();
+                    Model_Removed(sender, e);
                     break;
             }
         }
@@ -214,7 +181,23 @@ namespace Cube.Note.App.Editor
             var index = e.NewStartingIndex;
             Model[index].PropertyChanged -= Model_PropertyChanged;
             Model[index].PropertyChanged += Model_PropertyChanged;
-            SyncWait(() => View.Pages.Insert(index, Model[index]));
+            SyncWait(() => View.Insert(index, Model[index]));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_Removed
+        /// 
+        /// <summary>
+        /// コレクションから要素が削除された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_Removed(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var index = e.OldStartingIndex;
+            SyncWait(() => View.RemoveItems(new int[] { index }));
+            if (Model.Count <= 0) Model.NewPage();
         }
 
         /* ----------------------------------------------------------------- */
@@ -241,8 +224,8 @@ namespace Cube.Note.App.Editor
 
             Sync(() =>
             {
-                if (e.PropertyName == nameof(page.Abstract)) View.Pages.ReplaceText(index, page.GetAbstract());
-                else View.Pages.Replace(index, page);
+                if (e.PropertyName == nameof(page.Abstract)) View.ReplaceText(index, page.GetAbstract());
+                else View.Replace(index, page);
             });
         }
 
@@ -263,14 +246,14 @@ namespace Cube.Note.App.Editor
         {
             if (Settings.Current.Page == null) return;
 
-            var index = View.Pages.SelectedIndices.Count > 0 ?
-                        View.Pages.SelectedIndices[0] : -1;
+            var index = View.SelectedIndices.Count > 0 ?
+                        View.SelectedIndices[0] : -1;
             if (index >= 0 && index < Model.Count && Settings.Current.Page == Model[index]) return;
 
             var changed = Model.IndexOf(Settings.Current.Page);
             if (changed == -1) return;
 
-            Sync(() => View.Pages.Select(changed));
+            Sync(() => View.Select(changed));
         }
 
         /* ----------------------------------------------------------------- */
@@ -288,6 +271,39 @@ namespace Cube.Note.App.Editor
         }
 
         #endregion
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsRemoveCanceled
+        /// 
+        /// <summary>
+        /// キャンセルされたかどうか判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsRemoveCanceled(int index)
+        {
+            var message = new System.Text.StringBuilder();
+            message.AppendLine(Properties.Resources.WarnRemove);
+            message.AppendLine();
+            message.AppendLine(Model[index].GetAbstract());
+            message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
+            message.AppendLine(Model[index].LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
+
+            var result = DialogResult.Yes;
+            SyncWait(() => result = MessageBox.Show(
+                message.ToString(),
+                Properties.Resources.WarnRemoveTitle,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button1
+            ));
+            return result == DialogResult.No;
+        }
 
         #endregion
     }

@@ -17,7 +17,6 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -74,52 +73,6 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ComboBox Tags => TagComboBox;
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NewPage
-        ///
-        /// <summary>
-        /// 新しいページの追加が要求された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler NewPageExecuted;
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NewPage
-        /// 
-        /// <summary>
-        /// 新しいページを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void NewPage() => OnNewPageExecuted(EventArgs.Empty);
-
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnNewPageExecuted
-        ///
-        /// <summary>
-        /// NewPageExecuted イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnNewPageExecuted(EventArgs e)
-            => NewPageExecuted?.Invoke(this, e);
 
         #endregion
     }

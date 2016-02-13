@@ -41,32 +41,29 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<EventArgs> NewPage { get; }
-            = new RelayEvent<EventArgs>();
+        public RelayEvent NewPage { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
         /// Edit
         ///
         /// <summary>
-        /// ページのプロパティを編集するイベントです。
+        /// 選択ページのプロパティを編集するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> Edit { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
+        public RelayEvent Edit { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
         /// Remove
         ///
         /// <summary>
-        /// 指定されたページを削除するイベントです。
+        /// 選択ページを削除するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int[]>> Remove { get; }
-            = new RelayEvent<ValueEventArgs<int[]>>();
+        public RelayEvent Remove { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,7 +86,6 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<EventArgs> Settings { get; }
-            = new RelayEvent<EventArgs>();
+        public RelayEvent Settings { get; } = new RelayEvent();
     }
 }

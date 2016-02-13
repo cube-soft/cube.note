@@ -72,8 +72,10 @@
       <DependentUpon>FormBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoSaver.cs" />
+    <Compile Include="Models\EventAggregator.cs" />
     <Compile Include="Models\PageConverter.cs" />
     <Compile Include="Models\PageEx.cs" />
+    <Compile Include="Models\RelayEvent.cs" />
     <Compile Include="PageCollectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,6 +92,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
+    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Presenters\SearchPresenter.cs" />
     <Compile Include="Presenters\SettingsPresenter.cs" />
     <Compile Include="Presenters\TagCollectionPresenter.cs" />

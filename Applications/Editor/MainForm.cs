@@ -74,11 +74,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            NewPageMenuItem.Click  += NewPageMenuItem_Click;
-            RemoveMenuItem.Click   += RemoveMenuItem_Click;
-            SearchMenuItem.Click   += SearchMenuItem_Click;
-            VisibleMenuItem.Click  += VisibleMenuItem_Click;
-            LogoMenuItem.Click     += LogoMenuItem_Click;
+            NewPageMenuItem.Click += (s, e) => Aggregator.NewPage.Raise();
+            RemoveMenuItem.Click += (s, e) => Aggregator.Remove.Raise();
+            SearchMenuItem.Click += (s, e) => SwitchPanel();
+            VisibleMenuItem.Click += (s, e) => SwitchMenu();
+            LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
@@ -133,7 +133,7 @@ namespace Cube.Note.App.Editor
         {
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
-            new PageCollectionPresenter(PageCollectionControl, Pages, Settings, Aggregator);
+            new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
             new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
         }
@@ -152,6 +152,45 @@ namespace Cube.Note.App.Editor
         ///
         /* --------------------------------------------------------------------- */
         public ILog Logger { get; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SwitchPanel
+        ///
+        /// <summary>
+        /// 左側のメニューパネルの表示方法を変更します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SwitchPanel()
+        {
+            SearchControl.Switch(ContentsPanel.Panel1);
+
+            if (IsActive(SearchControl))
+            {
+                SearchMenuItem.Image = Properties.Resources.SearchEnd;
+                ContentsPanel.Panel1Collapsed = false;
+            }
+            else SearchMenuItem.Image = Properties.Resources.Search;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SwitchMenu
+        ///
+        /// <summary>
+        /// 上部メニューの表示方法を変更します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SwitchMenu()
+        {
+            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
+        }
 
         #endregion
 
@@ -207,13 +246,13 @@ namespace Cube.Note.App.Editor
                 switch (e.KeyCode)
                 {
                     case Keys.D:
-                        RemoveMenuItem_Click(this, e);
+                        Aggregator.Remove.Raise();
                         break;
                     case Keys.F:
-                        SearchMenuItem_Click(this, e);
+                        SwitchPanel();
                         break;
                     case Keys.N:
-                        NewPageMenuItem_Click(this, e);
+                        Aggregator.NewPage.Raise();
                         break;
                     default:
                         result = false;
@@ -227,65 +266,6 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NewPageMenuItem_Click
-        ///
-        /// <summary>
-        /// 新規追加メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void NewPageMenuItem_Click(object sender, EventArgs e)
-            => PageCollectionControl.NewPage();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveMenuItem_Click
-        ///
-        /// <summary>
-        /// 削除メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RemoveMenuItem_Click(object sender, EventArgs e)
-            => PageCollectionControl.Pages.RemoveItems();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SearchMenuItem_Click
-        ///
-        /// <summary>
-        /// 検索メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SearchMenuItem_Click(object sender, EventArgs e)
-        {
-            SearchControl.Switch(ContentsPanel.Panel1);
-
-            if (IsActive(SearchControl))
-            {
-                SearchMenuItem.Image = Properties.Resources.SearchEnd;
-                ContentsPanel.Panel1Collapsed = false;
-            }
-            else SearchMenuItem.Image = Properties.Resources.Search;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// VisibleMenuItem_Click
-        ///
-        /// <summary>
-        /// 表示方法の変更メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void VisibleMenuItem_Click(object sender, EventArgs e)
-        {
-            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
-        }
 
         /* ----------------------------------------------------------------- */
         ///
