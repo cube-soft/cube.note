@@ -156,9 +156,11 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage()
+        public void NewPage() => NewPage(Everyone);
+        public void NewPage(Tag tag)
         {
             var page = new Page();
+            if (tag != null && tag != Everyone) page.Tags.Add(tag.Name);
             Touch(page);
             Insert(0, page);
         }

@@ -81,7 +81,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void NewPage_Handled(object sender, EventArgs e)
         {
-            Model.NewPage();
+            Model.NewPage(Settings.Current.Tag);
             Sync(() => View.Select(0));
         }
 
@@ -96,15 +96,22 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Remove_Handled(object sender, EventArgs e)
         {
-            if (View.SelectedIndices.Count <= 0) return;
+            Sync(() =>
+            {
+                var pages = View.DataSource;
+                if (pages == null || !View.AnyItemsSelected) return;
 
-            var index = View.SelectedIndices[0];
-            if (Settings.User.RemoveWarning && IsRemoveCanceled(index)) return;
+                var index = View.SelectedIndices[0];
+                var page  = pages[index];
+                if (IsRemoveCanceled(page)) return;
 
-            Model[index].PropertyChanged -= Model_PropertyChanged;
-            Model.RemoveAt(index);
+                pages.RemoveAt(index);
+                var newindex = Math.Min(index, pages.Count - 1);
+                Settings.Current.Page = newindex >= 0 ? pages[newindex] : null;
 
-            Settings.Current.Page = Model[Math.Min(index, Model.Count - 1)];
+                page.PropertyChanged -= Model_PropertyChanged;
+                Model.Remove(page);
+            });
         }
 
         #endregion
@@ -126,10 +133,7 @@ namespace Cube.Note.App.Editor
             var index = View.SelectedIndices[0];
             if (pages == null || index < 0 || index >= pages.Count) return;
 
-            var real = Model.IndexOf(pages[index]);
-            if (real < 0 || index >= Model.Count) return;
-
-            Settings.Current.Page = Model[real];
+            Settings.Current.Page = pages[index];
         }
 
         #endregion
@@ -153,7 +157,7 @@ namespace Cube.Note.App.Editor
                     Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    Model_Removed(sender, e);
+                    if (Model.Count <= 0) NewPage_Handled(sender, EventArgs.Empty);
                     break;
             }
         }
@@ -165,7 +169,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// コレクションに要素が追加された時に実行されるハンドラです。
         /// </summary>
-        ///
+        /// 
         /* ----------------------------------------------------------------- */
         private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -175,25 +179,14 @@ namespace Cube.Note.App.Editor
             page.PropertyChanged -= Model_PropertyChanged;
             page.PropertyChanged += Model_PropertyChanged;
 
-            if (ViewContains(page)) SyncWait(() => View.DataSource.Insert(index, page));
-        }
+            SyncWait(() =>
+            {
+                var pages = View.DataSource;
+                if (pages == null || !ViewContains(page)) return;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_Removed
-        /// 
-        /// <summary>
-        /// コレクションから要素が削除された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_Removed(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            var index = e.OldStartingIndex;
-            var page  = Model[index];
-
-            if (ViewContains(page)) SyncWait(() => View.DataSource.RemoveAt(index));
-            if (Model.Count <= 0) Model.NewPage();
+                var newindex = Math.Min(index, pages.Count);
+                pages.Insert(newindex, page);
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -215,11 +208,11 @@ namespace Cube.Note.App.Editor
             var page = sender as Page;
             if (page == null) return;
 
-            var index = Model.IndexOf(page);
-            if (index == -1) return;
-
             Sync(() =>
             {
+                var index = View.DataSource?.IndexOf(page) ?? -1;
+                if (index == -1) return;
+
                 if (e.PropertyName == nameof(page.Abstract)) View.ReplaceText(index, page.GetAbstract());
                 else View.Replace(index, page);
             });
@@ -242,14 +235,15 @@ namespace Cube.Note.App.Editor
         {
             if (Settings.Current.Page == null) return;
 
-            var index = View.SelectedIndices.Count > 0 ?
-                        View.SelectedIndices[0] : -1;
-            if (index >= 0 && index < Model.Count && Settings.Current.Page == Model[index]) return;
+            Sync(() =>
+            {
+                var current = View.SelectedIndices.Count > 0 ?
+                              View.SelectedIndices[0] : -1;
+                var changed = View.DataSource?.IndexOf(Settings.Current.Page) ?? -1;
+                if (changed == -1 || changed == current) return;
 
-            var changed = Model.IndexOf(Settings.Current.Page);
-            if (changed == -1) return;
-
-            Sync(() => View.Select(changed));
+                View.Select(changed);
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -281,14 +275,17 @@ namespace Cube.Note.App.Editor
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private bool IsRemoveCanceled(int index)
+        private bool IsRemoveCanceled(Page page)
         {
+            if (page == null) return true;
+            if (!Settings.User.RemoveWarning) return false;
+
             var message = new System.Text.StringBuilder();
             message.AppendLine(Properties.Resources.WarnRemove);
             message.AppendLine();
-            message.AppendLine(Model[index].GetAbstract());
-            message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
-            message.AppendLine(Model[index].LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
+            message.AppendLine(page.GetAbstract());
+            message.AppendLine(page.Creation.ToString(Properties.Resources.CreationFormat));
+            message.AppendLine(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
 
             var result = DialogResult.Yes;
             SyncWait(() => result = MessageBox.Show(
