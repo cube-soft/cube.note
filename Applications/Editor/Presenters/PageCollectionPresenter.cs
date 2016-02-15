@@ -189,7 +189,11 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// コレクションに要素が追加された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
+        /// <remarks>
+        /// TODO: DataSource への追加方法を要検討
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
         {

@@ -17,7 +17,6 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 
@@ -80,6 +79,8 @@ namespace Cube.Note.App.Editor
 
         #region Event handlers
 
+        #region EventAggregator
+
         /* ----------------------------------------------------------------- */
         ///
         /// Property_Handled
@@ -111,6 +112,10 @@ namespace Cube.Note.App.Editor
             Events.Edit.Raise(new ValueEventArgs<Page>(page));
         }
 
+        #endregion
+
+        #region View
+
         /* ----------------------------------------------------------------- */
         ///
         /// View_SelectedIndexChanged
@@ -124,6 +129,10 @@ namespace Cube.Note.App.Editor
         {
             Settings.Current.Tag = View.SelectedItem as Tag;
         }
+
+        #endregion
+
+        #region Model
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,6 +157,8 @@ namespace Cube.Note.App.Editor
                     break;
             }
         }
+
+        #endregion
 
         #endregion
     }
