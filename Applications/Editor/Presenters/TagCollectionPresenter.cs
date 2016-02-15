@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
@@ -61,6 +62,7 @@ namespace Cube.Note.App.Editor
 
             View.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Items.Add(Everyone);
+            View.Items.Add(Properties.Resources.TagEdit);
             View.SelectedIndex = 0;
         }
 
@@ -129,9 +131,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Current.Tag = View.SelectedItem as Tag;
+            if (View.SelectedItem.ToString() == Properties.Resources.TagEdit)
+            {
+                View.SelectedItem = Settings.Current.Tag;
+                Events.TagSettings.Raise();
+            }
+            else Settings.Current.Tag = View.SelectedItem as Tag;
         }
 
         #endregion
@@ -152,7 +159,7 @@ namespace Cube.Note.App.Editor
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    SyncWait(() => View.Items.Add(Model[e.NewStartingIndex]));
+                    SyncWait(() => View.Items.Insert(View.Items.Count - 1, Model[e.NewStartingIndex]));
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:

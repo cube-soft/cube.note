@@ -84,6 +84,9 @@ namespace Cube.Note.App.Editor
 
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
+
+            // TODO: Presenter に移譲
+            Aggregator.TagSettings.Handled += SettingsMenuItem_Click;
         }
 
         /* ----------------------------------------------------------------- */

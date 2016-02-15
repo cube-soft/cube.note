@@ -274,6 +274,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   タグを編集する... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TagEdit {
+            get {
+                return ResourceManager.GetString("TagEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Title {

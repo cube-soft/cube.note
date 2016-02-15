@@ -94,9 +94,11 @@
             // 
             // PageListView
             // 
+            this.PageListView.Aggregator = null;
             this.PageListView.AllowNoSelect = false;
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Converter = pageConverter1;
+            this.PageListView.DataSource = null;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -107,7 +109,7 @@
             this.PageListView.Size = new System.Drawing.Size(296, 259);
             this.PageListView.TabIndex = 0;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(296, 70);
+            this.PageListView.TileSize = new System.Drawing.Size(296, 115);
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;
             // 

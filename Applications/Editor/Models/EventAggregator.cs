@@ -98,5 +98,16 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Settings { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TagSettings
+        ///
+        /// <summary>
+        /// タグ用の設定フォームを開くイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent TagSettings { get; } = new RelayEvent();
     }
 }
