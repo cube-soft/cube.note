@@ -185,6 +185,43 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Increase
+        ///
+        /// <summary>
+        /// 指定されたタグの Count を増加させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Increase(IEnumerable<string> tags)
+        {
+            foreach (var name in tags)
+            {
+                var tag = Create(name);
+                tag.Count++;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Decrease
+        ///
+        /// <summary>
+        /// 指定されたタグの Count を減少させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Decrease(IEnumerable<string> tags)
+        {
+            foreach (var name in tags)
+            {
+                var tag = Get(name);
+                if (tag == null) continue;
+                tag.Count = Math.Max(tag.Count - 1, 0);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Load
         ///
         /// <summary>

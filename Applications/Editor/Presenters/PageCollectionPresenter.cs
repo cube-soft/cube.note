@@ -53,6 +53,7 @@ namespace Cube.Note.App.Editor
             : base(view, model, settings, events)
         {
             Events.NewPage.Handled += NewPage_Handled;
+            Events.Edit.Handled += Edit_Handled;
             Events.Remove.Handled += Remove_Handled;
 
             View.DataSource = new ObservableCollection<Page>();
@@ -87,6 +88,23 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Edit_Handled
+        /// 
+        /// <summary>
+        /// ページの情報が編集された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 現状はタグの編集のみなので、Tags を指定して PropertyChanged
+        /// を実行しています。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Edit_Handled(object sender, ValueEventArgs<Page> e)
+            => Model_PropertyChanged(e.Value, new PropertyChangedEventArgs(nameof(e.Value.Tags)));
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Remove_Handled
         /// 
         /// <summary>
@@ -113,6 +131,7 @@ namespace Cube.Note.App.Editor
                 Model.Remove(page);
             });
         }
+
 
         #endregion
 

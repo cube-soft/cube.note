@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 
@@ -51,6 +52,8 @@ namespace Cube.Note.App.Editor
         {
             Everyone = pages.Everyone;
 
+            Events.Property.Handled += Property_Handled;
+
             Model.CollectionChanged += Model_CollectionChanged;
 
             View.SelectedIndexChanged += View_SelectedIndexChanged;
@@ -76,6 +79,37 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Property_Handled
+        ///
+        /// <summary>
+        /// タグ編集画面を表示する時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Property_Handled(object sender, ValueEventArgs<Page> e)
+        {
+            var page = e.Value ?? Settings.Current.Page;
+            if (page == null) return;
+
+            SyncWait(() =>
+            {
+                var dialog = new PropertyForm(page, Model);
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+                Model.Decrease(page.Tags);
+                page.Tags.Clear();
+                foreach (var name in dialog.Tags)
+                {
+                    Model.Create(name).Count++;
+                    page.Tags.Add(name);
+                }
+            });
+
+            Events.Edit.Raise(new ValueEventArgs<Page>(page));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -106,6 +140,9 @@ namespace Cube.Note.App.Editor
             {
                 case NotifyCollectionChangedAction.Add:
                     SyncWait(() => View.Items.Add(Model[e.NewStartingIndex]));
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    SyncWait(() => View.Items.RemoveAt(e.OldStartingIndex));
                     break;
                 default:
                     break;

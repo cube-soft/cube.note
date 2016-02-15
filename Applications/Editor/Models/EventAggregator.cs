@@ -43,14 +43,27 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Edit
+        /// Property
         ///
         /// <summary>
-        /// 選択ページのプロパティを編集するイベントです。
+        /// ページのプロパティ画面を表示するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Edit { get; } = new RelayEvent();
+        public RelayEvent<ValueEventArgs<Page>> Property { get; }
+            = new RelayEvent<ValueEventArgs<Page>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Edit
+        ///
+        /// <summary>
+        /// ページ情報を編集した時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<Page>> Edit { get; }
+            = new RelayEvent<ValueEventArgs<Page>>();
 
         /* ----------------------------------------------------------------- */
         ///
