@@ -116,15 +116,16 @@ namespace Cube.Note.App.Editor
             CreationLabel.Text = src.Creation.ToString(Properties.Resources.CreationFormat);
             LastUpdateLabel.Text = src.LastUpdate.ToString(Properties.Resources.LastUpdateFormat);
 
+            var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
+            NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
+
             foreach (var tag in tags)
             {
                 var button = new TagButton(tag);
+                button.Name = tag.Name;
                 if (src.Tags.Contains(tag.Name)) button.Checked = true;
                 TagsPanel.Controls.Add(button);
             }
-
-            var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
-            NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
         }
 
         #endregion
@@ -161,11 +162,23 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void NewTagButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(NewTagTextBox.Text)) return;
+            try
+            {
+                if (string.IsNullOrEmpty(NewTagTextBox.Text)) return;
 
-            var button = new TagButton(NewTagTextBox.Text);
-            button.Checked = true;
-            TagsPanel.Controls.Add(button);
+                var tag = NewTagTextBox.Text.Trim();
+                if (string.IsNullOrEmpty(tag)) return;
+
+                var contains = TagsPanel.Controls.ContainsKey(tag);
+                var button   = contains ?
+                               TagsPanel.Controls[tag] as TagButton :
+                               new TagButton(tag);
+                button.Name = tag;
+                button.Checked = true;
+
+                if (!contains) TagsPanel.Controls.Add(button);
+            }
+            finally { NewTagTextBox.Text = string.Empty; }
         }
 
         #endregion
