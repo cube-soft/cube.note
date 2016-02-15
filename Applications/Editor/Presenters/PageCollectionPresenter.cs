@@ -102,7 +102,21 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Edit_Handled(object sender, ValueEventArgs<Page> e)
-            => Model_PropertyChanged(e.Value, new PropertyChangedEventArgs(nameof(e.Value.Tags)));
+        {
+            var page = e.Value;
+            if (page == null) return;
+
+            Sync(() =>
+            {
+                if (Settings.Current.Tag == null ||
+                    Settings.Current.Tag == Model.Everyone ||
+                    page.Tags.Contains(Settings.Current.Tag.Name))
+                {
+                    View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
+                }
+                else View.DataSource?.Remove(page);
+            });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -126,9 +140,8 @@ namespace Cube.Note.App.Editor
 
                 pages.RemoveAt(index);
                 var newindex = Math.Min(index, pages.Count - 1);
-                Settings.Current.Page = newindex >= 0 ? pages[newindex] : null;
+                Settings.Current.Page = (newindex >= 0) ? pages[newindex] : null;
 
-                page.PropertyChanged -= Model_PropertyChanged;
                 Model.Remove(page);
             });
         }
@@ -200,9 +213,6 @@ namespace Cube.Note.App.Editor
             var index = e.NewStartingIndex;
             var page  = Model[index];
 
-            page.PropertyChanged -= Model_PropertyChanged;
-            page.PropertyChanged += Model_PropertyChanged;
-
             SyncWait(() =>
             {
                 var pages = View.DataSource;
@@ -210,35 +220,6 @@ namespace Cube.Note.App.Editor
 
                 var newindex = Math.Min(index, pages.Count);
                 pages.Insert(newindex, page);
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_PropertyChanged
-        /// 
-        /// <summary>
-        /// プロパティの値が変化した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 項目全体を置換すると画面のちらつき目立つため、概要の更新に
-        /// ついては Text 部分のみを置換します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var page = sender as Page;
-            if (page == null) return;
-
-            Sync(() =>
-            {
-                var index = View.DataSource?.IndexOf(page) ?? -1;
-                if (index == -1) return;
-
-                if (e.PropertyName == nameof(page.Abstract)) View.ReplaceText(index, page.GetAbstract());
-                else View.Replace(index, page);
             });
         }
 

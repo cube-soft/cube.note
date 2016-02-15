@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing;
@@ -94,7 +95,11 @@ namespace Cube.Note.App.Editor
             set
             {
                 if (_source == value) return;
-                if (_source != null) _source.CollectionChanged -= DS_CollectionChanged;
+                if (_source != null)
+                {
+                    _source.CollectionChanged -= DS_CollectionChanged;
+                    foreach (var page in _source) page.PropertyChanged -= DS_PropertyChanged;
+                }
 
                 ClearItems();
                 _source = value;
@@ -103,7 +108,12 @@ namespace Cube.Note.App.Editor
                 {
                     _source.CollectionChanged -= DS_CollectionChanged;
                     _source.CollectionChanged += DS_CollectionChanged;
-                    foreach (var page in value) Add(page);
+                    foreach (var page in _source)
+                    {
+                        Add(page);
+                        page.PropertyChanged -= DS_PropertyChanged;
+                        page.PropertyChanged += DS_PropertyChanged;
+                    }
                 }
             }
         }
@@ -114,17 +124,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReplaceText
+        /// Update
         /// 
         /// <summary>
-        /// 項目のテキストを置換します。
+        /// 指定された項目を更新します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void ReplaceText(int index, string text)
+        public void Update(int index)
         {
-            if (index < 0 || index >= Count) return;
-            Items[index].Text = text;
+            if (DataSource == null || index < 0 || index >= DataSource.Count) return;
+            Replace(index, DataSource[index]);
         }
 
         #endregion
@@ -258,7 +268,7 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Event handlers
+        #region DataSource event handlers
 
         /* ----------------------------------------------------------------- */
         ///
@@ -274,15 +284,49 @@ namespace Cube.Note.App.Editor
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    var index = e.NewStartingIndex;
-                    Insert(index, DataSource[index]);
+                    Insert(e.NewStartingIndex, DataSource[e.NewStartingIndex]);
                     if (Count == 1 && !AllowNoSelect) Select(0);
+                    Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:
+                    Detach(e.OldItems);
                     RemoveItems(new int[] { e.OldStartingIndex });
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    if (DataSource.Count == 0) ClearItems();
+                    if (DataSource.Count > 0) break;
+                    Detach(e.OldItems);
+                    ClearItems();
+                    break;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DS_CollectionChanged
+        /// 
+        /// <summary>
+        /// コレクションの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DS_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var page = sender as Page;
+            if (page == null) return;
+
+            var index = DataSource?.IndexOf(page) ?? -1;
+            if (index < 0) return;
+
+            switch (e.PropertyName)
+            {
+                case nameof(page.Abstract):
+                    Items[index].Text = page.GetAbstract();
+                    break;
+                case nameof(page.Creation):
+                case nameof(page.LastUpdate):
+                    Replace(index, page);
+                    break;
+                default:
                     break;
             }
         }
@@ -332,6 +376,38 @@ namespace Cube.Note.App.Editor
             if (width == TileSize.Width && height == TileSize.Height) return;
 
             TileSize = new Size(width, height);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        /// 
+        /// <summary>
+        /// イベントハンドラを関連付けます。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Attach(IList pages)
+        {
+            foreach (Page page in pages)
+            {
+                page.PropertyChanged -= DS_PropertyChanged;
+                page.PropertyChanged += DS_PropertyChanged;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        /// 
+        /// <summary>
+        /// イベントハンドラの関連付けを解除します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Detach(IList pages)
+        {
+            foreach (Page page in pages) page.PropertyChanged -= DS_PropertyChanged;
         }
 
         #endregion
