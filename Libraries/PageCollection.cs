@@ -141,7 +141,16 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Tag Everyone { get; set; }
+        public Tag Everyone
+        {
+            get { return _everyone; }
+            set
+            {
+                if (_everyone == value) return;
+                _everyone = value;
+                if (_everyone != null) _everyone.Count = Count;
+            }
+        }
 
         #endregion
 
@@ -163,6 +172,8 @@ namespace Cube.Note
             if (tag != null && tag != Everyone) page.Tags.Add(tag.Name);
             Touch(page);
             Insert(0, page);
+            if (Everyone != null) Everyone.Count++;
+            if (tag != null && tag != Everyone) tag.Count++;
         }
 
         /* ----------------------------------------------------------------- */
@@ -203,6 +214,7 @@ namespace Cube.Note
             {
                 if (!IoEx.File.Exists(ToPath(page))) continue;
                 Add(page);
+                if (Everyone != null) Everyone.Count++;
                 foreach (var tag in page.Tags) Tags.Create(tag).Count++;
             }
         }
@@ -239,8 +251,16 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         protected override void RemoveItem(int index)
         {
-            Clean(Items[index]);
-            base.RemoveItem(index);
+            try
+            {
+                var page = Items[index];
+                if (page == null) return;
+
+                Tags.Decrease(page.Tags);
+                if (Everyone != null) Everyone.Count--;
+                Clean(page);
+            }
+            finally { base.RemoveItem(index); }
         }
 
         #endregion
@@ -320,6 +340,10 @@ namespace Cube.Note
             IoEx.Directory.CreateDirectory(path);
         }
 
+        #endregion
+
+        #region Fields
+        private Tag _everyone;
         #endregion
     }
 }

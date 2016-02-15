@@ -17,6 +17,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.ComponentModel;
+using System.Collections;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 
@@ -50,6 +52,8 @@ namespace Cube.Note.App.Editor
             : base(view, pages.Tags, settings, events)
         {
             Everyone = pages.Everyone;
+            Everyone.PropertyChanged -= Model_PropertyChanged;
+            Everyone.PropertyChanged += Model_PropertyChanged;
 
             Events.Property.Handled += Property_Handled;
 
@@ -149,8 +153,10 @@ namespace Cube.Note.App.Editor
             {
                 case NotifyCollectionChangedAction.Add:
                     SyncWait(() => View.Items.Add(Model[e.NewStartingIndex]));
+                    Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:
+                    Detach(e.OldItems);
                     SyncWait(() => View.Items.RemoveAt(e.OldStartingIndex));
                     break;
                 default:
@@ -158,7 +164,69 @@ namespace Cube.Note.App.Editor
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_PropertyChanged
+        ///
+        /// <summary>
+        /// プロパティが変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var tag = sender as Tag;
+            if (tag == null) return;
+
+            Sync(() =>
+            {
+                var index = View.Items.IndexOf(tag);
+                if (index == -1) return;
+                View.Items[index] = tag;
+            });
+        }
+
         #endregion
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// イベントハンドラを関連付けます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Attach(IList tags)
+        {
+            if (tags == null) return;
+
+            foreach (Tag tag in tags)
+            {
+                tag.PropertyChanged -= Model_PropertyChanged;
+                tag.PropertyChanged += Model_PropertyChanged;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// 関連付けられているイベントハンドラを解除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Detach(IList tags)
+        {
+            if (tags == null) return;
+
+            foreach (Tag tag in tags) tag.PropertyChanged -= Model_PropertyChanged;
+        }
 
         #endregion
     }
