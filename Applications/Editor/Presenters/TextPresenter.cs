@@ -70,10 +70,12 @@ namespace Cube.Note.App.Editor
             try
             {
                 var document = e.NewValue?.CreateDocument(Model.Directory);
-                if (e.NewValue == null) return;
 
                 Sync(() =>
                 {
+                    View.Visible = (document != null);
+                    if (document == null) return;
+
                     View.Document = document;
                     View.ResetViewWidth();
                     View.ScrollToCaret();

@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Forms;
+using Cube.Extensions;
 
 namespace Cube.Note.App.Editor
 {
@@ -276,7 +277,13 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
         {
-            // TODO: implementations
+            if (e.NewValue == null) return;
+            Sync(() =>
+            {
+                View.DataSource = Model.Search(e.NewValue).ToObservable();
+                if (View.DataSource.Count > 0) View.Select(0);
+                else Settings.Current.Page = null;
+            });
         }
 
         #endregion
