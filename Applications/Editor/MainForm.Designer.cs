@@ -39,6 +39,7 @@
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
             this.NewPageMenuItem = new System.Windows.Forms.ToolStripButton();
             this.RemoveMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.TagMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator3 = new System.Windows.Forms.ToolStripButton();
@@ -136,8 +137,10 @@
             this.TextControl.Name = "TextControl";
             this.TextControl.ScrollPos = new System.Drawing.Point(0, 0);
             this.TextControl.Size = new System.Drawing.Size(511, 374);
+            this.TextControl.Status = null;
             this.TextControl.TabIndex = 0;
             this.TextControl.ViewWidth = 104;
+            this.TextControl.WordWrapCount = -1;
             // 
             // MenuToolStrip
             // 
@@ -151,6 +154,7 @@
             this.MenuSeparator1,
             this.NewPageMenuItem,
             this.RemoveMenuItem,
+            this.TagMenuItem,
             this.MenuSeparator2,
             this.SearchMenuItem,
             this.MenuSeparator3,
@@ -205,11 +209,21 @@
             this.RemoveMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Remove;
             this.RemoveMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.RemoveMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RemoveMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 6, 1);
             this.RemoveMenuItem.Name = "RemoveMenuItem";
             this.RemoveMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.RemoveMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.RemoveMenuItem.Size = new System.Drawing.Size(44, 29);
             this.RemoveMenuItem.Text = "ノートを削除";
+            // 
+            // TagMenuItem
+            // 
+            this.TagMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TagMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Tag;
+            this.TagMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TagMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 6, 1);
+            this.TagMenuItem.Name = "TagMenuItem";
+            this.TagMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.TagMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.TagMenuItem.Text = "タグを付ける";
             // 
             // MenuSeparator2
             // 
@@ -298,8 +312,12 @@
             // 
             // FooterStatusControl
             // 
+            this.FooterStatusControl.ColumnNumber = 0;
+            this.FooterStatusControl.Count = 0;
             this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.FooterStatusControl.GripMargin = new System.Windows.Forms.Padding(0);
+            this.FooterStatusControl.LineCount = 0;
+            this.FooterStatusControl.LineNumber = 0;
             this.FooterStatusControl.Location = new System.Drawing.Point(0, 437);
             this.FooterStatusControl.Message = "";
             this.FooterStatusControl.Name = "FooterStatusControl";
@@ -350,6 +368,7 @@
         private TitleControl TitleControl;
         private TextControl TextControl;
         private StatusControl FooterStatusControl;
+        private System.Windows.Forms.ToolStripButton TagMenuItem;
     }
 }
 

@@ -75,6 +75,7 @@ namespace Cube.Note.App.Editor
         private void InitializeEvents()
         {
             NewPageMenuItem.Click += (s, e) => Aggregator.NewPage.Raise();
+            TagMenuItem.Click += (s, e) => Aggregator.Property.Raise(new ValueEventArgs<Page>(null));
             RemoveMenuItem.Click += (s, e) => Aggregator.Remove.Raise();
             SearchMenuItem.Click += (s, e) => SwitchPanel();
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
