@@ -149,7 +149,7 @@
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.ExitButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ExitButton.FlatAppearance.BorderSize = 0;
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExitButton.ForeColor = System.Drawing.Color.White;
             this.ExitButton.Location = new System.Drawing.Point(0, 0);
@@ -174,7 +174,7 @@
             this.ApplyButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ApplyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ApplyButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ApplyButton.FlatAppearance.BorderSize = 0;
+            this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ApplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ApplyButton.ForeColor = System.Drawing.Color.White;
             this.ApplyButton.Location = new System.Drawing.Point(0, 0);
@@ -275,9 +275,9 @@
         private Cube.Forms.FlowLayoutPanel TagsPanel;
         private Cube.Forms.FlowLayoutPanel ButtonsPanel;
         private System.Windows.Forms.Panel ExitButtonShadow;
-        private Forms.Button ExitButton;
+        private Cube.Forms.Button ExitButton;
         private System.Windows.Forms.Panel ApplyButtonShadow;
-        private Forms.Button ApplyButton;
+        private Cube.Forms.Button ApplyButton;
         private System.Windows.Forms.Label AbstractLabel;
         private System.Windows.Forms.Label CreationLabel;
         private System.Windows.Forms.Label LastUpdateLabel;
