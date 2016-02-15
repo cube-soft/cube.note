@@ -75,7 +75,7 @@ namespace Cube.Note.App.Editor
         private void InitializeEvents()
         {
             NewPageMenuItem.Click += (s, e) => Aggregator.NewPage.Raise();
-            TagMenuItem.Click += (s, e) => Aggregator.Property.Raise(new ValueEventArgs<Page>(null));
+            TagMenuItem.Click += (s, e) => RaiseProperty();
             RemoveMenuItem.Click += (s, e) => Aggregator.Remove.Raise();
             SearchMenuItem.Click += (s, e) => SwitchPanel();
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
@@ -262,6 +262,9 @@ namespace Cube.Note.App.Editor
                     case Keys.N:
                         Aggregator.NewPage.Raise();
                         break;
+                    case Keys.T:
+                        RaiseProperty();
+                        break;
                     default:
                         result = false;
                         break;
@@ -354,6 +357,18 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseProperty
+        ///
+        /// <summary>
+        /// プロパティ表示のためのイベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseProperty()
+            => Aggregator.Property.Raise(new ValueEventArgs<Page>(null));
 
         /* ----------------------------------------------------------------- */
         ///
