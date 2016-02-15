@@ -17,6 +17,9 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
@@ -28,7 +31,7 @@ namespace Cube.Note
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class Tag
+    public class Tag : INotifyPropertyChanged
     {
         #region Constructors
 
@@ -60,7 +63,16 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name == value) return;
+                _name = value;
+                RaisePropertyChanged(nameof(Name));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -72,7 +84,31 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count { get; set; }
+        public int Count
+        {
+            get { return _count; }
+            set
+            {
+                if (_count == value) return;
+                _count = value;
+                RaisePropertyChanged(nameof(Count));
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PropertyChanged
+        ///
+        /// <summary>
+        /// プロパティが変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -87,8 +123,45 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public override string ToString() => Name;
+        public override string ToString() => $"{Name} ({Count})";
 
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPropertyChanged
+        ///
+        /// <summary>
+        /// PropertyChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+            => PropertyChanged?.Invoke(this, e);
+
+        #endregion
+
+        #region Non-virtual protected methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaisePropertyChanged
+        ///
+        /// <summary>
+        /// PropertyChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void RaisePropertyChanged([CallerMemberName] string name = null)
+            => OnPropertyChanged(new PropertyChangedEventArgs(name));
+
+        #endregion
+
+        #region Fields
+        private string _name;
+        private int _count;
         #endregion
     }
 }
