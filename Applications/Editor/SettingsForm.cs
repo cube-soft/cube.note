@@ -60,6 +60,8 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings)
         {
             InitializeComponent();
+            MainSettingControl.OKButton = ApplyButton;
+            MainSettingControl.CancelButton = ExitButton;
             InitializeVersionControl();
             Update(settings);
             InitializeEvents();
@@ -84,24 +86,24 @@ namespace Cube.Note.App.Editor
         {
             if (settings == null) return;
 
-            BackColorButton.BackColor           = settings.BackColor;
-            BackColorButton.ForeColor           = settings.BackColor;
-            ForeColorButton.BackColor           = settings.ForeColor;
-            ForeColorButton.ForeColor           = settings.ForeColor;
-            HighlightBackColorButton.BackColor  = settings.HighlightBackColor;
-            HighlightBackColorButton.ForeColor  = settings.HighlightBackColor;
-            HighlightForeColorButton.BackColor  = settings.HighlightForeColor;
-            HighlightForeColorButton.ForeColor  = settings.HighlightForeColor;
-            LineNumberBackColorButton.BackColor = settings.LineNumberBackColor;
-            LineNumberBackColorButton.ForeColor = settings.LineNumberBackColor;
-            LineNumberForeColorButton.BackColor = settings.LineNumberForeColor;
-            LineNumberForeColorButton.ForeColor = settings.LineNumberForeColor;
-            SpecialCharsColorButton.BackColor   = settings.SpecialCharsColor;
-            SpecialCharsColorButton.ForeColor   = settings.SpecialCharsColor;
-            CurrentLineColorButton.BackColor    = settings.CurrentLineColor;
-            CurrentLineColorButton.ForeColor    = settings.CurrentLineColor;
+            BackColorColorButton.BackColor           = settings.BackColor;
+            BackColorColorButton.ForeColor           = settings.BackColor;
+            ForeColorColorButton.BackColor           = settings.ForeColor;
+            ForeColorColorButton.ForeColor           = settings.ForeColor;
+            HighlightBackColorColorButton.BackColor  = settings.HighlightBackColor;
+            HighlightBackColorColorButton.ForeColor  = settings.HighlightBackColor;
+            HighlightForeColorColorButton.BackColor  = settings.HighlightForeColor;
+            HighlightForeColorColorButton.ForeColor  = settings.HighlightForeColor;
+            LineNumberBackColorColorButton.BackColor = settings.LineNumberBackColor;
+            LineNumberBackColorColorButton.ForeColor = settings.LineNumberBackColor;
+            LineNumberForeColorColorButton.BackColor = settings.LineNumberForeColor;
+            LineNumberForeColorColorButton.ForeColor = settings.LineNumberForeColor;
+            SpecialCharsColorColorButton.BackColor   = settings.SpecialCharsColor;
+            SpecialCharsColorColorButton.ForeColor   = settings.SpecialCharsColor;
+            CurrentLineColorColorButton.BackColor    = settings.CurrentLineColor;
+            CurrentLineColorColorButton.ForeColor    = settings.CurrentLineColor;
 
-            FontButton.Tag                      = settings.Font;
+            FontFontButton.Tag                      = settings.Font;
 
             TabToSpaceCheckBox.Checked          = settings.TabToSpace;
             WordWrapCheckBox.Checked            = settings.WordWrap;
@@ -141,36 +143,7 @@ namespace Cube.Note.App.Editor
             ApplyButton.Click                          += ApplyButton_Click;
             ExitButton.Click                           += ExitButton_Click;
             ResetButton.Click                          += (s, e) => OnReset(e);
-
-            FontButton.Click                           += FontButton_Click;
-
-            BackColorButton.Click                      += ColorButton_Click;
-            ForeColorButton.Click                      += ColorButton_Click;
-            HighlightBackColorButton.Click             += ColorButton_Click;
-            HighlightForeColorButton.Click             += ColorButton_Click;
-            LineNumberBackColorButton.Click            += ColorButton_Click;
-            LineNumberForeColorButton.Click            += ColorButton_Click;
-            SpecialCharsColorButton.Click              += ColorButton_Click;
-            CurrentLineColorButton.Click               += ColorButton_Click;
-
-            TabToSpaceCheckBox.CheckedChanged          += CheckBoxChanged;
-            WordWrapCheckBox.CheckedChanged            += CheckBoxChanged;
-            WordWrapAsWindowCheckBox.CheckedChanged    += CheckBoxChanged;
-            LineNumberVisibleCheckBox.CheckedChanged   += CheckBoxChanged;
-            RulerVisibleCheckBox.CheckedChanged        += CheckBoxChanged;
-            SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            EolVisibleCheckBox.CheckedChanged          += CheckBoxChanged;
-            TabVisibleCheckBox.CheckedChanged          += CheckBoxChanged;
-            SpaceVisibleCheckBox.CheckedChanged        += CheckBoxChanged;
-            FullSpaceVisibleCheckBox.CheckedChanged    += CheckBoxChanged;
-            CurrentLineVisibleCheckBox.CheckedChanged  += CheckBoxChanged;
-            ModifiedLineVisibleCheckBox.CheckedChanged += CheckBoxChanged;
-            BracketVisibleCheckBox.CheckedChanged      += CheckBoxChanged;
-            RemoveWarningCheckBox.CheckedChanged       += CheckBoxChanged;
-
-            TabWidthNumericUpDown.ValueChanged         += NumericUpDownChanged;
-            AutoSaveTimeNumericUpDown.ValueChanged     += NumericUpDownChanged;
-            WordWrapCountNumericUpDown.ValueChanged    += NumericUpDownChanged;
+            PropertyChanged                            += OnPropertyChanged;
 
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberVisibleCheckBox.CheckedChanged   += (s, e) => EnableLineNumber();
@@ -217,7 +190,17 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler Applied;
+        public event EventHandler Applied
+        {
+            add
+            {
+                MainSettingControl.Apply += value;
+            }
+            remove
+            {
+                MainSettingControl.Apply -= value;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -228,7 +211,17 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler Canceled;
+        public event EventHandler Canceled
+        {
+            add
+            {
+                MainSettingControl.Cancel += value;
+            }
+            remove
+            {
+                MainSettingControl.Cancel -= value;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -250,35 +243,21 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<KeyValueEventArgs<string, object>> PropertyChanged;
+        public event EventHandler<KeyValueEventArgs<string, object>> PropertyChanged
+        {
+            add
+            {
+                MainSettingControl.PropertyChanged += value;
+            }
+            remove
+            {
+                MainSettingControl.PropertyChanged -= value;
+            }
+        }
 
         #endregion
 
         #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnApplied
-        ///
-        /// <summary>
-        /// Applied イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnApplied(EventArgs e)
-            => Applied?.Invoke(this, e);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCanceled
-        ///
-        /// <summary>
-        /// Canceled イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnCanceled(EventArgs e)
-            => Canceled?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -291,18 +270,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset(EventArgs e)
             => Reset?.Invoke(this, e);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPropertyChanged
-        ///
-        /// <summary>
-        /// PropertyChanged イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnPropertyChanged(KeyValueEventArgs<string, object> e)
-            => PropertyChanged?.Invoke(this, e);
+        
 
         #endregion
 
@@ -343,7 +311,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ApplyButton_Click(object sender, EventArgs e)
         {
-            OnApplied(e);
+            //OnApplied(e);
             Close();
         }
 
@@ -358,60 +326,24 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            OnCanceled(e);
+            //OnCanceled(e);
             Close();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ColorButton_Click
+        /// OnPropertyChanged
         ///
         /// <summary>
-        /// 色設定ボタンが押下された時に実行されるハンドラです。
+        /// プロパティが変更された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ColorButton_Click(object sender, EventArgs e)
+        private void OnPropertyChanged(object sender, KeyValueEventArgs<string, object> e)
         {
-            var control = sender as Control;
-            if (control == null) return;
-
-            var dialog = new ColorDialog();
-            dialog.Color = control.BackColor;
-            dialog.FullOpen = true;
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            control.BackColor = dialog.Color;
-            control.ForeColor = dialog.Color;
-
             UpdateControls();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FontButton_Click
-        ///
-        /// <summary>
-        /// フォント設定ボタンが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void FontButton_Click(object sender, EventArgs e)
-        {
-            var control = sender as Control;
-            if (control == null) return;
-
-            var dialog = new FontDialog();
-            var font = control.Tag as Font;
-            if (font != null) dialog.Font = font;
-            dialog.ShowEffects = false;
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            control.Tag = dialog.Font;
-
-            UpdateControls();
-        }
-
+        
         #endregion
 
         #region Update methods
@@ -427,16 +359,16 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateControls()
         {
-            UpdateColor(BackColorButton, BackColorLabel);
-            UpdateColor(ForeColorButton, ForeColorLabel);
-            UpdateColor(HighlightBackColorButton, HighlightBackColorLabel);
-            UpdateColor(HighlightForeColorButton, HighlightForeColorLabel);
-            UpdateColor(LineNumberBackColorButton, LineNumberBackColorLabel);
-            UpdateColor(LineNumberForeColorButton, LineNumberForeColorLabel);
-            UpdateColor(SpecialCharsColorButton, SpecialCharsColorLabel);
-            UpdateColor(CurrentLineColorButton, CurrentLineColorLabel);
+            UpdateColor(BackColorColorButton, BackColorLabel);
+            UpdateColor(ForeColorColorButton, ForeColorLabel);
+            UpdateColor(HighlightBackColorColorButton, HighlightBackColorLabel);
+            UpdateColor(HighlightForeColorColorButton, HighlightForeColorLabel);
+            UpdateColor(LineNumberBackColorColorButton, LineNumberBackColorLabel);
+            UpdateColor(LineNumberForeColorColorButton, LineNumberForeColorLabel);
+            UpdateColor(SpecialCharsColorColorButton, SpecialCharsColorLabel);
+            UpdateColor(CurrentLineColorColorButton, CurrentLineColorLabel);
 
-            UpdateFont(FontButton.Tag as Font, FontLabel);
+            UpdateFont(FontFontButton.Font, FontLabel);
 
             EnableLineNumber();
             EnableSpecialChars();
@@ -460,7 +392,7 @@ namespace Cube.Note.App.Editor
             if (label.Text == text) return;
             label.Text = text;
 
-            RaisePropertyChanged(control, color);
+            //RaisePropertyChanged(control, color);
         }
 
         /* ----------------------------------------------------------------- */
@@ -480,7 +412,7 @@ namespace Cube.Note.App.Editor
             if (label.Text == text) return;
             label.Text = text;
 
-            OnPropertyChanged(new KeyValueEventArgs<string, object>("Font", font));
+            //OnPropertyChanged(new KeyValueEventArgs<string, object>("Font", font));
         }
 
         /* ----------------------------------------------------------------- */
@@ -497,7 +429,7 @@ namespace Cube.Note.App.Editor
             var enable = SpecialCharsVisibleCheckBox.Checked;
 
             SpecialCharsColorTitleLabel.Enabled = enable;
-            SpecialCharsColorButton.Enabled     = enable;
+            SpecialCharsColorColorButton.Enabled     = enable;
             SpecialCharsColorLabel.Enabled      = enable;
             EolVisibleCheckBox.Enabled          = enable;
             TabVisibleCheckBox.Enabled          = enable;
@@ -519,7 +451,7 @@ namespace Cube.Note.App.Editor
             var enable = CurrentLineVisibleCheckBox.Checked;
 
             CurrentLineColorTitleLabel.Enabled = enable;
-            CurrentLineColorButton.Enabled     = enable;
+            CurrentLineColorColorButton.Enabled     = enable;
             CurrentLineColorLabel.Enabled      = enable;
         }
 
@@ -536,10 +468,10 @@ namespace Cube.Note.App.Editor
         {
             var enable = LineNumberVisibleCheckBox.Checked || RulerVisibleCheckBox.Checked;
 
-            LineNumberBackColorButton.Enabled     = enable;
+            LineNumberBackColorColorButton.Enabled     = enable;
             LineNumberBackColorLabel.Enabled      = enable;
             LineNumberBackColorTitleLabel.Enabled = enable;
-            LineNumberForeColorButton.Enabled     = enable;
+            LineNumberForeColorColorButton.Enabled     = enable;
             LineNumberForeColorLabel.Enabled      = enable;
             LineNumberForeColorTitleLabel.Enabled = enable;
         }
@@ -561,127 +493,6 @@ namespace Cube.Note.App.Editor
             WordWrapLabel.Enabled              = enable;
             WordWrapAsWindowCheckBox.Enabled   = enable;
             WordWrapCountNumericUpDown.Enabled = cmode;
-        }
-
-        #endregion
-
-        #region RaiseEvent methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckBoxChanged
-        ///
-        /// <summary>
-        /// チェックボックスの状態が変化した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// Value には CheckBox.Checked が設定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void CheckBoxChanged(object sender, EventArgs e)
-        {
-            var control = sender as CheckBox;
-            if (control == null) return;
-            RaisePropertyChanged(control, control.Checked);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ComboBoxChanged
-        ///
-        /// <summary>
-        /// コンボボックスの状態が変化した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// Value には ComboBox.SelectedIndex が設定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void ComboBoxChanged(object sender, EventArgs e)
-        {
-            var control = sender as ComboBox;
-            if (control == null) return;
-            RaisePropertyChanged(control, control.SelectedIndex);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NumericUpDownChanged
-        ///
-        /// <summary>
-        /// NumericUpDown の状態が変化した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// Value には NumericUpDown.Value が設定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void NumericUpDownChanged(object sender, EventArgs e)
-        {
-            var control = sender as NumericUpDown;
-            if (control == null) return;
-            RaisePropertyChanged(control, control.Value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RadioButtonChanged
-        ///
-        /// <summary>
-        /// ラジオボタンの状態が変化した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// Value には RadioButton.Checked が設定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void RadioButtonChanged(object sender, EventArgs e)
-        {
-            var control = sender as RadioButton;
-            if (control == null) return;
-            RaisePropertyChanged(control, control.Checked);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TextBoxChanged
-        ///
-        /// <summary>
-        /// ラジオボタンの状態が変化した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// Value には TextBox.Text が設定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void TextBoxChanged(object sender, EventArgs e)
-        {
-            var control = sender as TextBox;
-            if (control == null) return;
-            RaisePropertyChanged(control, control.Text);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RaisePropertyChanged
-        ///
-        /// <summary>
-        /// PropertyChanged イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void RaisePropertyChanged(Control control, object value)
-        {
-            var name = control.Name.Replace(control.GetType().Name, string.Empty);
-            if (string.IsNullOrEmpty(name)) return;
-
-            OnPropertyChanged(new KeyValueEventArgs<string, object>(name, value));
         }
 
         #endregion
