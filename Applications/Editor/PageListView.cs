@@ -281,6 +281,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DS_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DS_CollectionChanged(sender, e)));
+                return;
+            }
+
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
@@ -311,6 +317,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DS_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DS_PropertyChanged(sender, e)));
+                return;
+            }
+
             var page = sender as Page;
             if (page == null) return;
 
