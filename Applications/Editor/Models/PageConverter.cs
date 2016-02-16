@@ -55,7 +55,7 @@ namespace Cube.Note.App.Editor
             dest.Add(page.GetAbstract());
             dest.Add(page.Creation.ToString(Properties.Resources.CreationFormat));
             dest.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
-            dest.Add(string.Join(", ", page.Tags));
+            dest.Add(string.Join(", ", page.Tags.ToArray()));
             return new ListViewItem(dest.ToArray());
         }
 
