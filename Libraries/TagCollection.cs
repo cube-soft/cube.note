@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageCollection.cs
+/// TagCollection.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -28,60 +28,57 @@ namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageCollection
+    /// TagCollection
     /// 
     /// <summary>
-    /// ノート一覧を管理するためのクラスです。
+    /// タグ一覧を管理するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class PageCollection : ObservableCollection<Page>
+    public class TagCollection : ObservableCollection<Tag>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCollection
+        /// TagCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollection() : this(Assembly.GetExecutingAssembly()) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageCollection
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PageCollection(Assembly assembly) : base()
+        public TagCollection(string path) : base()
         {
-            var reader = new AssemblyReader(assembly);
-            var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var folder = $@"{reader.Company}\{reader.Product}\Inbox";
-
-            Directory = IoEx.Path.Combine(appdata, folder);
-            Tags = new TagCollection(assembly);
+            Path = path;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCollection
+        /// TagCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollection(string directory)
+        public TagCollection(Assembly assembly) : this(assembly, DefaultFileName) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TagCollection
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public TagCollection(Assembly assembly, string filename) : base()
         {
-            Directory = directory;
-            Tags = new TagCollection(IoEx.Path.Combine(directory, TagCollection.DefaultFileName));
+            var reader = new AssemblyReader(assembly);
+            var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var tail = $@"{reader.Company}\{reader.Product}\{filename}";
+            Path = IoEx.Path.Combine(head, tail);
         }
 
         #endregion
@@ -97,7 +94,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static string DefaultFileName => "Order.json";
+        public static string DefaultFileName => "Tags.json";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -115,42 +112,11 @@ namespace Cube.Note
         /// Directory
         ///
         /// <summary>
-        /// 対象とするディレクトリへのパスを取得します。
+        /// タグ一覧を保持しているファイルへのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Directory { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Tags
-        ///
-        /// <summary>
-        /// タグ一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public TagCollection Tags { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Everyone
-        ///
-        /// <summary>
-        /// すべてのノートを表示する事に該当するタグを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Tag Everyone
-        {
-            get { return _everyone; }
-            set
-            {
-                if (_everyone == value) return;
-                _everyone = value;
-                if (_everyone != null) _everyone.Count = Count;
-            }
-        }
+        public string Path { get; }
 
         #endregion
 
@@ -158,39 +124,100 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// NewPage
+        /// Contains
         ///
         /// <summary>
-        /// 新しいページを先頭に追加します。
+        /// 指定された名前を持つタグが存在するかどうかを判別します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage() => NewPage(Everyone);
-        public void NewPage(Tag tag)
+        public bool Contains(string name) => Items.Any(x => x.Name == name);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Get
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Get(string name) => Items.FirstOrDefault(x => x.Name == name);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグを生成します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 同名のタグが既に存在する場合は、該当タグを返します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Create(string name)
         {
-            var page = new Page();
-            if (tag != null && tag != Everyone) page.Tags.Add(tag.Name);
-            Touch(page);
-            Insert(0, page);
-            if (Everyone != null) Everyone.Count++;
-            if (tag != null && tag != Everyone) tag.Count++;
+            var dest = Get(name);
+            if (dest != null) return dest;
+
+            var newtag = new Tag(name);
+            Add(newtag);
+            return newtag;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Search
+        /// Remove
         ///
         /// <summary>
-        /// タグに合致する項目一覧を取得します。
+        /// 指定された名前を持つタグを削除します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Search(Tag tag)
+        public void Remove(string name)
         {
-            return Items.Where(item
-                => item.Tags.Contains(tag.Name) ||
-                   tag == Everyone
-            );
+            var dest = Get(name);
+            if (dest == null) return;
+            Remove(dest);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Increase
+        ///
+        /// <summary>
+        /// 指定されたタグの Count を増加させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Increase(IEnumerable<string> tags)
+        {
+            foreach (var name in tags)
+            {
+                var tag = Create(name);
+                tag.Count++;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Decrease
+        ///
+        /// <summary>
+        /// 指定されたタグの Count を減少させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Decrease(IEnumerable<string> tags)
+        {
+            foreach (var name in tags)
+            {
+                var tag = Get(name);
+                if (tag == null) continue;
+                tag.Count = Math.Max(tag.Count - 1, 0);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -202,21 +229,10 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Load() => Load(DefaultFileName);
-        public void Load(string filename)
+        public void Load()
         {
-            Tags.Load();
-
-            var order = ToPath(filename);
-            if (!IoEx.File.Exists(order)) return;
-
-            foreach (var page in Settings.Load<List<Page>>(order, FileType))
-            {
-                if (!IoEx.File.Exists(ToPath(page))) continue;
-                Add(page);
-                if (Everyone != null) Everyone.Count++;
-                foreach (var tag in page.Tags) Tags.Create(tag).Count++;
-            }
+            if (!IoEx.File.Exists(Path)) return;
+            foreach (var name in Settings.Load<List<string>>(Path, FileType)) Create(name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -228,102 +244,20 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Save(DefaultFileName);
-        public void Save(string filename)
+        public void Save() => Save(Path);
+        public void Save(string path)
         {
-            Tags.Save();
-            CreateDirectory(Directory);
-            Settings.Save(Items, ToPath(filename), FileType);
+            CreateDirectory(path);
+            Settings.Save(
+                Items.Select(x => x.Name).OrderBy(x => x).ToList(),
+                path,
+                FileType
+            );
         }
 
         #endregion
 
-        #region Override methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveItem
-        ///
-        /// <summary>
-        /// 項目を削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void RemoveItem(int index)
-        {
-            try
-            {
-                var page = Items[index];
-                if (page == null) return;
-
-                Tags.Decrease(page.Tags);
-                if (Everyone != null) Everyone.Count--;
-                Clean(page);
-            }
-            finally { base.RemoveItem(index); }
-        }
-
-        #endregion
-
-        #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Touch
-        ///
-        /// <summary>
-        /// 空のファイルを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Touch(Page page)
-        {
-            var path = ToPath(page);
-            CreateDirectory(IoEx.Path.GetDirectoryName(path));
-            IoEx.File.Create(path).Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Clean
-        ///
-        /// <summary>
-        /// 削除するための処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Clean(Page page)
-        {
-            IoEx.File.Delete(ToPath(page));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToPath
-        ///
-        /// <summary>
-        /// 指定されたオブジェクトに対応するパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string ToPath(Page item)
-        {
-            return ToPath(item.FileName);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToPath
-        ///
-        /// <summary>
-        /// 指定されたファイル名に対応するパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string ToPath(string filename)
-        {
-            return IoEx.Path.Combine(Directory, filename);
-        }
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
@@ -336,14 +270,11 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private void CreateDirectory(string path)
         {
-            if (IoEx.Directory.Exists(path)) return;
-            IoEx.Directory.CreateDirectory(path);
+            var directory = IoEx.Path.GetDirectoryName(path);
+            if (IoEx.Directory.Exists(directory)) return;
+            IoEx.Directory.CreateDirectory(directory);
         }
 
-        #endregion
-
-        #region Fields
-        private Tag _everyone;
         #endregion
     }
 }

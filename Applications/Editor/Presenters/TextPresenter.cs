@@ -31,7 +31,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class TextPresenter : Cube.Forms.PresenterBase<TextControl, PageCollection>
+    public class TextPresenter
+        : PresenterBase<TextControl, PageCollection>
     {
         #region Constructors
 
@@ -44,10 +45,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TextPresenter(TextControl view, PageCollection model)
-            : base(view, model)
+        public TextPresenter(TextControl view, PageCollection model,
+            SettingsFolder settings, EventAggregator events)
+            : base(view, model, settings, events)
         {
-            Model.ActiveChanged += Model_ActiveChanged;
+            Settings.Current.PageChanged += Settings_PageChanged;
         }
 
         #endregion
@@ -56,30 +58,30 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_ActiveChanged
+        /// Settings_PageChanged
         ///
         /// <summary>
-        /// 編集対象となる Page オブジェクトが変更された時に実行される
-        /// ハンドラです。
+        /// 編集対象となる Page オブジェクトが変更された時に実行されるハンドラです。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Model_ActiveChanged(object sender, PageChangedEventArgs e)
+        private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
-            if (e.NewPage == null) return;
-
-            var document = e.NewPage.CreateDocument(Model.Directory);
-            document.ContentChanged -= Model_ContentChanged;
-            document.ContentChanged += Model_ContentChanged;
-
-            Sync(() =>
+            try
             {
-                View.Document = document;
-                View.ViewWidth = 0;
-                View.ScrollToCaret();
-            });
+                var document = e.NewValue?.CreateDocument(Model.Directory);
 
-            Clean(e.OldPage);
+                Sync(() =>
+                {
+                    View.Visible = (document != null);
+                    if (document == null) return;
+
+                    View.Document = document;
+                    View.ResetViewWidth();
+                    View.ScrollToCaret();
+                });
+            }
+            finally { UpdateModel(e.NewValue, e.OldValue); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -93,8 +95,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
         {
-            if (Model.Active == null || Model.Active.Document != sender) return;
-            Model.Active.Abstract = Abstract(Model.Active.Document as Document);
+            var document = Settings.Current?.Page?.Document as Document;
+            if (document == null || document != sender) return;
+            Settings.Current.Page.Abstract = GetAbstract(document);
         }
 
         #endregion
@@ -103,34 +106,37 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clean
+        /// UpdateModel
         ///
         /// <summary>
-        /// 編集対象ではなくなった Page オブジェクトの後処理を行います。
+        /// Model の状態を更新します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Clean(Page page)
+        private void UpdateModel(Page newpage, Page oldpage)
         {
-            if (page == null) return;
+            var newdoc = newpage?.Document as Document;
+            if (newdoc != null)
+            {
+                newdoc.ContentChanged -= Model_ContentChanged;
+                newdoc.ContentChanged += Model_ContentChanged;
+            }
 
-            var document = page.Document as Document;
-            if (document != null) document.ContentChanged -= Model_ContentChanged;
+            var olddoc = oldpage?.Document as Document;
+            if (olddoc != null) olddoc.ContentChanged -= Model_ContentChanged;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Abstract
+        /// GetAbstract
         ///
         /// <summary>
         /// 概要を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Abstract(Document document)
+        private string GetAbstract(Document document)
         {
-            if (document == null) return string.Empty;
-
             for (var i = 0; i < document.LineCount; ++i)
             {
                 var content = document.GetLineContent(i).Trim();

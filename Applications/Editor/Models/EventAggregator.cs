@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FormBase
+/// EventAggregator.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,123 +17,97 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FormBase
+    /// EventAggregator
     /// 
     /// <summary>
-    /// フォーム外観の共通部分を定義したクラスです。
+    /// CubeNote で発生するイベントを集約するクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class FormBase : Cube.Forms.WidgetForm
+    public class EventAggregator
     {
-        #region Constructors
-
         /* ----------------------------------------------------------------- */
         ///
-        /// FormBase
+        /// NewPage
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// 新しいページを追加するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FormBase()
-        {
-            InitializeComponent();
-
-            Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
-            Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
-        }
-
-        #endregion
-
-        #region Methods
+        public RelayEvent NewPage { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Maximize
+        /// Property
         ///
         /// <summary>
-        /// 最大化します。
+        /// ページのプロパティ画面を表示するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Maximize()
-        {
-            if (!Sizable || !MaximizeBox) return;
-
-            WindowState = WindowState == FormWindowState.Normal ?
-                          FormWindowState.Maximized :
-                          FormWindowState.Normal;
-        }
+        public RelayEvent<ValueEventArgs<Page>> Property { get; }
+            = new RelayEvent<ValueEventArgs<Page>>();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Minimize
+        /// Edit
         ///
         /// <summary>
-        /// 最小化します。
+        /// ページ情報を編集した時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Minimize()
-        {
-            if (WindowState == FormWindowState.Minimized) return;
-            WindowState = FormWindowState.Minimized;
-        }
-
-        #endregion
-
-        #region Override methods
+        public RelayEvent<ValueEventArgs<Page>> Edit { get; }
+            = new RelayEvent<ValueEventArgs<Page>>();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnLoad
+        /// Remove
         ///
         /// <summary>
-        /// ロード時に実行されます。
+        /// 選択ページを削除するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
-            var control = Caption as TitleControl;
-            if (control == null) return;
-
-            control.CloseExecuted    += (s, ev) => Close();
-            control.MaximizeExecuted += (s, ev) => Maximize();
-            control.MinimizeExecuted += (s, ev) => Minimize();
-
-            control.MaximizeBox = MaximizeBox && Sizable;
-            control.MinimizeBox = MinimizeBox;
-        }
+        public RelayEvent Remove { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnBackColorChanged
+        /// Search
         ///
         /// <summary>
-        /// 背景色が変更された時に実行されます。
+        /// 指定されたキーワードで検索するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBackColorChanged(EventArgs e)
-        {
-            base.OnBackColorChanged(e);
-            if (Caption == null) return;
-            Caption.BackColor = BackColor;
-        }
+        public RelayEvent<ValueEventArgs<string>> Search { get; }
+            = new RelayEvent<ValueEventArgs<string>>();
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        ///
+        /// <summary>
+        /// 設定フォームを開くイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Settings { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TagSettings
+        ///
+        /// <summary>
+        /// タグ用の設定フォームを開くイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent TagSettings { get; } = new RelayEvent();
     }
 }

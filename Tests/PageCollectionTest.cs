@@ -57,15 +57,6 @@ namespace Cube.Note.Tests
             );
         }
 
-        [Test]
-        public void FileType_IsJson()
-        {
-            Assert.That(
-                Pages.FileType,
-                Is.EqualTo(Cube.Settings.FileType.Json)
-            );
-        }
-
         [TestCase("05859d5f90094ab0b8ec739b6150f455")]
         public void FileName_Last(string expected)
         {
@@ -99,6 +90,15 @@ namespace Cube.Note.Tests
             Assert.That(
                 Pages[Pages.Count - 1].LastUpdate,
                 Is.EqualTo(new DateTime(y, m, d, hh, mm, ss, ms))
+            );
+        }
+
+        [TestCase("Tag2", 2)]
+        public void Tags_Count(string name, int expected)
+        {
+            Assert.That(
+                Pages.Tags.Create(name).Count,
+                Is.EqualTo(expected)
             );
         }
 

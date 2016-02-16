@@ -60,31 +60,6 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
-        ///
-        /// <summary>
-        /// 設定ファイルの保存先を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Path { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FileType
-        ///
-        /// <summary>
-        /// 設定ファイルのファイル形式を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Settings.FileType FileType
-        {
-            get { return Settings.FileType.Json; }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// FontName
         ///
         /// <summary>
@@ -100,8 +75,8 @@ namespace Cube.Note
             {
                 if (_fontName == value) return;
                 _fontName = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("FontName"));
-                OnPropertyChanged(new PropertyChangedEventArgs("Font"));
+                RaisePropertyChanged(nameof(FontName));
+                RaisePropertyChanged(nameof(Font));
             }
         }
 
@@ -122,8 +97,8 @@ namespace Cube.Note
             {
                 if (_fontSize == value) return;
                 _fontSize = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("FontSize"));
-                OnPropertyChanged(new PropertyChangedEventArgs("Font"));
+                RaisePropertyChanged(nameof(FontSize));
+                RaisePropertyChanged(nameof(Font));
             }
         }
 
@@ -144,8 +119,8 @@ namespace Cube.Note
             {
                 if (_fontStyle == value) return;
                 _fontStyle = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("FontStyle"));
-                OnPropertyChanged(new PropertyChangedEventArgs("Font"));
+                RaisePropertyChanged(nameof(FontStyle));
+                RaisePropertyChanged(nameof(Font));
             }
         }
 
@@ -158,13 +133,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Font Font
-        {
-            get
-            {
-                return new Font(FontName, (float)FontSize, FontStyle, GraphicsUnit.Point);
-            }
-        }
+        public Font Font => new Font(FontName, (float)FontSize, FontStyle, GraphicsUnit.Point);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -183,7 +152,7 @@ namespace Cube.Note
             {
                 if (_backColor == value) return;
                 _backColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("BackColor"));
+                RaisePropertyChanged(nameof(BackColor));
             }
         }
 
@@ -204,7 +173,7 @@ namespace Cube.Note
             {
                 if (_foreColor == value) return;
                 _foreColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ForeColor"));
+                RaisePropertyChanged(nameof(ForeColor));
             }
         }
 
@@ -225,7 +194,7 @@ namespace Cube.Note
             {
                 if (_highlightBackColor == value) return;
                 _highlightBackColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("HighlightBackColor"));
+                RaisePropertyChanged(nameof(HighlightBackColor));
             }
         }
 
@@ -246,7 +215,7 @@ namespace Cube.Note
             {
                 if (_highlightForeColor == value) return;
                 _highlightForeColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("HighlightForeColor"));
+                RaisePropertyChanged(nameof(HighlightForeColor));
             }
         }
 
@@ -267,7 +236,7 @@ namespace Cube.Note
             {
                 if (_lineNumberBackColor == value) return;
                 _lineNumberBackColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("LineNumberBackColor"));
+                RaisePropertyChanged(nameof(LineNumberBackColor));
             }
         }
 
@@ -288,7 +257,7 @@ namespace Cube.Note
             {
                 if (_lineNumberForeColor == value) return;
                 _lineNumberForeColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("LineNumberForeColor"));
+                RaisePropertyChanged(nameof(LineNumberForeColor));
             }
         }
 
@@ -309,7 +278,7 @@ namespace Cube.Note
             {
                 if (_specialCharsColor == value) return;
                 _specialCharsColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("SpecialCharsColor"));
+                RaisePropertyChanged(nameof(SpecialCharsColor));
             }
         }
 
@@ -330,7 +299,7 @@ namespace Cube.Note
             {
                 if (_currentLineColor == value) return;
                 _currentLineColor = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("CurrentLineColor"));
+                RaisePropertyChanged(nameof(CurrentLineColor));
             }
         }
 
@@ -351,7 +320,7 @@ namespace Cube.Note
             {
                 if (_autoSaveTime == value) return;
                 _autoSaveTime = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("AutoSaveTime"));
+                RaisePropertyChanged(nameof(AutoSaveTime));
             }
         }
 
@@ -372,7 +341,7 @@ namespace Cube.Note
             {
                 if (_tabWidth == value) return;
                 _tabWidth = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("TabWidth"));
+                RaisePropertyChanged(nameof(TabWidth));
             }
         }
 
@@ -394,7 +363,72 @@ namespace Cube.Note
             {
                 if (_tabToSpace == value) return;
                 _tabToSpace = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("TabToSpace"));
+                RaisePropertyChanged(nameof(TabToSpace));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrap
+        ///
+        /// <summary>
+        /// テキストを折り返し表示するかどうかを示す値を取得または
+        /// 設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool WordWrap
+        {
+            get { return _wordWrap; }
+            set
+            {
+                if (_wordWrap == value) return;
+                _wordWrap = value;
+                RaisePropertyChanged(nameof(WordWrap));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrapAsWindow
+        ///
+        /// <summary>
+        /// ウィンドウ幅でテキストを折り返し表示するかどうかを示す値を
+        /// 取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool WordWrapAsWindow
+        {
+            get { return _wordWrapAsWindow; }
+            set
+            {
+                if (_wordWrapAsWindow == value) return;
+                _wordWrapAsWindow = value;
+                RaisePropertyChanged(nameof(WordWrapAsWindow));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrapCount
+        ///
+        /// <summary>
+        /// 折り返し表示する文字数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int WordWrapCount
+        {
+            get { return _wordWrapCount; }
+            set
+            {
+                if (_wordWrapCount == value) return;
+                _wordWrapCount = value;
+                RaisePropertyChanged(nameof(WordWrapCount));
             }
         }
 
@@ -415,7 +449,7 @@ namespace Cube.Note
             {
                 if (_lineNumberVisible == value) return;
                 _lineNumberVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("LineNumberVisible"));
+                RaisePropertyChanged(nameof(LineNumberVisible));
             }
         }
 
@@ -437,7 +471,7 @@ namespace Cube.Note
             {
                 if (_rulerVisible == value) return;
                 _rulerVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("RulerVisible"));
+                RaisePropertyChanged(nameof(RulerVisible));
             }
         }
 
@@ -458,7 +492,7 @@ namespace Cube.Note
             {
                 if (_specialCharsVisible == value) return;
                 _specialCharsVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("SpecialCharsVisible"));
+                RaisePropertyChanged(nameof(SpecialCharsVisible));
             }
         }
 
@@ -479,7 +513,7 @@ namespace Cube.Note
             {
                 if (_eolVisible == value) return;
                 _eolVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("EolVisible"));
+                RaisePropertyChanged(nameof(EolVisible));
             }
         }
 
@@ -500,7 +534,7 @@ namespace Cube.Note
             {
                 if (_tabVisible == value) return;
                 _tabVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("TabVisible"));
+                RaisePropertyChanged(nameof(TabVisible));
             }
         }
 
@@ -521,7 +555,7 @@ namespace Cube.Note
             {
                 if (_spaceVisible == value) return;
                 _spaceVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("SpaceVisible"));
+                RaisePropertyChanged(nameof(SpaceVisible));
             }
         }
 
@@ -542,7 +576,7 @@ namespace Cube.Note
             {
                 if (_fullSpaceVisible == value) return;
                 _fullSpaceVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("FullSpaceVisible"));
+                RaisePropertyChanged(nameof(FullSpaceVisible));
             }
         }
 
@@ -563,7 +597,7 @@ namespace Cube.Note
             {
                 if (_currentLineVisible == value) return;
                 _currentLineVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("CurrentLineVisible"));
+                RaisePropertyChanged(nameof(CurrentLineVisible));
             }
         }
 
@@ -584,7 +618,7 @@ namespace Cube.Note
             {
                 if (_modifiedLineVisible == value) return;
                 _modifiedLineVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ModifiedLineVisible"));
+                RaisePropertyChanged(nameof(ModifiedLineVisible));
             }
         }
 
@@ -605,7 +639,7 @@ namespace Cube.Note
             {
                 if (_bracketVisible == value) return;
                 _bracketVisible = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("BracketVisible"));
+                RaisePropertyChanged(nameof(BracketVisible));
             }
         }
 
@@ -627,7 +661,7 @@ namespace Cube.Note
             {
                 if (_removeWarning == value) return;
                 _removeWarning = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("RemoveWarning"));
+                RaisePropertyChanged(nameof(RemoveWarning));
             }
         }
 
@@ -646,8 +680,6 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public void Assign(SettingsValue src)
         {
-            Path = src.Path;
-
             FontName            = src.FontName;
             FontSize            = src.FontSize;
             FontStyle           = src.FontStyle;
@@ -664,6 +696,9 @@ namespace Cube.Note
             AutoSaveTime        = src.AutoSaveTime;
             TabWidth            = src.TabWidth;
             TabToSpace          = src.TabToSpace;
+            WordWrap            = src.WordWrap;
+            WordWrapAsWindow    = src.WordWrapAsWindow;
+            WordWrapCount       = src.WordWrapCount;
             LineNumberVisible   = src.LineNumberVisible;
             RulerVisible        = src.RulerVisible;
             SpecialCharsVisible = src.SpecialCharsVisible;
@@ -675,80 +710,6 @@ namespace Cube.Note
             ModifiedLineVisible = src.ModifiedLineVisible;
             BracketVisible      = src.BracketVisible;
             RemoveWarning       = src.RemoveWarning;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        ///
-        /// <summary>
-        /// SettingsValue オブジェクトを保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Save()
-        {
-            Save(Path);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        ///
-        /// <summary>
-        /// SettingsValue オブジェクトを保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Save(string path)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(path)) return;
-
-                var directory = IoEx.Path.GetDirectoryName(path);
-                if (string.IsNullOrEmpty(directory)) return;
-                if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
-
-                Settings.Save(this, path, FileType);
-            }
-            catch (Exception /* err */) { /* ignore errors */ }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// SettingsValue オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SettingsValue Create(Assembly assembly, string filename)
-        {
-            var reader  = new AssemblyReader(assembly);
-            var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var leaf    = string.Format(@"{0}\{1}\{2}", reader.Company, reader.Product, filename);
-            var path    = IoEx.Path.Combine(appdata, leaf);
-            return Create(path);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// SettingsValue オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SettingsValue Create(string path)
-        {
-            var dest = !string.IsNullOrEmpty(path) && IoEx.File.Exists(path) ?
-                       Settings.Load<SettingsValue>(path, Settings.FileType.Json) :
-                       new SettingsValue();
-            dest.Path = path;
-            return dest;
         }
 
         #endregion
@@ -765,10 +726,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [OnDeserializing]
-        private void OnDeserializing(StreamingContext context)
-        {
-            InitializeValues();
-        }
+        private void OnDeserializing(StreamingContext context) => InitializeValues();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -781,9 +739,6 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private void InitializeValues()
         {
-            var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            Path = IoEx.Path.Combine(appdata, @"CubeSoft\CubeNote\Settings.json");
-
             FontName            = "Meiryo";
             FontSize            = 11.25;
             FontStyle           = FontStyle.Regular;
@@ -799,8 +754,11 @@ namespace Cube.Note
 
             AutoSaveTime        = TimeSpan.FromSeconds(30);
             TabWidth            = 8;
+            WordWrapCount       = 80;
 
             TabToSpace          = false;
+            WordWrap            = false;
+            WordWrapAsWindow    = false;
             LineNumberVisible   = true;
             RulerVisible        = false;
             SpecialCharsVisible = true;
@@ -817,31 +775,34 @@ namespace Cube.Note
         #endregion
 
         #region Fields
-        public Color _backColor;
-        public Color _foreColor;
-        public Color _highlightBackColor;
-        public Color _highlightForeColor;
-        public Color _lineNumberBackColor;
-        public Color _lineNumberForeColor;
-        public Color _specialCharsColor;
-        public Color _currentLineColor;
-        public TimeSpan _autoSaveTime;
-        public string _fontName;
-        public double _fontSize;
-        public FontStyle _fontStyle;
-        public int _tabWidth;
-        public bool _tabToSpace;
-        public bool _lineNumberVisible;
-        public bool _rulerVisible;
-        public bool _specialCharsVisible;
-        public bool _eolVisible;
-        public bool _tabVisible;
-        public bool _spaceVisible;
-        public bool _fullSpaceVisible;
-        public bool _currentLineVisible;
-        public bool _modifiedLineVisible;
-        public bool _bracketVisible;
-        public bool _removeWarning;
+        private Color _backColor;
+        private Color _foreColor;
+        private Color _highlightBackColor;
+        private Color _highlightForeColor;
+        private Color _lineNumberBackColor;
+        private Color _lineNumberForeColor;
+        private Color _specialCharsColor;
+        private Color _currentLineColor;
+        private TimeSpan _autoSaveTime;
+        private string _fontName;
+        private double _fontSize;
+        private FontStyle _fontStyle;
+        private int _tabWidth;
+        private int _wordWrapCount;
+        private bool _tabToSpace;
+        private bool _wordWrap;
+        private bool _wordWrapAsWindow;
+        private bool _lineNumberVisible;
+        private bool _rulerVisible;
+        private bool _specialCharsVisible;
+        private bool _eolVisible;
+        private bool _tabVisible;
+        private bool _spaceVisible;
+        private bool _fullSpaceVisible;
+        private bool _currentLineVisible;
+        private bool _modifiedLineVisible;
+        private bool _bracketVisible;
+        private bool _removeWarning;
         #endregion
     }
 }

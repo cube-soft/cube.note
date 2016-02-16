@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FileResource.cs
+/// Tag.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,39 +17,37 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
-using IoEx = System.IO;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-namespace Cube.Note.Tests
+namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileResource
+    /// Tag
     /// 
     /// <summary>
-    /// テストでファイルを使用するためのクラスです。
+    /// タグ情報を保持するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    class FileResource
+    public class Tag : INotifyPropertyChanged
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileResource
+        /// Tag
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected FileResource()
+        public Tag(string name)
         {
-            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
-            Root = IoEx.Path.GetDirectoryName(reader.Location);
-            _folder = GetType().FullName.Replace($"{reader.Product}.", "");
-            Initialize();
+            Name = name;
+            Count = 0;
         }
 
         #endregion
@@ -58,84 +56,112 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Root
+        /// Name
         ///
         /// <summary>
-        /// テスト用リソースの存在するルートディレクトリへのパスを
-        /// 取得、または設定します。
+        /// タグ名を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Root { get; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name == value) return;
+                _name = value;
+                RaisePropertyChanged(nameof(Name));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Examples
-        /// 
+        /// Count
+        ///
         /// <summary>
-        /// テスト用ファイルの存在するフォルダへのパスを取得します。
+        /// このタグに関連付けられている Page オブジェクトの個数を取得
+        /// または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Examples => IoEx.Path.Combine(Root, "Examples");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Results
-        /// 
-        /// <summary>
-        /// テスト結果を格納するためのフォルダへのパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected string Results => IoEx.Path.Combine(Root, $@"Results\{_folder}");
+        public int Count
+        {
+            get { return _count; }
+            set
+            {
+                if (_count == value) return;
+                _count = value;
+                RaisePropertyChanged(nameof(Count));
+            }
+        }
 
         #endregion
 
-        #region Other private methods
+        #region Events
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Initialize
-        /// 
+        /// PropertyChanged
+        ///
         /// <summary>
-        /// リソースファイルを初期化します。
+        /// プロパティが変更された時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Initialize()
-        {
-            if (!IoEx.Directory.Exists(Results)) IoEx.Directory.CreateDirectory(Results);
-            Clean(Results);
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clean
-        /// 
+        /// ToString
+        ///
         /// <summary>
-        /// 指定されたフォルダ内に存在する全てのファイルを削除します。
+        /// 文字列に変換します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Clean(string folder)
-        {
-            foreach (string file in IoEx.Directory.GetFiles(folder))
-            {
-                IoEx.File.SetAttributes(file, IoEx.FileAttributes.Normal);
-                IoEx.File.Delete(file);
-            }
+        public override string ToString() => $"{Name} ({Count})";
 
-            foreach (string sub in IoEx.Directory.GetDirectories(folder))
-            {
-                Clean(sub);
-            }
-        }
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPropertyChanged
+        ///
+        /// <summary>
+        /// PropertyChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+            => PropertyChanged?.Invoke(this, e);
+
+        #endregion
+
+        #region Non-virtual protected methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaisePropertyChanged
+        ///
+        /// <summary>
+        /// PropertyChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void RaisePropertyChanged([CallerMemberName] string name = null)
+            => OnPropertyChanged(new PropertyChangedEventArgs(name));
 
         #endregion
 
         #region Fields
-        private string _folder = string.Empty;
+        private string _name;
+        private int _count;
         #endregion
     }
 }

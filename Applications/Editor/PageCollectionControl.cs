@@ -17,7 +17,6 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -62,10 +61,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageListView Pages
-        {
-            get { return PageListView; }
-        }
+        public PageListView Pages => PageListView;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,61 +72,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ComboBox Tags
-        {
-            get { return TagComboBox; }
-        }
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NewPage
-        ///
-        /// <summary>
-        /// 新しいページの追加が要求された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler NewPageRequired;
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NewPage
-        /// 
-        /// <summary>
-        /// 新しいページを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void NewPage()
-        {
-            OnNewPageRequired(new EventArgs());
-        }
-
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnNewPageRequired
-        ///
-        /// <summary>
-        /// NewPageRequired イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnNewPageRequired(EventArgs e)
-        {
-            if (NewPageRequired != null) NewPageRequired(this, e);
-        }
+        public ComboBox Tags => TagComboBox;
 
         #endregion
     }

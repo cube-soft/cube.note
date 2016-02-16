@@ -31,7 +31,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SettingsPresenter : Cube.Forms.PresenterBase<SettingsForm, SettingsValue>
+    public class SettingsPresenter
+        : PresenterBase<SettingsForm, SettingsValue>
     {
         #region Constructors
 
@@ -44,7 +45,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsPresenter(SettingsForm view, SettingsValue model) : base(view, model)
+        public SettingsPresenter(SettingsForm view, SettingsFolder settings,
+            EventAggregator events)
+            : base(view, settings.User, settings, events)
         {
             View.Applied         += View_Applied;
             View.Canceled        += View_Canceled;
@@ -97,7 +100,7 @@ namespace Cube.Note.App.Editor
             await Async(() =>
             {
                 _backup.Assign(Model);
-                Model.Save();
+                Settings.Save();
             });
         }
 
@@ -112,7 +115,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_Canceled(object sender, EventArgs e)
         {
-            Model.Assign(_backup);
+            Settings.User.Assign(_backup);
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,13 +129,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void View_Reset(object sender, EventArgs e)
         {
-            await Async(() =>
-            {
-                var reset = new SettingsValue();
-                reset.Path = Model.Path;
-                Model.Assign(reset);
-            });
-
+            await Async(() => Model.Assign(new SettingsValue()));
             Sync(() => View.Update(Model));
         }
 
@@ -151,79 +148,89 @@ namespace Cube.Note.App.Editor
             {
                 switch (e.Key)
                 {
-                    case "Font":
+                    case nameof(Model.Font):
                         var font = (Font)e.Value;
                         Model.FontName = font.Name;
                         Model.FontSize = font.Size;
                         Model.FontStyle = font.Style;
                         break;
-                    case "BackColor":
+                    case nameof(Model.BackColor):
                         Model.BackColor = (Color)e.Value;
                         break;
-                    case "ForeColor":
+                    case nameof(Model.ForeColor):
                         Model.ForeColor = (Color)e.Value;
                         break;
-                    case "HighlightBackColor":
+                    case nameof(Model.HighlightBackColor):
                         Model.HighlightBackColor = (Color)e.Value;
                         break;
-                    case "HighlightForeColor":
+                    case nameof(Model.HighlightForeColor):
                         Model.HighlightForeColor = (Color)e.Value;
                         break;
-                    case "LineNumberBackColor":
+                    case nameof(Model.LineNumberBackColor):
                         Model.LineNumberBackColor = (Color)e.Value;
                         break;
-                    case "LineNumberForeColor":
+                    case nameof(Model.LineNumberForeColor):
                         Model.LineNumberForeColor = (Color)e.Value;
                         break;
-                    case "SpecialCharsColor":
+                    case nameof(Model.SpecialCharsColor):
                         Model.SpecialCharsColor = (Color)e.Value;
                         break;
-                    case "CurrentLineColor":
+                    case nameof(Model.CurrentLineColor):
                         Model.CurrentLineColor = (Color)e.Value;
                         break;
-                    case "AutoSaveTime":
+                    case nameof(Model.AutoSaveTime):
                         Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
-                    case "TabWidth":
+                    case nameof(Model.TabWidth):
                         Model.TabWidth = (int)((decimal)e.Value);
                         break;
-                    case "TabToSpace":
+                    case nameof(Model.TabToSpace):
                         Model.TabToSpace = (bool)e.Value;
                         break;
-                    case "LineNumberVisible":
+                    case nameof(Model.WordWrap):
+                        Model.WordWrap = (bool)e.Value;
+                        break;
+                    case nameof(Model.WordWrapAsWindow):
+                        Model.WordWrapAsWindow = (bool)e.Value;
+                        break;
+                    case nameof(Model.WordWrapCount):
+                        Model.WordWrapCount = (int)((decimal)e.Value);
+                        break;
+                    case nameof(Model.LineNumberVisible):
                         Model.LineNumberVisible = (bool)e.Value;
                         break;
-                    case "RulerVisible":
+                    case nameof(Model.RulerVisible):
                         Model.RulerVisible = (bool)e.Value;
                         break;
-                    case "SpecialCharsVisible":
+                    case nameof(Model.SpecialCharsVisible):
                         Model.SpecialCharsVisible = (bool)e.Value;
                         break;
-                    case "EolVisible":
+                    case nameof(Model.EolVisible):
                         Model.EolVisible = (bool)e.Value;
                         break;
-                    case "TabVisible":
+                    case nameof(Model.TabVisible):
                         Model.TabVisible = (bool)e.Value;
                         break;
-                    case "SpaceVisible":
+                    case nameof(Model.SpaceVisible):
                         Model.SpaceVisible = (bool)e.Value;
                         break;
-                    case "FullSpaceVisible":
+                    case nameof(Model.FullSpaceVisible):
                         Model.FullSpaceVisible = (bool)e.Value;
                         break;
-                    case "CurrentLineVisible":
+                    case nameof(Model.CurrentLineVisible):
                         Model.CurrentLineVisible = (bool)e.Value;
                         break;
-                    case "ModifiedLineVisible":
+                    case nameof(Model.ModifiedLineVisible):
                         Model.ModifiedLineVisible = (bool)e.Value;
                         break;
-                    case "BracketVisible":
+                    case nameof(Model.BracketVisible):
                         Model.BracketVisible = (bool)e.Value;
                         break;
-                    case "RemoveWarning":
+                    case nameof(Model.RemoveWarning):
                         Model.RemoveWarning = (bool)e.Value;
                         break;
                     default:
+                        Logger.Warn($"Skip:{e.Key}");
                         break;
                 }
             }

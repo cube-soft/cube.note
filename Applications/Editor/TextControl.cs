@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -63,7 +64,104 @@ namespace Cube.Note.App.Editor
             ColorScheme.EolColor           = ColorScheme.WhiteSpaceColor;
             ColorScheme.EofColor           = ColorScheme.WhiteSpaceColor;
             ColorScheme.CleanedLineBar     = ColorScheme.LineNumberBack;
-            ColorScheme.DirtyLineBar       = Color.FromArgb(251, 180, 13);
+            ColorScheme.DirtyLineBar       = SystemColors.Highlight;
+            ColorScheme.RightEdgeColor     = BackColor;
+
+            CaretMoved += (s, e) => Report();
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrapCount
+        ///
+        /// <summary>
+        /// 折り返し文字数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int WordWrapCount { get; set; } = -1;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Status
+        ///
+        /// <summary>
+        /// ステータスを表示するためのコントロールを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public StatusControl Status { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetViewWidth
+        ///
+        /// <summary>
+        /// ViewWidth をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ResetViewWidth()
+        {
+            ViewWidth = WordWrapCount > 0 ?
+                        WordWrapCount * View.HRulerUnitWidth :
+                        ClientSize.Width;
+        }
+
+        #endregion
+
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        ///
+        /// <summary>
+        /// 再描画します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override void Refresh()
+        {
+            base.Refresh();
+            Report();
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Progress
+        ///
+        /// <summary>
+        /// 現在の状態を表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Report()
+        {
+            if (Status == null) return;
+
+            var count     = (Document != null) ? Document.Length : 0;
+            var lineCount = (Document != null) ? Document.LineCount : 0;
+            var line      = 0;
+            var column    = 0;
+            if (Document != null) Document.GetCaretIndex(out line, out column);
+
+            Status.Count        = count - lineCount + 1;
+            Status.LineCount    = lineCount;
+            Status.LineNumber   = line + 1;
+            Status.ColumnNumber = column + 1;
         }
 
         #endregion

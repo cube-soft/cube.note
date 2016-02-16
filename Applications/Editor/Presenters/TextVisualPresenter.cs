@@ -31,7 +31,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class TextVisualPresenter : Cube.Forms.PresenterBase<TextControl, SettingsValue>
+    public class TextVisualPresenter
+        : PresenterBase<TextControl, SettingsValue>
     {
         #region Constructors
 
@@ -44,7 +45,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TextVisualPresenter(TextControl view, SettingsValue model) : base(view, model)
+        public TextVisualPresenter(TextControl view, SettingsFolder model,
+            EventAggregator events)
+            : base(view, model.User, model, events)
         {
             Model.PropertyChanged += Model_PropertyChanged;
 
@@ -53,7 +56,7 @@ namespace Cube.Note.App.Editor
                 try
                 {
                     Update();
-                    View.ViewWidth = 0;
+                    View.ResetViewWidth();
                 }
                 catch (Exception err) { Logger.Error(err); }
             });
@@ -62,6 +65,20 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Resize
+        ///
+        /// <summary>
+        /// View のリサイズ時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Resize(object sender, EventArgs e)
+        {
+            View.ResetViewWidth();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -79,7 +96,7 @@ namespace Cube.Note.App.Editor
                 try
                 {
                     Update(e.PropertyName);
-                    View.Refresh();
+                    View.ResetViewWidth();
                 }
                 catch (Exception err) { Logger.Error(err); }
             });
@@ -124,6 +141,7 @@ namespace Cube.Note.App.Editor
             View.HighlightsMatchedBracket       = Model.BracketVisible;
 
             UpdateSpecialCharsVisible();
+            UpdateWordWrap();
         }
 
         /* ----------------------------------------------------------------- */
@@ -139,76 +157,75 @@ namespace Cube.Note.App.Editor
         {
             switch (name)
             {
-                case "Font":
+                case nameof(Model.Font):
                     View.Font = Model.Font;
                     break;
-                case "BackColor":
+                case nameof(Model.BackColor):
                     View.BackColor = Model.BackColor;
+                    View.ColorScheme.RightEdgeColor = Model.BackColor;
                     break;
-                case "ForeColor":
+                case nameof(Model.ForeColor):
                     View.ForeColor = Model.ForeColor;
                     break;
-                case "HighlightBackColor":
+                case nameof(Model.HighlightBackColor):
                     View.ColorScheme.SelectionBack = Model.HighlightBackColor;
                     View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
                     View.ColorScheme.DirtyLineBar = Model.HighlightBackColor;
                     break;
-                case "HighlightForeColor":
+                case nameof(Model.HighlightForeColor):
                     View.ColorScheme.SelectionFore = Model.HighlightForeColor;
                     View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
                     break;
-                case "LineNumberBackColor":
+                case nameof(Model.LineNumberBackColor):
                     View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
                     View.ColorScheme.CleanedLineBar = Model.LineNumberBackColor;
                     break;
-                case "LineNumberForeColor":
+                case nameof(Model.LineNumberForeColor):
                     View.ColorScheme.LineNumberFore = Model.LineNumberForeColor;
                     break;
-                case "SpecialCharsColor":
+                case nameof(Model.SpecialCharsColor):
                     View.ColorScheme.WhiteSpaceColor = Model.SpecialCharsColor;
                     View.ColorScheme.EofColor = Model.SpecialCharsColor;
                     View.ColorScheme.EolColor = Model.SpecialCharsColor;
                     break;
-                case "CurrentLineColor":
+                case nameof(Model.CurrentLineColor):
                     View.ColorScheme.HighlightColor = Model.CurrentLineColor;
                     break;
-                case "TabWidth":
+                case nameof(Model.TabWidth):
                     View.TabWidth = Model.TabWidth;
                     break;
-                case "TabToSpace":
+                case nameof(Model.TabToSpace):
                     View.ConvertsTabToSpaces = Model.TabToSpace;
                     break;
-                case "LineNumberVisible":
+                case nameof(Model.WordWrap):
+                case nameof(Model.WordWrapCount):
+                case nameof(Model.WordWrapAsWindow):
+                    UpdateWordWrap();
+                    break;
+                case nameof(Model.LineNumberVisible):
                     View.ShowsLineNumber = Model.LineNumberVisible;
                     break;
-                case "RulerVisible":
+                case nameof(Model.RulerVisible):
                     View.ShowsHRuler = Model.RulerVisible;
                     break;
-                case "EolVisible":
-                    View.DrawsEolCode = Model.SpecialCharsVisible && Model.EolVisible;
-                    break;
-                case "TabVisible":
-                    View.DrawsTab = Model.SpecialCharsVisible && Model.TabVisible;
-                    break;
-                case "SpaceVisible":
-                    View.DrawsSpace = Model.SpecialCharsVisible && Model.SpaceVisible;
-                    break;
-                case "FullSpaceVisible":
-                    View.DrawsFullWidthSpace = Model.SpecialCharsVisible && Model.FullSpaceVisible;
-                    break;
-                case "SpecialCharsVisible":
+                case nameof(Model.SpecialCharsVisible):
+                case nameof(Model.EolVisible):
+                case nameof(Model.TabVisible):
+                case nameof(Model.SpaceVisible):
+                case nameof(Model.FullSpaceVisible):
                     UpdateSpecialCharsVisible();
                     break;
-                case "CurrentLineVisible":
+                case nameof(Model.CurrentLineVisible):
                     View.HighlightsCurrentLine = Model.CurrentLineVisible;
                     break;
-                case "ModifiedLineVisible":
+                case nameof(Model.ModifiedLineVisible):
                     View.ShowsDirtBar = Model.ModifiedLineVisible;
                     break;
-                case "BracketVisible":
+                case nameof(Model.BracketVisible):
                     View.HighlightsMatchedBracket = Model.BracketVisible;
                     break;
                 default:
+                    Logger.Debug($"Skip:{name}");
                     break;
             }
         }
@@ -230,6 +247,32 @@ namespace Cube.Note.App.Editor
             View.DrawsTab            = enable && Model.TabVisible;
             View.DrawsSpace          = enable && Model.SpaceVisible;
             View.DrawsFullWidthSpace = enable && Model.FullSpaceVisible;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateWordWrap
+        ///
+        /// <summary>
+        /// 折り返し表示に関する設定を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateWordWrap()
+        {
+            View.Resize  -= View_Resize;
+
+            if (Model.WordWrap)
+            {
+                View.ViewType      = Sgry.Azuki.ViewType.WrappedProportional;
+                View.WordWrapCount = Model.WordWrapAsWindow ? -1 : Model.WordWrapCount;
+                View.Resize       += View_Resize;
+            }
+            else
+            {
+                View.ViewType      = Sgry.Azuki.ViewType.Proportional;
+                View.WordWrapCount = -1;
+            }
         }
 
         #endregion

@@ -19,8 +19,10 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Forms;
+using Cube.Extensions;
 
 namespace Cube.Note.App.Editor
 {
@@ -33,7 +35,8 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class PageCollectionPresenter : Cube.Forms.PresenterBase<PageCollectionControl, PageCollection>
+    public class PageCollectionPresenter :
+        PresenterBase<PageListView, PageCollection>
     {
         #region Constructors
 
@@ -46,43 +49,105 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollectionPresenter(PageCollectionControl view,
-            PageCollection model, SettingsValue settings) : base(view, model)
+        public PageCollectionPresenter(PageListView view,　PageCollection model,
+            SettingsFolder settings, EventAggregator events)
+            : base(view, model, settings, events)
         {
-            Settings = settings;
+            Events.NewPage.Handled += NewPage_Handled;
+            Events.Edit.Handled += Edit_Handled;
+            Events.Remove.Handled += Remove_Handled;
 
-            View.NewPageRequired += View_NewPageRequired;
-            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.Pages.Added += View_Added;
-            View.Pages.Removing += View_Removing;
-            View.Pages.Removed += View_Removed;
+            View.DataSource = new ObservableCollection<Page>();
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
 
-            // NOTE: 暫定
-            View.Tags.Items.Add(Properties.Resources.AllTag);
-            View.Tags.SelectedIndex = 0;
-
-            Model.ActiveChanged += Model_ActiveChanged;
             Model.CollectionChanged += Model_CollectionChanged;
+
+            Settings.Current.PageChanged += Settings_PageChanged;
+            Settings.Current.TagChanged += Settings_TagChanged;
         }
 
         #endregion
 
-        #region Properties
+        #region Event handlers
+
+        #region EventAggregator
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// NewPage_Handled
         /// 
         /// <summary>
-        /// 設定オブジェクトを取得します。
+        /// 新しいページの作成要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue Settings { get; }
+        private void NewPage_Handled(object sender, EventArgs e)
+        {
+            Model.NewPage(Settings.Current.Tag);
+            Sync(() => View.Select(0));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Edit_Handled
+        /// 
+        /// <summary>
+        /// ページの情報が編集された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 現状はタグの編集のみなので、Tags を指定して PropertyChanged
+        /// を実行しています。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Edit_Handled(object sender, ValueEventArgs<Page> e)
+        {
+            var page = e.Value;
+            if (page == null) return;
+
+            Sync(() =>
+            {
+                if (Settings.Current.Tag == null ||
+                    Settings.Current.Tag == Model.Everyone ||
+                    page.Tags.Contains(Settings.Current.Tag.Name))
+                {
+                    View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
+                }
+                else View.DataSource?.Remove(page);
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove_Handled
+        /// 
+        /// <summary>
+        /// 選択ページの削除要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Remove_Handled(object sender, EventArgs e)
+        {
+            Sync(() =>
+            {
+                var pages = View.DataSource;
+                if (pages == null || !View.AnyItemsSelected) return;
+
+                var index = View.SelectedIndices[0];
+                var page  = pages[index];
+                if (IsRemoveCanceled(page)) return;
+
+                pages.RemoveAt(index);
+                var newindex = Math.Min(index, pages.Count - 1);
+                Settings.Current.Page = (newindex >= 0) ? pages[newindex] : null;
+
+                Model.Remove(page);
+            });
+        }
+
 
         #endregion
-
-        #region Event handlers
 
         #region View
 
@@ -97,125 +162,16 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var index = View.Pages.SelectedIndices[0];
-            if (index < 0 || index >= Model.Count) return;
+            var pages = View.DataSource;
+            var index = View.SelectedIndices[0];
+            if (pages == null || index < 0 || index >= pages.Count) return;
 
-            Model.Active = Model[index];
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_NewPageRequired
-        /// 
-        /// <summary>
-        /// 新しいページの作成要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_NewPageRequired(object sender, EventArgs e)
-        {
-            Model.NewPage();
-            View.Pages.Select(0);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Added
-        /// 
-        /// <summary>
-        /// 項目が追加された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Added(object sender, ValueEventArgs<int> e)
-        {
-            if (View.Pages.Count == 1) View.Pages.Select(0);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Removing
-        /// 
-        /// <summary>
-        /// ページが削除される直前に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Removing(object sender, ValueCancelEventArgs<int[]> e)
-        {
-            if (e.Value == null || e.Value.Length <= 0) return;
-            if (!Settings.RemoveWarning)
-            {
-                e.Cancel = false;
-                return;
-            }
-
-            var index = e.Value[0];
-            var message = new System.Text.StringBuilder();
-            message.AppendLine(Properties.Resources.WarnRemove);
-            message.AppendLine();
-            message.AppendLine(Model[index].GetAbstract());
-            message.AppendLine(Model[index].Creation.ToString(Properties.Resources.CreationFormat));
-            message.AppendLine(Model[index].LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
-
-            var result = MessageBox.Show(
-                message.ToString(),
-                Properties.Resources.WarnRemoveTitle,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button1
-            );
-
-            e.Cancel = (result == DialogResult.No);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Removed
-        /// 
-        /// <summary>
-        /// ページが削除された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Removed(object sender, ValueEventArgs<int[]> e)
-        {
-            if (e.Value == null || e.Value.Length <= 0) return;
-
-            var index = e.Value[0];
-            if (index < 0 || index >= Model.Count) return;
-
-            Model[index].PropertyChanged -= Model_PropertyChanged;
-            Model.RemoveAt(index);
-            Model.Active = Model[Math.Min(index, Model.Count - 1)];
+            Settings.Current.Page = pages[index];
         }
 
         #endregion
 
         #region Model
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_ActiveChanged
-        /// 
-        /// <summary>
-        /// アクティブな Page が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_ActiveChanged(object sender, EventArgs e)
-        {
-            if (Model.Active == null) return;
-
-            var index = View.Pages.SelectedIndices.Count > 0 ?
-                        View.Pages.SelectedIndices[0] : -1;
-            if (index >= 0 && index < Model.Count && Model.Active == Model[index]) return;
-
-            var changed = Model.IndexOf(Model.Active);
-            if (changed == -1) return;
-
-            Sync(() => View.Pages.Select(changed));
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -234,7 +190,7 @@ namespace Cube.Note.App.Editor
                     Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    if (Model.Count <= 0) Model.NewPage();
+                    if (Model.Count <= 0) NewPage_Handled(sender, EventArgs.Empty);
                     break;
             }
         }
@@ -247,45 +203,129 @@ namespace Cube.Note.App.Editor
         /// コレクションに要素が追加された時に実行されるハンドラです。
         /// </summary>
         ///
+        /// <remarks>
+        /// TODO: DataSource への追加方法を要検討
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
         {
             var index = e.NewStartingIndex;
-            Model[index].PropertyChanged -= Model_PropertyChanged;
-            Model[index].PropertyChanged += Model_PropertyChanged;
-            SyncWait(() => View.Pages.Insert(index, Model[index]));
-        }
+            var page  = Model[index];
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_PropertyChanged
-        /// 
-        /// <summary>
-        /// プロパティの値が変化した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 項目全体を置換すると画面のちらつき目立つため、概要の更新に
-        /// ついては Text 部分のみを置換します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var page = sender as Page;
-            if (page == null) return;
-
-            var index = Model.IndexOf(page);
-            if (index == -1) return;
-
-            Sync(() =>
+            SyncWait(() =>
             {
-                if (e.PropertyName == "Abstract") View.Pages.ReplaceText(index, page.GetAbstract());
-                else View.Pages.Replace(index, page);
+                var pages = View.DataSource;
+                if (pages == null || !ViewContains(page)) return;
+
+                var newindex = Math.Min(index, pages.Count);
+                pages.Insert(newindex, page);
             });
         }
 
         #endregion
+
+        #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_ActiveChanged
+        /// 
+        /// <summary>
+        /// アクティブな Page が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_PageChanged(object sender, EventArgs e)
+        {
+            if (Settings.Current.Page == null) return;
+
+            Sync(() =>
+            {
+                var current = View.SelectedIndices.Count > 0 ?
+                              View.SelectedIndices[0] : -1;
+                var changed = View.DataSource?.IndexOf(Settings.Current.Page) ?? -1;
+                if (changed == -1 || changed == current) return;
+
+                View.Select(changed);
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_TagChanged
+        /// 
+        /// <summary>
+        /// タグが変化した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
+        {
+            if (e.NewValue == null) return;
+            Sync(() =>
+            {
+                View.DataSource = Model.Search(e.NewValue).ToObservable();
+                if (View.DataSource.Count > 0) View.Select(0);
+                else Settings.Current.Page = null;
+            });
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsRemoveCanceled
+        /// 
+        /// <summary>
+        /// キャンセルされたかどうか判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsRemoveCanceled(Page page)
+        {
+            if (page == null) return true;
+            if (!Settings.User.RemoveWarning) return false;
+
+            var message = new System.Text.StringBuilder();
+            message.AppendLine(Properties.Resources.WarnRemove);
+            message.AppendLine();
+            message.AppendLine(page.GetAbstract());
+            message.AppendLine(page.Creation.ToString(Properties.Resources.CreationFormat));
+            message.AppendLine(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
+
+            var result = DialogResult.Yes;
+            SyncWait(() => result = MessageBox.Show(
+                message.ToString(),
+                Properties.Resources.WarnRemoveTitle,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button1
+            ));
+            return result == DialogResult.No;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewContains
+        /// 
+        /// <summary>
+        /// View にページが含まれている（または含まれるべき）かどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool ViewContains(Page page)
+        {
+            if (View.DataSource == null) return false;
+
+            return Settings.Current.Tag == null ||
+                   Settings.Current.Tag == Model.Everyone ||
+                   page.Tags.Contains(Settings.Current.Tag.Name);
+        }
 
         #endregion
     }

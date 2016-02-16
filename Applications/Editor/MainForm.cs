@@ -19,8 +19,8 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
-using System.Drawing;
 using System.Windows.Forms;
+using log4net;
 
 namespace Cube.Note.App.Editor
 {
@@ -48,11 +48,15 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MainForm()
         {
+            Logger = LogManager.GetLogger(GetType());
+
             InitializeComponent();
+            InitializeModels();
             InitializeEvents();
             InitializePresenters();
 
             Caption = TitleControl;
+            TextControl.Status = FooterStatusControl;
         }
 
         #endregion
@@ -70,15 +74,19 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            NewPageMenuItem.Click  += NewPageMenuItem_Click;
-            RemoveMenuItem.Click   += RemoveMenuItem_Click;
-            SearchMenuItem.Click   += SearchMenuItem_Click;
-            VisibleMenuItem.Click  += VisibleMenuItem_Click;
-            LogoMenuItem.Click     += LogoMenuItem_Click;
+            NewPageMenuItem.Click += (s, e) => Aggregator.NewPage.Raise();
+            TagMenuItem.Click += (s, e) => RaiseProperty();
+            RemoveMenuItem.Click += (s, e) => Aggregator.Remove.Raise();
+            SearchMenuItem.Click += (s, e) => SwitchPanel();
+            VisibleMenuItem.Click += (s, e) => SwitchMenu();
+            LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 
             PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
+
+            // TODO: Presenter に移譲
+            Aggregator.TagSettings.Handled += SettingsMenuItem_Click;
         }
 
         /* ----------------------------------------------------------------- */
@@ -92,13 +100,28 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            var width = SystemInformation.VerticalScrollBarWidth;
-            var height = SystemInformation.HorizontalScrollBarHeight;
-            SizeGripControl.Size = new Size(width, height);
-
             var area = Screen.FromControl(this).WorkingArea.Size;
             Width   = (int)(area.Width  * 0.7);
             Height  = (int)(area.Height * 0.7);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeModels
+        ///
+        /// <summary>
+        /// 各種モデルの初期化を行います。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// MainForm にはモデルに関する初期化処理は最低限に留めます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeModels()
+        {
+            Pages.Everyone = new Tag(Properties.Resources.EveryoneTag);
+            Settings.Load();
         }
 
         /* ----------------------------------------------------------------- */
@@ -112,12 +135,69 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new TextPresenter(TextControl, Pages);
-            new TextVisualPresenter(TextControl, Settings);
-            new PageCollectionPresenter(PageCollectionControl, Pages, Settings);
-            new SearchPresenter(SearchControl, Pages);
+            PageCollectionControl.Pages.Aggregator = Aggregator;
+            SearchControl.Aggregator = Aggregator;
+            SearchControl.Pages.Aggregator = Aggregator;
 
-            new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
+            new TextPresenter(TextControl, Pages, Settings, Aggregator);
+            new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
+            new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
+            new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
+            new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Logger
+        /// 
+        /// <summary>
+        /// ログ出力用オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public ILog Logger { get; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SwitchPanel
+        ///
+        /// <summary>
+        /// 左側のメニューパネルの表示方法を変更します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SwitchPanel()
+        {
+            SearchControl.Switch(ContentsPanel.Panel1);
+
+            if (IsActive(SearchControl))
+            {
+                SearchMenuItem.Image = Properties.Resources.SearchEnd;
+                ContentsPanel.Panel1Collapsed = false;
+            }
+            else SearchMenuItem.Image = Properties.Resources.Search;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SwitchMenu
+        ///
+        /// <summary>
+        /// 上部メニューの表示方法を変更します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SwitchMenu()
+        {
+            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
         }
 
         #endregion
@@ -129,7 +209,7 @@ namespace Cube.Note.App.Editor
         /// OnLoad
         ///
         /// <summary>
-        /// ロード時に実行されるハンドラです。
+        /// ロード時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -138,6 +218,21 @@ namespace Cube.Note.App.Editor
             base.OnLoad(e);
             InitializeLayout();
             Saver = new AutoSaver(Pages, Settings);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnShown
+        ///
+        /// <summary>
+        /// 初回表示時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
         /* ----------------------------------------------------------------- */
@@ -159,13 +254,16 @@ namespace Cube.Note.App.Editor
                 switch (e.KeyCode)
                 {
                     case Keys.D:
-                        RemoveMenuItem_Click(this, e);
+                        Aggregator.Remove.Raise();
                         break;
                     case Keys.F:
-                        SearchMenuItem_Click(this, e);
+                        SwitchPanel();
                         break;
                     case Keys.N:
-                        NewPageMenuItem_Click(this, e);
+                        Aggregator.NewPage.Raise();
+                        break;
+                    case Keys.T:
+                        RaiseProperty();
                         break;
                     default:
                         result = false;
@@ -182,69 +280,6 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// NewPageMenuItem_Click
-        ///
-        /// <summary>
-        /// 新規追加メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void NewPageMenuItem_Click(object sender, EventArgs e)
-        {
-            PageCollectionControl.NewPage();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveMenuItem_Click
-        ///
-        /// <summary>
-        /// 削除メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RemoveMenuItem_Click(object sender, EventArgs e)
-        {
-            PageCollectionControl.Pages.RemoveItems();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SearchMenuItem_Click
-        ///
-        /// <summary>
-        /// 検索メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SearchMenuItem_Click(object sender, EventArgs e)
-        {
-            SearchControl.Switch(ContentsPanel.Panel1);
-
-            if (IsActive(SearchControl))
-            {
-                SearchMenuItem.Image = Properties.Resources.SearchEnd;
-                ContentsPanel.Panel1Collapsed = false;
-            }
-            else SearchMenuItem.Image = Properties.Resources.Search;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// VisibleMenuItem_Click
-        ///
-        /// <summary>
-        /// 表示方法の変更メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void VisibleMenuItem_Click(object sender, EventArgs e)
-        {
-            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// LogoMenuItem_Click
         ///
         /// <summary>
@@ -255,7 +290,7 @@ namespace Cube.Note.App.Editor
         private void LogoMenuItem_Click(object sender, EventArgs e)
         {
             try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
-            catch (Exception /* err */) { /* ignore errors */ }
+            catch (Exception err) { Logger.Error(err); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -269,11 +304,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
-            var view = new SettingsForm(Settings);
-            using (var presenter = new SettingsPresenter(view, Settings))
+            var view = new SettingsForm(Settings.User);
+            using (var presenter = new SettingsPresenter(view, /* User, */ Settings, Aggregator))
             {
                 view.ShowDialog(this);
-                TextControl.ViewWidth = 0; // refresh
+                TextControl.ResetViewWidth(); // refresh
             }
         }
 
@@ -290,7 +325,7 @@ namespace Cube.Note.App.Editor
         {
             var active = IsActive(PageCollectionControl);
             NewPageMenuItem.Enabled = active;
-            RemoveMenuItem.Enabled = active;
+            RemoveMenuItem.Enabled  = active;
         }
 
         /* ----------------------------------------------------------------- */
@@ -309,10 +344,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ContentsPanel2_ClientSizeChanged(object sender, EventArgs e)
         {
-            var control = sender as Control;
-            if (control == null) return;
-            MoveSizeGripControl(control);
-
             // see remarks
             var hidden = ContentsPanel.Panel1Collapsed;
             var text   = hidden ?
@@ -329,6 +360,18 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// RaiseProperty
+        ///
+        /// <summary>
+        /// プロパティ表示のためのイベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseProperty()
+            => Aggregator.Property.Raise(new ValueEventArgs<Page>(null));
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IsActive
         ///
         /// <summary>
@@ -336,37 +379,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool IsActive(Control control)
-        {
-            return control.Parent == ContentsPanel.Panel1;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MoveSizeGripControl
-        ///
-        /// <summary>
-        /// リサイズ用グリップを右下に配置します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 現在のところ SizeGripControl は ContentsPanel.Panel2 上に
-        /// 配置されています。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void MoveSizeGripControl(Control parent)
-        {
-            var x = parent.Width  - SizeGripControl.Width;
-            var y = parent.Height - SizeGripControl.Height;
-            SizeGripControl.Location = new Point(x, y);
-        }
+        private bool IsActive(Control control) => control.Parent == ContentsPanel.Panel1;
 
         #endregion
 
         #region Models
         private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
-        private SettingsValue Settings = SettingsValue.Create(Assembly.GetEntryAssembly(), Properties.Resources.SettingsFileName);
+        private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
+        private EventAggregator Aggregator = new EventAggregator();
         private AutoSaver Saver = null;
         #endregion
 

@@ -51,14 +51,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public AutoSaver(PageCollection target, SettingsValue settings)
+        public AutoSaver(PageCollection target, SettingsFolder settings)
         {
             Target = target;
             Settings = settings;
             Interval = TimeSpan.FromSeconds(30);
 
-            Target.ActiveChanged += Target_ActiveChanged;
-            Settings.PropertyChanged += Settings_PropertyChanged;
+            Settings.Current.PageChanged += Settings_PageChanged;
+            Settings.User.PropertyChanged += Settings_PropertyChanged;
             _timer.Elapsed += Timer_Elapsed;
 
             Task35.Run(() => InitializeTarget());
@@ -102,7 +102,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue Settings { get; }
+        public SettingsFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -155,7 +155,7 @@ namespace Cube.Note.App.Editor
         {
             await Task35.Run(() =>
             {
-                SaveDocument(Target.Active);
+                SaveDocument(Settings.Current.Page);
                 SaveOrderFile();
             });
         }
@@ -170,9 +170,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Target_ActiveChanged(object sender, PageChangedEventArgs e)
+        private async void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
-            await Task35.Run(() => SaveDocument(e.OldPage));
+            await Task35.Run(() => SaveDocument(e.OldValue));
         }
 
         /* ----------------------------------------------------------------- */
@@ -186,8 +186,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != "AutoSaveTime") return;
-            Interval = Settings.AutoSaveTime;
+            if (e.PropertyName != nameof(Settings.User.AutoSaveTime)) return;
+            Interval = Settings.User.AutoSaveTime;
         }
 
         #endregion
@@ -209,7 +209,7 @@ namespace Cube.Note.App.Editor
             _disposed = true;
 
             _timer.Stop();
-            Target.ActiveChanged -= Target_ActiveChanged;
+            Settings.Current.PageChanged -= Settings_PageChanged;
             SaveAllDocuments();
             SaveOrderFile();
 
@@ -231,7 +231,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeTarget()
         {
-            Target.Load(Properties.Resources.OrderFileName);
+            Target.Load();
             if (Target.Count <= 0) Target.NewPage();
             _timer.Start();
         }
@@ -245,11 +245,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveDocument(Page page)
-        {
-            if (page == null) return;
-            page.SaveDocument(Target.Directory);
-        }
+        private void SaveDocument(Page page) => page?.SaveDocument(Target.Directory);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -274,10 +270,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveOrderFile()
-        {
-            Target.Save(Properties.Resources.OrderFileName);
-        }
+        private void SaveOrderFile() => Target.Save();
 
         #endregion
 

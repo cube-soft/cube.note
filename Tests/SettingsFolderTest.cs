@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// SettingsValueTest.cs
+/// SettingsFolderTest.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -27,15 +27,15 @@ namespace Cube.Note.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsValueTest
+    /// SettingsFolderTest
     /// 
     /// <summary>
-    /// SettingsValue のテスト用クラスです。
+    /// SettingsFolder のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SettingsValueTest : FileResource
+    class SettingsFolderTest : FileResource
     {
         #region SetUp and TearDown
 
@@ -51,8 +51,9 @@ namespace Cube.Note.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            var src = IoEx.Path.Combine(Examples, "Settings.json");
-            Settings = SettingsValue.Create(src);
+            var src = IoEx.Path.Combine(Examples, SettingsFolder.DefaultFileName);
+            Settings = new SettingsFolder(src);
+            Settings.Load();
         }
 
         #endregion
@@ -68,7 +69,7 @@ namespace Cube.Note.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private SettingsValue Settings { get; set; }
+        private SettingsFolder Settings { get; set; }
 
         #endregion
 
@@ -95,199 +96,226 @@ namespace Cube.Note.Tests
         }
 
         [TestCase("MS Gothic UI", 9.0)]
-        public void Font(string name, double size)
+        public void User_Font(string name, double size)
         {
             Assert.That(
-                Settings.Font,
+                Settings.User.Font,
                 Is.EqualTo(new Font(name, (float)size, FontStyle.Regular, GraphicsUnit.Point))
             );
         }
 
         [TestCase(1, 1, 1)]
-        public void ForeColor(int red, int green, int blue)
+        public void User_ForeColor(int red, int green, int blue)
         {
             Assert.That(
-                Settings.ForeColor,
+                Settings.User.ForeColor,
                 Is.EqualTo(Color.FromArgb(red, green, blue))
             );
         }
 
         [TestCase("Window")]
-        public void BackColor(string expected)
+        public void User_BackColor(string expected)
         {
             Assert.That(
-                Settings.BackColor,
+                Settings.User.BackColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
 
         [TestCase("Highlight")]
-        public void HighlightBackColor(string expected)
+        public void User_HighlightBackColor(string expected)
         {
             Assert.That(
-                Settings.HighlightBackColor,
+                Settings.User.HighlightBackColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
 
         [TestCase("HighlightText")]
-        public void HighlightForeColor(string expected)
+        public void User_HighlightForeColor(string expected)
         {
             Assert.That(
-                Settings.HighlightForeColor,
+                Settings.User.HighlightForeColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
 
         [TestCase("Control")]
-        public void LineNumberBackColor(string expected)
+        public void User_LineNumberBackColor(string expected)
         {
             Assert.That(
-                Settings.LineNumberBackColor,
+                Settings.User.LineNumberBackColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
 
         [TestCase("ControlDark")]
-        public void LineNumberForeColor(string expected)
+        public void User_LineNumberForeColor(string expected)
         {
             Assert.That(
-                Settings.LineNumberForeColor,
+                Settings.User.LineNumberForeColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
 
         [TestCase("ControlDark")]
-        public void SpecialCharsColor(string expected)
+        public void User_SpecialCharsColor(string expected)
         {
             Assert.That(
-                Settings.SpecialCharsColor,
+                Settings.User.SpecialCharsColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
 
         [TestCase("ControlDark")]
-        public void CurrentLineColor(string expected)
+        public void User_CurrentLineColor(string expected)
         {
             Assert.That(
-                Settings.CurrentLineColor,
+                Settings.User.CurrentLineColor,
                 Is.EqualTo(Color.FromName(expected))
             );
         }
 
         [TestCase(10)]
-        public void AutoSaveTime(int expected)
+        public void User_AutoSaveTime(int expected)
         {
             Assert.That(
-                Settings.AutoSaveTime,
+                Settings.User.AutoSaveTime,
                 Is.EqualTo(TimeSpan.FromSeconds(expected))
             );
         }
 
         [TestCase(4)]
-        public void TabWidth(int expected)
+        public void User_TabWidth(int expected)
         {
             Assert.That(
-                Settings.TabWidth,
+                Settings.User.TabWidth,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(80)]
+        public void User_WordWrapCount(int expected)
+        {
+            Assert.That(
+                Settings.User.WordWrapCount,
+                Is.EqualTo(80)
+            );
+        }
+
+        [TestCase(false)]
+        public void User_WordWrap(bool expected)
+        {
+            Assert.That(
+                Settings.User.WordWrap,
                 Is.EqualTo(expected)
             );
         }
 
         [TestCase(false)]
-        public void TabToSpace(bool expected)
+        public void User_WordWrapAsWindow(bool expected)
         {
             Assert.That(
-                Settings.TabToSpace,
-                Is.EqualTo(expected)
-            );
-        }
-
-        [TestCase(true)]
-        public void LineNumberVisible(bool expected)
-        {
-            Assert.That(
-                Settings.LineNumberVisible,
-                Is.EqualTo(expected)
-            );
-        }
-
-        [TestCase(true)]
-        public void RulerVisible(bool expected)
-        {
-            Assert.That(
-                Settings.RulerVisible,
+                Settings.User.WordWrapAsWindow,
                 Is.EqualTo(expected)
             );
         }
 
         [TestCase(false)]
-        public void SpecialCharsVisible(bool expected)
+        public void User_TabToSpace(bool expected)
         {
             Assert.That(
-                Settings.SpecialCharsVisible,
+                Settings.User.TabToSpace,
                 Is.EqualTo(expected)
             );
         }
 
         [TestCase(true)]
-        public void EolVisible(bool expected)
+        public void User_LineNumberVisible(bool expected)
         {
             Assert.That(
-                Settings.EolVisible,
+                Settings.User.LineNumberVisible,
                 Is.EqualTo(expected)
             );
         }
 
         [TestCase(true)]
-        public void TabVisible(bool expected)
+        public void User_RulerVisible(bool expected)
         {
             Assert.That(
-                Settings.TabVisible,
+                Settings.User.RulerVisible,
                 Is.EqualTo(expected)
             );
         }
 
         [TestCase(false)]
-        public void SpaceVisible(bool expected)
+        public void User_SpecialCharsVisible(bool expected)
         {
             Assert.That(
-                Settings.SpaceVisible,
+                Settings.User.SpecialCharsVisible,
                 Is.EqualTo(expected)
             );
         }
 
         [TestCase(true)]
-        public void FullSpaceVisible(bool expected)
+        public void User_EolVisible(bool expected)
         {
             Assert.That(
-                Settings.FullSpaceVisible,
-                Is.EqualTo(expected)
-            );
-        }
-
-        [TestCase(false)]
-        public void CurrentLineVisible(bool expected)
-        {
-            Assert.That(
-                Settings.CurrentLineVisible,
-                Is.EqualTo(expected)
-            );
-        }
-
-        [TestCase(false)]
-        public void ModifiedLineVisible(bool expected)
-        {
-            Assert.That(
-                Settings.ModifiedLineVisible,
+                Settings.User.EolVisible,
                 Is.EqualTo(expected)
             );
         }
 
         [TestCase(true)]
-        public void RemoveWarning(bool expected)
+        public void User_TabVisible(bool expected)
         {
             Assert.That(
-                Settings.RemoveWarning,
+                Settings.User.TabVisible,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(false)]
+        public void User_SpaceVisible(bool expected)
+        {
+            Assert.That(
+                Settings.User.SpaceVisible,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(true)]
+        public void User_FullSpaceVisible(bool expected)
+        {
+            Assert.That(
+                Settings.User.FullSpaceVisible,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(false)]
+        public void User_CurrentLineVisible(bool expected)
+        {
+            Assert.That(
+                Settings.User.CurrentLineVisible,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(false)]
+        public void User_ModifiedLineVisible(bool expected)
+        {
+            Assert.That(
+                Settings.User.ModifiedLineVisible,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase(true)]
+        public void User_RemoveWarning(bool expected)
+        {
+            Assert.That(
+                Settings.User.RemoveWarning,
                 Is.EqualTo(expected)
             );
         }
@@ -306,15 +334,13 @@ namespace Cube.Note.Tests
         [TestCase("NewSettings.json")]
         public void Save(string filename)
         {
-            var dest = IoEx.Path.Combine(Results, filename);
-            Settings.Save(dest);
+            Settings.Save(IoEx.Path.Combine(Results, filename));
             Assert.That(
-                IoEx.File.Exists(dest),
+                IoEx.File.Exists(Settings.Path),
                 Is.True
             );
         }
 
         #endregion
-
     }
 }

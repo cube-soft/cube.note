@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentHandlerTest.cs
+/// TagButton.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,84 +17,73 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Linq;
-using NUnit.Framework;
-using Cube.Note.Azuki;
+using System.Drawing;
+using System.Windows.Forms;
 
-namespace Cube.Note.Tests.Azuki
+namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentTest
+    /// TagButton
     /// 
     /// <summary>
-    /// DocumentHandler のテスト用クラスです。
+    /// タグの編集用ボタンを表すクラスです。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class DocumentHandlerTest : PageCollectionResource
+    public class TagButton : Cube.Forms.ToggleButton
     {
-        #region Tests
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateDocument_Last
+        /// TagButton
         ///
         /// <summary>
-        /// Document オブジェクトを生成するテストを行います。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("LastPage")]
-        public void CreateDocument_Last(string expected)
-        {
-            Assert.That(
-                Pages[Pages.Count - 1].CreateDocument(Pages.Directory).Text,
-                Is.EqualTo(expected)
-            );
-        }
+        public TagButton() : this(string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveDocument_Last
+        /// TagButton
         ///
         /// <summary>
-        /// 内容をファイルに保存するテストを行います。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void SaveDocument_Last()
-        {
-            var page = Pages[Pages.Count - 1];
-            var document = page.CreateDocument(Pages.Directory);
-            document.Replace("Replaced", 0, document.Length);
-            page.SaveDocument(Pages.Directory);
-
-            Assert.That(
-                page.LastUpdate,
-                Is.EqualTo(DateTime.Now).Within(TimeSpan.FromSeconds(1))
-            );
-        }
+        public TagButton(Tag tag) : this(tag?.Name) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Search_Count
+        /// TagButton
         ///
         /// <summary>
-        /// 検索のテストを行います。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Hello", 1)]
-        public void Search_Count(string keyword, int expected)
+        public TagButton(string tag) : base()
         {
-            Assert.That(
-                Pages.Search(keyword).Count(),
-                Is.EqualTo(expected)
-            );
+            Size = new Size(75, 25);
+            AutoSize = true;
+            TextAlign = ContentAlignment.MiddleCenter;
+            if (!string.IsNullOrEmpty(tag)) Text = tag;
+
+            Cursor = Cursors.Hand;
+
+            Surface.BackColor = SystemColors.Control;
+            Surface.BorderColor = SystemColors.ControlDark;
+            Surface.TextColor = SystemColors.GrayText;
+            Surface.BorderSize = 1;
+
+            CheckedSurface.BackColor = SystemColors.Highlight;
+            CheckedSurface.BorderColor = SystemColors.HotTrack;
+            CheckedSurface.TextColor = SystemColors.HighlightText;
+            CheckedSurface.BorderSize = 1;
         }
 
         #endregion

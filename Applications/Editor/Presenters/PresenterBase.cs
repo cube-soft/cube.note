@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageChangedEventArgs.cs
+/// PresenterBase.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,36 +17,35 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-
-namespace Cube.Note
+namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageChangedEventArgs
+    /// PresenterBase
     /// 
     /// <summary>
-    /// ページの変更に関連するイベントの内容を保持するためのクラスです。
+    /// CubeNote で作成する Presenter の基底となるクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class PageChangedEventArgs : EventArgs
+    public class PresenterBase<TView, TModel> : Cube.Forms.PresenterBase<TView, TModel>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageChangedEventArgs
+        /// PresenterBase
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageChangedEventArgs(Page before, Page after)
+        public PresenterBase(TView view, TModel model,
+            SettingsFolder settings, EventAggregator events) : base(view, model)
         {
-            OldPage = before;
-            NewPage = after;
+            Settings = settings;
+            Events = events;
         }
 
         #endregion
@@ -55,25 +54,25 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OldPage
+        /// Settings
         /// 
         /// <summary>
-        /// 変更前のオブジェクトを取得します。
+        /// 設定情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page OldPage { get; }
+        public SettingsFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// NewPage
+        /// Events
         /// 
         /// <summary>
-        /// 変更後のオブジェクトを取得します。
+        /// イベント情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page NewPage { get; }
+        public EventAggregator Events { get; }
 
         #endregion
     }

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Page.cs
+/// ConditionsValue.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -19,39 +19,39 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
 
 namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Page
+    /// ConditionsValue
     /// 
     /// <summary>
-    /// ページを表すクラスです。
+    /// アプリケーションの状態を表す値を保持するためのクラスです。
     /// </summary>
     /// 
+    /// <remarks>
+    /// このクラスが保持する値は、アプリケーション終了時に破棄されます。
+    /// アプリケーションの次回起動時にも必要な値に関しては SettingsValue に
+    /// 定義して下さい。
+    /// </remarks>
+    /// 
     /* --------------------------------------------------------------------- */
-    [DataContract]
-    public class Page : INotifyPropertyChanged
+    public class ConditionsValue : INotifyPropertyChanged
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Page
+        /// ConditionsValue
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page()
-        {
-            InitializeValues();
-        }
+        public ConditionsValue() { }
 
         #endregion
 
@@ -59,117 +59,45 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileName
+        /// Page
         ///
         /// <summary>
-        /// ファイル名を取得します。
+        /// アクティブな Page オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember]
-        public string FileName
+        public Page Page
         {
-            get { return _filename; }
+            get { return _page; }
             set
             {
-                if (_filename == value) return;
-                _filename = value;
-                RaisePropertyChanged(nameof(FileName));
+                if (_page == value) return;
+
+                var before = _page;
+                _page = value;
+                OnPageChanged(new ValueChangedEventArgs<Page>(before, value));
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Abstract
+        /// Tag
         ///
         /// <summary>
-        /// 概要を取得または設定します。
+        /// アクティブな Tag オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember]
-        public string Abstract
+        public Tag Tag
         {
-            get { return _abstract; }
+            get { return _tag; }
             set
             {
-                if (_abstract == value) return;
-                _abstract = value;
-                RaisePropertyChanged(nameof(Abstract));
-            }
-        }
+                if (_tag == value) return;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Creation
-        ///
-        /// <summary>
-        /// 生成日時を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public DateTime Creation
-        {
-            get { return _creation; }
-            set
-            {
-                if (_creation == value) return;
-                _creation = value;
-                RaisePropertyChanged(nameof(Creation));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LastUpdate
-        ///
-        /// <summary>
-        /// 生成日時を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public DateTime LastUpdate
-        {
-            get { return _update; }
-            set
-            {
-                if (_update == value) return;
-                _update = value;
-                RaisePropertyChanged(nameof(LastUpdate));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Tags
-        ///
-        /// <summary>
-        /// タグ一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public ObservableCollection<string> Tags { get; private set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Document
-        ///
-        /// <summary>
-        /// Document オブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public object Document
-        {
-            get { return _document; }
-            set
-            {
-                if (_document == value) return;
-                _document = value;
-                RaisePropertyChanged(nameof(Document));
+                var before = _tag;
+                _tag = value;
+                OnTagChanged(new ValueChangedEventArgs<Tag>(before, value));
             }
         }
 
@@ -188,6 +116,28 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageChanged
+        ///
+        /// <summary>
+        /// ページが変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<ValueChangedEventArgs<Page>> PageChanged;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TagChanged
+        ///
+        /// <summary>
+        /// タグが変更された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<ValueChangedEventArgs<Tag>> TagChanged;
+
         #endregion
 
         #region Virtual methods
@@ -203,6 +153,30 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
             => PropertyChanged?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPageChanged
+        ///
+        /// <summary>
+        /// TagChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPageChanged(ValueChangedEventArgs<Page> e)
+            => PageChanged?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnTagChanged
+        ///
+        /// <summary>
+        /// TagChanged イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnTagChanged(ValueChangedEventArgs<Tag> e)
+            => TagChanged?.Invoke(this, e);
 
         #endregion
 
@@ -222,47 +196,9 @@ namespace Cube.Note
 
         #endregion
 
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDeserializing
-        ///
-        /// <summary>
-        /// デシリアライズ時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context) => InitializeValues();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeValues
-        ///
-        /// <summary>
-        /// 値を初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeValues()
-        {
-            FileName   = Guid.NewGuid().ToString("N");
-            Abstract   = string.Empty;
-            Creation   = DateTime.Now;
-            LastUpdate = DateTime.Now;
-            Tags       = new ObservableCollection<string>();
-            Document   = null;
-        }
-
-        #endregion
-
         #region Fields
-        private string _filename;
-        private string _abstract;
-        private DateTime _creation;
-        private DateTime _update;
-        private object _document;
+        private Page _page;
+        private Tag _tag;
         #endregion
     }
 }

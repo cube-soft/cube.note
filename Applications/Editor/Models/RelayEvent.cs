@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FormBase
+/// RelayEvent.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -18,121 +18,113 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FormBase
+    /// RelayEvent
     /// 
     /// <summary>
-    /// フォーム外観の共通部分を定義したクラスです。
+    /// イベントを伝搬させるためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class FormBase : Cube.Forms.WidgetForm
+    public class RelayEvent
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FormBase
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public FormBase()
-        {
-            InitializeComponent();
-
-            Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
-            Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
-        }
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Maximize
-        ///
+        /// Raise
+        /// 
         /// <summary>
-        /// 最大化します。
+        /// イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Maximize()
-        {
-            if (!Sizable || !MaximizeBox) return;
-
-            WindowState = WindowState == FormWindowState.Normal ?
-                          FormWindowState.Maximized :
-                          FormWindowState.Normal;
-        }
+        public void Raise() => Raise(this);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Minimize
-        ///
+        /// Raise
+        /// 
         /// <summary>
-        /// 最小化します。
+        /// イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Minimize()
-        {
-            if (WindowState == FormWindowState.Minimized) return;
-            WindowState = FormWindowState.Minimized;
-        }
+        public void Raise(object sender) => Handled?.Invoke(sender, EventArgs.Empty);
 
         #endregion
 
-        #region Override methods
+        #region Events
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnLoad
-        ///
+        /// Handled
+        /// 
         /// <summary>
-        /// ロード時に実行されます。
+        /// Raise によって発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
+        public event EventHandler Handled;
 
-            var control = Caption as TitleControl;
-            if (control == null) return;
+        #endregion
+    }
 
-            control.CloseExecuted    += (s, ev) => Close();
-            control.MaximizeExecuted += (s, ev) => Maximize();
-            control.MinimizeExecuted += (s, ev) => Minimize();
-
-            control.MaximizeBox = MaximizeBox && Sizable;
-            control.MinimizeBox = MinimizeBox;
-        }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// RelayEvent
+    /// 
+    /// <summary>
+    /// イベントを伝搬させるためのクラスです。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
+    public class RelayEvent<TEvent> where TEvent : EventArgs
+    {
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnBackColorChanged
-        ///
+        /// Raise
+        /// 
         /// <summary>
-        /// 背景色が変更された時に実行されます。
+        /// イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBackColorChanged(EventArgs e)
-        {
-            base.OnBackColorChanged(e);
-            if (Caption == null) return;
-            Caption.BackColor = BackColor;
-        }
+        public void Raise(TEvent args)
+            => Raise(this, args);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Raise
+        /// 
+        /// <summary>
+        /// イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Raise(object sender, TEvent args)
+            => Handled?.Invoke(sender, args);
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Handled
+        /// 
+        /// <summary>
+        /// Raise によって発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<TEvent> Handled;
 
         #endregion
     }

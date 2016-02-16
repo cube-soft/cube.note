@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             Sgry.Azuki.FontInfo fontInfo1 = new Sgry.Azuki.FontInfo();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
-            this.SizeGripControl = new Cube.Forms.SizeGripControl();
             this.TextControl = new Cube.Note.App.Editor.TextControl();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
             this.NewPageMenuItem = new System.Windows.Forms.ToolStripButton();
             this.RemoveMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.TagMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator3 = new System.Windows.Forms.ToolStripButton();
@@ -47,12 +47,12 @@
             this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
+            this.FooterStatusControl = new Cube.Note.App.Editor.StatusControl();
             this.LayoutPanel.SuspendLayout();
             //((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
             this.ContentsPanel.Panel2.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SizeGripControl)).BeginInit();
             this.MenuToolStrip.SuspendLayout();
             //((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).BeginInit();
             this.SuspendLayout();
@@ -66,14 +66,16 @@
             this.LayoutPanel.Controls.Add(this.MenuToolStrip, 0, 1);
             this.LayoutPanel.Controls.Add(this.VerticalSeparator, 0, 2);
             this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
+            this.LayoutPanel.Controls.Add(this.FooterStatusControl, 0, 4);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 4;
+            this.LayoutPanel.RowCount = 5;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.LayoutPanel.Size = new System.Drawing.Size(782, 459);
             this.LayoutPanel.TabIndex = 2;
             // 
@@ -93,9 +95,8 @@
             // 
             // ContentsPanel.Panel2
             // 
-            this.ContentsPanel.Panel2.Controls.Add(this.SizeGripControl);
             this.ContentsPanel.Panel2.Controls.Add(this.TextControl);
-            this.ContentsPanel.Size = new System.Drawing.Size(782, 396);
+            this.ContentsPanel.Size = new System.Drawing.Size(782, 374);
             this.ContentsPanel.SplitterDistance = 270;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
@@ -108,19 +109,8 @@
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
-            this.PageCollectionControl.Size = new System.Drawing.Size(270, 396);
+            this.PageCollectionControl.Size = new System.Drawing.Size(270, 374);
             this.PageCollectionControl.TabIndex = 0;
-            // 
-            // SizeGripControl
-            // 
-            this.SizeGripControl.BackColor = System.Drawing.SystemColors.Control;
-            this.SizeGripControl.Image = ((System.Drawing.Image)(resources.GetObject("SizeGripControl.Image")));
-            this.SizeGripControl.Location = new System.Drawing.Point(495, 380);
-            this.SizeGripControl.Margin = new System.Windows.Forms.Padding(0);
-            this.SizeGripControl.Name = "SizeGripControl";
-            this.SizeGripControl.Size = new System.Drawing.Size(16, 16);
-            this.SizeGripControl.TabIndex = 1;
-            this.SizeGripControl.TabStop = false;
             // 
             // TextControl
             // 
@@ -146,9 +136,11 @@
             this.TextControl.Margin = new System.Windows.Forms.Padding(0);
             this.TextControl.Name = "TextControl";
             this.TextControl.ScrollPos = new System.Drawing.Point(0, 0);
-            this.TextControl.Size = new System.Drawing.Size(511, 396);
+            this.TextControl.Size = new System.Drawing.Size(511, 374);
+            this.TextControl.Status = null;
             this.TextControl.TabIndex = 0;
             this.TextControl.ViewWidth = 104;
+            this.TextControl.WordWrapCount = -1;
             // 
             // MenuToolStrip
             // 
@@ -162,6 +154,7 @@
             this.MenuSeparator1,
             this.NewPageMenuItem,
             this.RemoveMenuItem,
+            this.TagMenuItem,
             this.MenuSeparator2,
             this.SearchMenuItem,
             this.MenuSeparator3,
@@ -216,11 +209,21 @@
             this.RemoveMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Remove;
             this.RemoveMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.RemoveMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RemoveMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 6, 1);
             this.RemoveMenuItem.Name = "RemoveMenuItem";
             this.RemoveMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.RemoveMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.RemoveMenuItem.Size = new System.Drawing.Size(44, 29);
             this.RemoveMenuItem.Text = "ノートを削除";
+            // 
+            // TagMenuItem
+            // 
+            this.TagMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TagMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Tag;
+            this.TagMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TagMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 6, 1);
+            this.TagMenuItem.Name = "TagMenuItem";
+            this.TagMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.TagMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.TagMenuItem.Text = "タグを付ける";
             // 
             // MenuSeparator2
             // 
@@ -307,6 +310,21 @@
             this.TitleControl.Size = new System.Drawing.Size(782, 30);
             this.TitleControl.TabIndex = 4;
             // 
+            // FooterStatusControl
+            // 
+            this.FooterStatusControl.ColumnNumber = 0;
+            this.FooterStatusControl.Count = 0;
+            this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FooterStatusControl.GripMargin = new System.Windows.Forms.Padding(0);
+            this.FooterStatusControl.LineCount = 0;
+            this.FooterStatusControl.LineNumber = 0;
+            this.FooterStatusControl.Location = new System.Drawing.Point(0, 437);
+            this.FooterStatusControl.Message = "";
+            this.FooterStatusControl.Name = "FooterStatusControl";
+            this.FooterStatusControl.Size = new System.Drawing.Size(782, 22);
+            this.FooterStatusControl.TabIndex = 5;
+            this.FooterStatusControl.Text = "statusControl1";
+            // 
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
@@ -324,7 +342,6 @@
             this.ContentsPanel.Panel2.ResumeLayout(false);
             //((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).EndInit();
             this.ContentsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SizeGripControl)).EndInit();
             this.MenuToolStrip.ResumeLayout(false);
             this.MenuToolStrip.PerformLayout();
             //((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).EndInit();
@@ -350,7 +367,8 @@
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
         private TitleControl TitleControl;
         private TextControl TextControl;
-        private Forms.SizeGripControl SizeGripControl;
+        private StatusControl FooterStatusControl;
+        private System.Windows.Forms.ToolStripButton TagMenuItem;
     }
 }
 

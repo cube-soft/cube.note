@@ -104,6 +104,8 @@ namespace Cube.Note.App.Editor
             FontButton.Tag                      = settings.Font;
 
             TabToSpaceCheckBox.Checked          = settings.TabToSpace;
+            WordWrapCheckBox.Checked            = settings.WordWrap;
+            WordWrapAsWindowCheckBox.Checked    = settings.WordWrapAsWindow;
             LineNumberVisibleCheckBox.Checked   = settings.LineNumberVisible;
             RulerVisibleCheckBox.Checked        = settings.RulerVisible;
             SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
@@ -118,6 +120,7 @@ namespace Cube.Note.App.Editor
 
             TabWidthNumericUpDown.Value         = settings.TabWidth;
             AutoSaveTimeNumericUpDown.Value     = (int)settings.AutoSaveTime.TotalSeconds;
+            WordWrapCountNumericUpDown.Value    = settings.WordWrapCount;
         }
 
         #endregion
@@ -135,9 +138,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            RunButton.Click                            += RunButton_Click;
-            ExitButton.Click                           += ExitButton_Click;
             ApplyButton.Click                          += ApplyButton_Click;
+            ExitButton.Click                           += ExitButton_Click;
             ResetButton.Click                          += (s, e) => OnReset(e);
 
             FontButton.Click                           += FontButton_Click;
@@ -152,6 +154,8 @@ namespace Cube.Note.App.Editor
             CurrentLineColorButton.Click               += ColorButton_Click;
 
             TabToSpaceCheckBox.CheckedChanged          += CheckBoxChanged;
+            WordWrapCheckBox.CheckedChanged            += CheckBoxChanged;
+            WordWrapAsWindowCheckBox.CheckedChanged    += CheckBoxChanged;
             LineNumberVisibleCheckBox.CheckedChanged   += CheckBoxChanged;
             RulerVisibleCheckBox.CheckedChanged        += CheckBoxChanged;
             SpecialCharsVisibleCheckBox.CheckedChanged += CheckBoxChanged;
@@ -166,11 +170,14 @@ namespace Cube.Note.App.Editor
 
             TabWidthNumericUpDown.ValueChanged         += NumericUpDownChanged;
             AutoSaveTimeNumericUpDown.ValueChanged     += NumericUpDownChanged;
+            WordWrapCountNumericUpDown.ValueChanged    += NumericUpDownChanged;
 
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberVisibleCheckBox.CheckedChanged   += (s, e) => EnableLineNumber();
             RulerVisibleCheckBox.CheckedChanged        += (s, e) => EnableLineNumber();
             CurrentLineVisibleCheckBox.CheckedChanged  += (s, e) => EnableCurrentLine();
+            WordWrapCheckBox.CheckedChanged            += (s, e) => EnableWordWrap();
+            WordWrapAsWindowCheckBox.CheckedChanged    += (s, e) => EnableWordWrap();
         }
 
         /* ----------------------------------------------------------------- */
@@ -186,14 +193,14 @@ namespace Cube.Note.App.Editor
         {
             var control = new Cube.Forms.VersionControl();
 
-            control.Assembly    = Assembly.GetEntryAssembly();
-            control.Description = string.Empty;
-            control.Logo        = Properties.Resources.LogoLarge;
-            control.Url         = Properties.Resources.WebUrl;
-            control.Dock        = DockStyle.Top;
-            control.Resize     += (s, e) => ResizeVersionControl(control);
+            control.Assembly     = Assembly.GetEntryAssembly();
+            control.VersionDigit = 3;
+            control.Description  = string.Empty;
+            control.Logo         = Properties.Resources.LogoLarge;
+            control.Url          = Properties.Resources.WebUrl;
+            control.Dock         = DockStyle.Fill;
+            control.Padding      = new Padding(40, 40, 0, 0);
 
-            ResizeVersionControl(control);
             VersionTabPage.Controls.Add(control);
         }
 
@@ -259,9 +266,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnApplied(EventArgs e)
-        {
-            if (Applied != null) Applied(this, e);
-        }
+            => Applied?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -273,9 +278,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnCanceled(EventArgs e)
-        {
-            if (Canceled != null) Canceled(this, e);
-        }
+            => Canceled?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -287,9 +290,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset(EventArgs e)
-        {
-            if (Reset != null) Reset(this, e);
-        }
+            => Reset?.Invoke(this, e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -301,10 +302,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnPropertyChanged(KeyValueEventArgs<string, object> e)
-        {
-            if (PropertyChanged != null) PropertyChanged(this, e);
-            ApplyButton.Enabled = true;
-        }
+            => PropertyChanged?.Invoke(this, e);
 
         #endregion
 
@@ -328,7 +326,6 @@ namespace Cube.Note.App.Editor
             if (Height > area.Height) Height = area.Height;
 
             UpdateControls();
-            ApplyButton.Enabled = false;
         }
 
         #endregion
@@ -337,32 +334,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RunButton_Click
+        /// ApplyButton_Click
         ///
         /// <summary>
         /// OK ボタンが押下された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RunButton_Click(object sender, EventArgs e)
-        {
-            ApplyButton_Click(sender, e);
-            Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ApplyButton_Click
-        ///
-        /// <summary>
-        /// 更新ボタンが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
         private void ApplyButton_Click(object sender, EventArgs e)
         {
             OnApplied(e);
-            ApplyButton.Enabled = false;
+            Close();
         }
 
         /* ----------------------------------------------------------------- */
@@ -459,6 +441,7 @@ namespace Cube.Note.App.Editor
             EnableLineNumber();
             EnableSpecialChars();
             EnableCurrentLine();
+            EnableWordWrap();
         }
 
         /* ----------------------------------------------------------------- */
@@ -473,7 +456,7 @@ namespace Cube.Note.App.Editor
         private void UpdateColor(Control control, Label label)
         {
             var color = control.BackColor;
-            var text = string.Format("({0}, {1}, {2})", color.R, color.G, color.B);
+            var text = $"({color.R}, {color.G}, {color.B})";
             if (label.Text == text) return;
             label.Text = text;
 
@@ -493,7 +476,7 @@ namespace Cube.Note.App.Editor
         {
             if (font == null) return;
 
-            var text = string.Format("({0}, {1}pt)", font.Name, font.Size);
+            var text = $"({font.Name}, {font.Size}pt)";
             if (label.Text == text) return;
             label.Text = text;
 
@@ -563,17 +546,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ResizeVersionControl
+        /// EnableWordWrap
         ///
         /// <summary>
-        /// バージョン画面のレイアウトを調整します。
+        /// 行番号および水平ルーラーに関する設定の変更を可能にします。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResizeVersionControl(Control control)
+        private void EnableWordWrap()
         {
-            control.Padding = new Padding(40, 40, 0, 0);
-            control.Height = Math.Min(VersionTabPage.Height, 200);
+            var enable = WordWrapCheckBox.Checked;
+            var cmode  = WordWrapCheckBox.Checked && !WordWrapAsWindowCheckBox.Checked;
+
+            WordWrapLabel.Enabled              = enable;
+            WordWrapAsWindowCheckBox.Enabled   = enable;
+            WordWrapCountNumericUpDown.Enabled = cmode;
         }
 
         #endregion
@@ -691,9 +678,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected void RaisePropertyChanged(Control control, object value)
         {
-            var name = control.Tag is string ?
-                       control.Tag as string :
-                       control.Name.Replace(control.GetType().Name, string.Empty);
+            var name = control.Name.Replace(control.GetType().Name, string.Empty);
             if (string.IsNullOrEmpty(name)) return;
 
             OnPropertyChanged(new KeyValueEventArgs<string, object>(name, value));
