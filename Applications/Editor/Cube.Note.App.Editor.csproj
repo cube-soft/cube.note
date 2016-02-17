@@ -44,9 +44,8 @@
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Cube.Forms, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\cube.forms\Libraries\bin\Debug\Cube.Forms.dll</HintPath>
+    <Reference Include="Cube.Forms">
+      <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>

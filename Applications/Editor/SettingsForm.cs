@@ -60,8 +60,8 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings)
         {
             InitializeComponent();
-            MainSettingControl.OKButton = ApplyButton;
-            MainSettingControl.CancelButton = ExitButton;
+            SettingControl.OKButton = ApplyButton;
+            SettingControl.CancelButton = ExitButton;
             InitializeVersionControl();
             Update(settings);
             InitializeEvents();
@@ -194,11 +194,11 @@ namespace Cube.Note.App.Editor
         {
             add
             {
-                MainSettingControl.Apply += value;
+                SettingControl.Apply += value;
             }
             remove
             {
-                MainSettingControl.Apply -= value;
+                SettingControl.Apply -= value;
             }
         }
 
@@ -215,11 +215,11 @@ namespace Cube.Note.App.Editor
         {
             add
             {
-                MainSettingControl.Cancel += value;
+                SettingControl.Cancel += value;
             }
             remove
             {
-                MainSettingControl.Cancel -= value;
+                SettingControl.Cancel -= value;
             }
         }
 
@@ -247,11 +247,11 @@ namespace Cube.Note.App.Editor
         {
             add
             {
-                MainSettingControl.PropertyChanged += value;
+                SettingControl.PropertyChanged += value;
             }
             remove
             {
-                MainSettingControl.PropertyChanged -= value;
+                SettingControl.PropertyChanged -= value;
             }
         }
 
