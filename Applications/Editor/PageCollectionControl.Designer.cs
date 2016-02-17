@@ -60,7 +60,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.LayoutPanel.Size = new System.Drawing.Size(300, 300);
             this.LayoutPanel.TabIndex = 0;
             // 
@@ -74,14 +74,14 @@
             this.NewPageButton.ForeColor = System.Drawing.SystemColors.GrayText;
             this.NewPageButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
             this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.NewPageButton.Location = new System.Drawing.Point(0, 270);
+            this.NewPageButton.Location = new System.Drawing.Point(0, 272);
             this.NewPageButton.Margin = new System.Windows.Forms.Padding(0);
             this.NewPageButton.Name = "NewPageButton";
             this.NewPageButton.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.NewPageButton.Size = new System.Drawing.Size(300, 30);
+            this.NewPageButton.Size = new System.Drawing.Size(300, 28);
             this.NewPageButton.TabIndex = 5;
             this.NewPageButton.Text = "ノートを追加";
-            this.NewPageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NewPageButton.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.NewPageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewPageButton.UseVisualStyleBackColor = false;
             // 
@@ -117,7 +117,7 @@
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
             this.ContentsPanel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 4);
-            this.ContentsPanel.Size = new System.Drawing.Size(300, 236);
+            this.ContentsPanel.Size = new System.Drawing.Size(300, 238);
             this.ContentsPanel.TabIndex = 2;
             // 
             // PageListView
@@ -134,7 +134,7 @@
             this.PageListView.Margin = new System.Windows.Forms.Padding(0);
             this.PageListView.MultiSelect = false;
             this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(296, 232);
+            this.PageListView.Size = new System.Drawing.Size(296, 234);
             this.PageListView.TabIndex = 0;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.PageListView.TileSize = new System.Drawing.Size(296, 115);
@@ -145,7 +145,7 @@
             // 
             this.Separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.Separator2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Separator2.Location = new System.Drawing.Point(0, 269);
+            this.Separator2.Location = new System.Drawing.Point(0, 271);
             this.Separator2.Margin = new System.Windows.Forms.Padding(0);
             this.Separator2.Name = "Separator2";
             this.Separator2.Size = new System.Drawing.Size(300, 1);

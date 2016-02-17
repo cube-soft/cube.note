@@ -440,6 +440,141 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Button methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsSelectedArea
+        /// 
+        /// <summary>
+        /// 指定された座標が選択項目上にあるかどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsSelectedArea(Point point)
+        {
+            var item = GetItemAt(point.X, point.Y);
+            if (item == null) return false;
+            return SelectedIndices.Contains(item.Index);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsRemoveButton
+        /// 
+        /// <summary>
+        /// 削除ボタン上かどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsRemoveButton(Point point, Rectangle bounds)
+        {
+            if (!ShowRemoveButton || !IsSelectedArea(point)) return false;
+
+            var image = Properties.Resources.Remove;
+
+            var x1 = bounds.Right - _space;
+            var x0 = x1 - image.Width;
+            var y0 = bounds.Top + _space;
+            var y1 = y0 + image.Height;
+
+            return point.X >= x0 && point.X <= x1 &&
+                   point.Y >= y0 && point.Y <= y1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsPropertyButton
+        /// 
+        /// <summary>
+        /// プロパティ情報編集ボタンおよびテキスト上かどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsPropertyButton(Point point, Rectangle bounds)
+        {
+            var size = _cacheProperty;
+            if (size == SizeF.Empty) return false;
+            if (!ShowPropertyButton || !IsSelectedArea(point)) return false;
+
+            var x0 = bounds.Left + _space;
+            var x1 = x0 + size.Width;
+            var y1 = bounds.Bottom - _space;
+            var y0 = y1 - size.Height;
+
+            return point.X >= x0 && point.X <= x1 &&
+                   point.Y >= y0 && point.Y <= y1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawRemoveButton
+        /// 
+        /// <summary>
+        /// 削除ボタンを描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawRemoveButton(Graphics gs, Rectangle bounds)
+        {
+            var image = Properties.Resources.Remove;
+            var x = bounds.Right - image.Width - _space;
+            var y = bounds.Top + _space;
+            gs.DrawImage(image, x, y);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawPropertyButton
+        /// 
+        /// <summary>
+        /// プロパティ情報編ボタンを描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawPropertyButton(Graphics gs, Rectangle bounds)
+        {
+            var font   = new Font(Font.FontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
+            var size   = GetPropertySize(gs, font);
+            var height = size.Height;
+            var image  = Properties.Resources.Property;
+
+            var x0 = bounds.Left + _space;
+            var y0 = bounds.Bottom - (height + _space) + (height - image.Height) / 2.0 - 1.0;
+            gs.DrawImage(image, x0, (float)y0);
+
+            var text = Properties.Resources.ShowProperty;
+            var brush = new SolidBrush(SystemColors.GrayText);
+
+            var x1 = x0 + image.Width;
+            var y1 = bounds.Bottom - (height + _space) + (height - size.Height) / 2.0;
+            gs.DrawString(text, font, brush, x1, (float)y1);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPropertySize
+        /// 
+        /// <summary>
+        /// プロパティボタンの描画領域を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private SizeF GetPropertySize(Graphics gs, Font font)
+        {
+            if (_cacheProperty != SizeF.Empty) return _cacheProperty;
+
+            var image  = Properties.Resources.Property;
+            var text   = Properties.Resources.ShowProperty;
+            var size   = gs.MeasureString(text, font);
+            var height = Math.Max(image.Height, size.Height);
+
+            _cacheProperty = new SizeF(image.Width + size.Width, height);
+            return _cacheProperty;
+        }
+
+        #endregion
+
         #region Others
 
         /* ----------------------------------------------------------------- */
@@ -517,99 +652,11 @@ namespace Cube.Note.App.Editor
             foreach (Page page in pages) page.PropertyChanged -= DS_PropertyChanged;
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsRemoveButton
-        /// 
-        /// <summary>
-        /// 削除ボタン上かどうかを判別します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private bool IsRemoveButton(Point point, Rectangle bounds)
-        {
-            if (!ShowRemoveButton) return false;
-
-            var space = 3;
-            var image = Properties.Resources.Remove;
-
-            var x0 = bounds.Right - image.Width - space;
-            var x1 = x0 + image.Width;
-            var y0 = bounds.Top + space;
-            var y1 = y0 + image.Height;
-
-            return point.X >= x0 && point.X <= x1 &&
-                   point.Y >= y0 && point.Y <= y1;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsPropertyButton
-        /// 
-        /// <summary>
-        /// プロパティ情報編集ボタンおよびテキスト上かどうかを判別します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private bool IsPropertyButton(Point point, Rectangle bounds)
-        {
-            if (!ShowPropertyButton) return false;
-
-            var space = 3;
-            var image = Properties.Resources.Property;
-
-            var x0 = bounds.Left + space;
-            var x1 = x0 + image.Width + 11 * 6;
-            var y0 = bounds.Bottom - image.Height - space;
-            var y1 = y0 + image.Height;
-
-            return point.X >= x0 && point.X <= x1 &&
-                   point.Y >= y0 && point.Y <= y1;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DrawRemoveButton
-        /// 
-        /// <summary>
-        /// 削除ボタンを描画します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void DrawRemoveButton(Graphics gs, Rectangle bounds)
-        {
-            var image = Properties.Resources.Remove;
-            var x = bounds.Right - image.Width - _space;
-            var y = bounds.Top + _space;
-            gs.DrawImage(image, new PointF(x, y));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DrawPropertyButton
-        /// 
-        /// <summary>
-        /// プロパティ情報編ボタンを描画します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void DrawPropertyButton(Graphics gs, Rectangle bounds)
-        {
-            var image = Properties.Resources.Property;
-            var x = bounds.Left + _space;
-            var y = bounds.Bottom - image.Height - _space;
-            gs.DrawImage(image, new PointF(x, y));
-
-            x += image.Width;
-            var font = new Font(Font.FontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
-            var brush = new SolidBrush(SystemColors.GrayText);
-            gs.DrawString(Properties.Resources.ShowProperty, font, brush, x, y);
-        }
-
         #endregion
 
         #region Fields
         private ObservableCollection<Page> _source;
+        private SizeF _cacheProperty = SizeF.Empty;
         private static readonly int _space = 3;
         #endregion
     }
