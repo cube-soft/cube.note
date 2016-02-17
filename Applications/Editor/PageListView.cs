@@ -315,24 +315,6 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnMouseDoubleClick
-        /// 
-        /// <summary>
-        /// マウスがダブルクリックされた時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
-        {
-            base.OnMouseDoubleClick(e);
-
-            if (DataSource == null || SelectedIndices.Count <= 0) return;
-            var page = DataSource[SelectedIndices[0]];
-            Aggregator?.Property.Raise(new ValueEventArgs<Page>(page));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// OnRemoved
         /// 
         /// <summary>

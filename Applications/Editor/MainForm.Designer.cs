@@ -33,7 +33,7 @@
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
-            this.RightContentsPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.RightContentsPanel = new Cube.Forms.TableLayoutPanel();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
@@ -330,7 +330,7 @@
             this.FooterStatusControl.Name = "FooterStatusControl";
             this.FooterStatusControl.Size = new System.Drawing.Size(782, 22);
             this.FooterStatusControl.TabIndex = 5;
-            this.FooterStatusControl.Text = "statusControl1";
+            this.FooterStatusControl.Text = "";
             // 
             // MainForm
             // 
@@ -364,7 +364,7 @@
         private System.Windows.Forms.SplitContainer ContentsPanel;
         private PageCollectionControl PageCollectionControl;
         private TitleControl TitleControl;
-        private System.Windows.Forms.TableLayoutPanel RightContentsPanel;
+        private Cube.Forms.TableLayoutPanel RightContentsPanel;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
         private System.Windows.Forms.ToolStripButton MenuSeparator1;

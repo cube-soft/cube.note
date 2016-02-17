@@ -99,7 +99,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   タグを編集する... に類似しているローカライズされた文字列を検索します。
+        ///   タグを編集... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string EditTag {
             get {
@@ -303,7 +303,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   タグを付ける に類似しているローカライズされた文字列を検索します。
+        ///   タグを設定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ShowProperty {
             get {

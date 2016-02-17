@@ -131,7 +131,7 @@
     <value>yyyy/MM/dd HH:mm 作成</value>
   </data>
   <data name="EditTag" xml:space="preserve">
-    <value>タグを編集する...</value>
+    <value>タグを編集...</value>
   </data>
   <data name="EmptyPage" xml:space="preserve">
     <value>無題のページ</value>
@@ -194,7 +194,7 @@
     <value>..\Resources\Shadow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ShowProperty" xml:space="preserve">
-    <value>タグを付ける</value>
+    <value>タグを設定</value>
   </data>
   <data name="Title" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
