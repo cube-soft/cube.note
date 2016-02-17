@@ -98,6 +98,16 @@ namespace Cube.Note.App.Editor
             dest.Text = text;
         }
 
+        protected override void CheckUpdateType(Control control, string propertyname, object value)
+        {
+            if (propertyname == "AutoSaveTime")
+            {
+                if (!(value is TimeSpan)) return;
+                var numeric = (NumericUpDown)control;
+                numeric.Value = (int)((TimeSpan)value).TotalSeconds;
+            }
+            else base.CheckUpdateType(control, propertyname, value);
+        }
         #endregion
     }
 }

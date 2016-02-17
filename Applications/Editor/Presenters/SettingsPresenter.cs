@@ -146,6 +146,7 @@ namespace Cube.Note.App.Editor
         {
             try
             {
+                var type = typeof(SettingsValue);
                 switch (e.Key)
                 {
                     case nameof(Model.Font):
@@ -154,85 +155,14 @@ namespace Cube.Note.App.Editor
                         Model.FontSize = font.Size;
                         Model.FontStyle = font.Style;
                         break;
-                    case nameof(Model.BackColor):
-                        Model.BackColor = (Color)e.Value;
-                        break;
-                    case nameof(Model.ForeColor):
-                        Model.ForeColor = (Color)e.Value;
-                        break;
-                    case nameof(Model.HighlightBackColor):
-                        Model.HighlightBackColor = (Color)e.Value;
-                        break;
-                    case nameof(Model.HighlightForeColor):
-                        Model.HighlightForeColor = (Color)e.Value;
-                        break;
-                    case nameof(Model.LineNumberBackColor):
-                        Model.LineNumberBackColor = (Color)e.Value;
-                        break;
-                    case nameof(Model.LineNumberForeColor):
-                        Model.LineNumberForeColor = (Color)e.Value;
-                        break;
-                    case nameof(Model.SpecialCharsColor):
-                        Model.SpecialCharsColor = (Color)e.Value;
-                        break;
-                    case nameof(Model.CurrentLineColor):
-                        Model.CurrentLineColor = (Color)e.Value;
-                        break;
                     case nameof(Model.AutoSaveTime):
                         Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
-                    case nameof(Model.TabWidth):
-                        Model.TabWidth = (int)((decimal)e.Value);
-                        break;
-                    case nameof(Model.TabToSpace):
-                        Model.TabToSpace = (bool)e.Value;
-                        break;
-                    case nameof(Model.WordWrap):
-                        Model.WordWrap = (bool)e.Value;
-                        break;
-                    case nameof(Model.WordWrapAsWindow):
-                        Model.WordWrapAsWindow = (bool)e.Value;
-                        break;
-                    case nameof(Model.WordWrapCount):
-                        Model.WordWrapCount = (int)((decimal)e.Value);
-                        break;
-                    case nameof(Model.LineNumberVisible):
-                        Model.LineNumberVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.RulerVisible):
-                        Model.RulerVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.SpecialCharsVisible):
-                        Model.SpecialCharsVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.EolVisible):
-                        Model.EolVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.TabVisible):
-                        Model.TabVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.SpaceVisible):
-                        Model.SpaceVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.FullSpaceVisible):
-                        Model.FullSpaceVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.CurrentLineVisible):
-                        Model.CurrentLineVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.ModifiedLineVisible):
-                        Model.ModifiedLineVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.BracketVisible):
-                        Model.BracketVisible = (bool)e.Value;
-                        break;
-                    case nameof(Model.RemoveWarning):
-                        Model.RemoveWarning = (bool)e.Value;
-                        break;
                     default:
-                        Logger.Warn($"Skip:{e.Key}");
+                        type.GetProperty(e.Key).SetValue(Model, e.Value);
                         break;
                 }
+                
             }
             catch (Exception err) { Logger.Error(err); }
         }

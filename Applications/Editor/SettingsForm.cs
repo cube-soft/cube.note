@@ -84,47 +84,7 @@ namespace Cube.Note.App.Editor
         public void Update(SettingsValue settings)
         {
             if (settings == null) return;
-
-            BackColorColorButton.BackColor = settings.BackColor;
-            BackColorColorButton.ForeColor = settings.BackColor;
-            ForeColorColorButton.BackColor = settings.ForeColor;
-            ForeColorColorButton.ForeColor = settings.ForeColor;
-
-            HighlightBackColorColorButton.BackColor  = settings.HighlightBackColor;
-            HighlightBackColorColorButton.ForeColor  = settings.HighlightBackColor;
-            HighlightForeColorColorButton.BackColor  = settings.HighlightForeColor;
-            HighlightForeColorColorButton.ForeColor  = settings.HighlightForeColor;
-
-            LineNumberBackColorColorButton.BackColor = settings.LineNumberBackColor;
-            LineNumberBackColorColorButton.ForeColor = settings.LineNumberBackColor;
-            LineNumberForeColorColorButton.BackColor = settings.LineNumberForeColor;
-            LineNumberForeColorColorButton.ForeColor = settings.LineNumberForeColor;
-
-            SpecialCharsColorColorButton.BackColor = settings.SpecialCharsColor;
-            SpecialCharsColorColorButton.ForeColor = settings.SpecialCharsColor;
-            CurrentLineColorColorButton.BackColor  = settings.CurrentLineColor;
-            CurrentLineColorColorButton.ForeColor  = settings.CurrentLineColor;
-
-            FontFontButton.Font = settings.Font;
-
-            TabWidthNumericUpDown.Value      = settings.TabWidth;
-            AutoSaveTimeNumericUpDown.Value  = (int)settings.AutoSaveTime.TotalSeconds;
-            WordWrapCountNumericUpDown.Value = settings.WordWrapCount;
-
-            WordWrapCheckBox.Checked            = settings.WordWrap;
-            WordWrapAsWindowCheckBox.Checked    = settings.WordWrapAsWindow;
-            TabToSpaceCheckBox.Checked          = settings.TabToSpace;
-            LineNumberVisibleCheckBox.Checked   = settings.LineNumberVisible;
-            RulerVisibleCheckBox.Checked        = settings.RulerVisible;
-            SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
-            EolVisibleCheckBox.Checked          = settings.EolVisible;
-            TabVisibleCheckBox.Checked          = settings.TabVisible;
-            SpaceVisibleCheckBox.Checked        = settings.SpaceVisible;
-            FullSpaceVisibleCheckBox.Checked    = settings.FullSpaceVisible;
-            CurrentLineVisibleCheckBox.Checked  = settings.CurrentLineVisible;
-            ModifiedLineVisibleCheckBox.Checked = settings.ModifiedLineVisible;
-            BracketVisibleCheckBox.Checked      = settings.BracketVisible;
-            RemoveWarningCheckBox.Checked       = settings.RemoveWarning;
+            SettingControl.UpdateFromSetting(settings);
         }
 
         #endregion
