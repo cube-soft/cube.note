@@ -95,25 +95,24 @@ namespace Cube.Note.App.Editor
             set
             {
                 if (_source == value) return;
+
                 if (_source != null)
                 {
                     _source.CollectionChanged -= DS_CollectionChanged;
-                    foreach (var page in _source) page.PropertyChanged -= DS_PropertyChanged;
+                    Detach(_source);
                 }
-
                 ClearItems();
-                _source = value;
 
-                if (_source != null)
+                _source = value;
+                if (_source == null) return;
+
+                _source.CollectionChanged -= DS_CollectionChanged;
+                _source.CollectionChanged += DS_CollectionChanged;
+                foreach (var page in _source)
                 {
-                    _source.CollectionChanged -= DS_CollectionChanged;
-                    _source.CollectionChanged += DS_CollectionChanged;
-                    foreach (var page in _source)
-                    {
-                        Add(page);
-                        page.PropertyChanged -= DS_PropertyChanged;
-                        page.PropertyChanged += DS_PropertyChanged;
-                    }
+                    Add(page);
+                    page.PropertyChanged -= DS_PropertyChanged;
+                    page.PropertyChanged += DS_PropertyChanged;
                 }
             }
         }
