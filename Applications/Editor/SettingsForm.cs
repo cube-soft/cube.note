@@ -19,7 +19,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
-using System.Drawing;
 using System.Windows.Forms; 
 
 namespace Cube.Note.App.Editor
@@ -60,13 +59,13 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings)
         {
             InitializeComponent();
-            SettingControl.OKButton = ApplyButton;
-            SettingControl.CancelButton = ExitButton;
             InitializeVersionControl();
             Update(settings);
             InitializeEvents();
 
             Caption = TitleControl;
+            SettingControl.OKButton = ApplyButton;
+            SettingControl.CancelButton = ExitButton;
         }
 
         #endregion
@@ -86,28 +85,35 @@ namespace Cube.Note.App.Editor
         {
             if (settings == null) return;
 
-            BackColorColorButton.BackColor           = settings.BackColor;
-            BackColorColorButton.ForeColor           = settings.BackColor;
-            ForeColorColorButton.BackColor           = settings.ForeColor;
-            ForeColorColorButton.ForeColor           = settings.ForeColor;
+            BackColorColorButton.BackColor = settings.BackColor;
+            BackColorColorButton.ForeColor = settings.BackColor;
+            ForeColorColorButton.BackColor = settings.ForeColor;
+            ForeColorColorButton.ForeColor = settings.ForeColor;
+
             HighlightBackColorColorButton.BackColor  = settings.HighlightBackColor;
             HighlightBackColorColorButton.ForeColor  = settings.HighlightBackColor;
             HighlightForeColorColorButton.BackColor  = settings.HighlightForeColor;
             HighlightForeColorColorButton.ForeColor  = settings.HighlightForeColor;
+
             LineNumberBackColorColorButton.BackColor = settings.LineNumberBackColor;
             LineNumberBackColorColorButton.ForeColor = settings.LineNumberBackColor;
             LineNumberForeColorColorButton.BackColor = settings.LineNumberForeColor;
             LineNumberForeColorColorButton.ForeColor = settings.LineNumberForeColor;
-            SpecialCharsColorColorButton.BackColor   = settings.SpecialCharsColor;
-            SpecialCharsColorColorButton.ForeColor   = settings.SpecialCharsColor;
-            CurrentLineColorColorButton.BackColor    = settings.CurrentLineColor;
-            CurrentLineColorColorButton.ForeColor    = settings.CurrentLineColor;
 
-            FontFontButton.Tag                      = settings.Font;
+            SpecialCharsColorColorButton.BackColor = settings.SpecialCharsColor;
+            SpecialCharsColorColorButton.ForeColor = settings.SpecialCharsColor;
+            CurrentLineColorColorButton.BackColor  = settings.CurrentLineColor;
+            CurrentLineColorColorButton.ForeColor  = settings.CurrentLineColor;
 
-            TabToSpaceCheckBox.Checked          = settings.TabToSpace;
+            FontFontButton.Font = settings.Font;
+
+            TabWidthNumericUpDown.Value      = settings.TabWidth;
+            AutoSaveTimeNumericUpDown.Value  = (int)settings.AutoSaveTime.TotalSeconds;
+            WordWrapCountNumericUpDown.Value = settings.WordWrapCount;
+
             WordWrapCheckBox.Checked            = settings.WordWrap;
             WordWrapAsWindowCheckBox.Checked    = settings.WordWrapAsWindow;
+            TabToSpaceCheckBox.Checked          = settings.TabToSpace;
             LineNumberVisibleCheckBox.Checked   = settings.LineNumberVisible;
             RulerVisibleCheckBox.Checked        = settings.RulerVisible;
             SpecialCharsVisibleCheckBox.Checked = settings.SpecialCharsVisible;
@@ -119,10 +125,6 @@ namespace Cube.Note.App.Editor
             ModifiedLineVisibleCheckBox.Checked = settings.ModifiedLineVisible;
             BracketVisibleCheckBox.Checked      = settings.BracketVisible;
             RemoveWarningCheckBox.Checked       = settings.RemoveWarning;
-
-            TabWidthNumericUpDown.Value         = settings.TabWidth;
-            AutoSaveTimeNumericUpDown.Value     = (int)settings.AutoSaveTime.TotalSeconds;
-            WordWrapCountNumericUpDown.Value    = settings.WordWrapCount;
         }
 
         #endregion
@@ -140,10 +142,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            ApplyButton.Click                          += ApplyButton_Click;
-            ExitButton.Click                           += ExitButton_Click;
-            ResetButton.Click                          += (s, e) => OnReset(e);
-            PropertyChanged                            += OnPropertyChanged;
+            ApplyButton.Click += (s, e) => Close();
+            ExitButton.Click  += (s, e) => Close();
+            ResetButton.Click += (s, e) => OnReset(e);
 
             SpecialCharsVisibleCheckBox.CheckedChanged += (s, e) => EnableSpecialChars();
             LineNumberVisibleCheckBox.CheckedChanged   += (s, e) => EnableLineNumber();
@@ -183,44 +184,32 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Applied
+        /// Apply
         ///
         /// <summary>
         /// OK または適用ボタンが押下された時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler Applied
+        public event EventHandler Apply
         {
-            add
-            {
-                SettingControl.Apply += value;
-            }
-            remove
-            {
-                SettingControl.Apply -= value;
-            }
+            add    { SettingControl.Apply += value; }
+            remove { SettingControl.Apply -= value; }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Canceled
+        /// Cancel
         ///
         /// <summary>
         /// キャンセルボタンが押下された時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler Canceled
+        public event EventHandler Cancel
         {
-            add
-            {
-                SettingControl.Cancel += value;
-            }
-            remove
-            {
-                SettingControl.Cancel -= value;
-            }
+            add    { SettingControl.Cancel += value; }
+            remove { SettingControl.Cancel -= value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -245,14 +234,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public event EventHandler<KeyValueEventArgs<string, object>> PropertyChanged
         {
-            add
-            {
-                SettingControl.PropertyChanged += value;
-            }
-            remove
-            {
-                SettingControl.PropertyChanged -= value;
-            }
+            add    { SettingControl.PropertyChanged += value; }
+            remove { SettingControl.PropertyChanged -= value; }
         }
 
         #endregion
@@ -271,7 +254,6 @@ namespace Cube.Note.App.Editor
         protected virtual void OnReset(EventArgs e)
             => Reset?.Invoke(this, e);
         
-
         #endregion
 
         #region Override methods
@@ -298,54 +280,6 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ApplyButton_Click
-        ///
-        /// <summary>
-        /// OK ボタンが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ApplyButton_Click(object sender, EventArgs e)
-        {
-            //OnApplied(e);
-            Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ExitButton_Click
-        ///
-        /// <summary>
-        /// キャンセルボタンが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            //OnCanceled(e);
-            Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPropertyChanged
-        ///
-        /// <summary>
-        /// プロパティが変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void OnPropertyChanged(object sender, KeyValueEventArgs<string, object> e)
-        {
-            UpdateControls();
-        }
-        
-        #endregion
-
         #region Update methods
 
         /* ----------------------------------------------------------------- */
@@ -359,60 +293,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateControls()
         {
-            UpdateColor(BackColorColorButton, BackColorLabel);
-            UpdateColor(ForeColorColorButton, ForeColorLabel);
-            UpdateColor(HighlightBackColorColorButton, HighlightBackColorLabel);
-            UpdateColor(HighlightForeColorColorButton, HighlightForeColorLabel);
-            UpdateColor(LineNumberBackColorColorButton, LineNumberBackColorLabel);
-            UpdateColor(LineNumberForeColorColorButton, LineNumberForeColorLabel);
-            UpdateColor(SpecialCharsColorColorButton, SpecialCharsColorLabel);
-            UpdateColor(CurrentLineColorColorButton, CurrentLineColorLabel);
-
-            UpdateFont(FontFontButton.Font, FontLabel);
-
             EnableLineNumber();
             EnableSpecialChars();
             EnableCurrentLine();
             EnableWordWrap();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateColor
-        ///
-        /// <summary>
-        /// 色設定を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void UpdateColor(Control control, Label label)
-        {
-            var color = control.BackColor;
-            var text = $"({color.R}, {color.G}, {color.B})";
-            if (label.Text == text) return;
-            label.Text = text;
-
-            //RaisePropertyChanged(control, color);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateFont
-        ///
-        /// <summary>
-        /// フォント設定を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void UpdateFont(Font font, Label label)
-        {
-            if (font == null) return;
-
-            var text = $"({font.Name}, {font.Size}pt)";
-            if (label.Text == text) return;
-            label.Text = text;
-
-            //OnPropertyChanged(new KeyValueEventArgs<string, object>("Font", font));
         }
 
         /* ----------------------------------------------------------------- */

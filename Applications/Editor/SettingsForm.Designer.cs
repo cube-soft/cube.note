@@ -37,7 +37,7 @@
             this.ExitButton = new Cube.Forms.Button();
             this.ApplyButtonShadow = new System.Windows.Forms.Panel();
             this.ApplyButton = new Cube.Forms.Button();
-            this.SettingControl = new Cube.Forms.SettingsControl();
+            this.SettingControl = new Cube.Note.App.Editor.SettingsControl();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralSettingsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -332,7 +332,7 @@
             // BackColorColorButton
             // 
             this.BackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.BackColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("BackColorColorButton.CustomColors")));
+            this.BackColorColorButton.CustomColors = null;
             this.BackColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.BackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -366,7 +366,7 @@
             // ForeColorColorButton
             // 
             this.ForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.ForeColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("ForeColorColorButton.CustomColors")));
+            this.ForeColorColorButton.CustomColors = null;
             this.ForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.ForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -400,7 +400,7 @@
             // HighlightBackColorColorButton
             // 
             this.HighlightBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.HighlightBackColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("HighlightBackColorColorButton.CustomColors")));
+            this.HighlightBackColorColorButton.CustomColors = null;
             this.HighlightBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.HighlightBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HighlightBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -434,7 +434,7 @@
             // HighlightForeColorColorButton
             // 
             this.HighlightForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.HighlightForeColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("HighlightForeColorColorButton.CustomColors")));
+            this.HighlightForeColorColorButton.CustomColors = null;
             this.HighlightForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.HighlightForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HighlightForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -683,7 +683,7 @@
             // LineNumberBackColorColorButton
             // 
             this.LineNumberBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.LineNumberBackColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("LineNumberBackColorColorButton.CustomColors")));
+            this.LineNumberBackColorColorButton.CustomColors = null;
             this.LineNumberBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.LineNumberBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -718,7 +718,7 @@
             // LineNumberForeColorColorButton
             // 
             this.LineNumberForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.LineNumberForeColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("LineNumberForeColorColorButton.CustomColors")));
+            this.LineNumberForeColorColorButton.CustomColors = null;
             this.LineNumberForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.LineNumberForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -785,7 +785,7 @@
             // CurrentLineColorColorButton
             // 
             this.CurrentLineColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.CurrentLineColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("CurrentLineColorColorButton.CustomColors")));
+            this.CurrentLineColorColorButton.CustomColors = null;
             this.CurrentLineColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.CurrentLineColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CurrentLineColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -873,7 +873,7 @@
             // SpecialCharsColorColorButton
             // 
             this.SpecialCharsColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.SpecialCharsColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("SpecialCharsColorColorButton.CustomColors")));
+            this.SpecialCharsColorColorButton.CustomColors = null;
             this.SpecialCharsColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.SpecialCharsColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SpecialCharsColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -957,7 +957,7 @@
         private Forms.Button ExitButton;
         private System.Windows.Forms.Panel ApplyButtonShadow;
         private Forms.Button ApplyButton;
-        private Forms.SettingsControl SettingControl;
+        private SettingsControl SettingControl;
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
         private System.Windows.Forms.FlowLayoutPanel GeneralSettingsPanel;
