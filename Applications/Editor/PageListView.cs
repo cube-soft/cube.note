@@ -205,6 +205,7 @@ namespace Cube.Note.App.Editor
             Converter     = new PageConverter();
             FullRowSelect = true;
             HeaderStyle   = ColumnHeaderStyle.None;
+            LabelWrap     = false;
             Margin        = new Padding(0);
             MultiSelect   = false;
             OwnerDraw     = true;

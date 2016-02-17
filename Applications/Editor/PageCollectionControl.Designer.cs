@@ -90,11 +90,11 @@
             this.TagComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TagComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TagComboBox.FormattingEnabled = true;
-            this.TagComboBox.Location = new System.Drawing.Point(8, 3);
-            this.TagComboBox.Margin = new System.Windows.Forms.Padding(8, 3, 8, 0);
+            this.TagComboBox.Location = new System.Drawing.Point(4, 3);
+            this.TagComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 0);
             this.TagComboBox.MaxDropDownItems = 10;
             this.TagComboBox.Name = "TagComboBox";
-            this.TagComboBox.Size = new System.Drawing.Size(284, 26);
+            this.TagComboBox.Size = new System.Drawing.Size(292, 26);
             this.TagComboBox.TabIndex = 3;
             // 
             // Separator1
@@ -130,6 +130,7 @@
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.PageListView.LabelWrap = false;
             this.PageListView.Location = new System.Drawing.Point(4, 0);
             this.PageListView.Margin = new System.Windows.Forms.Padding(0);
             this.PageListView.MultiSelect = false;
@@ -137,7 +138,7 @@
             this.PageListView.Size = new System.Drawing.Size(296, 234);
             this.PageListView.TabIndex = 0;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(296, 115);
+            this.PageListView.TileSize = new System.Drawing.Size(296, 77);
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;
             // 

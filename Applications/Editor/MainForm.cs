@@ -75,8 +75,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            SearchMenuItem.Click += (s, e) => SwitchPanel();
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
+            SearchMenuItem.Click += (s, e) => SwitchPanel();
+            UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
+            RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
             LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 

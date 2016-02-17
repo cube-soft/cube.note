@@ -291,6 +291,7 @@
             this.TextControl.Size = new System.Drawing.Size(511, 374);
             this.TextControl.Status = null;
             this.TextControl.TabIndex = 1;
+            this.TextControl.TopMargin = 6;
             this.TextControl.ViewWidth = 104;
             this.TextControl.WordWrapCount = -1;
             // 
@@ -330,7 +331,6 @@
             this.FooterStatusControl.Name = "FooterStatusControl";
             this.FooterStatusControl.Size = new System.Drawing.Size(782, 22);
             this.FooterStatusControl.TabIndex = 5;
-            this.FooterStatusControl.Text = "";
             // 
             // MainForm
             // 
