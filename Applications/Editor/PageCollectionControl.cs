@@ -46,6 +46,8 @@ namespace Cube.Note.App.Editor
         public PageCollectionControl()
         {
             InitializeComponent();
+
+            NewPageButton.Click += (s, e) => Aggregator?.NewPage.Raise();
         }
 
         #endregion
@@ -73,6 +75,21 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ComboBox Tags => TagComboBox;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Aggregator
+        ///
+        /// <summary>
+        /// イベントを集約するオブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventAggregator Aggregator
+        {
+            get { return Pages.Aggregator; }
+            set { Pages.Aggregator = value; }
+        }
 
         #endregion
     }

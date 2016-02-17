@@ -98,6 +98,7 @@
             // 
             // PageCollectionControl
             // 
+            this.PageCollectionControl.Aggregator = null;
             this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
             this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageCollectionControl.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -307,7 +308,6 @@
         private System.Windows.Forms.SplitContainer ContentsPanel;
         private PageCollectionControl PageCollectionControl;
         private TitleControl TitleControl;
-        private StatusControl FooterStatusControl;
         private System.Windows.Forms.TableLayoutPanel RightContentsPanel;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
@@ -317,6 +317,7 @@
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
         private TextControl TextControl;
         private System.Windows.Forms.PictureBox VerticalSeparator;
+        private StatusControl FooterStatusControl;
     }
 }
 
