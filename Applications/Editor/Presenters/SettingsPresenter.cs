@@ -49,9 +49,9 @@ namespace Cube.Note.App.Editor
             EventAggregator events)
             : base(view, settings.User, settings, events)
         {
-            View.Applied         += View_Applied;
-            View.Canceled        += View_Canceled;
-            View.Reset           += View_Reset;
+            View.Apply  += View_Apply;
+            View.Cancel += View_Cancel;
+            View.Reset  += View_Reset;
             View.PropertyChanged += View_PropertyChanged;
 
             _backup.Assign(Model);
@@ -76,9 +76,9 @@ namespace Cube.Note.App.Editor
             _disposed = true;
             if (!disposing) return;
 
-            View.Applied         -= View_Applied;
-            View.Canceled        -= View_Canceled;
-            View.Reset           -= View_Reset;
+            View.Apply  -= View_Apply;
+            View.Cancel -= View_Cancel;
+            View.Reset  -= View_Reset;
             View.PropertyChanged -= View_PropertyChanged;
         }
 
@@ -88,14 +88,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Applied
+        /// View_Apply
         /// 
         /// <summary>
         /// 適用ボタンが押下された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void View_Applied(object sender, EventArgs e)
+        private async void View_Apply(object sender, EventArgs e)
         {
             await Async(() =>
             {
@@ -106,24 +106,24 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Canceled
+        /// View_Cancel
         /// 
         /// <summary>
         /// キャンセルボタンが押下された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Canceled(object sender, EventArgs e)
+        private void View_Cancel(object sender, EventArgs e)
         {
             Settings.User.Assign(_backup);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Canceled
+        /// View_Reset
         /// 
         /// <summary>
-        /// キャンセルボタンが押下された時に実行されるハンドラです。
+        /// リセットボタンが押下された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -44,8 +44,7 @@
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Cube.Forms, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Cube.Forms">
       <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
@@ -105,6 +104,9 @@
     </Compile>
     <Compile Include="PropertyForm.Designer.cs">
       <DependentUpon>PropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsControl.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
@@ -181,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Font.png" />
     <None Include="Resources\Tag.png" />
     <None Include="Resources\Shadow.png" />
     <None Include="Resources\Normalize.png" />

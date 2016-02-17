@@ -117,6 +117,16 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Font {
+            get {
+                object obj = ResourceManager.GetObject("Font", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   ノート一覧を非表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HideMenu {
