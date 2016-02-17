@@ -556,7 +556,7 @@ namespace Cube.Note.App.Editor
             if (!ShowPropertyButton) return false;
 
             var space = 3;
-            var image = Properties.Resources.Tag;
+            var image = Properties.Resources.Property;
 
             var x0 = bounds.Left + space;
             var x1 = x0 + image.Width + 11 * 6;
@@ -595,7 +595,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawPropertyButton(Graphics gs, Rectangle bounds)
         {
-            var image = Properties.Resources.Tag;
+            var image = Properties.Resources.Property;
             var x = bounds.Left + _space;
             var y = bounds.Bottom - image.Height - _space;
             gs.DrawImage(image, new PointF(x, y));
@@ -603,7 +603,7 @@ namespace Cube.Note.App.Editor
             x += image.Width;
             var font = new Font(Font.FontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
             var brush = new SolidBrush(SystemColors.GrayText);
-            gs.DrawString(Properties.Resources.Property, font, brush, x, y);
+            gs.DrawString(Properties.Resources.ShowProperty, font, brush, x, y);
         }
 
         #endregion

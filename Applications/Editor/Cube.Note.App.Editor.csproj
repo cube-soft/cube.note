@@ -183,8 +183,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Property.png" />
     <None Include="Resources\Font.png" />
-    <None Include="Resources\Tag.png" />
     <None Include="Resources\Shadow.png" />
     <None Include="Resources\Normalize.png" />
     <None Include="Resources\LogoLarge.png" />
