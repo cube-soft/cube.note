@@ -57,6 +57,7 @@ namespace Cube.Note.App.Editor
 
             Caption = TitleControl;
             TextControl.Status = FooterStatusControl;
+            MenuToolStrip.Renderer = new MenuRenderer(MenuToolStrip.BackColor);
         }
 
         #endregion

@@ -33,14 +33,14 @@
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.PageCollectionControl = new Cube.Note.App.Editor.PageCollectionControl();
-            this.TextControl = new Cube.Note.App.Editor.TextControl();
+            this.RightContentsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
-            this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
+            this.MenuSeparator = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
-            this.MenuSeparator3 = new System.Windows.Forms.ToolStripButton();
             this.SettingsMenuItem = new System.Windows.Forms.ToolStripButton();
             this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.TextControl = new Cube.Note.App.Editor.TextControl();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.FooterStatusControl = new Cube.Note.App.Editor.StatusControl();
@@ -49,6 +49,7 @@
             this.ContentsPanel.Panel1.SuspendLayout();
             this.ContentsPanel.Panel2.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
+            this.RightContentsPanel.SuspendLayout();
             this.MenuToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).BeginInit();
             this.SuspendLayout();
@@ -58,20 +59,18 @@
             this.LayoutPanel.BackColor = System.Drawing.SystemColors.Control;
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 3);
-            this.LayoutPanel.Controls.Add(this.MenuToolStrip, 0, 1);
-            this.LayoutPanel.Controls.Add(this.VerticalSeparator, 0, 2);
+            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 1);
             this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
-            this.LayoutPanel.Controls.Add(this.FooterStatusControl, 0, 4);
+            this.LayoutPanel.Controls.Add(this.FooterStatusControl, 0, 2);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 5;
+            this.LayoutPanel.RowCount = 3;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.LayoutPanel.Size = new System.Drawing.Size(782, 459);
             this.LayoutPanel.TabIndex = 2;
             // 
@@ -81,7 +80,7 @@
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContentsPanel.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.ContentsPanel.IsSplitterFixed = true;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 63);
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 30);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
             // 
@@ -91,8 +90,8 @@
             // 
             // ContentsPanel.Panel2
             // 
-            this.ContentsPanel.Panel2.Controls.Add(this.TextControl);
-            this.ContentsPanel.Size = new System.Drawing.Size(782, 374);
+            this.ContentsPanel.Panel2.Controls.Add(this.RightContentsPanel);
+            this.ContentsPanel.Size = new System.Drawing.Size(782, 407);
             this.ContentsPanel.SplitterDistance = 270;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
@@ -105,38 +104,26 @@
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
-            this.PageCollectionControl.Size = new System.Drawing.Size(270, 374);
+            this.PageCollectionControl.Size = new System.Drawing.Size(270, 407);
             this.PageCollectionControl.TabIndex = 0;
             // 
-            // TextControl
+            // RightContentsPanel
             // 
-            this.TextControl.BackColor = System.Drawing.SystemColors.Window;
-            this.TextControl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TextControl.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.TextControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextControl.DrawingOption = ((Sgry.Azuki.DrawingOption)(((((((Sgry.Azuki.DrawingOption.DrawsFullWidthSpace | Sgry.Azuki.DrawingOption.DrawsTab) 
-            | Sgry.Azuki.DrawingOption.DrawsEol) 
-            | Sgry.Azuki.DrawingOption.HighlightCurrentLine) 
-            | Sgry.Azuki.DrawingOption.ShowsLineNumber) 
-            | Sgry.Azuki.DrawingOption.ShowsDirtBar) 
-            | Sgry.Azuki.DrawingOption.HighlightsMatchedBracket)));
-            this.TextControl.FirstVisibleLine = 0;
-            this.TextControl.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-            fontInfo1.Name = "MS UI Gothic";
-            fontInfo1.Size = 9;
-            fontInfo1.Style = System.Drawing.FontStyle.Regular;
-            this.TextControl.FontInfo = fontInfo1;
-            this.TextControl.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.TextControl.LeftMargin = 8;
-            this.TextControl.Location = new System.Drawing.Point(0, 0);
-            this.TextControl.Margin = new System.Windows.Forms.Padding(0);
-            this.TextControl.Name = "TextControl";
-            this.TextControl.ScrollPos = new System.Drawing.Point(0, 0);
-            this.TextControl.Size = new System.Drawing.Size(511, 374);
-            this.TextControl.Status = null;
-            this.TextControl.TabIndex = 0;
-            this.TextControl.ViewWidth = 104;
-            this.TextControl.WordWrapCount = -1;
+            this.RightContentsPanel.ColumnCount = 1;
+            this.RightContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.RightContentsPanel.Controls.Add(this.MenuToolStrip, 0, 0);
+            this.RightContentsPanel.Controls.Add(this.TextControl, 0, 2);
+            this.RightContentsPanel.Controls.Add(this.VerticalSeparator, 0, 1);
+            this.RightContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RightContentsPanel.Location = new System.Drawing.Point(0, 0);
+            this.RightContentsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.RightContentsPanel.Name = "RightContentsPanel";
+            this.RightContentsPanel.RowCount = 3;
+            this.RightContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.RightContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.RightContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.RightContentsPanel.Size = new System.Drawing.Size(511, 407);
+            this.RightContentsPanel.TabIndex = 0;
             // 
             // MenuToolStrip
             // 
@@ -147,16 +134,15 @@
             this.MenuToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.MenuToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VisibleMenuItem,
-            this.MenuSeparator1,
+            this.MenuSeparator,
             this.SearchMenuItem,
-            this.MenuSeparator3,
             this.SettingsMenuItem,
             this.LogoMenuItem});
-            this.MenuToolStrip.Location = new System.Drawing.Point(0, 30);
+            this.MenuToolStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuToolStrip.Name = "MenuToolStrip";
             this.MenuToolStrip.Padding = new System.Windows.Forms.Padding(0);
-            this.MenuToolStrip.Size = new System.Drawing.Size(782, 32);
-            this.MenuToolStrip.TabIndex = 0;
+            this.MenuToolStrip.Size = new System.Drawing.Size(511, 32);
+            this.MenuToolStrip.TabIndex = 2;
             this.MenuToolStrip.Text = "メニュー";
             // 
             // VisibleMenuItem
@@ -171,17 +157,17 @@
             this.VisibleMenuItem.Size = new System.Drawing.Size(44, 30);
             this.VisibleMenuItem.Text = "ノート一覧を非表示";
             // 
-            // MenuSeparator1
+            // MenuSeparator
             // 
-            this.MenuSeparator1.AutoSize = false;
-            this.MenuSeparator1.AutoToolTip = false;
-            this.MenuSeparator1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.MenuSeparator1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator1.Enabled = false;
-            this.MenuSeparator1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator1.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator1.Name = "MenuSeparator1";
-            this.MenuSeparator1.Size = new System.Drawing.Size(1, 34);
+            this.MenuSeparator.AutoSize = false;
+            this.MenuSeparator.AutoToolTip = false;
+            this.MenuSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.MenuSeparator.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator.Enabled = false;
+            this.MenuSeparator.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator.Name = "MenuSeparator";
+            this.MenuSeparator.Size = new System.Drawing.Size(1, 30);
             // 
             // SearchMenuItem
             // 
@@ -194,18 +180,6 @@
             this.SearchMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.SearchMenuItem.Size = new System.Drawing.Size(44, 30);
             this.SearchMenuItem.Text = "検索";
-            // 
-            // MenuSeparator3
-            // 
-            this.MenuSeparator3.AutoSize = false;
-            this.MenuSeparator3.AutoToolTip = false;
-            this.MenuSeparator3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.MenuSeparator3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator3.Enabled = false;
-            this.MenuSeparator3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator3.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator3.Name = "MenuSeparator3";
-            this.MenuSeparator3.Size = new System.Drawing.Size(1, 34);
             // 
             // SettingsMenuItem
             // 
@@ -233,15 +207,45 @@
             this.LogoMenuItem.Size = new System.Drawing.Size(44, 30);
             this.LogoMenuItem.Text = "Web ページ";
             // 
+            // TextControl
+            // 
+            this.TextControl.BackColor = System.Drawing.SystemColors.Window;
+            this.TextControl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TextControl.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.TextControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextControl.DrawingOption = ((Sgry.Azuki.DrawingOption)(((((((Sgry.Azuki.DrawingOption.DrawsFullWidthSpace | Sgry.Azuki.DrawingOption.DrawsTab) 
+            | Sgry.Azuki.DrawingOption.DrawsEol) 
+            | Sgry.Azuki.DrawingOption.HighlightCurrentLine) 
+            | Sgry.Azuki.DrawingOption.ShowsLineNumber) 
+            | Sgry.Azuki.DrawingOption.ShowsDirtBar) 
+            | Sgry.Azuki.DrawingOption.HighlightsMatchedBracket)));
+            this.TextControl.FirstVisibleLine = 0;
+            this.TextControl.Font = new System.Drawing.Font("MS UI Gothic", 9F);
+            fontInfo1.Name = "MS UI Gothic";
+            fontInfo1.Size = 9;
+            fontInfo1.Style = System.Drawing.FontStyle.Regular;
+            this.TextControl.FontInfo = fontInfo1;
+            this.TextControl.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.TextControl.LeftMargin = 8;
+            this.TextControl.Location = new System.Drawing.Point(0, 33);
+            this.TextControl.Margin = new System.Windows.Forms.Padding(0);
+            this.TextControl.Name = "TextControl";
+            this.TextControl.ScrollPos = new System.Drawing.Point(0, 0);
+            this.TextControl.Size = new System.Drawing.Size(511, 374);
+            this.TextControl.Status = null;
+            this.TextControl.TabIndex = 1;
+            this.TextControl.ViewWidth = 104;
+            this.TextControl.WordWrapCount = -1;
+            // 
             // VerticalSeparator
             // 
             this.VerticalSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
             this.VerticalSeparator.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VerticalSeparator.Location = new System.Drawing.Point(0, 62);
+            this.VerticalSeparator.Location = new System.Drawing.Point(0, 32);
             this.VerticalSeparator.Margin = new System.Windows.Forms.Padding(0);
             this.VerticalSeparator.Name = "VerticalSeparator";
-            this.VerticalSeparator.Size = new System.Drawing.Size(782, 1);
-            this.VerticalSeparator.TabIndex = 2;
+            this.VerticalSeparator.Size = new System.Drawing.Size(511, 1);
+            this.VerticalSeparator.TabIndex = 3;
             this.VerticalSeparator.TabStop = false;
             // 
             // TitleControl
@@ -288,6 +292,8 @@
             this.ContentsPanel.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).EndInit();
             this.ContentsPanel.ResumeLayout(false);
+            this.RightContentsPanel.ResumeLayout(false);
+            this.RightContentsPanel.PerformLayout();
             this.MenuToolStrip.ResumeLayout(false);
             this.MenuToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VerticalSeparator)).EndInit();
@@ -300,17 +306,17 @@
         private Cube.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.SplitContainer ContentsPanel;
         private PageCollectionControl PageCollectionControl;
+        private TitleControl TitleControl;
+        private StatusControl FooterStatusControl;
+        private System.Windows.Forms.TableLayoutPanel RightContentsPanel;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
+        private System.Windows.Forms.ToolStripButton MenuSeparator;
         private System.Windows.Forms.ToolStripButton SearchMenuItem;
-        private System.Windows.Forms.PictureBox VerticalSeparator;
         private System.Windows.Forms.ToolStripButton SettingsMenuItem;
-        private System.Windows.Forms.ToolStripButton MenuSeparator1;
-        private System.Windows.Forms.ToolStripButton MenuSeparator3;
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
-        private TitleControl TitleControl;
         private TextControl TextControl;
-        private StatusControl FooterStatusControl;
+        private System.Windows.Forms.PictureBox VerticalSeparator;
     }
 }
 

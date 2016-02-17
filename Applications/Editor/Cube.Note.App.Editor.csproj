@@ -71,6 +71,7 @@
       <DependentUpon>FormBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoSaver.cs" />
+    <Compile Include="Models\MenuRenderer.cs" />
     <Compile Include="Models\EventAggregator.cs" />
     <Compile Include="Models\PageConverter.cs" />
     <Compile Include="Models\PageEx.cs" />
