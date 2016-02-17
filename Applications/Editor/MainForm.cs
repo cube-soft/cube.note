@@ -57,6 +57,7 @@ namespace Cube.Note.App.Editor
 
             Caption = TitleControl;
             TextControl.Status = FooterStatusControl;
+            MenuToolStrip.Renderer = new MenuRenderer(MenuToolStrip.BackColor);
         }
 
         #endregion
@@ -74,15 +75,13 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            NewPageMenuItem.Click += (s, e) => Aggregator.NewPage.Raise();
-            TagMenuItem.Click += (s, e) => RaiseProperty();
-            RemoveMenuItem.Click += (s, e) => Aggregator.Remove.Raise();
-            SearchMenuItem.Click += (s, e) => SwitchPanel();
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
+            SearchMenuItem.Click += (s, e) => SwitchPanel();
+            UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
+            RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
             LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 
-            PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
 
             // TODO: Presenter に移譲
@@ -310,22 +309,6 @@ namespace Cube.Note.App.Editor
                 view.ShowDialog(this);
                 TextControl.ResetViewWidth(); // refresh
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageCollectionControl_ParentChanged
-        ///
-        /// <summary>
-        /// 親コントロールが変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageCollectionControl_ParentChanged(object sender, EventArgs e)
-        {
-            var active = IsActive(PageCollectionControl);
-            NewPageMenuItem.Enabled = active;
-            RemoveMenuItem.Enabled  = active;
         }
 
         /* ----------------------------------------------------------------- */

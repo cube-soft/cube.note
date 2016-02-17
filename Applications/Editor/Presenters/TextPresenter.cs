@@ -140,7 +140,11 @@ namespace Cube.Note.App.Editor
             for (var i = 0; i < document.LineCount; ++i)
             {
                 var content = document.GetLineContent(i).Trim();
-                if (content.Length > 0) return content;
+                if (content.Length <= 0) continue;
+
+                return content.Length > Settings.MaxAbstractLength ?
+                       content.Substring(0, Settings.MaxAbstractLength) :
+                       content;
             }
             return string.Empty;
         }

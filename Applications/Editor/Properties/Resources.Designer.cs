@@ -99,6 +99,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   タグを編集... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string EditTag {
+            get {
+                return ResourceManager.GetString("EditTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   無題のページ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string EmptyPage {
@@ -216,6 +225,26 @@ namespace Cube.Note.App.Editor.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Property {
+            get {
+                object obj = ResourceManager.GetObject("Property", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Redo {
+            get {
+                object obj = ResourceManager.GetObject("Redo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Remove {
             get {
                 object obj = ResourceManager.GetObject("Remove", resourceCulture);
@@ -274,21 +303,11 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        ///   タグを設定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Tag {
+        internal static string ShowProperty {
             get {
-                object obj = ResourceManager.GetObject("Tag", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   タグを編集する... に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TagEdit {
-            get {
-                return ResourceManager.GetString("TagEdit", resourceCulture);
+                return ResourceManager.GetString("ShowProperty", resourceCulture);
             }
         }
         
@@ -298,6 +317,16 @@ namespace Cube.Note.App.Editor.Properties {
         internal static System.Drawing.Bitmap Title {
             get {
                 object obj = ResourceManager.GetObject("Title", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Undo {
+            get {
+                object obj = ResourceManager.GetObject("Undo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

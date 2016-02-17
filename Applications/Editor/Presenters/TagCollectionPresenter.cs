@@ -62,7 +62,7 @@ namespace Cube.Note.App.Editor
 
             View.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Items.Add(Everyone);
-            View.Items.Add(Properties.Resources.TagEdit);
+            View.Items.Add(Properties.Resources.EditTag);
             View.SelectedIndex = 0;
         }
 
@@ -133,7 +133,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (View.SelectedItem.ToString() == Properties.Resources.TagEdit)
+            if (View.SelectedItem.ToString() == Properties.Resources.EditTag)
             {
                 View.SelectedItem = Settings.Current.Tag;
                 Events.TagSettings.Raise();

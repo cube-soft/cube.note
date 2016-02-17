@@ -71,6 +71,7 @@
       <DependentUpon>FormBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoSaver.cs" />
+    <Compile Include="Models\MenuRenderer.cs" />
     <Compile Include="Models\EventAggregator.cs" />
     <Compile Include="Models\PageConverter.cs" />
     <Compile Include="Models\PageEx.cs" />
@@ -183,8 +184,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Undo.png" />
+    <None Include="Resources\Redo.png" />
+    <None Include="Resources\Property.png" />
     <None Include="Resources\Font.png" />
-    <None Include="Resources\Tag.png" />
     <None Include="Resources\Shadow.png" />
     <None Include="Resources\Normalize.png" />
     <None Include="Resources\LogoLarge.png" />

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageCollectionControl.cs
+/// MenuRenderer.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,37 +17,36 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageCollectionControl
+    /// FlatColorTable
     /// 
     /// <summary>
-    /// ページ一覧を表示するためのクラスです。
+    /// グラデーション描画を無効にするためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class PageCollectionControl : Cube.Forms.UserControl
+    public class FlatColorTable : ProfessionalColorTable
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemListControl
+        /// FlatColorTable
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollectionControl()
+        public FlatColorTable(Color color) : base()
         {
-            InitializeComponent();
-
-            NewPageButton.Click += (s, e) => Aggregator?.NewPage.Raise();
+            Color = color;
         }
 
         #endregion
@@ -56,41 +55,48 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pages
+        /// Color
         /// 
         /// <summary>
-        /// ページ一覧を表示する ListView オブジェクトを取得します。
+        /// メイン色を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageListView Pages => PageListView;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Tags
-        /// 
-        /// <summary>
-        /// タグ一覧を表示する ComboBox オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ComboBox Tags => TagComboBox;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Aggregator
-        ///
-        /// <summary>
-        /// イベントを集約するオブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EventAggregator Aggregator
-        {
-            get { return Pages.Aggregator; }
-            set { Pages.Aggregator = value; }
-        }
+        public Color Color { get; }
 
         #endregion
+
+        #region Override properties
+        public override Color ToolStripGradientBegin  => Color;
+        public override Color ToolStripGradientMiddle => Color;
+        public override Color ToolStripGradientEnd    => Color;
+        #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// MenuRenderer
+    /// 
+    /// <summary>
+    /// ToolStripMenu を描画するためのクラスです。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
+    public class MenuRenderer : ToolStripProfessionalRenderer
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MenuRenderer
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MenuRenderer(Color color)
+            : base(new FlatColorTable(color))
+        {
+            RoundedEdges = false;
+        }
     }
 }
