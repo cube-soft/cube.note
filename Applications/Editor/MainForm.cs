@@ -132,8 +132,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            PageCollectionControl.Aggregator = Aggregator;
+            PageCollectionControl.Pages.Aggregator = Aggregator;
             SearchControl.Aggregator = Aggregator;
+            SearchControl.Pages.Aggregator = Aggregator;
 
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);

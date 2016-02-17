@@ -36,10 +36,14 @@
             this.RightContentsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
-            this.MenuSeparator = new System.Windows.Forms.ToolStripButton();
+            this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
             this.SettingsMenuItem = new System.Windows.Forms.ToolStripButton();
             this.LogoMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
+            this.UndoMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.RedoMenuItem = new System.Windows.Forms.ToolStripButton();
+            this.MenuSeparator3 = new System.Windows.Forms.ToolStripButton();
             this.TextControl = new Cube.Note.App.Editor.TextControl();
             this.VerticalSeparator = new System.Windows.Forms.PictureBox();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
@@ -135,10 +139,14 @@
             this.MenuToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.MenuToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VisibleMenuItem,
-            this.MenuSeparator,
+            this.MenuSeparator1,
             this.SearchMenuItem,
             this.SettingsMenuItem,
-            this.LogoMenuItem});
+            this.LogoMenuItem,
+            this.MenuSeparator2,
+            this.UndoMenuItem,
+            this.RedoMenuItem,
+            this.MenuSeparator3});
             this.MenuToolStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuToolStrip.Name = "MenuToolStrip";
             this.MenuToolStrip.Padding = new System.Windows.Forms.Padding(0);
@@ -158,17 +166,17 @@
             this.VisibleMenuItem.Size = new System.Drawing.Size(44, 30);
             this.VisibleMenuItem.Text = "ノート一覧を非表示";
             // 
-            // MenuSeparator
+            // MenuSeparator1
             // 
-            this.MenuSeparator.AutoSize = false;
-            this.MenuSeparator.AutoToolTip = false;
-            this.MenuSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
-            this.MenuSeparator.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator.Enabled = false;
-            this.MenuSeparator.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator.Name = "MenuSeparator";
-            this.MenuSeparator.Size = new System.Drawing.Size(1, 30);
+            this.MenuSeparator1.AutoSize = false;
+            this.MenuSeparator1.AutoToolTip = false;
+            this.MenuSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
+            this.MenuSeparator1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator1.Enabled = false;
+            this.MenuSeparator1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator1.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator1.Name = "MenuSeparator1";
+            this.MenuSeparator1.Size = new System.Drawing.Size(1, 30);
             // 
             // SearchMenuItem
             // 
@@ -207,6 +215,54 @@
             this.LogoMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.LogoMenuItem.Size = new System.Drawing.Size(44, 30);
             this.LogoMenuItem.Text = "Web ページ";
+            // 
+            // MenuSeparator2
+            // 
+            this.MenuSeparator2.AutoSize = false;
+            this.MenuSeparator2.AutoToolTip = false;
+            this.MenuSeparator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
+            this.MenuSeparator2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator2.Enabled = false;
+            this.MenuSeparator2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator2.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator2.Name = "MenuSeparator2";
+            this.MenuSeparator2.Size = new System.Drawing.Size(1, 30);
+            // 
+            // UndoMenuItem
+            // 
+            this.UndoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UndoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Undo;
+            this.UndoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.UndoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UndoMenuItem.Margin = new System.Windows.Forms.Padding(6, 1, 1, 1);
+            this.UndoMenuItem.Name = "UndoMenuItem";
+            this.UndoMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.UndoMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.UndoMenuItem.Text = "元に戻す";
+            // 
+            // RedoMenuItem
+            // 
+            this.RedoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RedoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Redo;
+            this.RedoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.RedoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RedoMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 6, 1);
+            this.RedoMenuItem.Name = "RedoMenuItem";
+            this.RedoMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.RedoMenuItem.Size = new System.Drawing.Size(44, 30);
+            this.RedoMenuItem.Text = "やり直し";
+            // 
+            // MenuSeparator3
+            // 
+            this.MenuSeparator3.AutoSize = false;
+            this.MenuSeparator3.AutoToolTip = false;
+            this.MenuSeparator3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
+            this.MenuSeparator3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.MenuSeparator3.Enabled = false;
+            this.MenuSeparator3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MenuSeparator3.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSeparator3.Name = "MenuSeparator3";
+            this.MenuSeparator3.Size = new System.Drawing.Size(1, 30);
             // 
             // TextControl
             // 
@@ -311,13 +367,17 @@
         private System.Windows.Forms.TableLayoutPanel RightContentsPanel;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
-        private System.Windows.Forms.ToolStripButton MenuSeparator;
+        private System.Windows.Forms.ToolStripButton MenuSeparator1;
         private System.Windows.Forms.ToolStripButton SearchMenuItem;
         private System.Windows.Forms.ToolStripButton SettingsMenuItem;
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
         private TextControl TextControl;
         private System.Windows.Forms.PictureBox VerticalSeparator;
         private StatusControl FooterStatusControl;
+        private System.Windows.Forms.ToolStripButton MenuSeparator2;
+        private System.Windows.Forms.ToolStripButton UndoMenuItem;
+        private System.Windows.Forms.ToolStripButton RedoMenuItem;
+        private System.Windows.Forms.ToolStripButton MenuSeparator3;
     }
 }
 
