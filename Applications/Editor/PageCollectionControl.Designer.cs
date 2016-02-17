@@ -34,12 +34,12 @@
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator1 = new System.Windows.Forms.PictureBox();
             this.ContentsPanel = new Cube.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.PageListView = new Cube.Note.App.Editor.PageListView();
+            this.Separator2 = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
             this.ContentsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Separator2)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -51,7 +51,7 @@
             this.LayoutPanel.Controls.Add(this.TagComboBox, 0, 0);
             this.LayoutPanel.Controls.Add(this.Separator1, 0, 1);
             this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 2);
-            this.LayoutPanel.Controls.Add(this.pictureBox1, 0, 3);
+            this.LayoutPanel.Controls.Add(this.Separator2, 0, 3);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -67,10 +67,11 @@
             // NewPageButton
             // 
             this.NewPageButton.BackColor = System.Drawing.SystemColors.Control;
+            this.NewPageButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NewPageButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NewPageButton.FlatAppearance.BorderSize = 0;
             this.NewPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.NewPageButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.NewPageButton.ForeColor = System.Drawing.SystemColors.GrayText;
             this.NewPageButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
             this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.NewPageButton.Location = new System.Drawing.Point(0, 270);
@@ -98,7 +99,7 @@
             // 
             // Separator1
             // 
-            this.Separator1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Separator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.Separator1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Separator1.Location = new System.Drawing.Point(0, 32);
             this.Separator1.Margin = new System.Windows.Forms.Padding(0);
@@ -118,17 +119,6 @@
             this.ContentsPanel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 4);
             this.ContentsPanel.Size = new System.Drawing.Size(300, 236);
             this.ContentsPanel.TabIndex = 2;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 269);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(300, 1);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
             // 
             // PageListView
             // 
@@ -151,6 +141,17 @@
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;
             // 
+            // Separator2
+            // 
+            this.Separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
+            this.Separator2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Separator2.Location = new System.Drawing.Point(0, 269);
+            this.Separator2.Margin = new System.Windows.Forms.Padding(0);
+            this.Separator2.Name = "Separator2";
+            this.Separator2.Size = new System.Drawing.Size(300, 1);
+            this.Separator2.TabIndex = 6;
+            this.Separator2.TabStop = false;
+            // 
             // PageCollectionControl
             // 
             this.Controls.Add(this.LayoutPanel);
@@ -161,7 +162,7 @@
             this.LayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).EndInit();
             this.ContentsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Separator2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -174,6 +175,6 @@
         private PageListView PageListView;
         private System.Windows.Forms.ComboBox TagComboBox;
         private System.Windows.Forms.Button NewPageButton;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox Separator2;
     }
 }

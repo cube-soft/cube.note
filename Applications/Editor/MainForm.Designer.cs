@@ -76,7 +76,7 @@
             // 
             // ContentsPanel
             // 
-            this.ContentsPanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.ContentsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContentsPanel.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.ContentsPanel.IsSplitterFixed = true;
@@ -162,7 +162,7 @@
             // 
             this.MenuSeparator.AutoSize = false;
             this.MenuSeparator.AutoToolTip = false;
-            this.MenuSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.MenuSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.MenuSeparator.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.MenuSeparator.Enabled = false;
             this.MenuSeparator.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -240,7 +240,7 @@
             // 
             // VerticalSeparator
             // 
-            this.VerticalSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.VerticalSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.VerticalSeparator.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VerticalSeparator.Location = new System.Drawing.Point(0, 32);
             this.VerticalSeparator.Margin = new System.Windows.Forms.Padding(0);
