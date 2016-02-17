@@ -37,10 +37,6 @@
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.VisibleMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator1 = new System.Windows.Forms.ToolStripButton();
-            this.NewPageMenuItem = new System.Windows.Forms.ToolStripButton();
-            this.RemoveMenuItem = new System.Windows.Forms.ToolStripButton();
-            this.TagMenuItem = new System.Windows.Forms.ToolStripButton();
-            this.MenuSeparator2 = new System.Windows.Forms.ToolStripButton();
             this.SearchMenuItem = new System.Windows.Forms.ToolStripButton();
             this.MenuSeparator3 = new System.Windows.Forms.ToolStripButton();
             this.SettingsMenuItem = new System.Windows.Forms.ToolStripButton();
@@ -152,10 +148,6 @@
             this.MenuToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VisibleMenuItem,
             this.MenuSeparator1,
-            this.NewPageMenuItem,
-            this.RemoveMenuItem,
-            this.TagMenuItem,
-            this.MenuSeparator2,
             this.SearchMenuItem,
             this.MenuSeparator3,
             this.SettingsMenuItem,
@@ -190,52 +182,6 @@
             this.MenuSeparator1.Margin = new System.Windows.Forms.Padding(0);
             this.MenuSeparator1.Name = "MenuSeparator1";
             this.MenuSeparator1.Size = new System.Drawing.Size(1, 34);
-            // 
-            // NewPageMenuItem
-            // 
-            this.NewPageMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.NewPageMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
-            this.NewPageMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.NewPageMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewPageMenuItem.Margin = new System.Windows.Forms.Padding(6, 1, 1, 1);
-            this.NewPageMenuItem.Name = "NewPageMenuItem";
-            this.NewPageMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.NewPageMenuItem.Size = new System.Drawing.Size(44, 30);
-            this.NewPageMenuItem.Text = "ノートを追加";
-            // 
-            // RemoveMenuItem
-            // 
-            this.RemoveMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RemoveMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Remove;
-            this.RemoveMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.RemoveMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RemoveMenuItem.Name = "RemoveMenuItem";
-            this.RemoveMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.RemoveMenuItem.Size = new System.Drawing.Size(44, 29);
-            this.RemoveMenuItem.Text = "ノートを削除";
-            // 
-            // TagMenuItem
-            // 
-            this.TagMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TagMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Tag;
-            this.TagMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TagMenuItem.Margin = new System.Windows.Forms.Padding(1, 1, 6, 1);
-            this.TagMenuItem.Name = "TagMenuItem";
-            this.TagMenuItem.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.TagMenuItem.Size = new System.Drawing.Size(44, 30);
-            this.TagMenuItem.Text = "タグを付ける";
-            // 
-            // MenuSeparator2
-            // 
-            this.MenuSeparator2.AutoSize = false;
-            this.MenuSeparator2.AutoToolTip = false;
-            this.MenuSeparator2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.MenuSeparator2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.MenuSeparator2.Enabled = false;
-            this.MenuSeparator2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MenuSeparator2.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSeparator2.Name = "MenuSeparator2";
-            this.MenuSeparator2.Size = new System.Drawing.Size(1, 29);
             // 
             // SearchMenuItem
             // 
@@ -356,19 +302,15 @@
         private PageCollectionControl PageCollectionControl;
         private System.Windows.Forms.ToolStrip MenuToolStrip;
         private System.Windows.Forms.ToolStripButton VisibleMenuItem;
-        private System.Windows.Forms.ToolStripButton NewPageMenuItem;
-        private System.Windows.Forms.ToolStripButton RemoveMenuItem;
         private System.Windows.Forms.ToolStripButton SearchMenuItem;
         private System.Windows.Forms.PictureBox VerticalSeparator;
         private System.Windows.Forms.ToolStripButton SettingsMenuItem;
         private System.Windows.Forms.ToolStripButton MenuSeparator1;
         private System.Windows.Forms.ToolStripButton MenuSeparator3;
-        private System.Windows.Forms.ToolStripButton MenuSeparator2;
         private System.Windows.Forms.ToolStripButton LogoMenuItem;
         private TitleControl TitleControl;
         private TextControl TextControl;
         private StatusControl FooterStatusControl;
-        private System.Windows.Forms.ToolStripButton TagMenuItem;
     }
 }
 
