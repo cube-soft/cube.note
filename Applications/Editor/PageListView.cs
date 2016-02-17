@@ -189,6 +189,12 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// コントロールが生成された時に実行されます。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// Tile の高さは Font.Size * 1.5 倍 * (3 行 + ボタン領域) に 10px
+        /// の余白領域を設けた値としています。表示するコンテンツ（行数）が
+        /// 増えた時にはこの値も調整する必要があります。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnCreateControl()
@@ -203,7 +209,7 @@ namespace Cube.Note.App.Editor
             MultiSelect   = false;
             OwnerDraw     = true;
             Theme         = Cube.Forms.WindowTheme.Explorer;
-            TileSize      = new Size(Width, 115);
+            TileSize      = new Size(Width, (int)(Font.Size * 1.5 * 5 + 10));
             View          = View.Tile;
         }
 
@@ -225,6 +231,21 @@ namespace Cube.Note.App.Editor
             if (!SelectedIndices.Contains(e.ItemIndex)) return;
             if (ShowRemoveButton) DrawRemoveButton(e.Graphics, e.Bounds);
             if (ShowPropertyButton) DrawPropertyButton(e.Graphics, e.Bounds);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDrawSubItem
+        /// 
+        /// <summary>
+        /// サブ項目を描画する際に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDrawSubItem(DrawListViewSubItemEventArgs e)
+        {
+            e.DrawDefault = true;
+            base.OnDrawSubItem(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -422,16 +443,19 @@ namespace Cube.Note.App.Editor
             if (page == null) return;
 
             var index = DataSource?.IndexOf(page) ?? -1;
-            if (index < 0) return;
+            if (index < 0 || index >= Items.Count) return;
+
+            var src = Items[index];
+            var cvt = Converter.Convert(page);
 
             switch (e.PropertyName)
             {
                 case nameof(page.Abstract):
-                    Items[index].Text = page.GetAbstract();
+                    src.Text = cvt.Text;
                     break;
-                case nameof(page.Creation):
                 case nameof(page.LastUpdate):
-                    Replace(index, page);
+                    if (src.SubItems == null || src.SubItems.Count < 2) break;
+                    src.SubItems[1].Text = cvt.SubItems[1].Text;
                     break;
                 default:
                     break;
@@ -591,7 +615,6 @@ namespace Cube.Note.App.Editor
             Columns.AddRange(new ColumnHeader[]
             {
                 new ColumnHeader(), // Title
-                new ColumnHeader(), // CreationTime
                 new ColumnHeader(), // LastUpdateTime
                 new ColumnHeader(), // Tags
             });

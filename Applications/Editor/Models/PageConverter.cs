@@ -19,7 +19,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace Cube.Note.App.Editor
 {
@@ -53,7 +52,6 @@ namespace Cube.Note.App.Editor
 
             var items = new List<string>();
             items.Add(page.GetAbstract());
-            items.Add(page.Creation.ToString(Properties.Resources.CreationFormat));
             items.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
             items.Add(string.Join(", ", page.Tags));
 
