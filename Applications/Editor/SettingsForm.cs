@@ -272,13 +272,13 @@ namespace Cube.Note.App.Editor
         {
             var enable = SpecialCharsVisibleCheckBox.Checked;
 
-            SpecialCharsColorTitleLabel.Enabled = enable;
-            SpecialCharsColorColorButton.Enabled     = enable;
-            SpecialCharsColorLabel.Enabled      = enable;
-            EolVisibleCheckBox.Enabled          = enable;
-            TabVisibleCheckBox.Enabled          = enable;
-            SpaceVisibleCheckBox.Enabled        = enable;
-            FullSpaceVisibleCheckBox.Enabled    = enable;
+            SpecialCharsColorTitleLabel.Enabled  = enable;
+            SpecialCharsColorColorButton.Enabled = enable;
+            SpecialCharsColorLabel.Enabled       = enable;
+            EolVisibleCheckBox.Enabled           = enable;
+            TabVisibleCheckBox.Enabled           = enable;
+            SpaceVisibleCheckBox.Enabled         = enable;
+            FullSpaceVisibleCheckBox.Enabled     = enable;
         }
 
         /* ----------------------------------------------------------------- */
@@ -294,9 +294,9 @@ namespace Cube.Note.App.Editor
         {
             var enable = CurrentLineVisibleCheckBox.Checked;
 
-            CurrentLineColorTitleLabel.Enabled = enable;
-            CurrentLineColorColorButton.Enabled     = enable;
-            CurrentLineColorLabel.Enabled      = enable;
+            CurrentLineColorTitleLabel.Enabled  = enable;
+            CurrentLineColorColorButton.Enabled = enable;
+            CurrentLineColorLabel.Enabled       = enable;
         }
 
         /* ----------------------------------------------------------------- */
@@ -312,12 +312,12 @@ namespace Cube.Note.App.Editor
         {
             var enable = LineNumberVisibleCheckBox.Checked || RulerVisibleCheckBox.Checked;
 
-            LineNumberBackColorColorButton.Enabled     = enable;
-            LineNumberBackColorLabel.Enabled      = enable;
-            LineNumberBackColorTitleLabel.Enabled = enable;
-            LineNumberForeColorColorButton.Enabled     = enable;
-            LineNumberForeColorLabel.Enabled      = enable;
-            LineNumberForeColorTitleLabel.Enabled = enable;
+            LineNumberBackColorColorButton.Enabled = enable;
+            LineNumberBackColorLabel.Enabled       = enable;
+            LineNumberBackColorTitleLabel.Enabled  = enable;
+            LineNumberForeColorColorButton.Enabled = enable;
+            LineNumberForeColorLabel.Enabled       = enable;
+            LineNumberForeColorTitleLabel.Enabled  = enable;
         }
 
         /* ----------------------------------------------------------------- */
