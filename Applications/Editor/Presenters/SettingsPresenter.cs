@@ -159,10 +159,9 @@ namespace Cube.Note.App.Editor
                         Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
                     default:
-                        type.GetProperty(e.Key).SetValue(Model, e.Value);
+                        type.GetProperty(e.Key)?.SetValue(Model, e.Value);
                         break;
                 }
-                
             }
             catch (Exception err) { Logger.Error(err); }
         }

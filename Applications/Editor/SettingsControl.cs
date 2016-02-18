@@ -98,16 +98,37 @@ namespace Cube.Note.App.Editor
             dest.Text = text;
         }
 
-        protected override void CheckUpdateType(Control control, string propertyname, object value)
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnUpdateControl
+        ///
+        /// <summary>
+        /// Update(object) メソッドを通じてコントロールの内容が更新された
+        /// 時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnUpdateControl(KeyValueCancelEventArgs<Control, object> e)
         {
-            if (propertyname == "AutoSaveTime")
+            var name = e.Key.Name.Replace(e.Key.GetType().Name, string.Empty);
+            if (string.IsNullOrEmpty(name)) return;
+
+            switch (name)
             {
-                if (!(value is TimeSpan)) return;
-                var numeric = (NumericUpDown)control;
-                numeric.Value = (int)((TimeSpan)value).TotalSeconds;
+                case "AutoSaveTime":
+                    var control = e.Key as NumericUpDown;
+                    var value   = e.Value as TimeSpan?;
+                    if (control == null || !value.HasValue) break;
+                    control.Value = (int)value.Value.TotalSeconds;
+                    e.Cancel = true;
+                    break;
+                default:
+                    break;
             }
-            else base.CheckUpdateType(control, propertyname, value);
+
+            base.OnUpdateControl(e);
         }
+
         #endregion
     }
 }

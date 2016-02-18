@@ -84,7 +84,7 @@ namespace Cube.Note.App.Editor
         public void Update(SettingsValue settings)
         {
             if (settings == null) return;
-            SettingControl.UpdateFromSetting(settings);
+            SettingControl.Update(settings);
         }
 
         #endregion
