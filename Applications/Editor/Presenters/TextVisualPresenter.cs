@@ -108,7 +108,7 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SyncToView
+        /// Update
         ///
         /// <summary>
         /// Model の内容を View に反映させます。
@@ -117,31 +117,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Update()
         {
-            View.Font                           = Model.Font;
-            View.BackColor                      = Model.BackColor;
-            View.ForeColor                      = Model.ForeColor;
-            View.ColorScheme.SelectionBack      = Model.HighlightBackColor;
-            View.ColorScheme.MatchedBracketBack = Model.HighlightBackColor;
-            View.ColorScheme.DirtyLineBar       = Model.HighlightBackColor;
-            View.ColorScheme.SelectionFore      = Model.HighlightForeColor;
-            View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
-            View.ColorScheme.LineNumberBack     = Model.LineNumberBackColor;
-            View.ColorScheme.CleanedLineBar     = Model.LineNumberBackColor;
-            View.ColorScheme.LineNumberFore     = Model.LineNumberForeColor;
-            View.ColorScheme.WhiteSpaceColor    = Model.SpecialCharsColor;
-            View.ColorScheme.EolColor           = Model.SpecialCharsColor;
-            View.ColorScheme.EofColor           = Model.SpecialCharsColor;
-            View.ColorScheme.HighlightColor     = Model.CurrentLineColor;
-            View.TabWidth                       = Model.TabWidth;
-            View.ConvertsTabToSpaces            = Model.TabToSpace;
-            View.ShowsLineNumber                = Model.LineNumberVisible;
-            View.ShowsHRuler                    = Model.RulerVisible;
-            View.HighlightsCurrentLine          = Model.CurrentLineVisible;
-            View.ShowsDirtBar                   = Model.ModifiedLineVisible;
-            View.HighlightsMatchedBracket       = Model.BracketVisible;
-
-            UpdateSpecialCharsVisible();
-            UpdateWordWrap();
+            foreach (var info in Model.GetType().GetProperties()) Update(info.Name);
         }
 
         /* ----------------------------------------------------------------- */
