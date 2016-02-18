@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ResetButton = new Cube.Forms.Button();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
@@ -338,7 +337,6 @@
             // 
             this.BackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.BackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BackColorColorButton.CustomColors = null;
             this.BackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.BackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -373,7 +371,6 @@
             // 
             this.ForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.ForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ForeColorColorButton.CustomColors = null;
             this.ForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.ForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -408,7 +405,6 @@
             // 
             this.HighlightBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.HighlightBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HighlightBackColorColorButton.CustomColors = null;
             this.HighlightBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.HighlightBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HighlightBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -443,7 +439,6 @@
             // 
             this.HighlightForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.HighlightForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HighlightForeColorColorButton.CustomColors = null;
             this.HighlightForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.HighlightForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HighlightForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -693,7 +688,6 @@
             // 
             this.LineNumberBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.LineNumberBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LineNumberBackColorColorButton.CustomColors = null;
             this.LineNumberBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.LineNumberBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -729,7 +723,6 @@
             // 
             this.LineNumberForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.LineNumberForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LineNumberForeColorColorButton.CustomColors = null;
             this.LineNumberForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.LineNumberForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LineNumberForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -797,7 +790,6 @@
             // 
             this.CurrentLineColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.CurrentLineColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CurrentLineColorColorButton.CustomColors = null;
             this.CurrentLineColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.CurrentLineColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CurrentLineColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -886,7 +878,6 @@
             // 
             this.SpecialCharsColorColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.SpecialCharsColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SpecialCharsColorColorButton.CustomColors = null;
             this.SpecialCharsColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.SpecialCharsColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SpecialCharsColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
@@ -920,7 +911,6 @@
             // TextColorColorButton
             // 
             this.TextColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.TextColorColorButton.CustomColors = ((System.Collections.Generic.IList<int>)(resources.GetObject("TextColorColorButton.CustomColors")));
             this.TextColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.TextColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.TextColorColorButton.ForeColor = System.Drawing.SystemColors.Control;

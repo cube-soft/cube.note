@@ -667,53 +667,6 @@ namespace Cube.Note
 
         #endregion
 
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Assign
-        ///
-        /// <summary>
-        /// プロパティの内容を代入します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Assign(SettingsValue src)
-        {
-            FontName            = src.FontName;
-            FontSize            = src.FontSize;
-            FontStyle           = src.FontStyle;
-
-            BackColor           = src.BackColor;
-            ForeColor           = src.ForeColor;
-            HighlightBackColor  = src.HighlightBackColor;
-            HighlightForeColor  = src.HighlightForeColor;
-            LineNumberBackColor = src.LineNumberBackColor;
-            LineNumberForeColor = src.LineNumberForeColor;
-            SpecialCharsColor   = src.SpecialCharsColor;
-            CurrentLineColor    = src.CurrentLineColor;
-
-            AutoSaveTime        = src.AutoSaveTime;
-            TabWidth            = src.TabWidth;
-            TabToSpace          = src.TabToSpace;
-            WordWrap            = src.WordWrap;
-            WordWrapAsWindow    = src.WordWrapAsWindow;
-            WordWrapCount       = src.WordWrapCount;
-            LineNumberVisible   = src.LineNumberVisible;
-            RulerVisible        = src.RulerVisible;
-            SpecialCharsVisible = src.SpecialCharsVisible;
-            EolVisible          = src.EolVisible;
-            TabVisible          = src.TabVisible;
-            SpaceVisible        = src.SpaceVisible;
-            FullSpaceVisible    = src.FullSpaceVisible;
-            CurrentLineVisible  = src.CurrentLineVisible;
-            ModifiedLineVisible = src.ModifiedLineVisible;
-            BracketVisible      = src.BracketVisible;
-            RemoveWarning       = src.RemoveWarning;
-        }
-
-        #endregion
-
         #region Others
 
         /* ----------------------------------------------------------------- */
