@@ -51,7 +51,7 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
-            Events.Search.Handled += Search_Handled;
+            Events.Search.Handle += Search_Handled;
 
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Detached += View_Detached;

@@ -36,7 +36,7 @@
             this.ExitButton = new Cube.Forms.Button();
             this.ApplyButtonShadow = new System.Windows.Forms.Panel();
             this.ApplyButton = new Cube.Forms.Button();
-            this.SettingControl = new Cube.Note.App.Editor.SettingsControl();
+            this.SettingsControl = new Cube.Note.App.Editor.SettingsControl();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralSettingsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -96,7 +96,7 @@
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
             this.ApplyButtonShadow.SuspendLayout();
-            this.SettingControl.SuspendLayout();
+            this.SettingsControl.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             this.GeneralSettingsPanel.SuspendLayout();
@@ -115,7 +115,7 @@
             this.LayoutPanel.Controls.Add(this.ResetButton, 0, 2);
             this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
             this.LayoutPanel.Controls.Add(this.ButtonsPanel, 0, 3);
-            this.LayoutPanel.Controls.Add(this.SettingControl, 0, 1);
+            this.LayoutPanel.Controls.Add(this.SettingsControl, 0, 1);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -218,18 +218,15 @@
             this.ApplyButton.Text = "OK";
             this.ApplyButton.UseVisualStyleBackColor = false;
             // 
-            // SettingControl
+            // SettingsControl
             // 
-            this.SettingControl.ApplyButton = null;
-            this.SettingControl.CancelButton = null;
-            this.SettingControl.Controls.Add(this.TabControl);
-            this.SettingControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SettingControl.Location = new System.Drawing.Point(12, 42);
-            this.SettingControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 0);
-            this.SettingControl.Name = "SettingControl";
-            this.SettingControl.OKButton = null;
-            this.SettingControl.Size = new System.Drawing.Size(474, 414);
-            this.SettingControl.TabIndex = 5;
+            this.SettingsControl.Controls.Add(this.TabControl);
+            this.SettingsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SettingsControl.Location = new System.Drawing.Point(12, 42);
+            this.SettingsControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 0);
+            this.SettingsControl.Name = "SettingsControl";
+            this.SettingsControl.Size = new System.Drawing.Size(474, 414);
+            this.SettingsControl.TabIndex = 5;
             // 
             // TabControl
             // 
@@ -935,7 +932,7 @@
             this.ButtonsPanel.ResumeLayout(false);
             this.ExitButtonShadow.ResumeLayout(false);
             this.ApplyButtonShadow.ResumeLayout(false);
-            this.SettingControl.ResumeLayout(false);
+            this.SettingsControl.ResumeLayout(false);
             this.TabControl.ResumeLayout(false);
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralSettingsPanel.ResumeLayout(false);
@@ -960,7 +957,7 @@
         private Forms.Button ExitButton;
         private System.Windows.Forms.Panel ApplyButtonShadow;
         private Forms.Button ApplyButton;
-        private SettingsControl SettingControl;
+        private SettingsControl SettingsControl;
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
         private System.Windows.Forms.FlowLayoutPanel GeneralSettingsPanel;

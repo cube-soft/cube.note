@@ -56,7 +56,7 @@ namespace Cube.Note.App.Editor
             Everyone.PropertyChanged -= Model_PropertyChanged;
             Everyone.PropertyChanged += Model_PropertyChanged;
 
-            Events.Property.Handled += Property_Handled;
+            Events.Property.Handle += Property_Handled;
 
             Model.CollectionChanged += Model_CollectionChanged;
 

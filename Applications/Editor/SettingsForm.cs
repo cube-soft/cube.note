@@ -65,8 +65,8 @@ namespace Cube.Note.App.Editor
             InitializeEvents();
 
             Caption = TitleControl;
-            SettingControl.OKButton = ApplyButton;
-            SettingControl.CancelButton = ExitButton;
+            SettingsControl.OKButton = ApplyButton;
+            SettingsControl.CancelButton = ExitButton;
         }
 
         #endregion
@@ -85,7 +85,7 @@ namespace Cube.Note.App.Editor
         public void Update(SettingsValue settings)
         {
             if (settings == null) return;
-            SettingControl.Update(settings);
+            SettingsControl.Update(settings);
         }
 
         #endregion
@@ -154,8 +154,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public event EventHandler Apply
         {
-            add    { SettingControl.Apply += value; }
-            remove { SettingControl.Apply -= value; }
+            add    { SettingsControl.Apply += value; }
+            remove { SettingsControl.Apply -= value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -169,8 +169,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public event EventHandler Cancel
         {
-            add    { SettingControl.Cancel += value; }
-            remove { SettingControl.Cancel -= value; }
+            add    { SettingsControl.Cancel += value; }
+            remove { SettingsControl.Cancel -= value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -195,8 +195,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public event EventHandler<KeyValueEventArgs<string, object>> PropertyChanged
         {
-            add    { SettingControl.PropertyChanged += value; }
-            remove { SettingControl.PropertyChanged -= value; }
+            add    { SettingsControl.PropertyChanged += value; }
+            remove { SettingsControl.PropertyChanged -= value; }
         }
 
         #endregion

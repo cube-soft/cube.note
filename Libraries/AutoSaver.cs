@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Cube.Note.Azuki;
 
-namespace Cube.Note.App.Editor
+namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -51,17 +51,17 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public AutoSaver(PageCollection target, SettingsFolder settings)
+        public AutoSaver(PageCollection pages, SettingsFolder settings)
         {
-            Target = target;
+            Pages    = pages;
             Settings = settings;
-            Interval = TimeSpan.FromSeconds(30);
+            Interval = Settings.User.AutoSaveTime;
 
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.User.PropertyChanged += Settings_PropertyChanged;
             _timer.Elapsed += Timer_Elapsed;
 
-            Task.Run(() => InitializeTarget());
+            Task.Run(() => InitializePages());
         }
 
         /* ----------------------------------------------------------------- */
@@ -91,7 +91,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollection Target { get; }
+        public PageCollection Pages { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -212,6 +212,7 @@ namespace Cube.Note.App.Editor
             Settings.Current.PageChanged -= Settings_PageChanged;
             SaveAllDocuments();
             SaveOrderFile();
+            SaveSettingsFile();
 
             if (disposing) _timer.Dispose();
         }
@@ -229,11 +230,15 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitializeTarget()
+        private void InitializePages()
         {
-            Target.Load();
-            if (Target.Count <= 0) Target.NewPage();
-            _timer.Start();
+            try
+            {
+                if (Pages == null) return;
+                Pages.Load();
+                if (Pages.Count <= 0) Pages.NewPage();
+            }
+            finally { _timer.Start(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -245,7 +250,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveDocument(Page page) => page?.SaveDocument(Target.Directory);
+        private void SaveDocument(Page page) => page?.SaveDocument(Pages.Directory);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -258,7 +263,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SaveAllDocuments()
         {
-            foreach (var page in Target) page.SaveDocument(Target.Directory);
+            foreach (var page in Pages) page?.SaveDocument(Pages.Directory);
         }
 
         /* ----------------------------------------------------------------- */
@@ -270,7 +275,18 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveOrderFile() => Target.Save();
+        private void SaveOrderFile() => Pages?.Save();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SaveSettingsFile
+        ///
+        /// <summary>
+        /// 設定ファイルを保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SaveSettingsFile() => Settings?.Save();
 
         #endregion
 

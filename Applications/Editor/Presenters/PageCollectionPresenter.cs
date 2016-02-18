@@ -53,9 +53,9 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
-            Events.NewPage.Handled += NewPage_Handled;
-            Events.Edit.Handled += Edit_Handled;
-            Events.Remove.Handled += Remove_Handled;
+            Events.NewPage.Handle += NewPage_Handled;
+            Events.Edit.Handle += Edit_Handled;
+            Events.Remove.Handle += Remove_Handled;
 
             View.DataSource = new ObservableCollection<Page>();
             View.SelectedIndexChanged += View_SelectedIndexChanged;
