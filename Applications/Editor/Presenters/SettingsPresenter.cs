@@ -146,24 +146,46 @@ namespace Cube.Note.App.Editor
         {
             try
             {
-                var type = typeof(SettingsValue);
                 switch (e.Key)
                 {
                     case nameof(Model.Font):
-                        var font = (Font)e.Value;
-                        Model.FontName = font.Name;
-                        Model.FontSize = font.Size;
+                        var font = e.Value as Font;
+                        if (font == null) break;
+                        Model.FontName  = font.Name;
+                        Model.FontSize  = font.Size;
                         Model.FontStyle = font.Style;
                         break;
                     case nameof(Model.AutoSaveTime):
                         Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
                     default:
-                        type.GetProperty(e.Key)?.SetValue(Model, e.Value);
+                        SetValue(e.Key, e.Value);
                         break;
                 }
             }
             catch (Exception err) { Logger.Error(err); }
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetValue
+        /// 
+        /// <summary>
+        /// 値を設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetValue(string name, object value)
+        {
+            var dest = typeof(SettingsValue).GetProperty(name);
+            if (dest == null) return;
+
+            if (value.GetType().Name == nameof(Decimal)) dest.SetValue(Model, (int)((decimal)value));
+            else dest.SetValue(Model, value);
         }
 
         #endregion
