@@ -180,11 +180,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetValue(string name, object value)
         {
-            var type = typeof(SettingsValue).GetProperty(name);
-            if (type == null) return;
+            var info = typeof(SettingsValue).GetProperty(name);
+            if (info == null) return;
 
-            if (value.GetType().Name == nameof(Decimal)) type.SetValue(Model, (int)((decimal)value));
-            else type.SetValue(Model, value);
+            var convert = Convert.ChangeType(value, info.PropertyType);
+            info.SetValue(Model, convert);
         }
 
         #endregion
