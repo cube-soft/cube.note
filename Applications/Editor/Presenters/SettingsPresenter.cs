@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using Cube.Operations;
 
 namespace Cube.Note.App.Editor
 {
@@ -114,9 +115,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_Cancel(object sender, EventArgs e)
-        {
-            Settings.User.Assign(_backup);
-        }
+            => Model.Assign(_backup);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -181,11 +180,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetValue(string name, object value)
         {
-            var dest = typeof(SettingsValue).GetProperty(name);
-            if (dest == null) return;
+            var type = typeof(SettingsValue).GetProperty(name);
+            if (type == null) return;
 
-            if (value.GetType().Name == nameof(Decimal)) dest.SetValue(Model, (int)((decimal)value));
-            else dest.SetValue(Model, value);
+            if (value.GetType().Name == nameof(Decimal)) type.SetValue(Model, (int)((decimal)value));
+            else type.SetValue(Model, value);
         }
 
         #endregion
