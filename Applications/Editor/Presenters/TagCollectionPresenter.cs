@@ -53,17 +53,7 @@ namespace Cube.Note.App.Editor
             : base(view, pages.Tags, settings, events)
         {
             Everyone = pages.Everyone;
-            Everyone.PropertyChanged -= Model_PropertyChanged;
-            Everyone.PropertyChanged += Model_PropertyChanged;
-
-            Events.Property.Handle += Property_Handled;
-
-            Model.CollectionChanged += Model_CollectionChanged;
-
-            View.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.Items.Add(Everyone);
-            View.Items.Add(Properties.Resources.EditTag);
-            View.SelectedIndex = 0;
+            Model.Loaded += Model_Loaded;
         }
 
         #endregion
@@ -144,6 +134,22 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Model
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_Loaded
+        ///
+        /// <summary>
+        /// タグ情報の読み込みが完了した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_Loaded(object sender, EventArgs e)
+        {
+            Events.Property.Handle += Property_Handled;
+            ViewReset();
+            Model.CollectionChanged += Model_CollectionChanged;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -233,6 +239,40 @@ namespace Cube.Note.App.Editor
             if (tags == null) return;
 
             foreach (Tag tag in tags) tag.PropertyChanged -= Model_PropertyChanged;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewReset
+        ///
+        /// <summary>
+        /// View の状態をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ViewReset()
+        {
+            SyncWait(() =>
+            {
+                View.SelectedIndexChanged -= View_SelectedIndexChanged;
+
+                if (View.Items.Count > 0) View.Items.Clear();
+
+                Everyone.PropertyChanged -= Model_PropertyChanged;
+                Everyone.PropertyChanged += Model_PropertyChanged;
+                View.Items.Add(Everyone);
+
+                foreach (var tag in Model)
+                {
+                    tag.PropertyChanged -= Model_PropertyChanged;
+                    tag.PropertyChanged += Model_PropertyChanged;
+                    View.Items.Add(tag);
+                }
+
+                View.Items.Add(Properties.Resources.EditTag);
+                View.SelectedIndexChanged += View_SelectedIndexChanged;
+                View.SelectedIndex = 0;
+            });
         }
 
         #endregion
