@@ -134,13 +134,13 @@ namespace Cube.Note.App.Editor
                 if (_source == null) return;
 
                 _source.CollectionChanged -= DS_CollectionChanged;
-                _source.CollectionChanged += DS_CollectionChanged;
                 foreach (var page in _source)
                 {
-                    Add(page);
                     page.PropertyChanged -= DS_PropertyChanged;
+                    Add(page);
                     page.PropertyChanged += DS_PropertyChanged;
                 }
+                _source.CollectionChanged += DS_CollectionChanged;
             }
         }
 

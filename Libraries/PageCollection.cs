@@ -154,6 +154,21 @@ namespace Cube.Note
 
         #endregion
 
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Loaded
+        ///
+        /// <summary>
+        /// ページ情報の読み込みが完了した時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Loaded;
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -217,6 +232,8 @@ namespace Cube.Note
                 if (Everyone != null) Everyone.Count++;
                 foreach (var tag in page.Tags) Tags.Create(tag).Count++;
             }
+
+            OnLoaded(EventArgs.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -235,6 +252,22 @@ namespace Cube.Note
             CreateDirectory(Directory);
             Settings.Save(Items, ToPath(filename), FileType);
         }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoaded
+        ///
+        /// <summary>
+        /// Loaded イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnLoaded(EventArgs e)
+            => Loaded?.Invoke(this, e);
 
         #endregion
 
