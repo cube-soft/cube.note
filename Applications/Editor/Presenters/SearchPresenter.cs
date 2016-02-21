@@ -20,7 +20,7 @@
 using System;
 using System.Linq;
 using Cube.Note.Azuki;
-using Cube.Operations;
+using Cube.Collections;
 
 namespace Cube.Note.App.Editor
 {

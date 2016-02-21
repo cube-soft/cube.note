@@ -19,7 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
-using Cube.Operations;
+using Cube.Generics;
 
 namespace Cube.Note.App.Editor
 {
