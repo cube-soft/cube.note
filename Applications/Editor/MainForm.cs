@@ -76,7 +76,6 @@ namespace Cube.Note.App.Editor
         private void InitializeEvents()
         {
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
-            SearchMenuItem.Click += (s, e) => SwitchPanel();
             UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
             RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
             LogoMenuItem.Click += LogoMenuItem_Click;
@@ -149,14 +148,11 @@ namespace Cube.Note.App.Editor
         private void InitializePresenters()
         {
             PageCollectionControl.Pages.Aggregator = Aggregator;
-            SearchControl.Aggregator = Aggregator;
-            SearchControl.Pages.Aggregator = Aggregator;
 
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
-            new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
         }
 
         #endregion
@@ -173,45 +169,6 @@ namespace Cube.Note.App.Editor
         ///
         /* --------------------------------------------------------------------- */
         public ILog Logger { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SwitchPanel
-        ///
-        /// <summary>
-        /// 左側のメニューパネルの表示方法を変更します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SwitchPanel()
-        {
-            SearchControl.Switch(ContentsPanel.Panel1);
-
-            if (IsActive(SearchControl))
-            {
-                SearchMenuItem.Image = Properties.Resources.SearchEnd;
-                ContentsPanel.Panel1Collapsed = false;
-            }
-            else SearchMenuItem.Image = Properties.Resources.Search;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SwitchMenu
-        ///
-        /// <summary>
-        /// 上部メニューの表示方法を変更します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SwitchMenu()
-        {
-            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
-        }
 
         #endregion
 
@@ -270,7 +227,6 @@ namespace Cube.Note.App.Editor
                         Aggregator.Remove.Raise();
                         break;
                     case Keys.F:
-                        SwitchPanel();
                         break;
                     case Keys.N:
                         Aggregator.NewPage.Raise();
@@ -357,6 +313,18 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SwitchMenu
+        ///
+        /// <summary>
+        /// 上部メニューの表示方法を変更します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SwitchMenu()
+            => ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// RaiseProperty
         ///
         /// <summary>
@@ -366,17 +334,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RaiseProperty() => Aggregator.Property.Raise();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsActive
-        ///
-        /// <summary>
-        /// コントロールがアクティブ状態になっているかどうかを判別します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsActive(Control control) => control.Parent == ContentsPanel.Panel1;
-
         #endregion
 
         #region Models
@@ -384,10 +341,6 @@ namespace Cube.Note.App.Editor
         private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
         private EventAggregator Aggregator = new EventAggregator();
         private AutoSaver Saver = null;
-        #endregion
-
-        #region Views
-        private SearchControl SearchControl = new SearchControl();
         #endregion
     }
 }
