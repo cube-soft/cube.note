@@ -101,6 +101,46 @@ namespace Cube.Note
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanUndo
+        ///
+        /// <summary>
+        /// Undo が可能かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanUndo
+        {
+            get { return _canUndo; }
+            set
+            {
+                if (_canUndo == value) return;
+                _canUndo = value;
+                RaisePropertyChanged(nameof(CanUndo));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanRedo
+        ///
+        /// <summary>
+        /// Redo が可能かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanRedo
+        {
+            get { return _canRedo; }
+            set
+            {
+                if (_canRedo == value) return;
+                _canRedo = value;
+                RaisePropertyChanged(nameof(CanRedo));
+            }
+        }
+
         #endregion
 
         #region Events
@@ -199,6 +239,8 @@ namespace Cube.Note
         #region Fields
         private Page _page;
         private Tag _tag;
+        private bool _canUndo;
+        private bool _canRedo;
         #endregion
     }
 }

@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using Sgry.Azuki;
 using Cube.Note.Azuki;
 
@@ -49,12 +50,74 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
+            Events.Undo.Handle += Undo_Handle;
+            Events.Redo.Handle += Redo_Handle;
             Settings.Current.PageChanged += Settings_PageChanged;
         }
 
         #endregion
 
         #region Event handlers
+
+        #region EventAggregator
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Undo_Handle
+        ///
+        /// <summary>
+        /// Undo 時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Undo_Handle(object sender, EventArgs e)
+        {
+            var document = Settings.Current?.Page?.Document as Document;
+            if (document == null || !document.CanUndo) return;
+            document.Undo();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Redo_Handle
+        ///
+        /// <summary>
+        /// Redo 時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Redo_Handle(object sender, EventArgs e)
+        {
+            var document = Settings.Current?.Page?.Document as Document;
+            if (document == null || !document.CanRedo) return;
+            document.Redo();
+        }
+
+        #endregion
+
+        #region Model
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_ContentChanged
+        ///
+        /// <summary>
+        /// Document オブジェクトの内容が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
+        {
+            var document = Settings.Current?.Page?.Document as Document;
+            if (document == null || document != sender) return;
+            Settings.Current.Page.Abstract = GetAbstract(document);
+            Settings.Current.CanUndo = document.CanUndo;
+            Settings.Current.CanRedo = document.CanRedo;
+        }
+
+        #endregion
+
+        #region Settings
 
         /* ----------------------------------------------------------------- */
         ///
@@ -79,26 +142,15 @@ namespace Cube.Note.App.Editor
                     View.Document = document;
                     View.ResetViewWidth();
                     View.ScrollToCaret();
+
+                    Settings.Current.CanUndo = document.CanUndo;
+                    Settings.Current.CanRedo = document.CanRedo;
                 });
             }
             finally { UpdateModel(e.NewValue, e.OldValue); }
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_ContentChanged
-        ///
-        /// <summary>
-        /// Document オブジェクトの内容が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
-        {
-            var document = Settings.Current?.Page?.Document as Document;
-            if (document == null || document != sender) return;
-            Settings.Current.Page.Abstract = GetAbstract(document);
-        }
+        #endregion
 
         #endregion
 
