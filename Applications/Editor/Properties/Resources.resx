@@ -130,11 +130,26 @@
   <data name="CreationFormat" xml:space="preserve">
     <value>yyyy/MM/dd HH:mm 作成</value>
   </data>
+  <data name="DownMenu" xml:space="preserve">
+    <value>下へ</value>
+  </data>
+  <data name="EditTag" xml:space="preserve">
+    <value>タグを編集...</value>
+  </data>
   <data name="EmptyPage" xml:space="preserve">
     <value>無題のページ</value>
   </data>
   <data name="EveryoneTag" xml:space="preserve">
     <value>すべてのノート</value>
+  </data>
+  <data name="ExportFilter" xml:space="preserve">
+    <value>テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.*</value>
+  </data>
+  <data name="ExportMenu" xml:space="preserve">
+    <value>ファイルに保存</value>
+  </data>
+  <data name="Font" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Font.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HideMenu" xml:space="preserve">
     <value>ノート一覧を非表示</value>
@@ -163,8 +178,17 @@
   <data name="PositionFormat" xml:space="preserve">
     <value>カーソル {0:#,0} 行 {1:#,0} 列</value>
   </data>
+  <data name="Property" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RemoveMenu" xml:space="preserve">
+    <value>削除</value>
   </data>
   <data name="Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,14 +205,17 @@
   <data name="Shadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Shadow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TagEdit" xml:space="preserve">
-    <value>タグを編集する...</value>
+  <data name="ShowProperty" xml:space="preserve">
+    <value>タグを設定</value>
   </data>
   <data name="Title" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UpMenu" xml:space="preserve">
+    <value>上へ</value>
   </data>
   <data name="VisibleMenu" xml:space="preserve">
     <value>ノート一覧を表示</value>

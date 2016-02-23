@@ -43,6 +43,10 @@
       <HintPath>..\..\..\packages\AsyncBridge.Net35.0.2.0\lib\net35-Client\AsyncBridge.Net35.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Azuki">
       <HintPath>..\..\..\lib\Azuki.dll</HintPath>
     </Reference>
@@ -59,10 +63,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Threading">
-      <HintPath>..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -79,11 +79,9 @@
     <Compile Include="FormBase.Designer.cs">
       <DependentUpon>FormBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\AutoSaver.cs" />
-    <Compile Include="Models\EventAggregator.cs" />
+    <Compile Include="Models\MenuRenderer.cs" />
     <Compile Include="Models\PageConverter.cs" />
     <Compile Include="Models\PageEx.cs" />
-    <Compile Include="Models\RelayEvent.cs" />
     <Compile Include="PageCollectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,6 +111,9 @@
     </Compile>
     <Compile Include="PropertyForm.Designer.cs">
       <DependentUpon>PropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsControl.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
@@ -189,7 +190,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <None Include="Resources\Tag.png" />
+    <None Include="Resources\Undo.png" />
+    <None Include="Resources\Redo.png" />
+    <None Include="Resources\Property.png" />
+    <None Include="Resources\Font.png" />
     <None Include="Resources\Shadow.png" />
     <None Include="Resources\Normalize.png" />
     <None Include="Resources\LogoLarge.png" />

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// RelayEvent.cs
+/// MenuRenderer.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,115 +17,86 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RelayEvent
+    /// FlatColorTable
     /// 
     /// <summary>
-    /// イベントを伝搬させるためのクラスです。
+    /// グラデーション描画を無効にするためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class RelayEvent
+    public class FlatColorTable : ProfessionalColorTable
     {
-        #region Methods
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Raise
+        /// FlatColorTable
         /// 
         /// <summary>
-        /// イベントを発生させます。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Raise() => Raise(this);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Raise
-        /// 
-        /// <summary>
-        /// イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Raise(object sender) => Handled?.Invoke(sender, EventArgs.Empty);
+        public FlatColorTable(Color color) : base()
+        {
+            Color = color;
+        }
 
         #endregion
 
-        #region Events
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Handled
+        /// Color
         /// 
         /// <summary>
-        /// Raise によって発生するイベントです。
+        /// メイン色を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler Handled;
+        public Color Color { get; }
 
+        #endregion
+
+        #region Override properties
+        public override Color ToolStripGradientBegin  => Color;
+        public override Color ToolStripGradientMiddle => Color;
+        public override Color ToolStripGradientEnd    => Color;
         #endregion
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// RelayEvent
+    /// MenuRenderer
     /// 
     /// <summary>
-    /// イベントを伝搬させるためのクラスです。
+    /// ToolStripMenu を描画するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class RelayEvent<TEvent> where TEvent : EventArgs
+    public class MenuRenderer : ToolStripProfessionalRenderer
     {
-        #region Methods
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Raise
+        /// MenuRenderer
         /// 
         /// <summary>
-        /// イベントを発生させます。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Raise(TEvent args)
-            => Raise(this, args);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Raise
-        /// 
-        /// <summary>
-        /// イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Raise(object sender, TEvent args)
-            => Handled?.Invoke(sender, args);
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Handled
-        /// 
-        /// <summary>
-        /// Raise によって発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler<TEvent> Handled;
-
-        #endregion
+        public MenuRenderer(Color color)
+            : base(new FlatColorTable(color))
+        {
+            RoundedEdges = false;
+        }
     }
 }

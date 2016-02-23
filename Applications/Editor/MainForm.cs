@@ -57,6 +57,7 @@ namespace Cube.Note.App.Editor
 
             Caption = TitleControl;
             TextControl.Status = FooterStatusControl;
+            MenuToolStrip.Renderer = new MenuRenderer(MenuToolStrip.BackColor);
         }
 
         #endregion
@@ -74,19 +75,30 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            NewPageMenuItem.Click += (s, e) => Aggregator.NewPage.Raise();
-            TagMenuItem.Click += (s, e) => RaiseProperty();
-            RemoveMenuItem.Click += (s, e) => Aggregator.Remove.Raise();
-            SearchMenuItem.Click += (s, e) => SwitchPanel();
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
+            UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
+            RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
             LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 
-            PageCollectionControl.ParentChanged += PageCollectionControl_ParentChanged;
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
 
             // TODO: Presenter に移譲
-            Aggregator.TagSettings.Handled += SettingsMenuItem_Click;
+            Aggregator.TagSettings.Handle += SettingsMenuItem_Click;
+            Settings.Current.PropertyChanged += (s, e) =>
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(Settings.Current.CanUndo):
+                        UndoMenuItem.Enabled = Settings.Current.CanUndo;
+                        break;
+                    case nameof(Settings.Current.CanRedo):
+                        RedoMenuItem.Enabled = Settings.Current.CanRedo;
+                        break;
+                    default:
+                        break;
+                }
+            };
         }
 
         /* ----------------------------------------------------------------- */
@@ -136,14 +148,11 @@ namespace Cube.Note.App.Editor
         private void InitializePresenters()
         {
             PageCollectionControl.Pages.Aggregator = Aggregator;
-            SearchControl.Aggregator = Aggregator;
-            SearchControl.Pages.Aggregator = Aggregator;
 
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
-            new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
         }
 
         #endregion
@@ -160,45 +169,6 @@ namespace Cube.Note.App.Editor
         ///
         /* --------------------------------------------------------------------- */
         public ILog Logger { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SwitchPanel
-        ///
-        /// <summary>
-        /// 左側のメニューパネルの表示方法を変更します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SwitchPanel()
-        {
-            SearchControl.Switch(ContentsPanel.Panel1);
-
-            if (IsActive(SearchControl))
-            {
-                SearchMenuItem.Image = Properties.Resources.SearchEnd;
-                ContentsPanel.Panel1Collapsed = false;
-            }
-            else SearchMenuItem.Image = Properties.Resources.Search;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SwitchMenu
-        ///
-        /// <summary>
-        /// 上部メニューの表示方法を変更します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SwitchMenu()
-        {
-            ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
-        }
 
         #endregion
 
@@ -256,8 +226,21 @@ namespace Cube.Note.App.Editor
                     case Keys.D:
                         Aggregator.Remove.Raise();
                         break;
+                    case Keys.E:
+                        Aggregator.Export.Raise();
+                        break;
                     case Keys.F:
-                        SwitchPanel();
+                        break;
+                    case Keys.H:
+                        SwitchMenu();
+                        break;
+                    case Keys.J:
+                    case Keys.Down:
+                        Aggregator.Move.Raise(new ValueEventArgs<int>(1));
+                        break;
+                    case Keys.K:
+                    case Keys.Up:
+                        Aggregator.Move.Raise(new ValueEventArgs<int>(-1));
                         break;
                     case Keys.N:
                         Aggregator.NewPage.Raise();
@@ -314,22 +297,6 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCollectionControl_ParentChanged
-        ///
-        /// <summary>
-        /// 親コントロールが変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageCollectionControl_ParentChanged(object sender, EventArgs e)
-        {
-            var active = IsActive(PageCollectionControl);
-            NewPageMenuItem.Enabled = active;
-            RemoveMenuItem.Enabled  = active;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// ContentsPanel2_ClientSizeChanged
         ///
         /// <summary>
@@ -360,6 +327,18 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SwitchMenu
+        ///
+        /// <summary>
+        /// 上部メニューの表示方法を変更します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SwitchMenu()
+            => ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// RaiseProperty
         ///
         /// <summary>
@@ -367,19 +346,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseProperty()
-            => Aggregator.Property.Raise(new ValueEventArgs<Page>(null));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsActive
-        ///
-        /// <summary>
-        /// コントロールがアクティブ状態になっているかどうかを判別します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsActive(Control control) => control.Parent == ContentsPanel.Panel1;
+        private void RaiseProperty() => Aggregator.Property.Raise();
 
         #endregion
 
@@ -388,10 +355,6 @@ namespace Cube.Note.App.Editor
         private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
         private EventAggregator Aggregator = new EventAggregator();
         private AutoSaver Saver = null;
-        #endregion
-
-        #region Views
-        private SearchControl SearchControl = new SearchControl();
         #endregion
     }
 }

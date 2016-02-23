@@ -71,6 +71,33 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ShowRemoveButton
+        /// 
+        /// <summary>
+        /// 項目の削除ボタンを表示するかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(true)]
+        [DefaultValue(true)]
+        public bool ShowRemoveButton { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowPropertyButton
+        /// 
+        /// <summary>
+        /// プロパティ情報の編集用（タグ付け等）ボタンを表示するかどうかを
+        /// 示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(true)]
+        [DefaultValue(true)]
+        public bool ShowPropertyButton { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Aggregator
         /// 
         /// <summary>
@@ -95,26 +122,25 @@ namespace Cube.Note.App.Editor
             set
             {
                 if (_source == value) return;
+
                 if (_source != null)
                 {
                     _source.CollectionChanged -= DS_CollectionChanged;
-                    foreach (var page in _source) page.PropertyChanged -= DS_PropertyChanged;
+                    Detach(_source);
                 }
-
                 ClearItems();
-                _source = value;
 
-                if (_source != null)
+                _source = value;
+                if (_source == null) return;
+
+                _source.CollectionChanged -= DS_CollectionChanged;
+                foreach (var page in _source)
                 {
-                    _source.CollectionChanged -= DS_CollectionChanged;
-                    _source.CollectionChanged += DS_CollectionChanged;
-                    foreach (var page in _source)
-                    {
-                        Add(page);
-                        page.PropertyChanged -= DS_PropertyChanged;
-                        page.PropertyChanged += DS_PropertyChanged;
-                    }
+                    page.PropertyChanged -= DS_PropertyChanged;
+                    Add(page);
+                    page.PropertyChanged += DS_PropertyChanged;
                 }
+                _source.CollectionChanged += DS_CollectionChanged;
             }
         }
 
@@ -163,6 +189,12 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// コントロールが生成された時に実行されます。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// Tile の高さは Font.Size * 1.5 倍 * (3 行 + ボタン領域) に 10px
+        /// の余白領域を設けた値としています。表示するコンテンツ（行数）が
+        /// 増えた時にはこの値も調整する必要があります。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnCreateControl()
@@ -173,11 +205,48 @@ namespace Cube.Note.App.Editor
             Converter     = new PageConverter();
             FullRowSelect = true;
             HeaderStyle   = ColumnHeaderStyle.None;
+            LabelWrap     = false;
             Margin        = new Padding(0);
             MultiSelect   = false;
+            OwnerDraw     = true;
             Theme         = Cube.Forms.WindowTheme.Explorer;
-            TileSize      = new Size(Width, 115);
+            TileSize      = new Size(Width, (int)(Font.Size * 1.5 * 5 + 10));
             View          = View.Tile;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDrawItem
+        /// 
+        /// <summary>
+        /// 項目を描画する際に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDrawItem(DrawListViewItemEventArgs e)
+        {
+            e.DrawDefault = true;
+            base.OnDrawItem(e);
+
+            if (!e.DrawDefault) return;
+            if (!SelectedIndices.Contains(e.ItemIndex)) return;
+            if (ShowRemoveButton) DrawRemoveButton(e.Graphics, e.Bounds);
+            if (ShowPropertyButton) DrawPropertyButton(e.Graphics, e.Bounds);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDrawSubItem
+        /// 
+        /// <summary>
+        /// サブ項目を描画する際に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDrawSubItem(DrawListViewSubItemEventArgs e)
+        {
+            e.DrawDefault = true;
+            base.OnDrawSubItem(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -199,20 +268,45 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnDoubleClick
+        /// OnMouseMove
         /// 
         /// <summary>
-        /// マウスがダブルクリックされた時に実行されます。
+        /// マウスが移動した時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseDoubleClick(e);
+            base.OnMouseMove(e);
+            if (e.Button != MouseButtons.None) return;
 
-            if (DataSource == null || SelectedIndices.Count <= 0) return;
-            var page = DataSource[SelectedIndices[0]];
-            Aggregator?.Property.Raise(new ValueEventArgs<Page>(page));
+            var item = GetItemAt(e.Location.X, e.Location.Y);
+            var bounds = item?.Bounds ?? Rectangle.Empty;
+
+            Cursor = IsRemoveButton(e.Location, bounds) ||
+                     IsPropertyButton(e.Location, bounds) ?
+                     Cursors.Hand : Cursors.Default;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMouseClick
+        /// 
+        /// <summary>
+        /// マウスがクリックされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+            if (e.Button != MouseButtons.Left) return;
+
+            var item   = GetItemAt(e.Location.X, e.Location.Y);
+            var bounds = item?.Bounds ?? Rectangle.Empty;
+
+            if (IsRemoveButton(e.Location, bounds)) Aggregator?.Remove.Raise();
+            else if (IsPropertyButton(e.Location, bounds)) Aggregator?.Property.Raise();
         }
 
         /* ----------------------------------------------------------------- */
@@ -294,6 +388,9 @@ namespace Cube.Note.App.Editor
                     if (Count == 1 && !AllowNoSelect) Select(0);
                     Attach(e.NewItems);
                     break;
+                case NotifyCollectionChangedAction.Move:
+                    MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex);
+                    break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
                     RemoveItems(new int[] { e.OldStartingIndex });
@@ -327,20 +424,158 @@ namespace Cube.Note.App.Editor
             if (page == null) return;
 
             var index = DataSource?.IndexOf(page) ?? -1;
-            if (index < 0) return;
+            if (index < 0 || index >= Items.Count) return;
+
+            var src = Items[index];
+            var cvt = Converter.Convert(page);
 
             switch (e.PropertyName)
             {
                 case nameof(page.Abstract):
-                    Items[index].Text = page.GetAbstract();
+                    src.Text = cvt.Text;
                     break;
-                case nameof(page.Creation):
                 case nameof(page.LastUpdate):
-                    Replace(index, page);
+                    if (src.SubItems == null || src.SubItems.Count < 2) break;
+                    src.SubItems[1].Text = cvt.SubItems[1].Text;
                     break;
                 default:
                     break;
             }
+        }
+
+        #endregion
+
+        #region Button methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsSelectedArea
+        /// 
+        /// <summary>
+        /// 指定された座標が選択項目上にあるかどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsSelectedArea(Point point)
+        {
+            var item = GetItemAt(point.X, point.Y);
+            if (item == null) return false;
+            return SelectedIndices.Contains(item.Index);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsRemoveButton
+        /// 
+        /// <summary>
+        /// 削除ボタン上かどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsRemoveButton(Point point, Rectangle bounds)
+        {
+            if (!ShowRemoveButton || !IsSelectedArea(point)) return false;
+
+            var image = Properties.Resources.Remove;
+
+            var x1 = bounds.Right - _space;
+            var x0 = x1 - image.Width;
+            var y0 = bounds.Top + _space;
+            var y1 = y0 + image.Height;
+
+            return point.X >= x0 && point.X <= x1 &&
+                   point.Y >= y0 && point.Y <= y1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsPropertyButton
+        /// 
+        /// <summary>
+        /// プロパティ情報編集ボタンおよびテキスト上かどうかを判別します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private bool IsPropertyButton(Point point, Rectangle bounds)
+        {
+            var size = _cacheProperty;
+            if (size == SizeF.Empty) return false;
+            if (!ShowPropertyButton || !IsSelectedArea(point)) return false;
+
+            var x0 = bounds.Left + _space;
+            var x1 = x0 + size.Width;
+            var y1 = bounds.Bottom - _space;
+            var y0 = y1 - size.Height;
+
+            return point.X >= x0 && point.X <= x1 &&
+                   point.Y >= y0 && point.Y <= y1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawRemoveButton
+        /// 
+        /// <summary>
+        /// 削除ボタンを描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawRemoveButton(Graphics gs, Rectangle bounds)
+        {
+            var image = Properties.Resources.Remove;
+            var x = bounds.Right - image.Width - _space;
+            var y = bounds.Top + _space;
+            gs.DrawImage(image, x, y);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawPropertyButton
+        /// 
+        /// <summary>
+        /// プロパティ情報編ボタンを描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawPropertyButton(Graphics gs, Rectangle bounds)
+        {
+            var font   = new Font(Font.FontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
+            var size   = GetPropertySize(gs, font);
+            var height = size.Height;
+            var image  = Properties.Resources.Property;
+
+            var x0 = bounds.Left + _space;
+            var y0 = bounds.Bottom - (height + _space) + (height - image.Height) / 2.0 - 1.0;
+            gs.DrawImage(image, x0, (float)y0);
+
+            var text = Properties.Resources.ShowProperty;
+            var brush = new SolidBrush(SystemColors.GrayText);
+
+            var x1 = x0 + image.Width;
+            var y1 = bounds.Bottom - (height + _space) + (height - size.Height) / 2.0;
+            gs.DrawString(text, font, brush, x1, (float)y1);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPropertySize
+        /// 
+        /// <summary>
+        /// プロパティボタンの描画領域を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private SizeF GetPropertySize(Graphics gs, Font font)
+        {
+            if (_cacheProperty != SizeF.Empty) return _cacheProperty;
+
+            var image  = Properties.Resources.Property;
+            var text   = Properties.Resources.ShowProperty;
+            var size   = gs.MeasureString(text, font);
+            var height = Math.Max(image.Height, size.Height);
+
+            _cacheProperty = new SizeF(image.Width + size.Width, height);
+            return _cacheProperty;
         }
 
         #endregion
@@ -361,7 +596,6 @@ namespace Cube.Note.App.Editor
             Columns.AddRange(new ColumnHeader[]
             {
                 new ColumnHeader(), // Title
-                new ColumnHeader(), // CreationTime
                 new ColumnHeader(), // LastUpdateTime
                 new ColumnHeader(), // Tags
             });
@@ -426,6 +660,8 @@ namespace Cube.Note.App.Editor
 
         #region Fields
         private ObservableCollection<Page> _source;
+        private SizeF _cacheProperty = SizeF.Empty;
+        private static readonly int _space = 3;
         #endregion
     }
 }

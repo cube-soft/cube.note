@@ -90,7 +90,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventAggregator Aggregator { get; set; }
+        public EventAggregator Aggregator
+        {
+            get { return Pages.Aggregator; }
+            set { Pages.Aggregator = value; }
+        }
 
         #endregion
 

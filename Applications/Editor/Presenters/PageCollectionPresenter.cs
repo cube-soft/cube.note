@@ -18,11 +18,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Forms;
-using Cube.Extensions;
+using Cube.Collections;
+using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -53,17 +52,7 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
-            Events.NewPage.Handled += NewPage_Handled;
-            Events.Edit.Handled += Edit_Handled;
-            Events.Remove.Handled += Remove_Handled;
-
-            View.DataSource = new ObservableCollection<Page>();
-            View.SelectedIndexChanged += View_SelectedIndexChanged;
-
-            Model.CollectionChanged += Model_CollectionChanged;
-
-            Settings.Current.PageChanged += Settings_PageChanged;
-            Settings.Current.TagChanged += Settings_TagChanged;
+            Model.Loaded += Model_Loaded;
         }
 
         #endregion
@@ -85,6 +74,31 @@ namespace Cube.Note.App.Editor
         {
             Model.NewPage(Settings.Current.Tag);
             Sync(() => View.Select(0));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Export_Handle
+        /// 
+        /// <summary>
+        /// ページのエクスポート時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Export_Handle(object sender, EventArgs e)
+        {
+            Sync(() =>
+            {
+                var dialog = new SaveFileDialog();
+                dialog.Filter = Properties.Resources.ExportFilter;
+                dialog.OverwritePrompt = true;
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+                Async(() => Settings.Current.Page?
+                    .CreateDocument(Model.Directory)?
+                    .SaveDocument(dialog.FileName)
+                );
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -115,6 +129,40 @@ namespace Cube.Note.App.Editor
                     View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
                 }
                 else View.DataSource?.Remove(page);
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move_Handle
+        /// 
+        /// <summary>
+        /// 選択ページの移動要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Move_Handle(object sender, ValueEventArgs<int> e)
+        {
+            Sync(() =>
+            {
+                if (View.DataSource == null ||
+                    View.SelectedIndices.Count <= 0) return;
+
+                // View
+                var count = View.DataSource.Count;
+                var vold  = View.SelectedIndices[0];
+                var vnew  = Math.Min(Math.Max(vold + e.Value, 0), count);
+                if (vold < 0 || vold >= count) return;
+
+                // Model
+                var mold = Model.IndexOf(View.DataSource[vold]);
+                var mnew = vnew == View.DataSource.Count ?
+                           Model.Count :
+                           Model.IndexOf(View.DataSource[vnew]);
+                if (mold  < 0 || mold  >= Model.Count || mnew == -1) return;
+                Async(() => Model.Move(mold, mnew));
+
+                View.DataSource.Move(vold, vnew);
             });
         }
 
@@ -175,6 +223,35 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Model_Loaded
+        /// 
+        /// <summary>
+        /// ページ情報の読み込みが完了した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_Loaded(object sender, EventArgs e)
+        {
+            Sync(() =>
+            {
+                Events.NewPage.Handle += NewPage_Handled;
+                Events.Export.Handle += Export_Handle;
+                Events.Edit.Handle += Edit_Handled;
+                Events.Move.Handle += Move_Handle;
+                Events.Remove.Handle += Remove_Handled;
+
+                View.SelectedIndexChanged += View_SelectedIndexChanged;
+                ViewReset(Settings.Current.Tag ?? Model.Everyone);
+
+                Model.CollectionChanged += Model_CollectionChanged;
+
+                Settings.Current.PageChanged += Settings_PageChanged;
+                Settings.Current.TagChanged += Settings_TagChanged;
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Model_CollectionChanged
         /// 
         /// <summary>
@@ -202,10 +279,6 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// コレクションに要素が追加された時に実行されるハンドラです。
         /// </summary>
-        ///
-        /// <remarks>
-        /// TODO: DataSource への追加方法を要検討
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
@@ -261,15 +334,7 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
-        {
-            if (e.NewValue == null) return;
-            Sync(() =>
-            {
-                View.DataSource = Model.Search(e.NewValue).ToObservable();
-                if (View.DataSource.Count > 0) View.Select(0);
-                else Settings.Current.Page = null;
-            });
-        }
+            => ViewReset(e.NewValue);
 
         #endregion
 
@@ -325,6 +390,26 @@ namespace Cube.Note.App.Editor
             return Settings.Current.Tag == null ||
                    Settings.Current.Tag == Model.Everyone ||
                    page.Tags.Contains(Settings.Current.Tag.Name);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewReset
+        /// 
+        /// <summary>
+        /// View の状態をリセットします。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void ViewReset(Tag tag)
+        {
+            if (tag == null) return;
+            Sync(() =>
+            {
+                View.DataSource = Model.Search(tag).ToObservable();
+                if (View.DataSource.Count > 0) View.Select(0);
+                else Settings.Current.Page = null;
+            });
         }
 
         #endregion

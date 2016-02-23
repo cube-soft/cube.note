@@ -51,12 +51,13 @@ namespace Cube.Note.App.Editor
             var page = src as Page;
             if (page == null) return new ListViewItem(src.ToString());
 
-            var dest = new List<string>();
-            dest.Add(page.GetAbstract());
-            dest.Add(page.Creation.ToString(Properties.Resources.CreationFormat));
-            dest.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
-            dest.Add(string.Join(", ", page.Tags.ToArray()));
-            return new ListViewItem(dest.ToArray());
+            var items = new List<string>();
+            items.Add(page.GetAbstract());
+            items.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
+            items.Add(string.Join(", ", page.Tags.ToArray()));
+
+            var dest = new ListViewItem(items.ToArray());
+            return dest;
         }
 
         #endregion
