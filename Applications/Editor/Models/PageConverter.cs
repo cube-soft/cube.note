@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -34,6 +35,63 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     public class PageConverter : Cube.Forms.IListViewItemConverter
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageConverter
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PageConverter(int upper, Graphics graphics, Font font)
+        {
+            UpperWidth = upper;
+            Graphics   = graphics;
+            Font       = font;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpperWidth
+        ///
+        /// <summary>
+        /// 1 行の最大長をピクセル単位で取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int UpperWidth { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Graphics
+        ///
+        /// <summary>
+        /// 描画用オブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Graphics Graphics { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Font
+        ///
+        /// <summary>
+        /// フォントを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Font Font { get; set; }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */

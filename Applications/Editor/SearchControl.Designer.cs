@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.Separator1 = new System.Windows.Forms.PictureBox();
             this.ContentsPanel = new System.Windows.Forms.Panel();
@@ -85,7 +84,6 @@
             // 
             this.PageListView.BackColor = System.Drawing.SystemColors.Control;
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Converter = pageConverter1;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;

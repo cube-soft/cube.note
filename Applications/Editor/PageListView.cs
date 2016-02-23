@@ -201,8 +201,10 @@ namespace Cube.Note.App.Editor
         {
             base.OnCreateControl();
 
+            var upper = Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1);
+
             BorderStyle   = BorderStyle.None;
-            Converter     = new PageConverter();
+            Converter     = new PageConverter(upper, CreateGraphics(), Font);
             FullRowSelect = true;
             HeaderStyle   = ColumnHeaderStyle.None;
             LabelWrap     = false;
