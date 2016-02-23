@@ -108,8 +108,14 @@ namespace Cube.Note.App.Editor
             var page = src as Page;
             if (page == null) return new ListViewItem(src.ToString());
 
+            // TODO: 最初の行を確実に 1 行に抑えたい。
+            // Graphics, Font から得られる情報を利用して、
+            // text を UpperWidth に収まるように末尾を切り捨てる処理を実装する。
+            // Graphics.MeasureString() 等を参照
+            var text = page.GetAbstract();
+
             var items = new List<string>();
-            items.Add(page.GetAbstract());
+            items.Add(text);
             items.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
             items.Add(string.Join(", ", page.Tags));
 
