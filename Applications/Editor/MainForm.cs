@@ -86,6 +86,20 @@ namespace Cube.Note.App.Editor
 
             // TODO: Presenter に移譲
             Aggregator.TagSettings.Handle += SettingsMenuItem_Click;
+            Settings.Current.PropertyChanged += (s, e) =>
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(Settings.Current.CanUndo):
+                        UndoMenuItem.Enabled = Settings.Current.CanUndo;
+                        break;
+                    case nameof(Settings.Current.CanRedo):
+                        RedoMenuItem.Enabled = Settings.Current.CanRedo;
+                        break;
+                    default:
+                        break;
+                }
+            };
         }
 
         /* ----------------------------------------------------------------- */

@@ -231,6 +231,7 @@
             // UndoMenuItem
             // 
             this.UndoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UndoMenuItem.Enabled = false;
             this.UndoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Undo;
             this.UndoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.UndoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -243,6 +244,7 @@
             // RedoMenuItem
             // 
             this.RedoMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RedoMenuItem.Enabled = false;
             this.RedoMenuItem.Image = global::Cube.Note.App.Editor.Properties.Resources.Redo;
             this.RedoMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.RedoMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
