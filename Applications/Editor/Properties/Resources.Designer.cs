@@ -135,6 +135,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ExportFilter {
+            get {
+                return ResourceManager.GetString("ExportFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイルに保存 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ExportMenu {

@@ -226,6 +226,9 @@ namespace Cube.Note.App.Editor
                     case Keys.D:
                         Aggregator.Remove.Raise();
                         break;
+                    case Keys.E:
+                        Aggregator.Export.Raise();
+                        break;
                     case Keys.F:
                         break;
                     case Keys.H:

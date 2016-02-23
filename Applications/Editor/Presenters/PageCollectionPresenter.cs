@@ -21,6 +21,7 @@ using System;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 using Cube.Collections;
+using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -73,6 +74,31 @@ namespace Cube.Note.App.Editor
         {
             Model.NewPage(Settings.Current.Tag);
             Sync(() => View.Select(0));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Export_Handle
+        /// 
+        /// <summary>
+        /// ページのエクスポート時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Export_Handle(object sender, EventArgs e)
+        {
+            Sync(() =>
+            {
+                var dialog = new SaveFileDialog();
+                dialog.Filter = Properties.Resources.ExportFilter;
+                dialog.OverwritePrompt = true;
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+                Async(() => Settings.Current.Page?
+                    .CreateDocument(Model.Directory)?
+                    .SaveDocument(dialog.FileName)
+                );
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -209,6 +235,7 @@ namespace Cube.Note.App.Editor
             Sync(() =>
             {
                 Events.NewPage.Handle += NewPage_Handled;
+                Events.Export.Handle += Export_Handle;
                 Events.Edit.Handle += Edit_Handled;
                 Events.Move.Handle += Move_Handle;
                 Events.Remove.Handle += Remove_Handled;

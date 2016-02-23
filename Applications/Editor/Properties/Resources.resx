@@ -142,6 +142,9 @@
   <data name="EveryoneTag" xml:space="preserve">
     <value>すべてのノート</value>
   </data>
+  <data name="ExportFilter" xml:space="preserve">
+    <value>テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.*</value>
+  </data>
   <data name="ExportMenu" xml:space="preserve">
     <value>ファイルに保存</value>
   </data>
