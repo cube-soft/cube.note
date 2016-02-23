@@ -43,6 +43,17 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Export
+        ///
+        /// <summary>
+        /// ページをエクスポートするイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Export { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Property
         ///
         /// <summary>
@@ -50,8 +61,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<Page>> Property { get; }
-            = new RelayEvent<ValueEventArgs<Page>>();
+        public RelayEvent Property { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,6 +74,18 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public RelayEvent<ValueEventArgs<Page>> Edit { get; }
             = new RelayEvent<ValueEventArgs<Page>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// ページを移動するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Move { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
         ///

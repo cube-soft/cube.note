@@ -306,12 +306,7 @@ namespace Cube.Note.App.Editor
             var bounds = item?.Bounds ?? Rectangle.Empty;
 
             if (IsRemoveButton(e.Location, bounds)) Aggregator?.Remove.Raise();
-            else if (IsPropertyButton(e.Location, bounds))
-            {
-                Aggregator?.Property.Raise(
-                    new ValueEventArgs<Page>(DataSource?[item.Index])
-                );
-            }
+            else if (IsPropertyButton(e.Location, bounds)) Aggregator?.Property.Raise();
         }
 
         /* ----------------------------------------------------------------- */

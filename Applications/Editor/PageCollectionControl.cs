@@ -48,6 +48,8 @@ namespace Cube.Note.App.Editor
             InitializeComponent();
 
             NewPageButton.Click += (s, e) => Aggregator?.NewPage.Raise();
+
+            Pages.ContextMenuStrip = CreateContextMenu();
         }
 
         #endregion
@@ -89,6 +91,39 @@ namespace Cube.Note.App.Editor
         {
             get { return Pages.Aggregator; }
             set { Pages.Aggregator = value; }
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateContextMenu
+        /// 
+        /// <summary>
+        /// コンテキストメニューを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ContextMenuStrip CreateContextMenu()
+        {
+            var dest = new ContextMenuStrip();
+
+            dest.Items.Add(Properties.Resources.ExportMenu, null,
+                (s, e) => Aggregator?.Export.Raise());
+            dest.Items.Add("-");
+            dest.Items.Add(Properties.Resources.UpMenu, null,
+                (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(-1)));
+            dest.Items.Add(Properties.Resources.DownMenu, null,
+                (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(1)));
+            dest.Items.Add(Properties.Resources.RemoveMenu, null,
+                (s, e) => Aggregator?.Remove.Raise());
+            dest.Items.Add("-");
+            dest.Items.Add(Properties.Resources.ShowProperty, null,
+                (s, e) => Aggregator?.Property.Raise());
+
+            return dest;
         }
 
         #endregion

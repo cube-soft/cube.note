@@ -350,8 +350,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseProperty()
-            => Aggregator.Property.Raise(new ValueEventArgs<Page>(null));
+        private void RaiseProperty() => Aggregator.Property.Raise();
 
         /* ----------------------------------------------------------------- */
         ///

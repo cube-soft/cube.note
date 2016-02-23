@@ -86,9 +86,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Property_Handled(object sender, ValueEventArgs<Page> e)
+        private void Property_Handled(object sender, EventArgs e)
         {
-            var page = e.Value ?? Settings.Current.Page;
+            var page = Settings.Current.Page;
             if (page == null) return;
 
             SyncWait(() =>
