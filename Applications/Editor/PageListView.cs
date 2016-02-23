@@ -388,6 +388,9 @@ namespace Cube.Note.App.Editor
                     if (Count == 1 && !AllowNoSelect) Select(0);
                     Attach(e.NewItems);
                     break;
+                case NotifyCollectionChangedAction.Move:
+                    MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex);
+                    break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
                     RemoveItems(new int[] { e.OldStartingIndex });

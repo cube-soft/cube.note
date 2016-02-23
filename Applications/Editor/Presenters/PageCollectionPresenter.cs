@@ -108,6 +108,40 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Move_Handle
+        /// 
+        /// <summary>
+        /// 選択ページの移動要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Move_Handle(object sender, ValueEventArgs<int> e)
+        {
+            Sync(() =>
+            {
+                if (View.DataSource == null ||
+                    View.SelectedIndices.Count <= 0) return;
+
+                // View
+                var count = View.DataSource.Count;
+                var vold  = View.SelectedIndices[0];
+                var vnew  = Math.Min(Math.Max(vold + e.Value, 0), count);
+                if (vold < 0 || vold >= count) return;
+
+                // Model
+                var mold = Model.IndexOf(View.DataSource[vold]);
+                var mnew = vnew == View.DataSource.Count ?
+                           Model.Count :
+                           Model.IndexOf(View.DataSource[vnew]);
+                if (mold  < 0 || mold  >= Model.Count || mnew == -1) return;
+                Async(() => Model.Move(mold, mnew));
+
+                View.DataSource.Move(vold, vnew);
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Remove_Handled
         /// 
         /// <summary>
@@ -176,6 +210,7 @@ namespace Cube.Note.App.Editor
             {
                 Events.NewPage.Handle += NewPage_Handled;
                 Events.Edit.Handle += Edit_Handled;
+                Events.Move.Handle += Move_Handle;
                 Events.Remove.Handle += Remove_Handled;
 
                 View.SelectedIndexChanged += View_SelectedIndexChanged;
