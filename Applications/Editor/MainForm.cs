@@ -228,6 +228,9 @@ namespace Cube.Note.App.Editor
                         break;
                     case Keys.F:
                         break;
+                    case Keys.H:
+                        SwitchMenu();
+                        break;
                     case Keys.J:
                     case Keys.Down:
                         Aggregator.Move.Raise(new ValueEventArgs<int>(1));
