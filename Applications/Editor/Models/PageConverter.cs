@@ -110,13 +110,26 @@ namespace Cube.Note.App.Editor
             
             var text = page.GetAbstract();
             // 1 行に収まらない場合は 1 行に収まるように削る
-            if (Graphics.MeasureString(text, Font).Width > UpperWidth)
+            if (Graphics.MeasureString(text, Font).Width >= UpperWidth)
             {
-                while (Graphics.MeasureString(text, Font).Width > UpperWidth)
+                var fontWidth = Font.Size;
+                var textLength = (int)(UpperWidth / fontWidth);
+                var builder = new System.Text.StringBuilder(text.Substring(0, textLength));
+                var measuredWidth = 0.0F;
+                do
                 {
-                    text = text.Substring(0, text.Length - 1);
+                    measuredWidth = Graphics.MeasureString(builder.ToString(), Font).Width;
+                    fontWidth = measuredWidth / builder.Length;
+                    textLength = (int)(UpperWidth / fontWidth);
+                    builder.Append(text.Substring(builder.Length, System.Math.Max(textLength - builder.Length, 1)));
+                } while (fontWidth < UpperWidth - measuredWidth);
+
+                while (Graphics.MeasureString(builder.ToString(), Font).Width >= UpperWidth)
+                {
+                    builder.Remove(builder.Length - 1, 1);
                 }
-                
+
+                text = builder.ToString();
             }
 
             var items = new List<string>();
