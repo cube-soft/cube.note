@@ -431,17 +431,10 @@ namespace Cube.Note.App.Editor
             var src = Items[index];
             var cvt = Converter.Convert(page);
 
-            switch (e.PropertyName)
+            for (var i = 0; i < src.SubItems.Count; ++i)
             {
-                case nameof(page.Abstract):
-                    src.Text = cvt.Text;
-                    break;
-                case nameof(page.LastUpdate):
-                    if (src.SubItems == null || src.SubItems.Count < 2) break;
-                    src.SubItems[1].Text = cvt.SubItems[1].Text;
-                    break;
-                default:
-                    break;
+                if (src.SubItems[i].Text == cvt.SubItems[i].Text) continue;
+                src.SubItems[i].Text = cvt.SubItems[i].Text;
             }
         }
 
