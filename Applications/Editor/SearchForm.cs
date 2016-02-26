@@ -109,7 +109,9 @@ namespace Cube.Note.App.Editor
             {
                 if (ContentsPanel.Panel2Collapsed == !value) return;
                 ContentsPanel.Panel2Collapsed = !value;
-                if (value && Height < 300) Height = 300;
+
+                if (!value) Height = MinimumSize.Height;
+                else if (Height < 350) Height = 350;
             }
         }
 
@@ -171,7 +173,15 @@ namespace Cube.Note.App.Editor
             base.OnShown(e);
             ShowPages = false;
             Height = MinimumSize.Height;
+            KeywordTextBox.Focus();
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            e.Cancel = true;
+            Hide();
         }
 
         #endregion

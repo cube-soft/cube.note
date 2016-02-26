@@ -78,6 +78,7 @@ namespace Cube.Note.App.Editor
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
             UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
             RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
+            SearchMenuItem.Click += (s, e) => SearchControl.Show();
             LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 
@@ -147,12 +148,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            PageCollectionControl.Pages.Aggregator = Aggregator;
+            PageCollectionControl.Aggregator = Aggregator;
+            SearchControl.Aggregator = Aggregator;
 
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
+            new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
         }
 
         #endregion
@@ -355,6 +358,10 @@ namespace Cube.Note.App.Editor
         private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
         private EventAggregator Aggregator = new EventAggregator();
         private AutoSaver Saver = null;
+        #endregion
+
+        #region Views
+        private SearchForm SearchControl = new SearchForm();
         #endregion
     }
 }

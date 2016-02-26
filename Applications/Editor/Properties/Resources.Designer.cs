@@ -99,6 +99,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   現在のノート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CurrentNote {
+            get {
+                return ResourceManager.GetString("CurrentNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   下へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DownMenu {

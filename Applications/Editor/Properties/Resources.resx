@@ -130,6 +130,9 @@
   <data name="CreationFormat" xml:space="preserve">
     <value>yyyy/MM/dd HH:mm 作成</value>
   </data>
+  <data name="CurrentNote" xml:space="preserve">
+    <value>現在のノート</value>
+  </data>
   <data name="DownMenu" xml:space="preserve">
     <value>下へ</value>
   </data>

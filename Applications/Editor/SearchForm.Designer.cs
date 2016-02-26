@@ -178,6 +178,7 @@
             // 
             // RangeComboBox
             // 
+            this.RangeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchPanel.SetFlowBreak(this.RangeComboBox, true);
             this.RangeComboBox.FormattingEnabled = true;
             this.RangeComboBox.Location = new System.Drawing.Point(96, 44);
@@ -263,6 +264,7 @@
             // 
             // SearchForm
             // 
+            this.AcceptButton = this.SearchButton;
             this.ClientSize = new System.Drawing.Size(400, 350);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;

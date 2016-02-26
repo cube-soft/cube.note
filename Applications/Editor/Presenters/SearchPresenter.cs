@@ -34,7 +34,7 @@ namespace Cube.Note.App.Editor
     /// 
     /* --------------------------------------------------------------------- */
     public class SearchPresenter : 
-        PresenterBase<SearchControl, PageCollection>
+        PresenterBase<SearchForm, PageCollection>
     {
         #region Constructors
 
@@ -47,14 +47,17 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SearchPresenter(SearchControl view, PageCollection model,
+        public SearchPresenter(SearchForm view, PageCollection model,
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
             Events.Search.Handle += Search_Handled;
 
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.Detached += View_Detached;
+            View.Hidden += View_Hidden;
+
+            ResetSearchRange();
+            View.SearchRange.SelectedIndex = 1;
         }
 
         #endregion
@@ -85,7 +88,8 @@ namespace Cube.Note.App.Editor
                 Sync(() =>
                 {
                     View.Found = source.Count;
-                    View.Pages.DataSource = source;
+                    View.ShowPages = View.SearchRange.SelectedIndex != 0;
+                    if (View.ShowPages) View.Pages.DataSource = source;
                 });
             });
         }
@@ -96,14 +100,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Detached
+        /// View_Hidden
         /// 
         /// <summary>
         /// メイン画面から削除された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Detached(object sender, EventArgs e)
+        private void View_Hidden(object sender, EventArgs e)
         {
             View.Pages.DataSource = null;
             View.Found = -1;
@@ -135,6 +139,26 @@ namespace Cube.Note.App.Editor
         }
 
         #endregion
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetSearchRange
+        /// 
+        /// <summary>
+        /// 検索範囲用の項目を設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetSearchRange()
+        {
+            View.SearchRange.Items.Clear();
+            View.SearchRange.Items.Add(Properties.Resources.CurrentNote);
+            View.SearchRange.Items.Add(Model.Everyone);
+        }
 
         #endregion
     }

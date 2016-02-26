@@ -212,8 +212,9 @@ namespace Cube.Note.App.Editor
             MultiSelect   = false;
             OwnerDraw     = true;
             Theme         = Cube.Forms.WindowTheme.Explorer;
-            TileSize      = new Size(Width, (int)(Font.Size * 1.5 * 5 + 10));
             View          = View.Tile;
+
+            SetTileSize();
         }
 
         /* ----------------------------------------------------------------- */
@@ -609,7 +610,11 @@ namespace Cube.Note.App.Editor
         {
             if (View != View.Tile) return;
 
-            var height = Math.Max(TileSize.Height, 1);
+            var count = Columns?.Count ?? 0;
+            if (ShowRemoveButton)   ++count;
+            if (ShowPropertyButton) ++count;
+
+            var height = (int)Math.Max(Font.Size * 1.5 * count + 10, 1);
             var width  = Height < height * Count ?
                          Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1) :
                          Math.Max(Width, 1);
