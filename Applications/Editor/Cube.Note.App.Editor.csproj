@@ -124,12 +124,6 @@
     <Compile Include="TextControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SearchControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SearchControl.Designer.cs">
-      <DependentUpon>SearchControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="StatusControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -160,9 +154,6 @@
     </Compile>
     <EmbeddedResource Include="PropertyForm.resx">
       <DependentUpon>PropertyForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SearchControl.resx">
-      <DependentUpon>SearchControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
