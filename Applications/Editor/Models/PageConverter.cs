@@ -17,9 +17,9 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
 using System;
 using System.Text;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -38,6 +38,17 @@ namespace Cube.Note.App.Editor
     public class PageConverter : Cube.Forms.IListViewItemConverter
     {
         #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageConverter
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PageConverter() : this(-1, null, null) { }
 
         /* ----------------------------------------------------------------- */
         ///
