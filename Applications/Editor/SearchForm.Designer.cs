@@ -42,8 +42,9 @@
             this.SearchButton = new Cube.Forms.Button();
             this.ReplaceTabPage = new System.Windows.Forms.TabPage();
             this.Separator = new System.Windows.Forms.PictureBox();
-            this.ResultListView = new Cube.Note.App.Editor.PageListView();
             this.FooterStatusStrip = new Cube.Forms.StatusStrip();
+            this.ResultPanel = new System.Windows.Forms.Panel();
+            this.ResultListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -54,6 +55,7 @@
             this.SearchPanel.SuspendLayout();
             this.SearchButtonShadow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
+            this.ResultPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -103,8 +105,8 @@
             // 
             // ContentsPanel.Panel2
             // 
+            this.ContentsPanel.Panel2.Controls.Add(this.ResultPanel);
             this.ContentsPanel.Panel2.Controls.Add(this.Separator);
-            this.ContentsPanel.Panel2.Controls.Add(this.ResultListView);
             this.ContentsPanel.Size = new System.Drawing.Size(398, 296);
             this.ContentsPanel.SplitterDistance = 160;
             this.ContentsPanel.SplitterWidth = 1;
@@ -232,6 +234,26 @@
             this.Separator.TabIndex = 1;
             this.Separator.TabStop = false;
             // 
+            // FooterStatusStrip
+            // 
+            this.FooterStatusStrip.Location = new System.Drawing.Point(0, 326);
+            this.FooterStatusStrip.Name = "FooterStatusStrip";
+            this.FooterStatusStrip.Size = new System.Drawing.Size(398, 22);
+            this.FooterStatusStrip.TabIndex = 2;
+            this.FooterStatusStrip.Text = "statusStrip1";
+            // 
+            // ResultPanel
+            // 
+            this.ResultPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.ResultPanel.Controls.Add(this.ResultListView);
+            this.ResultPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ResultPanel.Location = new System.Drawing.Point(0, 1);
+            this.ResultPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ResultPanel.Name = "ResultPanel";
+            this.ResultPanel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 4);
+            this.ResultPanel.Size = new System.Drawing.Size(398, 134);
+            this.ResultPanel.TabIndex = 2;
+            // 
             // ResultListView
             // 
             this.ResultListView.Aggregator = null;
@@ -241,26 +263,18 @@
             this.ResultListView.FullRowSelect = true;
             this.ResultListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.ResultListView.LabelWrap = false;
-            this.ResultListView.Location = new System.Drawing.Point(0, 0);
+            this.ResultListView.Location = new System.Drawing.Point(4, 0);
             this.ResultListView.Margin = new System.Windows.Forms.Padding(0);
             this.ResultListView.MultiSelect = false;
             this.ResultListView.Name = "ResultListView";
             this.ResultListView.ShowPropertyButton = false;
             this.ResultListView.ShowRemoveButton = false;
-            this.ResultListView.Size = new System.Drawing.Size(398, 135);
-            this.ResultListView.TabIndex = 0;
+            this.ResultListView.Size = new System.Drawing.Size(394, 130);
+            this.ResultListView.TabIndex = 1;
             this.ResultListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.ResultListView.TileSize = new System.Drawing.Size(398, 77);
+            this.ResultListView.TileSize = new System.Drawing.Size(394, 10);
             this.ResultListView.UseCompatibleStateImageBehavior = false;
             this.ResultListView.View = System.Windows.Forms.View.Tile;
-            // 
-            // FooterStatusStrip
-            // 
-            this.FooterStatusStrip.Location = new System.Drawing.Point(0, 326);
-            this.FooterStatusStrip.Name = "FooterStatusStrip";
-            this.FooterStatusStrip.Size = new System.Drawing.Size(398, 22);
-            this.FooterStatusStrip.TabIndex = 2;
-            this.FooterStatusStrip.Text = "statusStrip1";
             // 
             // SearchForm
             // 
@@ -286,6 +300,7 @@
             this.SearchPanel.PerformLayout();
             this.SearchButtonShadow.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Separator)).EndInit();
+            this.ResultPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -306,7 +321,8 @@
         private System.Windows.Forms.ComboBox RangeComboBox;
         private System.Windows.Forms.Panel SearchButtonShadow;
         private Forms.Button SearchButton;
-        private PageListView ResultListView;
         private System.Windows.Forms.PictureBox Separator;
+        private System.Windows.Forms.Panel ResultPanel;
+        private PageListView ResultListView;
     }
 }
