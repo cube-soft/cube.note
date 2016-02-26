@@ -18,6 +18,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
+using System;
+using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -66,7 +68,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int UpperWidth { get; set; }
+        public int UpperWidth { get; set; } = -1;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,38 +110,70 @@ namespace Cube.Note.App.Editor
             var page = src as Page;
             if (page == null) return new ListViewItem(src.ToString());
             
-            var text = page.GetAbstract();
-            // 1 行に収まらない場合は 1 行に収まるように削る
-            if (Graphics.MeasureString(text, Font).Width >= UpperWidth)
-            {
-                var fontWidth = Font.Size;
-                var textLength = (int)(UpperWidth / fontWidth);
-                var builder = new System.Text.StringBuilder(text.Substring(0, textLength));
-                var measuredWidth = 0.0F;
-                do
-                {
-                    measuredWidth = Graphics.MeasureString(builder.ToString(), Font).Width;
-                    fontWidth = measuredWidth / builder.Length;
-                    textLength = (int)(UpperWidth / fontWidth);
-                    builder.Append(text.Substring(builder.Length, System.Math.Max(textLength - builder.Length, 1)));
-                } while (fontWidth < UpperWidth - measuredWidth);
-
-                while (Graphics.MeasureString(builder.ToString(), Font).Width >= UpperWidth)
-                {
-                    builder.Remove(builder.Length - 1, 1);
-                }
-
-                text = builder.ToString();
-            }
-
             var items = new List<string>();
-            items.Add(text);
+            items.Add(Trim(page.GetAbstract()));
             items.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
             items.Add(string.Join(", ", page.Tags));
 
             var dest = new ListViewItem(items.ToArray());
             return dest;
         }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Trim
+        ///
+        /// <summary>
+        /// 1 行 (UpperWidth) に収まるように、末尾の文字列を除去します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string Trim(string src)
+        {
+            if (Graphics == null || Font == null || UpperWidth <= 0 ||
+                Measure(src) <= UpperWidth) return src;
+
+            var unit     = Font.Size; // average font width
+            var capacity = (int)Math.Round(UpperWidth / unit);
+            var dest     = new StringBuilder(src.Substring(0, capacity));
+            var result   = Measure(dest.ToString());
+
+            while (src.Length > dest.Length && result < UpperWidth)
+            {
+                unit = result / dest.Length;
+                capacity = (int)Math.Round(UpperWidth / unit);
+
+                var add = Math.Min(Math.Max(capacity - dest.Length, 1), src.Length - dest.Length);
+                if (add <= 0) break;
+                dest.Append(src.Substring(dest.Length, add));
+
+                result = Measure(dest.ToString());
+            }
+
+            while (dest.Length > 0 && result > UpperWidth)
+            {
+                dest.Remove(dest.Length - 1, 1);
+                result = Measure(dest.ToString());
+            }
+
+            return dest.ToString();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Measure
+        ///
+        /// <summary>
+        /// テキストの幅を計測します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private float Measure(string src)
+            => Graphics?.MeasureString(src, Font).Width ?? 0;
 
         #endregion
     }
