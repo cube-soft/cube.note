@@ -111,6 +111,7 @@ namespace Cube.Note.App.Editor
         {
             View.Pages.DataSource = null;
             View.Found = -1;
+            View.ShowPages = false;
         }
 
         /* ----------------------------------------------------------------- */

@@ -41,10 +41,10 @@
             this.SearchButtonShadow = new System.Windows.Forms.Panel();
             this.SearchButton = new Cube.Forms.Button();
             this.ReplaceTabPage = new System.Windows.Forms.TabPage();
-            this.Separator = new System.Windows.Forms.PictureBox();
-            this.FooterStatusStrip = new Cube.Forms.StatusStrip();
             this.ResultPanel = new System.Windows.Forms.Panel();
             this.ResultListView = new Cube.Note.App.Editor.PageListView();
+            this.Separator = new System.Windows.Forms.PictureBox();
+            this.FooterStatusStrip = new Cube.Forms.StatusStrip();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -54,8 +54,8 @@
             this.SearchTabPage.SuspendLayout();
             this.SearchPanel.SuspendLayout();
             this.SearchButtonShadow.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
             this.ResultPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -223,25 +223,6 @@
             this.ReplaceTabPage.Text = "置 換";
             this.ReplaceTabPage.UseVisualStyleBackColor = true;
             // 
-            // Separator
-            // 
-            this.Separator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
-            this.Separator.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Separator.Location = new System.Drawing.Point(0, 0);
-            this.Separator.Margin = new System.Windows.Forms.Padding(0);
-            this.Separator.Name = "Separator";
-            this.Separator.Size = new System.Drawing.Size(398, 1);
-            this.Separator.TabIndex = 1;
-            this.Separator.TabStop = false;
-            // 
-            // FooterStatusStrip
-            // 
-            this.FooterStatusStrip.Location = new System.Drawing.Point(0, 326);
-            this.FooterStatusStrip.Name = "FooterStatusStrip";
-            this.FooterStatusStrip.Size = new System.Drawing.Size(398, 22);
-            this.FooterStatusStrip.TabIndex = 2;
-            this.FooterStatusStrip.Text = "statusStrip1";
-            // 
             // ResultPanel
             // 
             this.ResultPanel.BackColor = System.Drawing.SystemColors.Window;
@@ -276,6 +257,25 @@
             this.ResultListView.UseCompatibleStateImageBehavior = false;
             this.ResultListView.View = System.Windows.Forms.View.Tile;
             // 
+            // Separator
+            // 
+            this.Separator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
+            this.Separator.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Separator.Location = new System.Drawing.Point(0, 0);
+            this.Separator.Margin = new System.Windows.Forms.Padding(0);
+            this.Separator.Name = "Separator";
+            this.Separator.Size = new System.Drawing.Size(398, 1);
+            this.Separator.TabIndex = 1;
+            this.Separator.TabStop = false;
+            // 
+            // FooterStatusStrip
+            // 
+            this.FooterStatusStrip.Location = new System.Drawing.Point(0, 326);
+            this.FooterStatusStrip.Name = "FooterStatusStrip";
+            this.FooterStatusStrip.Size = new System.Drawing.Size(398, 22);
+            this.FooterStatusStrip.TabIndex = 2;
+            this.FooterStatusStrip.Text = "statusStrip1";
+            // 
             // SearchForm
             // 
             this.AcceptButton = this.SearchButton;
@@ -299,8 +299,8 @@
             this.SearchPanel.ResumeLayout(false);
             this.SearchPanel.PerformLayout();
             this.SearchButtonShadow.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Separator)).EndInit();
             this.ResultPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Separator)).EndInit();
             this.ResumeLayout(false);
 
         }
