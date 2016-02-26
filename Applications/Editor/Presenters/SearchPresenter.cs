@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Linq;
 using Cube.Note.Azuki;
 using Cube.Collections;
@@ -51,13 +52,12 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
+            Events.SearchMode.Handle += SearchMode_Handle;
             Events.Search.Handle += Search_Handled;
 
-            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Showing += View_Showing;
             View.Hidden += View_Hidden;
-
-            ResetSearchRange();
-            View.SearchRange.SelectedIndex = 1;
+            View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
         }
 
         #endregion
@@ -65,6 +65,29 @@ namespace Cube.Note.App.Editor
         #region Event handlers
 
         #region EventAggregator
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchMode_Handle
+        /// 
+        /// <summary>
+        /// 検索画面を表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SearchMode_Handle(object sender, ValueEventArgs<int> e)
+        {
+            Sync(() =>
+            {
+                View.Show();
+
+                var count = View.SearchRange.Items.Count;
+                if (count <= 0) return;
+
+                var index = Math.Max(Math.Min(e.Value, count - 1), 0);
+                View.SearchRange.SelectedIndex = index;
+            });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -100,10 +123,22 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// View_Showing
+        /// 
+        /// <summary>
+        /// 表示時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Showing(object sender, CancelEventArgs e)
+           => SyncWait(() => ResetSearchRange());
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// View_Hidden
         /// 
         /// <summary>
-        /// メイン画面から削除された時に実行されるハンドラです。
+        /// 非表示時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

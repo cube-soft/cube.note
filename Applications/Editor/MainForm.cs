@@ -78,7 +78,7 @@ namespace Cube.Note.App.Editor
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
             UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
             RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
-            SearchMenuItem.Click += (s, e) => SearchControl.Show();
+            SearchMenuItem.Click += (s, e) => RaiseSearch();
             LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 
@@ -233,6 +233,7 @@ namespace Cube.Note.App.Editor
                         Aggregator.Export.Raise();
                         break;
                     case Keys.F:
+                        RaiseSearch();
                         break;
                     case Keys.H:
                         SwitchMenu();
@@ -330,6 +331,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// FindActive
+        ///
+        /// <summary>
+        /// アクティブなコントロールを検索します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Control FindActive(Control control)
+        {
+            var cast = control as IContainerControl;
+            return cast != null ? FindActive(cast.ActiveControl) : control;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SwitchMenu
         ///
         /// <summary>
@@ -350,6 +366,22 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void RaiseProperty() => Aggregator.Property.Raise();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseSearch
+        ///
+        /// <summary>
+        /// 検索のためのイベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseSearch()
+        {
+            var control = FindActive(ActiveControl);
+            var index = (control == TextControl) ? 0 : 1;
+            Aggregator.SearchMode.Raise(new ValueEventArgs<int>(index));
+        }
 
         #endregion
 
