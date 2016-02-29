@@ -170,7 +170,7 @@
             // 
             // ExitButtonShadow
             // 
-            this.ExitButtonShadow.BackgroundImage = global::Cube.Note.App.Editor.Properties.Resources.Shadow;
+            this.ExitButtonShadow.BackColor = System.Drawing.Color.Gainsboro;
             this.ExitButtonShadow.Controls.Add(this.ExitButton);
             this.ExitButtonShadow.Location = new System.Drawing.Point(372, 4);
             this.ExitButtonShadow.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
@@ -196,7 +196,7 @@
             // 
             // ApplyButtonShadow
             // 
-            this.ApplyButtonShadow.BackgroundImage = global::Cube.Note.App.Editor.Properties.Resources.Shadow;
+            this.ApplyButtonShadow.BackColor = System.Drawing.Color.Gainsboro;
             this.ApplyButtonShadow.Controls.Add(this.ApplyButton);
             this.ApplyButtonShadow.Location = new System.Drawing.Point(236, 4);
             this.ApplyButtonShadow.Name = "ApplyButtonShadow";
