@@ -122,25 +122,27 @@ namespace Cube.Note.App.Editor
             set
             {
                 if (_source == value) return;
-
-                if (_source != null)
+                Update(() =>
                 {
+                    if (_source != null)
+                    {
+                        _source.CollectionChanged -= DS_CollectionChanged;
+                        Detach(_source);
+                    }
+                    ClearItems();
+
+                    _source = value;
+                    if (_source == null) return;
+
                     _source.CollectionChanged -= DS_CollectionChanged;
-                    Detach(_source);
-                }
-                ClearItems();
-
-                _source = value;
-                if (_source == null) return;
-
-                _source.CollectionChanged -= DS_CollectionChanged;
-                foreach (var page in _source)
-                {
-                    page.PropertyChanged -= DS_PropertyChanged;
-                    Add(page);
-                    page.PropertyChanged += DS_PropertyChanged;
-                }
-                _source.CollectionChanged += DS_CollectionChanged;
+                    foreach (var page in _source)
+                    {
+                        page.PropertyChanged -= DS_PropertyChanged;
+                        Add(page);
+                        page.PropertyChanged += DS_PropertyChanged;
+                    }
+                    _source.CollectionChanged += DS_CollectionChanged;
+                });
             }
         }
 
@@ -392,16 +394,16 @@ namespace Cube.Note.App.Editor
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Move:
-                    MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex);
+                    Update(() => MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
-                    RemoveItems(new int[] { e.OldStartingIndex });
+                    Update(() => RemoveItems(new int[] { e.OldStartingIndex }));
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     if (DataSource.Count > 0) break;
                     Detach(e.OldItems);
-                    ClearItems();
+                    Update(() => ClearItems());
                     break;
             }
         }
@@ -432,11 +434,14 @@ namespace Cube.Note.App.Editor
             var src = Items[index];
             var cvt = Converter.Convert(page);
 
-            for (var i = 0; i < src.SubItems.Count; ++i)
+            Update(() =>
             {
-                if (src.SubItems[i].Text == cvt.SubItems[i].Text) continue;
-                src.SubItems[i].Text = cvt.SubItems[i].Text;
-            }
+                for (var i = 0; i < src.SubItems.Count; ++i)
+                {
+                    if (src.SubItems[i].Text == cvt.SubItems[i].Text) continue;
+                    src.SubItems[i].Text = cvt.SubItems[i].Text;
+                }
+            });
         }
 
         #endregion
@@ -577,6 +582,25 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        /// 
+        /// <summary>
+        /// 更新処理を実行します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Update(Action action)
+        {
+            try
+            {
+                BeginUpdate();
+                action();
+            }
+            finally { EndUpdate(); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
