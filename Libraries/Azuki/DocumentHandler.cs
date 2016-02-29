@@ -117,10 +117,11 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> Search(this PageCollection pages, string keyword)
+        public static IEnumerable<Page> Search(this PageCollection pages, string keyword, bool sensitive)
         {
             return pages.Where(page
-                => page.CreateDocument(pages.Directory).FindNext(keyword, 0) != null
+                => page.CreateDocument(pages.Directory)
+                       .FindNext(keyword, 0, sensitive) != null
             );
         }
 
