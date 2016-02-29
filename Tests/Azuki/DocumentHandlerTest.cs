@@ -33,6 +33,7 @@ namespace Cube.Note.Tests.Azuki
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Parallelizable]
     [TestFixture]
     class DocumentHandlerTest : PageCollectionResource
     {

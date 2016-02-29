@@ -32,6 +32,7 @@ namespace Cube.Note.Tests
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Parallelizable]
     [TestFixture]
     class PageCollectionTest : PageCollectionResource
     {
