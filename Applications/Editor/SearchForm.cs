@@ -77,6 +77,22 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CaseSensitive
+        ///
+        /// <summary>
+        /// 大文字と小文字を区別するかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        public bool CaseSensitive
+        {
+            get { return CaseSensitiveCheckBox.Checked; }
+            set { CaseSensitiveCheckBox.Checked = value; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Found
         ///
         /// <summary>
@@ -202,9 +218,9 @@ namespace Cube.Note.App.Editor
             SearchPanel.SuspendLayout();
 
             var width = SearchPanel.Width - SearchPanel.Padding.Right;
+            SetWidth(ButtonsPanel,   width);
             SetWidth(KeywordTextBox, width);
-            SetWidth(RangeComboBox, width);
-            RightAlignment(SearchButtonShadow, width);
+            SetWidth(RangeComboBox,  width);
 
             SearchButton.ResumeLayout();
         }
@@ -245,29 +261,6 @@ namespace Cube.Note.App.Editor
             var padding = control.Padding.Left + control.Padding.Right;
 
             control.Width = width - x - margin - padding;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RightAlignment
-        ///
-        /// <summary>
-        /// 右寄せにします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RightAlignment(Control control, int x)
-        {
-            var current = control.Location.X + control.Width +
-                          control.Margin.Left + control.Padding.Left +
-                          control.Margin.Right + control.Padding.Right;
-            var lack    = x - current;
-            var left    = Math.Max(control.Margin.Left + lack, 0);
-            var right   = control.Margin.Right;
-            var top     = control.Margin.Top;
-            var bottom  = control.Margin.Bottom;
-
-            control.Margin = new Padding(left, top, right, bottom);
         }
 
         #endregion

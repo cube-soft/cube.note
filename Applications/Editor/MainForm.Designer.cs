@@ -343,6 +343,7 @@
             this.KeyPreview = true;
             this.MaximizeBox = true;
             this.MinimizeBox = true;
+            this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "MainForm";
             this.Sizable = true;
             this.LayoutPanel.ResumeLayout(false);

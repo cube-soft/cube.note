@@ -104,7 +104,7 @@ namespace Cube.Note.App.Editor
 
             await Async(() =>
             {
-                var results = Model.Search(e.Value, false);
+                var results = Model.Search(e.Value, View.CaseSensitive);
                 if (!results.Any()) return;
 
                 var source = results.ToObservable();
