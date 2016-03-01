@@ -98,6 +98,42 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// LineHeight
+        /// 
+        /// <summary>
+        /// 行間を示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        public double LineHeight => 1.3;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedBackColor
+        /// 
+        /// <summary>
+        /// 選択項目の背景色を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        public Color SelectedBackColor => Color.FromArgb(205, 232, 255);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedBorderColor
+        /// 
+        /// <summary>
+        /// 選択項目の枠色を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        public Color SelectedBorderColor => Color.FromArgb(153, 209, 255);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Aggregator
         /// 
         /// <summary>
@@ -105,6 +141,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public EventAggregator Aggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
@@ -116,6 +153,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public ObservableCollection<Page> DataSource
         {
             get { return _source; }
@@ -192,12 +230,6 @@ namespace Cube.Note.App.Editor
         /// コントロールが生成された時に実行されます。
         /// </summary>
         /// 
-        /// <remarks>
-        /// Tile の高さは Font.Size * 1.5 倍 * (3 行 + ボタン領域) に 10px
-        /// の余白領域を設けた値としています。表示するコンテンツ（行数）が
-        /// 増えた時にはこの値も調整する必要があります。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         protected override void OnCreateControl()
         {
@@ -214,7 +246,6 @@ namespace Cube.Note.App.Editor
             Margin         = new Padding(0);
             MultiSelect    = false;
             OwnerDraw      = true;
-            Theme          = Cube.Forms.WindowTheme.Explorer;
             View           = View.Tile;
 
             SetTileSize();
@@ -453,15 +484,12 @@ namespace Cube.Note.App.Editor
                 return;
             }
 
-            var back   = Color.FromArgb(205, 232, 255);
-            var border = Color.FromArgb(153, 209, 255);
-
             var area = bounds;
             --area.Width;
             --area.Height;
 
-            gs.FillRectangle(new SolidBrush(back), bounds);
-            gs.DrawRectangle(new Pen(border), area);
+            gs.FillRectangle(new SolidBrush(SelectedBackColor), bounds);
+            gs.DrawRectangle(new Pen(SelectedBorderColor), area);
         }
 
         /* ----------------------------------------------------------------- */
@@ -475,20 +503,19 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawText(ListViewItem item, Graphics gs, Rectangle bounds)
         {
-            var font = Font;
             var format = new StringFormat(StringFormatFlags.NoWrap);
             format.Trimming = StringTrimming.EllipsisCharacter;
 
-            bounds.Width -= 4;
-            bounds.Height = (int)(font.Size * 1.5);
-            bounds.X += 4;
-            bounds.Y += ShowRemoveButton ? bounds.Height + 2 : 4;
+            bounds.Width -= _space;
+            bounds.Height = (int)(Font.Size * LineHeight);
+            bounds.X += _space;
+            bounds.Y += ShowRemoveButton ? bounds.Height : _space;
 
             for (var i = 0; i < item.SubItems.Count; ++i)
             {
                 var text = item.SubItems[i].Text;
-                var color = (i == 0) ? SystemColors.ControlText : SystemColors.GrayText;
-                gs.DrawString(text, font, new SolidBrush(color), bounds, format);
+                var color = (i == 0) ? Color.Black : Color.DimGray;
+                gs.DrawString(text, Font, new SolidBrush(color), bounds, format);
                 bounds.Y += bounds.Height;
             }
         }
@@ -531,7 +558,7 @@ namespace Cube.Note.App.Editor
             gs.DrawImage(image, x0, (float)y0);
 
             var text = Properties.Resources.ShowProperty;
-            var brush = new SolidBrush(SystemColors.GrayText);
+            var brush = new SolidBrush(Color.Gray);
 
             var x1 = x0 + image.Width;
             var y1 = bounds.Bottom - (height + _space) + (height - size.Height) / 2.0;
@@ -687,7 +714,7 @@ namespace Cube.Note.App.Editor
             if (ShowRemoveButton)   ++count;
             if (ShowPropertyButton) ++count;
 
-            var height = (int)Math.Max(Font.Size * 1.5 * count + 10, 1);
+            var height = (int)Math.Max(Font.Size * LineHeight * count + 8, 1);
             var width  = Height < height * Count ?
                          Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1) :
                          Math.Max(Width, 1);
