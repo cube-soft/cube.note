@@ -99,6 +99,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   現在のノート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CurrentNote {
+            get {
+                return ResourceManager.GetString("CurrentNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   下へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DownMenu {
@@ -324,16 +333,6 @@ namespace Cube.Note.App.Editor.Properties {
         internal static System.Drawing.Bitmap Settings {
             get {
                 object obj = ResourceManager.GetObject("Settings", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Shadow {
-            get {
-                object obj = ResourceManager.GetObject("Shadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

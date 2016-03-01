@@ -17,9 +17,9 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -66,6 +66,8 @@ namespace Cube.Note.App.Editor
             ColorScheme.CleanedLineBar     = ColorScheme.LineNumberBack;
             ColorScheme.DirtyLineBar       = SystemColors.Highlight;
             ColorScheme.RightEdgeColor     = BackColor;
+
+            ColorScheme.SetColor(CharClass.Keyword, Color.White, Color.OrangeRed);
 
             CaretMoved += (s, e) => Report();
         }

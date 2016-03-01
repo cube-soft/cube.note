@@ -92,6 +92,12 @@
             this.SpecialCharsColorLabel = new System.Windows.Forms.Label();
             this.VersionTabPage = new System.Windows.Forms.TabPage();
             this.TextColorColorButton = new Cube.Forms.ColorButton();
+            this.Label16 = new System.Windows.Forms.Label();
+            this.SearchBackColorColorButton = new Cube.Forms.ColorButton();
+            this.SearchBackColorLabel = new System.Windows.Forms.Label();
+            this.Label17 = new System.Windows.Forms.Label();
+            this.SearchForeColorColorButton = new Cube.Forms.ColorButton();
+            this.SearchForeColorLabel = new System.Windows.Forms.Label();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
@@ -170,7 +176,7 @@
             // 
             // ExitButtonShadow
             // 
-            this.ExitButtonShadow.BackgroundImage = global::Cube.Note.App.Editor.Properties.Resources.Shadow;
+            this.ExitButtonShadow.BackColor = System.Drawing.Color.Gainsboro;
             this.ExitButtonShadow.Controls.Add(this.ExitButton);
             this.ExitButtonShadow.Location = new System.Drawing.Point(372, 4);
             this.ExitButtonShadow.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
@@ -196,7 +202,7 @@
             // 
             // ApplyButtonShadow
             // 
-            this.ApplyButtonShadow.BackgroundImage = global::Cube.Note.App.Editor.Properties.Resources.Shadow;
+            this.ApplyButtonShadow.BackColor = System.Drawing.Color.Gainsboro;
             this.ApplyButtonShadow.Controls.Add(this.ApplyButton);
             this.ApplyButtonShadow.Location = new System.Drawing.Point(236, 4);
             this.ApplyButtonShadow.Name = "ApplyButtonShadow";
@@ -270,6 +276,12 @@
             this.GeneralSettingsPanel.Controls.Add(this.Label15);
             this.GeneralSettingsPanel.Controls.Add(this.HighlightForeColorColorButton);
             this.GeneralSettingsPanel.Controls.Add(this.HighlightForeColorLabel);
+            this.GeneralSettingsPanel.Controls.Add(this.Label16);
+            this.GeneralSettingsPanel.Controls.Add(this.SearchBackColorColorButton);
+            this.GeneralSettingsPanel.Controls.Add(this.SearchBackColorLabel);
+            this.GeneralSettingsPanel.Controls.Add(this.Label17);
+            this.GeneralSettingsPanel.Controls.Add(this.SearchForeColorColorButton);
+            this.GeneralSettingsPanel.Controls.Add(this.SearchForeColorLabel);
             this.GeneralSettingsPanel.Controls.Add(this.Label31);
             this.GeneralSettingsPanel.Controls.Add(this.AutoSaveTimeNumericUpDown);
             this.GeneralSettingsPanel.Controls.Add(this.Label32);
@@ -458,7 +470,7 @@
             // 
             // Label31
             // 
-            this.Label31.Location = new System.Drawing.Point(15, 189);
+            this.Label31.Location = new System.Drawing.Point(15, 247);
             this.Label31.Margin = new System.Windows.Forms.Padding(3, 24, 3, 3);
             this.Label31.Name = "Label31";
             this.Label31.Size = new System.Drawing.Size(100, 23);
@@ -468,7 +480,7 @@
             // 
             // AutoSaveTimeNumericUpDown
             // 
-            this.AutoSaveTimeNumericUpDown.Location = new System.Drawing.Point(121, 189);
+            this.AutoSaveTimeNumericUpDown.Location = new System.Drawing.Point(121, 247);
             this.AutoSaveTimeNumericUpDown.Margin = new System.Windows.Forms.Padding(3, 24, 3, 3);
             this.AutoSaveTimeNumericUpDown.Minimum = new decimal(new int[] {
             10,
@@ -479,7 +491,7 @@
             this.AutoSaveTimeNumericUpDown.Size = new System.Drawing.Size(80, 23);
             this.AutoSaveTimeNumericUpDown.TabIndex = 10;
             this.AutoSaveTimeNumericUpDown.Value = new decimal(new int[] {
-            10,
+            14,
             0,
             0,
             0});
@@ -487,7 +499,7 @@
             // Label32
             // 
             this.GeneralSettingsPanel.SetFlowBreak(this.Label32, true);
-            this.Label32.Location = new System.Drawing.Point(207, 189);
+            this.Label32.Location = new System.Drawing.Point(207, 247);
             this.Label32.Margin = new System.Windows.Forms.Padding(3, 24, 3, 3);
             this.Label32.Name = "Label32";
             this.Label32.Size = new System.Drawing.Size(100, 23);
@@ -498,11 +510,11 @@
             // RemoveWarningCheckBox
             // 
             this.RemoveWarningCheckBox.AutoSize = true;
-            this.RemoveWarningCheckBox.Location = new System.Drawing.Point(15, 221);
+            this.RemoveWarningCheckBox.Location = new System.Drawing.Point(15, 279);
             this.RemoveWarningCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.RemoveWarningCheckBox.Name = "RemoveWarningCheckBox";
             this.RemoveWarningCheckBox.Size = new System.Drawing.Size(218, 19);
-            this.RemoveWarningCheckBox.TabIndex = 11;
+            this.RemoveWarningCheckBox.TabIndex = 15;
             this.RemoveWarningCheckBox.Text = "ノート削除時に警告メッセージを表示する";
             this.RemoveWarningCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -918,6 +930,74 @@
             this.TextColorColorButton.Text = "colorButton1";
             this.TextColorColorButton.UseVisualStyleBackColor = false;
             // 
+            // Label16
+            // 
+            this.Label16.Location = new System.Drawing.Point(15, 168);
+            this.Label16.Margin = new System.Windows.Forms.Padding(3);
+            this.Label16.Name = "Label16";
+            this.Label16.Size = new System.Drawing.Size(100, 23);
+            this.Label16.TabIndex = 111;
+            this.Label16.Text = "検索背景色";
+            this.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SearchBackColorColorButton
+            // 
+            this.SearchBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SearchBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SearchBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.SearchBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SearchBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.SearchBackColorColorButton.Location = new System.Drawing.Point(121, 168);
+            this.SearchBackColorColorButton.Name = "SearchBackColorColorButton";
+            this.SearchBackColorColorButton.Size = new System.Drawing.Size(50, 23);
+            this.SearchBackColorColorButton.TabIndex = 10;
+            this.SearchBackColorColorButton.UseVisualStyleBackColor = false;
+            // 
+            // SearchBackColorLabel
+            // 
+            this.GeneralSettingsPanel.SetFlowBreak(this.SearchBackColorLabel, true);
+            this.SearchBackColorLabel.Location = new System.Drawing.Point(177, 168);
+            this.SearchBackColorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SearchBackColorLabel.Name = "SearchBackColorLabel";
+            this.SearchBackColorLabel.Size = new System.Drawing.Size(190, 23);
+            this.SearchBackColorLabel.TabIndex = 11;
+            this.SearchBackColorLabel.Text = "(255, 255, 255)";
+            this.SearchBackColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Label17
+            // 
+            this.Label17.Location = new System.Drawing.Point(15, 197);
+            this.Label17.Margin = new System.Windows.Forms.Padding(3);
+            this.Label17.Name = "Label17";
+            this.Label17.Size = new System.Drawing.Size(100, 23);
+            this.Label17.TabIndex = 112;
+            this.Label17.Text = "検索テキスト色";
+            this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SearchForeColorColorButton
+            // 
+            this.SearchForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SearchForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SearchForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.SearchForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SearchForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.SearchForeColorColorButton.Location = new System.Drawing.Point(121, 197);
+            this.SearchForeColorColorButton.Name = "SearchForeColorColorButton";
+            this.SearchForeColorColorButton.Size = new System.Drawing.Size(50, 23);
+            this.SearchForeColorColorButton.TabIndex = 12;
+            this.SearchForeColorColorButton.UseVisualStyleBackColor = false;
+            // 
+            // SearchForeColorLabel
+            // 
+            this.GeneralSettingsPanel.SetFlowBreak(this.SearchForeColorLabel, true);
+            this.SearchForeColorLabel.Location = new System.Drawing.Point(177, 197);
+            this.SearchForeColorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SearchForeColorLabel.Name = "SearchForeColorLabel";
+            this.SearchForeColorLabel.Size = new System.Drawing.Size(190, 23);
+            this.SearchForeColorLabel.TabIndex = 13;
+            this.SearchForeColorLabel.Text = "(255, 255, 255)";
+            this.SearchForeColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // SettingsForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
@@ -1013,5 +1093,11 @@
         private Forms.ColorButton LineNumberForeColorColorButton;
         private Forms.ColorButton CurrentLineColorColorButton;
         private Forms.ColorButton SpecialCharsColorColorButton;
+        private System.Windows.Forms.Label Label16;
+        private Forms.ColorButton SearchBackColorColorButton;
+        private System.Windows.Forms.Label SearchBackColorLabel;
+        private System.Windows.Forms.Label Label17;
+        private Forms.ColorButton SearchForeColorColorButton;
+        private System.Windows.Forms.Label SearchForeColorLabel;
     }
 }

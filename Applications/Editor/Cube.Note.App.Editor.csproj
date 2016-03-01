@@ -112,6 +112,12 @@
     <Compile Include="PropertyForm.Designer.cs">
       <DependentUpon>PropertyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingsControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -126,12 +132,6 @@
     </Compile>
     <Compile Include="TextControl.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SearchControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SearchControl.Designer.cs">
-      <DependentUpon>SearchControl.cs</DependentUpon>
     </Compile>
     <Compile Include="StatusControl.cs">
       <SubType>Component</SubType>
@@ -164,8 +164,8 @@
     <EmbeddedResource Include="PropertyForm.resx">
       <DependentUpon>PropertyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SearchControl.resx">
-      <DependentUpon>SearchControl.cs</DependentUpon>
+    <EmbeddedResource Include="SearchForm.resx">
+      <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
@@ -194,7 +194,6 @@
     <None Include="Resources\Redo.png" />
     <None Include="Resources\Property.png" />
     <None Include="Resources\Font.png" />
-    <None Include="Resources\Shadow.png" />
     <None Include="Resources\Normalize.png" />
     <None Include="Resources\LogoLarge.png" />
     <None Include="Resources\SearchPale.png" />

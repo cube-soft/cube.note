@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -152,6 +153,13 @@ namespace Cube.Note.App.Editor
                     View.ColorScheme.SelectionFore = Model.HighlightForeColor;
                     View.ColorScheme.MatchedBracketFore = Model.HighlightForeColor;
                     break;
+                case nameof(Model.SearchBackColor):
+                case nameof(Model.SearchForeColor):
+                    View.ColorScheme.SetColor(CharClass.Keyword,
+                        Model.SearchForeColor,
+                        Model.SearchBackColor
+                    );
+                    break;
                 case nameof(Model.LineNumberBackColor):
                     View.ColorScheme.LineNumberBack = Model.LineNumberBackColor;
                     View.ColorScheme.CleanedLineBar = Model.LineNumberBackColor;
@@ -240,13 +248,13 @@ namespace Cube.Note.App.Editor
 
             if (Model.WordWrap)
             {
-                View.ViewType      = Sgry.Azuki.ViewType.WrappedProportional;
+                View.ViewType      = ViewType.WrappedProportional;
                 View.WordWrapCount = Model.WordWrapAsWindow ? -1 : Model.WordWrapCount;
                 View.Resize       += View_Resize;
             }
             else
             {
-                View.ViewType      = Sgry.Azuki.ViewType.Proportional;
+                View.ViewType      = ViewType.Proportional;
                 View.WordWrapCount = -1;
             }
         }

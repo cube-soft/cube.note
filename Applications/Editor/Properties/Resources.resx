@@ -130,6 +130,9 @@
   <data name="CreationFormat" xml:space="preserve">
     <value>yyyy/MM/dd HH:mm 作成</value>
   </data>
+  <data name="CurrentNote" xml:space="preserve">
+    <value>現在のノート</value>
+  </data>
   <data name="DownMenu" xml:space="preserve">
     <value>下へ</value>
   </data>
@@ -201,9 +204,6 @@
   </data>
   <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Shadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Shadow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ShowProperty" xml:space="preserve">
     <value>タグを設定</value>

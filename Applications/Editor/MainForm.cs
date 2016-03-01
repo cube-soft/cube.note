@@ -78,6 +78,7 @@ namespace Cube.Note.App.Editor
             VisibleMenuItem.Click += (s, e) => SwitchMenu();
             UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
             RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
+            SearchMenuItem.Click += (s, e) => RaiseSearch();
             LogoMenuItem.Click += LogoMenuItem_Click;
             SettingsMenuItem.Click += SettingsMenuItem_Click;
 
@@ -147,12 +148,13 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            PageCollectionControl.Pages.Aggregator = Aggregator;
+            PageCollectionControl.Aggregator = Aggregator;
 
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
+            new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
         }
 
         #endregion
@@ -230,6 +232,7 @@ namespace Cube.Note.App.Editor
                         Aggregator.Export.Raise();
                         break;
                     case Keys.F:
+                        RaiseSearch();
                         break;
                     case Keys.H:
                         SwitchMenu();
@@ -327,6 +330,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// FindActive
+        ///
+        /// <summary>
+        /// アクティブなコントロールを検索します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Control FindActive(Control control)
+        {
+            var cast = control as IContainerControl;
+            return cast != null ? FindActive(cast.ActiveControl) : control;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SwitchMenu
         ///
         /// <summary>
@@ -348,6 +366,22 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RaiseProperty() => Aggregator.Property.Raise();
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseSearch
+        ///
+        /// <summary>
+        /// 検索のためのイベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseSearch()
+        {
+            var control = FindActive(ActiveControl);
+            var index = (control == TextControl) ? 0 : 1;
+            Aggregator.SearchMode.Raise(new ValueEventArgs<int>(index));
+        }
+
         #endregion
 
         #region Models
@@ -355,6 +389,10 @@ namespace Cube.Note.App.Editor
         private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
         private EventAggregator Aggregator = new EventAggregator();
         private AutoSaver Saver = null;
+        #endregion
+
+        #region Views
+        private SearchForm SearchControl = new SearchForm();
         #endregion
     }
 }

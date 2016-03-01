@@ -96,7 +96,7 @@ namespace Cube.Note.App.Editor
 
                 Async(() => Settings.Current.Page?
                     .CreateDocument(Model.Directory)?
-                    .SaveDocument(dialog.FileName)
+                    .Save(dialog.FileName)
                 );
             });
         }

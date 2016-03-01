@@ -38,6 +38,51 @@ namespace Cube.Note.Azuki
     /* --------------------------------------------------------------------- */
     public static class DocumentHandler
     {
+        #region Document extension methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        /// 
+        /// <summary>
+        /// Document の内容をファイルに保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Save(this Document src, string path)
+        {
+            var bytes = _Encoding.GetBytes(src.Text);
+            var bom = _Encoding.GetBytes("\xFEFF");
+
+            using (var stream = IoEx.File.Open(path,
+                IoEx.FileMode.OpenOrCreate, IoEx.FileAccess.ReadWrite, IoEx.FileShare.ReadWrite))
+            {
+                stream.SetLength(0);
+                stream.Write(bom, 0, bom.Length);
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
+            src.IsDirty = false;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Highlight
+        /// 
+        /// <summary>
+        /// キーワードを強調表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Highlight(this Document src, string keyword, bool sensitive)
+        {
+            var obj = new Sgry.Azuki.Highlighter.KeywordHighlighter();
+            obj.AddRegex(keyword, !sensitive, CharClass.Keyword);
+            src.Highlighter = obj;
+        }
+
+        #endregion
+
         #region Page extension methods
 
         /* ----------------------------------------------------------------- */
@@ -75,33 +120,24 @@ namespace Cube.Note.Azuki
             if (doc == null || doc.IsReadOnly || !doc.IsDirty) return;
             
             var path = IoEx.Path.Combine(directory, page.FileName);
-            doc.SaveDocument(path);
+            doc.Save(path);
             page.LastUpdate = DateTime.Now;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveDocument
+        /// Highlight
         /// 
         /// <summary>
-        /// Document の内容をファイルに保存します。
+        /// キーワードを強調表示します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void SaveDocument(this Document src, string path)
+        public static void Highlight(this Page page, string keyword, bool sensitive)
         {
-            var bytes = _Encoding.GetBytes(src.Text);
-            var bom = _Encoding.GetBytes("\xFEFF");
-
-            using (var stream = IoEx.File.Open(path,
-                IoEx.FileMode.OpenOrCreate, IoEx.FileAccess.ReadWrite, IoEx.FileShare.ReadWrite))
-            {
-                stream.SetLength(0);
-                stream.Write(bom, 0, bom.Length);
-                stream.Write(bytes, 0, bytes.Length);
-            }
-
-            src.IsDirty = false;
+            var doc = page.Document as Document;
+            if (doc == null) return;
+            doc.Highlight(keyword, sensitive);
         }
 
         #endregion
@@ -117,12 +153,10 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> Search(this PageCollection pages, string keyword)
-        {
-            return pages.Where(page
-                => page.CreateDocument(pages.Directory).FindNext(keyword, 0) != null
-            );
-        }
+        public static IEnumerable<Page> Search(this IEnumerable<Page> src,
+            string keyword, bool sensitive, int offset, string directory)
+            => src.Where(x => x.CreateDocument(directory)
+                               .FindNext(keyword, offset, sensitive) != null);
 
         #endregion
 

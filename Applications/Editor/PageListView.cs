@@ -122,25 +122,27 @@ namespace Cube.Note.App.Editor
             set
             {
                 if (_source == value) return;
-
-                if (_source != null)
+                Update(() =>
                 {
+                    if (_source != null)
+                    {
+                        _source.CollectionChanged -= DS_CollectionChanged;
+                        Detach(_source);
+                    }
+                    ClearItems();
+
+                    _source = value;
+                    if (_source == null) return;
+
                     _source.CollectionChanged -= DS_CollectionChanged;
-                    Detach(_source);
-                }
-                ClearItems();
-
-                _source = value;
-                if (_source == null) return;
-
-                _source.CollectionChanged -= DS_CollectionChanged;
-                foreach (var page in _source)
-                {
-                    page.PropertyChanged -= DS_PropertyChanged;
-                    Add(page);
-                    page.PropertyChanged += DS_PropertyChanged;
-                }
-                _source.CollectionChanged += DS_CollectionChanged;
+                    foreach (var page in _source)
+                    {
+                        page.PropertyChanged -= DS_PropertyChanged;
+                        Add(page);
+                        page.PropertyChanged += DS_PropertyChanged;
+                    }
+                    _source.CollectionChanged += DS_CollectionChanged;
+                });
             }
         }
 
@@ -201,8 +203,10 @@ namespace Cube.Note.App.Editor
         {
             base.OnCreateControl();
 
+            var upper = Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1);
+
             BorderStyle   = BorderStyle.None;
-            Converter     = new PageConverter();
+            Converter     = new PageConverter(upper, CreateGraphics(), Font);
             FullRowSelect = true;
             HeaderStyle   = ColumnHeaderStyle.None;
             LabelWrap     = false;
@@ -210,8 +214,9 @@ namespace Cube.Note.App.Editor
             MultiSelect   = false;
             OwnerDraw     = true;
             Theme         = Cube.Forms.WindowTheme.Explorer;
-            TileSize      = new Size(Width, (int)(Font.Size * 1.5 * 5 + 10));
             View          = View.Tile;
+
+            SetTileSize();
         }
 
         /* ----------------------------------------------------------------- */
@@ -389,16 +394,16 @@ namespace Cube.Note.App.Editor
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Move:
-                    MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex);
+                    Update(() => MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
-                    RemoveItems(new int[] { e.OldStartingIndex });
+                    Update(() => RemoveItems(new int[] { e.OldStartingIndex }));
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     if (DataSource.Count > 0) break;
                     Detach(e.OldItems);
-                    ClearItems();
+                    Update(() => ClearItems());
                     break;
             }
         }
@@ -429,18 +434,14 @@ namespace Cube.Note.App.Editor
             var src = Items[index];
             var cvt = Converter.Convert(page);
 
-            switch (e.PropertyName)
+            Update(() =>
             {
-                case nameof(page.Abstract):
-                    src.Text = cvt.Text;
-                    break;
-                case nameof(page.LastUpdate):
-                    if (src.SubItems == null || src.SubItems.Count < 2) break;
-                    src.SubItems[1].Text = cvt.SubItems[1].Text;
-                    break;
-                default:
-                    break;
-            }
+                for (var i = 0; i < src.SubItems.Count; ++i)
+                {
+                    if (src.SubItems[i].Text == cvt.SubItems[i].Text) continue;
+                    src.SubItems[i].Text = cvt.SubItems[i].Text;
+                }
+            });
         }
 
         #endregion
@@ -584,6 +585,25 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Update
+        /// 
+        /// <summary>
+        /// 更新処理を実行します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Update(Action action)
+        {
+            try
+            {
+                BeginUpdate();
+                action();
+            }
+            finally { EndUpdate(); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SetColumns
         /// 
         /// <summary>
@@ -614,7 +634,11 @@ namespace Cube.Note.App.Editor
         {
             if (View != View.Tile) return;
 
-            var height = Math.Max(TileSize.Height, 1);
+            var count = Columns?.Count ?? 0;
+            if (ShowRemoveButton)   ++count;
+            if (ShowPropertyButton) ++count;
+
+            var height = (int)Math.Max(Font.Size * 1.5 * count + 10, 1);
             var width  = Height < height * Count ?
                          Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1) :
                          Math.Max(Width, 1);

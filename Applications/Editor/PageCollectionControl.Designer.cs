@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Cube.Note.App.Editor.PageConverter pageConverter1 = new Cube.Note.App.Editor.PageConverter();
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.NewPageButton = new System.Windows.Forms.Button();
             this.TagComboBox = new System.Windows.Forms.ComboBox();
@@ -125,7 +124,6 @@
             this.PageListView.Aggregator = null;
             this.PageListView.AllowNoSelect = false;
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Converter = pageConverter1;
             this.PageListView.DataSource = null;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
