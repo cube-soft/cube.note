@@ -38,74 +38,6 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     public class PageConverter : Cube.Forms.IListViewItemConverter
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageConverter
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PageConverter() : this(-1, null, null) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageConverter
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PageConverter(int upper, Graphics graphics, Font font)
-        {
-            UpperWidth = upper;
-            Graphics   = graphics;
-            Font       = font;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpperWidth
-        ///
-        /// <summary>
-        /// 1 行の最大長をピクセル単位で取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int UpperWidth { get; set; } = -1;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Graphics
-        ///
-        /// <summary>
-        /// 描画用オブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Graphics Graphics { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Font
-        ///
-        /// <summary>
-        /// フォントを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Font Font { get; set; }
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -123,69 +55,13 @@ namespace Cube.Note.App.Editor
             if (page == null) return new ListViewItem(src.ToString());
             
             var items = new List<string>();
-            items.Add(Trim(page.GetAbstract()));
+            items.Add(page.GetAbstract());
             items.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
             items.Add(string.Join(", ", page.Tags.ToArray()));
 
             var dest = new ListViewItem(items.ToArray());
             return dest;
         }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Trim
-        ///
-        /// <summary>
-        /// 1 行 (UpperWidth) に収まるように、末尾の文字列を除去します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string Trim(string src)
-        {
-            if (Graphics == null || Font == null || UpperWidth <= 0 ||
-                Measure(src) <= UpperWidth) return src;
-
-            var unit     = Font.Size; // average font width
-            var capacity = (int)Math.Round(UpperWidth / unit);
-            var dest     = new StringBuilder(src.Substring(0, capacity));
-            var result   = Measure(dest.ToString());
-
-            while (src.Length > dest.Length && result < UpperWidth)
-            {
-                unit = result / dest.Length;
-                capacity = (int)Math.Round(UpperWidth / unit);
-
-                var add = Math.Min(Math.Max(capacity - dest.Length, 1), src.Length - dest.Length);
-                if (add <= 0) break;
-                dest.Append(src.Substring(dest.Length, add));
-
-                result = Measure(dest.ToString());
-            }
-
-            while (dest.Length > 0 && result > UpperWidth)
-            {
-                dest.Remove(dest.Length - 1, 1);
-                result = Measure(dest.ToString());
-            }
-
-            return dest.ToString();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Measure
-        ///
-        /// <summary>
-        /// テキストの幅を計測します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private float Measure(string src)
-            => Graphics?.MeasureString(src, Font).Width ?? 0;
 
         #endregion
     }
