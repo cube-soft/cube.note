@@ -205,16 +205,17 @@ namespace Cube.Note.App.Editor
 
             var upper = Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1);
 
-            BorderStyle   = BorderStyle.None;
-            Converter     = new PageConverter();
-            FullRowSelect = true;
-            HeaderStyle   = ColumnHeaderStyle.None;
-            LabelWrap     = false;
-            Margin        = new Padding(0);
-            MultiSelect   = false;
-            OwnerDraw     = true;
-            Theme         = Cube.Forms.WindowTheme.Explorer;
-            View          = View.Tile;
+            BorderStyle    = BorderStyle.None;
+            Converter      = new PageConverter();
+            DoubleBuffered = true;
+            FullRowSelect  = true;
+            HeaderStyle    = ColumnHeaderStyle.None;
+            LabelWrap      = false;
+            Margin         = new Padding(0);
+            MultiSelect    = false;
+            OwnerDraw      = true;
+            Theme          = Cube.Forms.WindowTheme.Explorer;
+            View           = View.Tile;
 
             SetTileSize();
         }
@@ -446,24 +447,21 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawBackground(ListViewItem item, Graphics gs, Rectangle bounds)
         {
-            var activeBack   = Color.FromArgb(205, 232, 255);
-            var activeBorder = Color.FromArgb(153, 209, 255);
-            var hoverBack    = Color.AliceBlue;
+            if (!item.Selected)
+            {
+                gs.FillRectangle(new SolidBrush(BackColor), bounds);
+                return;
+            }
 
-            if (item.Selected)
-            {
-                gs.FillRectangle(new SolidBrush(activeBack), bounds);
-                if (bounds.Contains(PointToClient(Cursor.Position)))
-                {
-                    var area = bounds;
-                    area.Size -= new Size(1, 1);
-                    gs.DrawRectangle(new Pen(activeBorder), area);
-                }
-            }
-            else if (bounds.Contains(PointToClient(Cursor.Position)))
-            {
-                gs.FillRectangle(new SolidBrush(hoverBack), bounds);
-            }
+            var back   = Color.FromArgb(205, 232, 255);
+            var border = Color.FromArgb(153, 209, 255);
+
+            var area = bounds;
+            --area.Width;
+            --area.Height;
+
+            gs.FillRectangle(new SolidBrush(back), bounds);
+            gs.DrawRectangle(new Pen(border), area);
         }
 
         /* ----------------------------------------------------------------- */
@@ -477,20 +475,21 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawText(ListViewItem item, Graphics gs, Rectangle bounds)
         {
-            var font = item.Font;
+            var font = Font;
             var format = new StringFormat(StringFormatFlags.NoWrap);
             format.Trimming = StringTrimming.EllipsisCharacter;
 
-            bounds.X += 4;
-            bounds.Y += 4;
+            bounds.Width -= 4;
             bounds.Height = (int)(font.Size * 1.5);
+            bounds.X += 4;
+            bounds.Y += ShowRemoveButton ? bounds.Height + 2 : 4;
 
             for (var i = 0; i < item.SubItems.Count; ++i)
             {
-                bounds.Y += bounds.Height;
                 var text = item.SubItems[i].Text;
                 var color = (i == 0) ? SystemColors.ControlText : SystemColors.GrayText;
                 gs.DrawString(text, font, new SolidBrush(color), bounds, format);
+                bounds.Y += bounds.Height;
             }
         }
 
