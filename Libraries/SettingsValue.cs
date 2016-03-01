@@ -221,6 +221,48 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SearchBackColor
+        ///
+        /// <summary>
+        /// 検索結果表示時の背景色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color SearchBackColor
+        {
+            get { return _searchBackColor; }
+            set
+            {
+                if (_searchBackColor == value) return;
+                _searchBackColor = value;
+                RaisePropertyChanged(nameof(SearchBackColor));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchForeColor
+        ///
+        /// <summary>
+        /// 検索結果表示時の前景色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color SearchForeColor
+        {
+            get { return _searchForeColor; }
+            set
+            {
+                if (_searchForeColor == value) return;
+                _searchForeColor = value;
+                RaisePropertyChanged(nameof(SearchForeColor));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// LineNumberBackColor
         ///
         /// <summary>
@@ -700,6 +742,8 @@ namespace Cube.Note
             ForeColor           = SystemColors.WindowText;
             HighlightBackColor  = SystemColors.Highlight;
             HighlightForeColor  = SystemColors.HighlightText;
+            SearchBackColor     = Color.OrangeRed;
+            SearchForeColor     = Color.White;
             LineNumberBackColor = SystemColors.Control;
             LineNumberForeColor = SystemColors.ControlDark;
             SpecialCharsColor   = SystemColors.ControlDark;
@@ -732,6 +776,8 @@ namespace Cube.Note
         private Color _foreColor;
         private Color _highlightBackColor;
         private Color _highlightForeColor;
+        private Color _searchBackColor;
+        private Color _searchForeColor;
         private Color _lineNumberBackColor;
         private Color _lineNumberForeColor;
         private Color _specialCharsColor;
