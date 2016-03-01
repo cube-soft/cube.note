@@ -56,10 +56,34 @@ namespace Cube.Note.App.Editor
             var items = new List<string>();
             items.Add(page.GetAbstract());
             items.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
-            items.Add(string.Join(", ", page.Tags));
-
+            items.Add(GetTagString(page.Tags));
+            
             var dest = new ListViewItem(items.ToArray());
             return dest;
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTagString
+        ///
+        /// <summary>
+        /// タグを表す文字列を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetTagString(IList<string> tags)
+        {
+            var dest = new StringBuilder();
+            foreach (var tag in tags)
+            {
+                if (dest.Length > 0) dest.Append(", ");
+                dest.Append($"#{tag}");
+            }
+            return dest.ToString();
         }
 
         #endregion
