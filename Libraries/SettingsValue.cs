@@ -742,8 +742,8 @@ namespace Cube.Note
             ForeColor           = SystemColors.WindowText;
             HighlightBackColor  = SystemColors.Highlight;
             HighlightForeColor  = SystemColors.HighlightText;
-            SearchBackColor     = Color.OrangeRed;
-            SearchForeColor     = Color.White;
+            SearchBackColor     = Color.Orange;
+            SearchForeColor     = Color.Black;
             LineNumberBackColor = SystemColors.Control;
             LineNumberForeColor = SystemColors.ControlDark;
             SpecialCharsColor   = SystemColors.ControlDark;
