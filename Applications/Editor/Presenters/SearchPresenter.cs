@@ -155,7 +155,7 @@ namespace Cube.Note.App.Editor
             View.ShowPages = false;
 
             await Async(() => Cleanup(source));
-            Refresh();
+            Events.Refresh.Raise();
         }
 
         /* ----------------------------------------------------------------- */
@@ -168,7 +168,12 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
-            => Highlight(SelectedPage());
+        {
+            var page = SelectedPage();
+            if (page == null) return;
+            Settings.Current.Page = page;
+            Events.Refresh.Raise();
+        }
 
         #endregion
 
@@ -191,6 +196,8 @@ namespace Cube.Note.App.Editor
                              .FindNext(keyword, 0, sensitive);
             if (result == null) return;
 
+            page.Highlight(keyword, sensitive);
+
             var source = new ObservableCollection<Page>();
             source.Add(page);
             Sync(() =>
@@ -198,7 +205,7 @@ namespace Cube.Note.App.Editor
                 View.Found = source.Count;
                 View.ShowPages = false;
                 View.Pages.DataSource = source;
-                Highlight(page);
+                Events.Refresh.Raise();
             });
         }
 
@@ -223,42 +230,6 @@ namespace Cube.Note.App.Editor
                 View.ShowPages = true;
                 View.Pages.DataSource = source;
             });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Refresh
-        /// 
-        /// <summary>
-        /// TextControl を再描画します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Refresh()
-        {
-            var current = Settings.Current.Page;
-            Settings.Current.Page = null;
-            Settings.Current.Page = current;
-            var doc = current.Document as Sgry.Azuki.Document;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Highlight
-        /// 
-        /// <summary>
-        /// 強調表示します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Highlight(Page page)
-        {
-            if (page == null) return;
-
-            page.Highlight(View.Keyword, View.CaseSensitive);
-
-            if (Settings.Current.Page == page) Refresh();
-            else Settings.Current.Page = page;
         }
 
         /* ----------------------------------------------------------------- */

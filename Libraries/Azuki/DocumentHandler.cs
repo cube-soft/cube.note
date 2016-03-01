@@ -155,8 +155,8 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Page> Search(this IEnumerable<Page> src,
             string keyword, bool sensitive, int offset, string directory)
-            => src.Where(x => x.CreateDocument(directory)
-                               .FindNext(keyword, offset, sensitive) != null);
+            => src.Where(x => x.CreateDocument(directory).FindNext(keyword, offset, sensitive) != null)
+                  .Select(x => { x.Highlight(keyword, sensitive); return x; });
 
         #endregion
 

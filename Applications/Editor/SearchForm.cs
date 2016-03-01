@@ -259,7 +259,7 @@ namespace Cube.Note.App.Editor
             SetWidth(SearchRangeComboBox,  width);
             SetWidth(ReplaceRangeComboBox, width);
 
-            SearchButton.ResumeLayout();
+            SearchNextButton.ResumeLayout();
         }
 
         #endregion

@@ -50,6 +50,7 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
+            Events.Refresh.Handle += Refresh_Handle;
             Events.Undo.Handle += Undo_Handle;
             Events.Redo.Handle += Redo_Handle;
             Settings.Current.PageChanged += Settings_PageChanged;
@@ -60,6 +61,18 @@ namespace Cube.Note.App.Editor
         #region Event handlers
 
         #region EventAggregator
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh_Handle
+        ///
+        /// <summary>
+        /// 再描画時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Refresh_Handle(object sender, EventArgs e)
+            => Sync(() => View.Refresh());
 
         /* ----------------------------------------------------------------- */
         ///
