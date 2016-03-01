@@ -72,7 +72,27 @@ namespace Cube.Note.App.Editor
         public string Keyword
         {
             get { return KeywordTextBox.Text; }
-            set { KeywordTextBox.Text = value; }
+            set
+            {
+                KeywordTextBox.Text = value;
+                SearchTextBox.Text  = value;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Replace
+        ///
+        /// <summary>
+        /// 置換後の文字列を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        public string Replace
+        {
+            get { return ReplaceTextBox.Text; }
+            set { ReplaceTextBox.Text = value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -87,8 +107,12 @@ namespace Cube.Note.App.Editor
         [Browsable(false)]
         public bool CaseSensitive
         {
-            get { return CaseSensitiveCheckBox.Checked; }
-            set { CaseSensitiveCheckBox.Checked = value; }
+            get { return SearchCaseSensitiveCheckBox.Checked; }
+            set
+            {
+                SearchCaseSensitiveCheckBox.Checked  = value;
+                ReplaceCaseSensitiveCheckBox.Checked = value;
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -127,7 +151,7 @@ namespace Cube.Note.App.Editor
                 ContentsPanel.Panel2Collapsed = !value;
 
                 if (!value) Height = MinimumSize.Height;
-                else if (Height < 350) Height = 350;
+                else if (Height < MinimumSize.Height * 2) Height = MinimumSize.Height * 2;
             }
         }
 
@@ -153,7 +177,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public ComboBox SearchRange => RangeComboBox;
+        public ComboBox SearchRange => SearchRangeComboBox;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -193,6 +217,15 @@ namespace Cube.Note.App.Editor
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnFormClosing
+        ///
+        /// <summary>
+        /// フォームが閉じる時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
@@ -218,9 +251,13 @@ namespace Cube.Note.App.Editor
             SearchPanel.SuspendLayout();
 
             var width = SearchPanel.Width - SearchPanel.Padding.Right;
-            SetWidth(ButtonsPanel,   width);
-            SetWidth(KeywordTextBox, width);
-            SetWidth(RangeComboBox,  width);
+            SetWidth(SearchButtonsPanel,   width);
+            SetWidth(ReplaceButtonsPanel,  width);
+            SetWidth(KeywordTextBox,       width);
+            SetWidth(SearchTextBox,        width);
+            SetWidth(ReplaceTextBox,       width);
+            SetWidth(SearchRangeComboBox,  width);
+            SetWidth(ReplaceRangeComboBox, width);
 
             SearchButton.ResumeLayout();
         }
