@@ -206,7 +206,7 @@ namespace Cube.Note.App.Editor
             var upper = Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1);
 
             BorderStyle   = BorderStyle.None;
-            Converter     = new PageConverter(upper, CreateGraphics(), Font);
+            Converter     = new PageConverter();
             FullRowSelect = true;
             HeaderStyle   = ColumnHeaderStyle.None;
             LabelWrap     = false;
@@ -230,28 +230,15 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDrawItem(DrawListViewItemEventArgs e)
         {
-            e.DrawDefault = true;
-            base.OnDrawItem(e);
+            // base.OnDrawItem(e);
+            e.DrawDefault = false;
 
-            if (!e.DrawDefault) return;
+            DrawBackground(e.Item, e.Graphics, e.Bounds);
+            DrawText(e.Item, e.Graphics, e.Bounds);
+
             if (!SelectedIndices.Contains(e.ItemIndex)) return;
             if (ShowRemoveButton) DrawRemoveButton(e.Graphics, e.Bounds);
             if (ShowPropertyButton) DrawPropertyButton(e.Graphics, e.Bounds);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDrawSubItem
-        /// 
-        /// <summary>
-        /// サブ項目を描画する際に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnDrawSubItem(DrawListViewSubItemEventArgs e)
-        {
-            e.DrawDefault = true;
-            base.OnDrawSubItem(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -446,6 +433,114 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Draw methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawBackground
+        /// 
+        /// <summary>
+        /// 各項目の背景を描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawBackground(ListViewItem item, Graphics gs, Rectangle bounds)
+        {
+            var activeBack   = Color.FromArgb(205, 232, 255);
+            var activeBorder = Color.FromArgb(153, 209, 255);
+            var hoverBack    = Color.AliceBlue;
+
+            if (item.Selected)
+            {
+                gs.FillRectangle(new SolidBrush(activeBack), bounds);
+                if (bounds.Contains(PointToClient(Cursor.Position)))
+                {
+                    var area = bounds;
+                    area.Size -= new Size(1, 1);
+                    gs.DrawRectangle(new Pen(activeBorder), area);
+                }
+            }
+            else if (bounds.Contains(PointToClient(Cursor.Position)))
+            {
+                gs.FillRectangle(new SolidBrush(hoverBack), bounds);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawText
+        /// 
+        /// <summary>
+        /// 各項目のテキストを描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawText(ListViewItem item, Graphics gs, Rectangle bounds)
+        {
+            var font = item.Font;
+            var format = new StringFormat(StringFormatFlags.NoWrap);
+            format.Trimming = StringTrimming.EllipsisCharacter;
+
+            bounds.X += 4;
+            bounds.Y += 4;
+            bounds.Height = (int)(font.Size * 1.5);
+
+            for (var i = 0; i < item.SubItems.Count; ++i)
+            {
+                bounds.Y += bounds.Height;
+                var text = item.SubItems[i].Text;
+                var color = (i == 0) ? SystemColors.ControlText : SystemColors.GrayText;
+                gs.DrawString(text, font, new SolidBrush(color), bounds, format);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawRemoveButton
+        /// 
+        /// <summary>
+        /// 削除ボタンを描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawRemoveButton(Graphics gs, Rectangle bounds)
+        {
+            var image = Properties.Resources.Remove;
+            var x = bounds.Right - image.Width - _space;
+            var y = bounds.Top + _space;
+            gs.DrawImage(image, x, y);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawPropertyButton
+        /// 
+        /// <summary>
+        /// プロパティ情報編ボタンを描画します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void DrawPropertyButton(Graphics gs, Rectangle bounds)
+        {
+            var font = new Font(Font.FontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
+            var size = GetPropertySize(gs, font);
+            var height = size.Height;
+            var image = Properties.Resources.Property;
+
+            var x0 = bounds.Left + _space;
+            var y0 = bounds.Bottom - (height + _space) + (height - image.Height) / 2.0 - 1.0;
+            gs.DrawImage(image, x0, (float)y0);
+
+            var text = Properties.Resources.ShowProperty;
+            var brush = new SolidBrush(SystemColors.GrayText);
+
+            var x1 = x0 + image.Width;
+            var y1 = bounds.Bottom - (height + _space) + (height - size.Height) / 2.0;
+            gs.DrawString(text, font, brush, x1, (float)y1);
+        }
+
+        #endregion
+
         #region Button methods
 
         /* ----------------------------------------------------------------- */
@@ -510,51 +605,6 @@ namespace Cube.Note.App.Editor
 
             return point.X >= x0 && point.X <= x1 &&
                    point.Y >= y0 && point.Y <= y1;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DrawRemoveButton
-        /// 
-        /// <summary>
-        /// 削除ボタンを描画します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void DrawRemoveButton(Graphics gs, Rectangle bounds)
-        {
-            var image = Properties.Resources.Remove;
-            var x = bounds.Right - image.Width - _space;
-            var y = bounds.Top + _space;
-            gs.DrawImage(image, x, y);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DrawPropertyButton
-        /// 
-        /// <summary>
-        /// プロパティ情報編ボタンを描画します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void DrawPropertyButton(Graphics gs, Rectangle bounds)
-        {
-            var font   = new Font(Font.FontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
-            var size   = GetPropertySize(gs, font);
-            var height = size.Height;
-            var image  = Properties.Resources.Property;
-
-            var x0 = bounds.Left + _space;
-            var y0 = bounds.Bottom - (height + _space) + (height - image.Height) / 2.0 - 1.0;
-            gs.DrawImage(image, x0, (float)y0);
-
-            var text = Properties.Resources.ShowProperty;
-            var brush = new SolidBrush(SystemColors.GrayText);
-
-            var x1 = x0 + image.Width;
-            var y1 = bounds.Bottom - (height + _space) + (height - size.Height) / 2.0;
-            gs.DrawString(text, font, brush, x1, (float)y1);
         }
 
         /* ----------------------------------------------------------------- */
