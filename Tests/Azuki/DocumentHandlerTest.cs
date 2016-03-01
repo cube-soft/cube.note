@@ -94,7 +94,7 @@ namespace Cube.Note.Tests.Azuki
         public void Search_Count(string keyword, bool sensitive, int expected)
         {
             Assert.That(
-                Pages.Search(keyword, sensitive).Count(),
+                Pages.Search(keyword, sensitive, 0, Pages.Directory).Count(),
                 Is.EqualTo(expected)
             );
         }

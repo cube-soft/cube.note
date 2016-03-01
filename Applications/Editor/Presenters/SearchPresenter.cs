@@ -19,9 +19,12 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Cube.Note.Azuki;
 using Cube.Collections;
+using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -56,8 +59,9 @@ namespace Cube.Note.App.Editor
             Events.Search.Handle += Search_Handled;
 
             View.Showing += View_Showing;
-            View.Hidden += View_Hidden;
+            View.Hiding += View_Hiding;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Aggregator = Events;
         }
 
         #endregion
@@ -102,18 +106,18 @@ namespace Cube.Note.App.Editor
         {
             if (string.IsNullOrEmpty(e.Value)) return;
 
+            var one = false;
+            var sensitive = true;
+            SyncWait(() =>
+            {
+                one = View.SearchRange.SelectedIndex == 0;
+                sensitive = View.CaseSensitive;
+            });
+
             await Async(() =>
             {
-                var results = Model.Search(e.Value, View.CaseSensitive);
-                if (!results.Any()) return;
-
-                var source = results.ToObservable();
-                Sync(() =>
-                {
-                    View.Found = source.Count;
-                    View.ShowPages = View.SearchRange.SelectedIndex != 0;
-                    if (View.ShowPages) View.Pages.DataSource = source;
-                });
+                if (one) Search(Settings.Current.Page, e.Value, sensitive);
+                else Search(Model.Search(Model.Everyone), e.Value, sensitive);
             });
         }
 
@@ -135,18 +139,23 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Hidden
+        /// View_Hiding
         /// 
         /// <summary>
         /// 非表示時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Hidden(object sender, EventArgs e)
+        private async void View_Hiding(object sender, CancelEventArgs e)
         {
+            var source = View.Pages.DataSource;
+
             View.Pages.DataSource = null;
             View.Found = -1;
             View.ShowPages = false;
+
+            await Async(() => Cleanup(source));
+            Refresh();
         }
 
         /* ----------------------------------------------------------------- */
@@ -159,26 +168,119 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!View.Pages.AnyItemsSelected) return;
-
-            var pages = View.Pages.DataSource;
-            if (pages == null) return;
-
-            var index = View.Pages.SelectedIndices[0];
-            if (index < 0 || index >= pages.Count) return;
-
-            var real = Model.IndexOf(pages[index]);
-            if (real < 0 || real >= Model.Count) return;
-
-            Settings.Current.Page = Model[real];
-        }
+            => Highlight(SelectedPage());
 
         #endregion
 
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Search
+        /// 
+        /// <summary>
+        /// 現在のページから検索を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Search(Page page, string keyword, bool sensitive)
+        {
+            var result = page.CreateDocument(Model.Directory)?
+                             .FindNext(keyword, 0, sensitive);
+            if (result == null) return;
+
+            var source = new ObservableCollection<Page>();
+            source.Add(page);
+            Sync(() =>
+            {
+                View.Found = source.Count;
+                View.ShowPages = false;
+                View.Pages.DataSource = source;
+                Highlight(page);
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Search
+        /// 
+        /// <summary>
+        /// 指定されたページ一覧から検索を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Search(IEnumerable<Page> pages, string keyword, bool sensitive)
+        {
+            var results = pages.Search(keyword, sensitive, 0, Model.Directory);
+            if (!results.Any()) return;
+
+            var source = results.ToObservable();
+            Sync(() =>
+            {
+                View.Found = source.Count;
+                View.ShowPages = true;
+                View.Pages.DataSource = source;
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        /// 
+        /// <summary>
+        /// TextControl を再描画します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Refresh()
+        {
+            var current = Settings.Current.Page;
+            Settings.Current.Page = null;
+            Settings.Current.Page = current;
+            var doc = current.Document as Sgry.Azuki.Document;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Highlight
+        /// 
+        /// <summary>
+        /// 強調表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Highlight(Page page)
+        {
+            if (page == null) return;
+
+            page.Highlight(View.Keyword, View.CaseSensitive);
+
+            if (Settings.Current.Page == page) Refresh();
+            else Settings.Current.Page = page;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Cleanup
+        /// 
+        /// <summary>
+        /// 終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Cleanup(IList<Page> pages)
+        {
+            if (pages == null) return;
+
+            foreach (var page in pages)
+            {
+                var document = page.Document as Document;
+                if (document == null || document.Highlighter == null) continue;
+                document.Highlighter = null;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -194,6 +296,28 @@ namespace Cube.Note.App.Editor
             View.SearchRange.Items.Clear();
             View.SearchRange.Items.Add(Properties.Resources.CurrentNote);
             View.SearchRange.Items.Add(Model.Everyone);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedPage
+        /// 
+        /// <summary>
+        /// 選択ページを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Page SelectedPage()
+        {
+            if (!View.Pages.AnyItemsSelected) return null;
+
+            var pages = View.Pages.DataSource;
+            if (pages == null) return null;
+
+            var index = View.Pages.SelectedIndices[0];
+            if (index < 0 || index >= pages.Count) return null;
+
+            return pages[index];
         }
 
         #endregion

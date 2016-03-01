@@ -153,13 +153,10 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> Search(this PageCollection pages, string keyword, bool sensitive)
-        {
-            return pages.Where(page
-                => page.CreateDocument(pages.Directory)
-                       .FindNext(keyword, 0, sensitive) != null
-            );
-        }
+        public static IEnumerable<Page> Search(this IEnumerable<Page> src,
+            string keyword, bool sensitive, int offset, string directory)
+            => src.Where(x => x.CreateDocument(directory)
+                               .FindNext(keyword, offset, sensitive) != null);
 
         #endregion
 
