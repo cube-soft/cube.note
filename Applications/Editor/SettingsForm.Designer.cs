@@ -55,6 +55,12 @@
             this.Label15 = new System.Windows.Forms.Label();
             this.HighlightForeColorColorButton = new Cube.Forms.ColorButton();
             this.HighlightForeColorLabel = new System.Windows.Forms.Label();
+            this.Label16 = new System.Windows.Forms.Label();
+            this.SearchBackColorColorButton = new Cube.Forms.ColorButton();
+            this.SearchBackColorLabel = new System.Windows.Forms.Label();
+            this.Label17 = new System.Windows.Forms.Label();
+            this.SearchForeColorColorButton = new Cube.Forms.ColorButton();
+            this.SearchForeColorLabel = new System.Windows.Forms.Label();
             this.Label31 = new System.Windows.Forms.Label();
             this.AutoSaveTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.Label32 = new System.Windows.Forms.Label();
@@ -92,12 +98,6 @@
             this.SpecialCharsColorLabel = new System.Windows.Forms.Label();
             this.VersionTabPage = new System.Windows.Forms.TabPage();
             this.TextColorColorButton = new Cube.Forms.ColorButton();
-            this.Label16 = new System.Windows.Forms.Label();
-            this.SearchBackColorColorButton = new Cube.Forms.ColorButton();
-            this.SearchBackColorLabel = new System.Windows.Forms.Label();
-            this.Label17 = new System.Windows.Forms.Label();
-            this.SearchForeColorColorButton = new Cube.Forms.ColorButton();
-            this.SearchForeColorLabel = new System.Windows.Forms.Label();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
@@ -468,13 +468,81 @@
             this.HighlightForeColorLabel.Text = "(255, 255, 255)";
             this.HighlightForeColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // Label16
+            // 
+            this.Label16.Location = new System.Drawing.Point(15, 168);
+            this.Label16.Margin = new System.Windows.Forms.Padding(3);
+            this.Label16.Name = "Label16";
+            this.Label16.Size = new System.Drawing.Size(100, 23);
+            this.Label16.TabIndex = 105;
+            this.Label16.Text = "検索背景色";
+            this.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SearchBackColorColorButton
+            // 
+            this.SearchBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SearchBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SearchBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.SearchBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SearchBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.SearchBackColorColorButton.Location = new System.Drawing.Point(121, 168);
+            this.SearchBackColorColorButton.Name = "SearchBackColorColorButton";
+            this.SearchBackColorColorButton.Size = new System.Drawing.Size(50, 23);
+            this.SearchBackColorColorButton.TabIndex = 10;
+            this.SearchBackColorColorButton.UseVisualStyleBackColor = false;
+            // 
+            // SearchBackColorLabel
+            // 
+            this.GeneralSettingsPanel.SetFlowBreak(this.SearchBackColorLabel, true);
+            this.SearchBackColorLabel.Location = new System.Drawing.Point(177, 168);
+            this.SearchBackColorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SearchBackColorLabel.Name = "SearchBackColorLabel";
+            this.SearchBackColorLabel.Size = new System.Drawing.Size(190, 23);
+            this.SearchBackColorLabel.TabIndex = 11;
+            this.SearchBackColorLabel.Text = "(255, 255, 255)";
+            this.SearchBackColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Label17
+            // 
+            this.Label17.Location = new System.Drawing.Point(15, 197);
+            this.Label17.Margin = new System.Windows.Forms.Padding(3);
+            this.Label17.Name = "Label17";
+            this.Label17.Size = new System.Drawing.Size(100, 23);
+            this.Label17.TabIndex = 106;
+            this.Label17.Text = "検索テキスト色";
+            this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SearchForeColorColorButton
+            // 
+            this.SearchForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SearchForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SearchForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.SearchForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SearchForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.SearchForeColorColorButton.Location = new System.Drawing.Point(121, 197);
+            this.SearchForeColorColorButton.Name = "SearchForeColorColorButton";
+            this.SearchForeColorColorButton.Size = new System.Drawing.Size(50, 23);
+            this.SearchForeColorColorButton.TabIndex = 12;
+            this.SearchForeColorColorButton.UseVisualStyleBackColor = false;
+            // 
+            // SearchForeColorLabel
+            // 
+            this.GeneralSettingsPanel.SetFlowBreak(this.SearchForeColorLabel, true);
+            this.SearchForeColorLabel.Location = new System.Drawing.Point(177, 197);
+            this.SearchForeColorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SearchForeColorLabel.Name = "SearchForeColorLabel";
+            this.SearchForeColorLabel.Size = new System.Drawing.Size(190, 23);
+            this.SearchForeColorLabel.TabIndex = 13;
+            this.SearchForeColorLabel.Text = "(255, 255, 255)";
+            this.SearchForeColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Label31
             // 
             this.Label31.Location = new System.Drawing.Point(15, 247);
             this.Label31.Margin = new System.Windows.Forms.Padding(3, 24, 3, 3);
             this.Label31.Name = "Label31";
             this.Label31.Size = new System.Drawing.Size(100, 23);
-            this.Label31.TabIndex = 105;
+            this.Label31.TabIndex = 107;
             this.Label31.Text = "自動保存間隔";
             this.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -489,7 +557,7 @@
             0});
             this.AutoSaveTimeNumericUpDown.Name = "AutoSaveTimeNumericUpDown";
             this.AutoSaveTimeNumericUpDown.Size = new System.Drawing.Size(80, 23);
-            this.AutoSaveTimeNumericUpDown.TabIndex = 10;
+            this.AutoSaveTimeNumericUpDown.TabIndex = 14;
             this.AutoSaveTimeNumericUpDown.Value = new decimal(new int[] {
             14,
             0,
@@ -503,7 +571,7 @@
             this.Label32.Margin = new System.Windows.Forms.Padding(3, 24, 3, 3);
             this.Label32.Name = "Label32";
             this.Label32.Size = new System.Drawing.Size(100, 23);
-            this.Label32.TabIndex = 106;
+            this.Label32.TabIndex = 108;
             this.Label32.Text = "秒";
             this.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -929,74 +997,6 @@
             this.TextColorColorButton.TabIndex = 30;
             this.TextColorColorButton.Text = "colorButton1";
             this.TextColorColorButton.UseVisualStyleBackColor = false;
-            // 
-            // Label16
-            // 
-            this.Label16.Location = new System.Drawing.Point(15, 168);
-            this.Label16.Margin = new System.Windows.Forms.Padding(3);
-            this.Label16.Name = "Label16";
-            this.Label16.Size = new System.Drawing.Size(100, 23);
-            this.Label16.TabIndex = 111;
-            this.Label16.Text = "検索背景色";
-            this.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // SearchBackColorColorButton
-            // 
-            this.SearchBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.SearchBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SearchBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.SearchBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.SearchBackColorColorButton.Location = new System.Drawing.Point(121, 168);
-            this.SearchBackColorColorButton.Name = "SearchBackColorColorButton";
-            this.SearchBackColorColorButton.Size = new System.Drawing.Size(50, 23);
-            this.SearchBackColorColorButton.TabIndex = 10;
-            this.SearchBackColorColorButton.UseVisualStyleBackColor = false;
-            // 
-            // SearchBackColorLabel
-            // 
-            this.GeneralSettingsPanel.SetFlowBreak(this.SearchBackColorLabel, true);
-            this.SearchBackColorLabel.Location = new System.Drawing.Point(177, 168);
-            this.SearchBackColorLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.SearchBackColorLabel.Name = "SearchBackColorLabel";
-            this.SearchBackColorLabel.Size = new System.Drawing.Size(190, 23);
-            this.SearchBackColorLabel.TabIndex = 11;
-            this.SearchBackColorLabel.Text = "(255, 255, 255)";
-            this.SearchBackColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Label17
-            // 
-            this.Label17.Location = new System.Drawing.Point(15, 197);
-            this.Label17.Margin = new System.Windows.Forms.Padding(3);
-            this.Label17.Name = "Label17";
-            this.Label17.Size = new System.Drawing.Size(100, 23);
-            this.Label17.TabIndex = 112;
-            this.Label17.Text = "検索テキスト色";
-            this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // SearchForeColorColorButton
-            // 
-            this.SearchForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.SearchForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SearchForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.SearchForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.SearchForeColorColorButton.Location = new System.Drawing.Point(121, 197);
-            this.SearchForeColorColorButton.Name = "SearchForeColorColorButton";
-            this.SearchForeColorColorButton.Size = new System.Drawing.Size(50, 23);
-            this.SearchForeColorColorButton.TabIndex = 12;
-            this.SearchForeColorColorButton.UseVisualStyleBackColor = false;
-            // 
-            // SearchForeColorLabel
-            // 
-            this.GeneralSettingsPanel.SetFlowBreak(this.SearchForeColorLabel, true);
-            this.SearchForeColorLabel.Location = new System.Drawing.Point(177, 197);
-            this.SearchForeColorLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.SearchForeColorLabel.Name = "SearchForeColorLabel";
-            this.SearchForeColorLabel.Size = new System.Drawing.Size(190, 23);
-            this.SearchForeColorLabel.TabIndex = 13;
-            this.SearchForeColorLabel.Text = "(255, 255, 255)";
-            this.SearchForeColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SettingsForm
             // 
