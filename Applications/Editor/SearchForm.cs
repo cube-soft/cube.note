@@ -49,10 +49,15 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
+            TabControl.Selecting += TabControl_Selecting;
             SearchPanel.Resize += SearchPanel_Resize;
-            SearchButton.Click += (s, e) => RaiseSearchEvent();
+            SearchButton.Click += (s, e) => OnSearch(EventArgs.Empty);
+            OptionalButton1.Click += OptionalButton1_Click;
+            OptionalButton2.Click += OptionalButton2_Click;
 
             Caption = TitleControl;
+            ReplaceLabel.Visible = false;
+            ReplaceTextBox.Visible = false;
         }
 
         #endregion
@@ -71,12 +76,8 @@ namespace Cube.Note.App.Editor
         [Browsable(false)]
         public string Keyword
         {
-            get { return KeywordTextBox.Text; }
-            set
-            {
-                KeywordTextBox.Text = value;
-                SearchTextBox.Text  = value;
-            }
+            get { return SearchTextBox.Text; }
+            set { SearchTextBox.Text  = value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -107,12 +108,8 @@ namespace Cube.Note.App.Editor
         [Browsable(false)]
         public bool CaseSensitive
         {
-            get { return SearchCaseSensitiveCheckBox.Checked; }
-            set
-            {
-                SearchCaseSensitiveCheckBox.Checked  = value;
-                ReplaceCaseSensitiveCheckBox.Checked = value;
-            }
+            get { return CaseSensitiveCheckBox.Checked; }
+            set { CaseSensitiveCheckBox.Checked = value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -177,7 +174,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public ComboBox SearchRange => SearchRangeComboBox;
+        public ComboBox SearchRange => RangeComboBox;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -197,6 +194,129 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Search
+        ///
+        /// <summary>
+        /// 検索時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler Search;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchNext
+        ///
+        /// <summary>
+        /// 次を検索時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler SearchNext;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchPrev
+        ///
+        /// <summary>
+        /// 前を検索時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler SearchPrev;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceNext
+        ///
+        /// <summary>
+        /// 次を置換時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler ReplaceNext;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceAll
+        ///
+        /// <summary>
+        /// すべて置換時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler ReplaceAll;
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnSearch
+        ///
+        /// <summary>
+        /// Search イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnSearch(EventArgs e)
+            => Search?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnSearchNext
+        ///
+        /// <summary>
+        /// SearchNext イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnSearchNext(EventArgs e)
+            => SearchNext?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnSearchPrev
+        ///
+        /// <summary>
+        /// SearchPrev イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnSearchPrev(EventArgs e)
+            => SearchPrev?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnReplaceNext
+        ///
+        /// <summary>
+        /// ReplaceNext イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnReplaceNext(EventArgs e)
+            => ReplaceNext?.Invoke(this, e);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnReplaceAll
+        ///
+        /// <summary>
+        /// ReplaceAll イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnReplaceAll(EventArgs e)
+            => ReplaceAll?.Invoke(this, e);
+
+        #endregion
+
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -213,7 +333,7 @@ namespace Cube.Note.App.Editor
             base.OnShown(e);
             ShowPages = false;
             Height = MinimumSize.Height;
-            KeywordTextBox.Focus();
+            SearchTextBox.Focus();
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
@@ -239,10 +359,48 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// MenuTabControl_Selecting
+        ///
+        /// <summary>
+        /// MenuTabControl のタブが選択される前に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void TabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            SearchPanel.SuspendLayout();
+
+            switch (e.TabPage.Name)
+            {
+                case nameof(SearchTabPage):
+                    ReplaceTabPage.Controls.Remove(SearchPanel);
+                    ReplaceLabel.Visible   = false;
+                    ReplaceTextBox.Visible = false;
+                    OptionalButton1.Text   = Properties.Resources.SearchPrev;
+                    OptionalButton2.Text   = Properties.Resources.SearchNext;
+                    SearchTabPage.Controls.Add(SearchPanel);
+                    break;
+                case nameof(ReplaceTabPage):
+                    SearchTabPage.Controls.Remove(SearchPanel);
+                    ReplaceLabel.Visible   = true;
+                    ReplaceTextBox.Visible = true;
+                    OptionalButton1.Text   = Properties.Resources.ReplaceNext;
+                    OptionalButton2.Text   = Properties.Resources.ReplaceAll;
+                    ReplaceTabPage.Controls.Add(SearchPanel);
+                    break;
+                default:
+                    break;
+            }
+
+            SearchPanel.ResumeLayout();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SearchPanel_Resize
         ///
         /// <summary>
-        /// SearchPanel のリサイズ時に実行されるハンドラです。
+        /// ReplacePanel のリサイズ時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -251,32 +409,43 @@ namespace Cube.Note.App.Editor
             SearchPanel.SuspendLayout();
 
             var width = SearchPanel.Width - SearchPanel.Padding.Right;
-            SetWidth(SearchButtonsPanel,   width);
-            SetWidth(ReplaceButtonsPanel,  width);
-            SetWidth(KeywordTextBox,       width);
-            SetWidth(SearchTextBox,        width);
-            SetWidth(ReplaceTextBox,       width);
-            SetWidth(SearchRangeComboBox,  width);
-            SetWidth(ReplaceRangeComboBox, width);
+            SetWidth(ButtonsPanel,   width);
+            SetWidth(SearchTextBox,  width);
+            SetWidth(ReplaceTextBox, width);
+            SetWidth(RangeComboBox,  width);
 
-            SearchNextButton.ResumeLayout();
+            SearchPanel.ResumeLayout();
         }
-
-        #endregion
-
-        #region RaiseXxxEvent
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseSearchEvent
+        /// OptionalButton1_Click
         ///
         /// <summary>
-        /// Search イベントを発生させます。
+        /// ボタンのクリック時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseSearchEvent()
-            => Aggregator?.Search.Raise(new ValueEventArgs<string>(Keyword));
+        private void OptionalButton1_Click(object sender, EventArgs e)
+        {
+            if (SearchPanel.Parent == SearchTabPage) OnSearchPrev(EventArgs.Empty);
+            else OnReplaceNext(EventArgs.Empty);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OptionalButton2_Click
+        ///
+        /// <summary>
+        /// ボタンのクリック時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void OptionalButton2_Click(object sender, EventArgs e)
+        {
+            if (SearchPanel.Parent == SearchTabPage) OnSearchNext(EventArgs.Empty);
+            else OnReplaceAll(EventArgs.Empty);
+        }
 
         #endregion
 
