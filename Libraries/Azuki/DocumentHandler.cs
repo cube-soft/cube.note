@@ -65,22 +65,6 @@ namespace Cube.Note.Azuki
             src.IsDirty = false;
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Highlight
-        /// 
-        /// <summary>
-        /// キーワードを強調表示します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Highlight(this Document src, string keyword, bool sensitive)
-        {
-            var obj = new Sgry.Azuki.Highlighter.KeywordHighlighter();
-            obj.AddRegex(keyword, !sensitive, CharClass.Keyword);
-            src.Highlighter = obj;
-        }
-
         #endregion
 
         #region Page extension methods
@@ -123,40 +107,6 @@ namespace Cube.Note.Azuki
             doc.Save(path);
             page.LastUpdate = DateTime.Now;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Highlight
-        /// 
-        /// <summary>
-        /// キーワードを強調表示します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Highlight(this Page page, string keyword, bool sensitive)
-        {
-            var doc = page.Document as Document;
-            if (doc == null) return;
-            doc.Highlight(keyword, sensitive);
-        }
-
-        #endregion
-
-        #region PageCollection extension methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Search
-        /// 
-        /// <summary>
-        /// キーワードの含まれる Page オブジェクトを検索します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> Search(this IEnumerable<Page> src,
-            string keyword, bool sensitive, int offset, string directory)
-            => src.Where(x => x.CreateDocument(directory).FindNext(keyword, offset, sensitive) != null)
-                  .Select(x => { x.Highlight(keyword, sensitive); return x; });
 
         #endregion
 
