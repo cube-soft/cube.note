@@ -152,8 +152,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<string>> Search { get; }
-            = new RelayEvent<ValueEventArgs<string>>();
+        public RelayEvent Search { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///

@@ -102,22 +102,25 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Search_Handled(object sender, ValueEventArgs<string> e)
+        private async void Search_Handled(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(e.Value)) return;
-
-            var one = false;
+            var keyword   = string.Empty;
             var sensitive = true;
+            var one       = false;
+
             SyncWait(() =>
             {
-                one = View.SearchRange.SelectedIndex == 0;
+                keyword   = View.Keyword;
                 sensitive = View.CaseSensitive;
+                one       = View.SearchRange.SelectedIndex == 0;
             });
+
+            if (string.IsNullOrEmpty(keyword)) return;
 
             await Async(() =>
             {
-                if (one) Search(Settings.Current.Page, e.Value, sensitive);
-                else Search(Model.Search(Model.Everyone), e.Value, sensitive);
+                if (one) Search(Settings.Current.Page, keyword, sensitive);
+                else Search(Model.Search(Model.Everyone), keyword, sensitive);
             });
         }
 
