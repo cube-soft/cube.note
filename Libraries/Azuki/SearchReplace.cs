@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
@@ -55,6 +56,28 @@ namespace Cube.Note.Azuki
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Keyword
+        /// 
+        /// <summary>
+        /// 検索キーワードを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Keyword { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CaseSensitive
+        /// 
+        /// <summary>
+        /// 大文字・小文字を区別するかどうかを示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CaseSensitive { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -150,8 +173,10 @@ namespace Cube.Note.Azuki
         public void Search(string keyword, bool sensitive, Page page)
         {
             Results.Clear();
+            Keyword = keyword;
+            CaseSensitive = sensitive;
 
-            var result = FindNext(page, keyword, sensitive, 0);
+            var result = GetResult(page, keyword, sensitive);
             if (result == null) return;
 
             Results.Add(Highlight(page, keyword, sensitive));
@@ -170,17 +195,59 @@ namespace Cube.Note.Azuki
         public void Search(string keyword, bool sensitive, Tag range)
         {
             Results.Clear();
+            Keyword = keyword;
+            CaseSensitive = sensitive;
 
             Position current = null;
             foreach(var page in Pages.Search(range))
             {
-                var result = FindNext(page, keyword, sensitive, 0);
+                var result = GetResult(page, keyword, sensitive);
                 if (result == null) continue;
 
                 Results.Add(Highlight(page, keyword, sensitive));
                 if (current == null) current = new Position(0, result.Begin, result.End);
             }
             if (current != null) Current = current;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Forward
+        /// 
+        /// <summary>
+        /// 次の検索結果を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Forward()
+        {
+            if (Results.Count <= 0) return;
+
+            var index = Current != null ?
+                        Math.Max(Math.Min(Current.Index, Results.Count - 1), 0) :
+                        0;
+
+            Forward(index, null);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Back
+        /// 
+        /// <summary>
+        /// 前の検索結果を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Back()
+        {
+            if (Results.Count <= 0) return;
+
+            var index = Current != null ?
+                        Math.Max(Math.Min(Current.Index, Results.Count - 1), 0) :
+                        0;
+
+            Back(index, null);
         }
 
         #endregion
@@ -221,16 +288,62 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FindNext
+        /// GetResult
         /// 
         /// <summary>
         /// 次の検索結果を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private SearchResult FindNext(Page page, string keyword, bool sensitive, int offset)
+        private SearchResult GetResult(Page page, string keyword, bool sensitive)
             => page?.CreateDocument(Pages.Directory)
-                   ?.FindNext(keyword, offset, sensitive);
+                   ?.FindNext(keyword, 0, sensitive);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Forward
+        /// 
+        /// <summary>
+        /// 次の検索結果を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Forward(int index, int? offset)
+        {
+            var doc = Results[index].Document as Document;
+            if (doc == null) return;
+
+            var start  = offset.HasValue ? offset.Value : doc.CaretIndex;
+            var result = doc.FindNext(Keyword, start, CaseSensitive);
+
+            if (result != null) Current = new Position(index, result.Begin, result.End);
+            else if (index < Results.Count - 1) Forward(++index, 0);
+            else Current = null;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Back
+        /// 
+        /// <summary>
+        /// 前の検索結果を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Back(int index, int? offset)
+        {
+            var doc = Results[index].Document as Document;
+            if (doc == null) return;
+
+            var start  = !offset.HasValue    ? doc.CaretIndex :
+                          offset.Value == -1 ? doc.Length :
+                                               offset.Value;
+            var result = doc.FindPrev(Keyword, start, CaseSensitive);
+
+            if (result != null) Current = new Position(index, result.Begin, result.End);
+            else if (index >= 0) Back(--index, -1 /* LastIndex */);
+            else Current = null;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
