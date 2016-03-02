@@ -379,7 +379,7 @@ namespace Cube.Note.App.Editor
         {
             var control = FindActive(ActiveControl);
             var index = (control == TextControl) ? 0 : 1;
-            Aggregator.SearchMode.Raise(new ValueEventArgs<int>(index));
+            Aggregator.Search.Raise(new ValueEventArgs<int>(index));
         }
 
         #endregion

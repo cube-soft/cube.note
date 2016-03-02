@@ -50,9 +50,9 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, new SearchReplace(parent), settings, events)
         {
-            Events.SearchMode.Handle += SearchMode_Handle;
-            Events.Search.Handle += Search_Handled;
+            Events.Search.Handle += SearchMode_Handle;
 
+            View.Search += View_Search;
             View.Showing += View_Showing;
             View.Hiding += View_Hiding;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
@@ -91,27 +91,24 @@ namespace Cube.Note.App.Editor
             });
         }
 
+        #endregion
+
+        #region View
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Search_Handled
+        /// View_Search
         /// 
         /// <summary>
         /// 検索を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Search_Handled(object sender, EventArgs e)
+        private async void View_Search(object sender, EventArgs e)
         {
-            var keyword   = string.Empty;
-            var sensitive = true;
-            var one       = false;
-
-            SyncWait(() =>
-            {
-                keyword   = View.Keyword;
-                sensitive = View.CaseSensitive;
-                one       = View.SearchRange.SelectedIndex == 0;
-            });
+            var keyword   = View.Keyword;
+            var sensitive = View.CaseSensitive;
+            var one       = View.SearchRange.SelectedIndex == 0;
 
             if (string.IsNullOrEmpty(keyword)) return;
 
@@ -121,12 +118,8 @@ namespace Cube.Note.App.Editor
                 else Model.Search(keyword, sensitive, Model.Pages.Everyone);
             });
 
-            Sync(() => View.ShowPages = !one && Model.Results.Count > 0);
+            View.ShowPages = !one && Model.Results.Count > 0;
         }
-
-        #endregion
-
-        #region View
 
         /* ----------------------------------------------------------------- */
         ///

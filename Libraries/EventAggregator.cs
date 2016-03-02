@@ -133,26 +133,15 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SearchMode
-        ///
-        /// <summary>
-        /// 検索用の画面を表示します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> SearchMode { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Search
         ///
         /// <summary>
-        /// 指定されたキーワードで検索するイベントです。
+        /// 検索フォームを開くイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Search { get; } = new RelayEvent();
+        public RelayEvent<ValueEventArgs<int>> Search { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
         ///
