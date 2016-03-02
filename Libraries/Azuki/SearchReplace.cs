@@ -19,7 +19,6 @@
 /* ------------------------------------------------------------------------- */
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using Sgry.Azuki;
 using Sgry.Azuki.Highlighter;
@@ -51,7 +50,6 @@ namespace Cube.Note.Azuki
         public SearchReplace(PageCollection pages)
         {
             Pages = pages;
-            Results.CollectionChanged += Results_CollectionChanged;
         }
 
         #endregion
@@ -95,10 +93,10 @@ namespace Cube.Note.Azuki
             get { return _current; }
             set
             {
-                if (_current != null &&
+                if (_current != null && value != null &&
                     _current.Index == value.Index &&
                     _current.Begin == value.Begin &&
-                    _current.End == value.End) return;
+                    _current.End   == value.End   ) return;
 
                 _current = value;
                 RaisePropertyChanged(nameof(Current));
@@ -126,6 +124,22 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Reset
+        /// 
+        /// <summary>
+        /// 検索結果をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Reset()
+        {
+            foreach (var page in Results) UnHighlight(page);
+            Results.Clear();
+            Current = null;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Search
         /// 
         /// <summary>
@@ -136,7 +150,6 @@ namespace Cube.Note.Azuki
         public void Search(string keyword, bool sensitive, Page page)
         {
             Results.Clear();
-            ResetHighlight(keyword, sensitive);
 
             var result = FindNext(page, keyword, sensitive, 0);
             if (result == null) return;
@@ -157,7 +170,6 @@ namespace Cube.Note.Azuki
         public void Search(string keyword, bool sensitive, Tag range)
         {
             Results.Clear();
-            ResetHighlight(keyword, sensitive);
 
             Position current = null;
             foreach(var page in Pages.Search(range))
@@ -205,45 +217,7 @@ namespace Cube.Note.Azuki
 
         #endregion
 
-        #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Results_CollectionChanged
-        /// 
-        /// <summary>
-        /// コレクションの内容が変化した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                case NotifyCollectionChangedAction.Reset:
-                    if (Results.Count <= 0) ResetHighlight();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        #endregion
-
         #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Document
-        /// 
-        /// <summary>
-        /// Document オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Document Document(Page page)
-            => page?.CreateDocument(Pages.Directory);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -255,7 +229,8 @@ namespace Cube.Note.Azuki
         ///
         /* ----------------------------------------------------------------- */
         private SearchResult FindNext(Page page, string keyword, bool sensitive, int offset)
-            => Document(page)?.FindNext(keyword, offset, sensitive);
+            => page?.CreateDocument(Pages.Directory)
+                   ?.FindNext(keyword, offset, sensitive);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -268,38 +243,33 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         private Page Highlight(Page page, string keyword, bool sensitive)
         {
-            var src = Document(page);
+            var src = page?.Document as Document;
             if (src == null) return page;
+
+            var highlight = new KeywordHighlighter();
+            highlight.AddRegex(keyword, !sensitive, CharClass.Keyword);
+            src.Highlighter = highlight;
             
-            if (src.Highlighter != _highlight) src.Highlighter = _highlight;
             return page;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ResetHighlight
+        /// UnHighlight
         /// 
         /// <summary>
-        /// 強調表示をリセットします。
+        /// 検索結果の強調表示を解除します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResetHighlight(string keyword, bool sensitive)
+        private Page UnHighlight(Page page)
         {
-            ResetHighlight();
-            _highlight.AddRegex(keyword, !sensitive, CharClass.Keyword);
-        }
+            var src = page?.Document as Document;
+            if (src == null) return page;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ResetHighlight
-        /// 
-        /// <summary>
-        /// 強調表示をリセットします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ResetHighlight() => _highlight.ClearRegex();
+            src.Highlighter = null;
+            return page;
+        }
 
         #endregion
 
@@ -332,7 +302,6 @@ namespace Cube.Note.Azuki
 
         #region Fields
         private Position _current;
-        private KeywordHighlighter _highlight = new KeywordHighlighter();
         #endregion
     }
 }
