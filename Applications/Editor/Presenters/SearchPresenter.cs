@@ -19,13 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Cube.Note.Azuki;
-using Cube.Collections;
-using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -64,6 +58,8 @@ namespace Cube.Note.App.Editor
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
+
+            Model.PropertyChanged += Model_PropertyChanged;
         }
 
         #endregion
@@ -184,6 +180,31 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Model
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_PropertyChanged
+        /// 
+        /// <summary>
+        /// プロパティの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(Model.Current):
+                    SetSelection(Model.Current);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Others
@@ -202,6 +223,31 @@ namespace Cube.Note.App.Editor
             View.SearchRange.Items.Clear();
             View.SearchRange.Items.Add(Properties.Resources.CurrentNote);
             View.SearchRange.Items.Add(Model.Pages.Everyone);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetSelection
+        /// 
+        /// <summary>
+        /// 選択範囲を設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetSelection(SearchReplace.Position pos)
+        {
+            if (pos == null) return;
+            if (pos.Index < 0 || pos.Index >= Model.Results.Count) return;
+
+            var page = Model.Results[pos.Index];
+            Settings.Current.Page = page;
+
+            if (pos.Begin == pos.End) return;
+
+            var document = page?.CreateDocument(Model.Pages.Directory);
+            if (document == null) return;
+
+            Sync(() => document.SetSelection(pos.Begin, pos.End));
         }
 
         /* ----------------------------------------------------------------- */
