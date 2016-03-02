@@ -49,13 +49,11 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            // ReplacePanel.Resize += ReplacePanel_Resize;
+            TabControl.Selecting += TabControl_Selecting;
+            SearchPanel.Resize += SearchPanel_Resize;
 
             Caption = TitleControl;
-
-            // Layout
-            ReplaceButtonsPanel.Margin = new Padding(3, 32, 3, 3);
-            Label22.Visible = false;
+            ReplaceLabel.Visible = false;
             ReplaceTextBox.Visible = false;
         }
 
@@ -107,8 +105,8 @@ namespace Cube.Note.App.Editor
         [Browsable(false)]
         public bool CaseSensitive
         {
-            get { return ReplaceCaseSensitiveCheckBox.Checked; }
-            set { ReplaceCaseSensitiveCheckBox.Checked = value; }
+            get { return CaseSensitiveCheckBox.Checked; }
+            set { CaseSensitiveCheckBox.Checked = value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -173,7 +171,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public ComboBox SearchRange => ReplaceRangeComboBox;
+        public ComboBox SearchRange => RangeComboBox;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,60 +240,55 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void MenuTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        private void TabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            ReplacePanel.SuspendLayout();
-                        
+            SearchPanel.SuspendLayout();
+
             switch (e.TabPage.Name)
             {
                 case nameof(SearchTabPage):
-                    ReplaceTabPage.Controls.Remove(ReplacePanel);
-                    Label22.Visible = false;
+                    ReplaceTabPage.Controls.Remove(SearchPanel);
+                    ReplaceLabel.Visible   = false;
                     ReplaceTextBox.Visible = false;
-                    ReplacePanel.SetFlowBreak(ReplaceTextBox, false);
-                    ReplaceButtonsPanel.Margin = new Padding(3, 32, 3, 3);
-                    ReplaceButton.Text = "前を検索";
-                    ReplaceAllButton.Text = "次を検索";
-                    ReplacePanel.Dock = DockStyle.Fill;
-                    SearchTabPage.Controls.Add(ReplacePanel);
+                    OptionalButton1.Text   = Properties.Resources.SearchPrev;
+                    OptionalButton2.Text   = Properties.Resources.SearchNext;
+                    SearchTabPage.Controls.Add(SearchPanel);
                     break;
                 case nameof(ReplaceTabPage):
-                    SearchTabPage.Controls.Remove(ReplacePanel);
-                    Label22.Visible = true;
+                    SearchTabPage.Controls.Remove(SearchPanel);
+                    ReplaceLabel.Visible   = true;
                     ReplaceTextBox.Visible = true;
-                    ReplacePanel.SetFlowBreak(ReplaceTextBox, true);
-                    ReplaceButtonsPanel.Margin = new Padding(3);
-                    ReplaceButton.Text = "次を置換";
-                    ReplaceAllButton.Text = "すべて置換";
-                    ReplacePanel.Dock = DockStyle.Fill;
-                    ReplaceTabPage.Controls.Add(ReplacePanel);
+                    OptionalButton1.Text   = Properties.Resources.ReplaceNext;
+                    OptionalButton2.Text   = Properties.Resources.ReplaceAll;
+                    ReplaceTabPage.Controls.Add(SearchPanel);
                     break;
                 default:
                     break;
             }
-            ReplacePanel.ResumeLayout();
+
+            SearchPanel.ResumeLayout();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReplacePanel_Resize
+        /// SearchPanel_Resize
         ///
         /// <summary>
         /// ReplacePanel のリサイズ時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ReplacePanel_Resize(object sender, EventArgs e)
+        private void SearchPanel_Resize(object sender, EventArgs e)
         {
-            ReplacePanel.SuspendLayout();
+            SearchPanel.SuspendLayout();
 
-            var width = ReplacePanel.Width - ReplacePanel.Padding.Right;
-            SetWidth(ReplaceButtonsPanel,  width);
-            SetWidth(SearchTextBox,        width);
-            SetWidth(ReplaceTextBox,       width);
-            SetWidth(ReplaceRangeComboBox, width);
+            var width = SearchPanel.Width - SearchPanel.Padding.Right;
+            SetWidth(ButtonsPanel,   width);
+            SetWidth(SearchTextBox,  width);
+            SetWidth(ReplaceTextBox, width);
+            SetWidth(RangeComboBox,  width);
 
-            ReplaceAllButton.ResumeLayout();
+            SearchPanel.ResumeLayout();
         }
 
         #endregion

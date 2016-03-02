@@ -298,6 +298,24 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   すべてを置換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ReplaceAll {
+            get {
+                return ResourceManager.GetString("ReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   次を置換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ReplaceNext {
+            get {
+                return ResourceManager.GetString("ReplaceNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Search {
@@ -318,12 +336,30 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   次を検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchNext {
+            get {
+                return ResourceManager.GetString("SearchNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap SearchPale {
             get {
                 object obj = ResourceManager.GetObject("SearchPale", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   前を検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchPrev {
+            get {
+                return ResourceManager.GetString("SearchPrev", resourceCulture);
             }
         }
         
