@@ -28,25 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SearchNextButton = new Cube.Forms.Button();
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
             this.MenuTabControl = new System.Windows.Forms.TabControl();
             this.SearchTabPage = new System.Windows.Forms.TabPage();
-            this.SearchPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.Label11 = new System.Windows.Forms.Label();
-            this.KeywordTextBox = new System.Windows.Forms.TextBox();
-            this.Label12 = new System.Windows.Forms.Label();
-            this.SearchRangeComboBox = new System.Windows.Forms.ComboBox();
-            this.SearchCaseSensitiveCheckBox = new System.Windows.Forms.CheckBox();
-            this.SearchButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.SearchNextShadow = new System.Windows.Forms.Panel();
-            this.SearchPrevShadow = new System.Windows.Forms.Panel();
-            this.SearchPrevButton = new Cube.Forms.Button();
-            this.SearchShadow = new System.Windows.Forms.Panel();
-            this.SearchButton = new Cube.Forms.Button();
-            this.ReplaceTabPage = new System.Windows.Forms.TabPage();
             this.ReplacePanel = new System.Windows.Forms.FlowLayoutPanel();
             this.Label21 = new System.Windows.Forms.Label();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
@@ -58,14 +44,15 @@
             this.ReplaceButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ReplaceAllShadow = new System.Windows.Forms.Panel();
             this.ReplaceAllButton = new Cube.Forms.Button();
+            this.ReplaceShadow = new System.Windows.Forms.Panel();
+            this.ReplaceButton = new Cube.Forms.Button();
+            this.ReplaceSearchShadow = new System.Windows.Forms.Panel();
+            this.ReplaceSearchButton = new Cube.Forms.Button();
+            this.ReplaceTabPage = new System.Windows.Forms.TabPage();
             this.ResultPanel = new System.Windows.Forms.Panel();
             this.ResultListView = new Cube.Note.App.Editor.PageListView();
             this.Separator = new System.Windows.Forms.PictureBox();
             this.FooterStatusStrip = new Cube.Forms.StatusStrip();
-            this.ReplaceButton = new Cube.Forms.Button();
-            this.ReplaceShadow = new System.Windows.Forms.Panel();
-            this.ReplaceSearchButton = new Cube.Forms.Button();
-            this.ReplaceSearchShadow = new System.Windows.Forms.Panel();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -73,35 +60,14 @@
             this.ContentsPanel.SuspendLayout();
             this.MenuTabControl.SuspendLayout();
             this.SearchTabPage.SuspendLayout();
-            this.SearchPanel.SuspendLayout();
-            this.SearchButtonsPanel.SuspendLayout();
-            this.SearchNextShadow.SuspendLayout();
-            this.SearchPrevShadow.SuspendLayout();
-            this.SearchShadow.SuspendLayout();
-            this.ReplaceTabPage.SuspendLayout();
             this.ReplacePanel.SuspendLayout();
             this.ReplaceButtonsPanel.SuspendLayout();
             this.ReplaceAllShadow.SuspendLayout();
-            this.ResultPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
             this.ReplaceShadow.SuspendLayout();
             this.ReplaceSearchShadow.SuspendLayout();
+            this.ResultPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
             this.SuspendLayout();
-            // 
-            // SearchNextButton
-            // 
-            this.SearchNextButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.SearchNextButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SearchNextButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.SearchNextButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchNextButton.ForeColor = System.Drawing.Color.White;
-            this.SearchNextButton.Location = new System.Drawing.Point(0, 0);
-            this.SearchNextButton.Margin = new System.Windows.Forms.Padding(0);
-            this.SearchNextButton.Name = "SearchNextButton";
-            this.SearchNextButton.Size = new System.Drawing.Size(100, 30);
-            this.SearchNextButton.TabIndex = 0;
-            this.SearchNextButton.Text = "次を検索";
-            this.SearchNextButton.UseVisualStyleBackColor = false;
             // 
             // LayoutPanel
             // 
@@ -168,10 +134,11 @@
             this.MenuTabControl.SelectedIndex = 0;
             this.MenuTabControl.Size = new System.Drawing.Size(442, 204);
             this.MenuTabControl.TabIndex = 0;
+            this.MenuTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.MenuTabControl_Selecting);
             // 
             // SearchTabPage
             // 
-            this.SearchTabPage.Controls.Add(this.SearchPanel);
+            this.SearchTabPage.Controls.Add(this.ReplacePanel);
             this.SearchTabPage.Location = new System.Drawing.Point(4, 24);
             this.SearchTabPage.Name = "SearchTabPage";
             this.SearchTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -179,156 +146,6 @@
             this.SearchTabPage.TabIndex = 0;
             this.SearchTabPage.Text = "検 索";
             this.SearchTabPage.UseVisualStyleBackColor = true;
-            // 
-            // SearchPanel
-            // 
-            this.SearchPanel.Controls.Add(this.Label11);
-            this.SearchPanel.Controls.Add(this.KeywordTextBox);
-            this.SearchPanel.Controls.Add(this.Label12);
-            this.SearchPanel.Controls.Add(this.SearchRangeComboBox);
-            this.SearchPanel.Controls.Add(this.SearchCaseSensitiveCheckBox);
-            this.SearchPanel.Controls.Add(this.SearchButtonsPanel);
-            this.SearchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchPanel.Location = new System.Drawing.Point(3, 3);
-            this.SearchPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.SearchPanel.Name = "SearchPanel";
-            this.SearchPanel.Padding = new System.Windows.Forms.Padding(12);
-            this.SearchPanel.Size = new System.Drawing.Size(428, 170);
-            this.SearchPanel.TabIndex = 0;
-            // 
-            // Label11
-            // 
-            this.Label11.Location = new System.Drawing.Point(15, 15);
-            this.Label11.Margin = new System.Windows.Forms.Padding(3);
-            this.Label11.Name = "Label11";
-            this.Label11.Size = new System.Drawing.Size(100, 23);
-            this.Label11.TabIndex = 0;
-            this.Label11.Text = "検索する文字列";
-            this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // KeywordTextBox
-            // 
-            this.SearchPanel.SetFlowBreak(this.KeywordTextBox, true);
-            this.KeywordTextBox.Location = new System.Drawing.Point(121, 15);
-            this.KeywordTextBox.Name = "KeywordTextBox";
-            this.KeywordTextBox.Size = new System.Drawing.Size(292, 23);
-            this.KeywordTextBox.TabIndex = 1;
-            // 
-            // Label12
-            // 
-            this.Label12.Location = new System.Drawing.Point(15, 44);
-            this.Label12.Margin = new System.Windows.Forms.Padding(3);
-            this.Label12.Name = "Label12";
-            this.Label12.Size = new System.Drawing.Size(100, 23);
-            this.Label12.TabIndex = 2;
-            this.Label12.Text = "検索範囲";
-            this.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // SearchRangeComboBox
-            // 
-            this.SearchRangeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SearchPanel.SetFlowBreak(this.SearchRangeComboBox, true);
-            this.SearchRangeComboBox.FormattingEnabled = true;
-            this.SearchRangeComboBox.Location = new System.Drawing.Point(121, 44);
-            this.SearchRangeComboBox.Name = "SearchRangeComboBox";
-            this.SearchRangeComboBox.Size = new System.Drawing.Size(292, 23);
-            this.SearchRangeComboBox.TabIndex = 3;
-            // 
-            // SearchCaseSensitiveCheckBox
-            // 
-            this.SearchCaseSensitiveCheckBox.AutoSize = true;
-            this.SearchPanel.SetFlowBreak(this.SearchCaseSensitiveCheckBox, true);
-            this.SearchCaseSensitiveCheckBox.Location = new System.Drawing.Point(15, 76);
-            this.SearchCaseSensitiveCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.SearchCaseSensitiveCheckBox.Name = "SearchCaseSensitiveCheckBox";
-            this.SearchCaseSensitiveCheckBox.Size = new System.Drawing.Size(158, 19);
-            this.SearchCaseSensitiveCheckBox.TabIndex = 5;
-            this.SearchCaseSensitiveCheckBox.Text = "大文字と小文字を区別する";
-            this.SearchCaseSensitiveCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // SearchButtonsPanel
-            // 
-            this.SearchButtonsPanel.Controls.Add(this.SearchNextShadow);
-            this.SearchButtonsPanel.Controls.Add(this.SearchPrevShadow);
-            this.SearchButtonsPanel.Controls.Add(this.SearchShadow);
-            this.SearchButtonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.SearchButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.SearchButtonsPanel.Location = new System.Drawing.Point(15, 130);
-            this.SearchButtonsPanel.Margin = new System.Windows.Forms.Padding(3, 32, 3, 3);
-            this.SearchButtonsPanel.Name = "SearchButtonsPanel";
-            this.SearchButtonsPanel.Size = new System.Drawing.Size(398, 33);
-            this.SearchButtonsPanel.TabIndex = 6;
-            // 
-            // SearchNextShadow
-            // 
-            this.SearchNextShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.SearchNextShadow.Controls.Add(this.SearchNextButton);
-            this.SearchNextShadow.Location = new System.Drawing.Point(298, 0);
-            this.SearchNextShadow.Margin = new System.Windows.Forms.Padding(0);
-            this.SearchNextShadow.Name = "SearchNextShadow";
-            this.SearchNextShadow.Size = new System.Drawing.Size(100, 32);
-            this.SearchNextShadow.TabIndex = 7;
-            // 
-            // SearchPrevShadow
-            // 
-            this.SearchPrevShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.SearchPrevShadow.Controls.Add(this.SearchPrevButton);
-            this.SearchPrevShadow.Location = new System.Drawing.Point(194, 0);
-            this.SearchPrevShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.SearchPrevShadow.Name = "SearchPrevShadow";
-            this.SearchPrevShadow.Size = new System.Drawing.Size(100, 32);
-            this.SearchPrevShadow.TabIndex = 8;
-            // 
-            // SearchPrevButton
-            // 
-            this.SearchPrevButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.SearchPrevButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SearchPrevButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.SearchPrevButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchPrevButton.ForeColor = System.Drawing.Color.White;
-            this.SearchPrevButton.Location = new System.Drawing.Point(0, 0);
-            this.SearchPrevButton.Margin = new System.Windows.Forms.Padding(0);
-            this.SearchPrevButton.Name = "SearchPrevButton";
-            this.SearchPrevButton.Size = new System.Drawing.Size(100, 30);
-            this.SearchPrevButton.TabIndex = 0;
-            this.SearchPrevButton.Text = "前を検索";
-            this.SearchPrevButton.UseVisualStyleBackColor = false;
-            // 
-            // SearchShadow
-            // 
-            this.SearchShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.SearchShadow.Controls.Add(this.SearchButton);
-            this.SearchShadow.Location = new System.Drawing.Point(90, 0);
-            this.SearchShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.SearchShadow.Name = "SearchShadow";
-            this.SearchShadow.Size = new System.Drawing.Size(100, 32);
-            this.SearchShadow.TabIndex = 9;
-            // 
-            // SearchButton
-            // 
-            this.SearchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.SearchButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SearchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchButton.ForeColor = System.Drawing.Color.White;
-            this.SearchButton.Location = new System.Drawing.Point(0, 0);
-            this.SearchButton.Margin = new System.Windows.Forms.Padding(0);
-            this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(100, 30);
-            this.SearchButton.TabIndex = 0;
-            this.SearchButton.Text = "検索";
-            this.SearchButton.UseVisualStyleBackColor = false;
-            // 
-            // ReplaceTabPage
-            // 
-            this.ReplaceTabPage.Controls.Add(this.ReplacePanel);
-            this.ReplaceTabPage.Location = new System.Drawing.Point(4, 24);
-            this.ReplaceTabPage.Name = "ReplaceTabPage";
-            this.ReplaceTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ReplaceTabPage.Size = new System.Drawing.Size(434, 176);
-            this.ReplaceTabPage.TabIndex = 1;
-            this.ReplaceTabPage.Text = "置 換";
-            this.ReplaceTabPage.UseVisualStyleBackColor = true;
             // 
             // ReplacePanel
             // 
@@ -346,7 +163,7 @@
             this.ReplacePanel.Name = "ReplacePanel";
             this.ReplacePanel.Padding = new System.Windows.Forms.Padding(12);
             this.ReplacePanel.Size = new System.Drawing.Size(428, 170);
-            this.ReplacePanel.TabIndex = 1;
+            this.ReplacePanel.TabIndex = 3;
             // 
             // Label21
             // 
@@ -450,8 +267,68 @@
             this.ReplaceAllButton.Name = "ReplaceAllButton";
             this.ReplaceAllButton.Size = new System.Drawing.Size(100, 30);
             this.ReplaceAllButton.TabIndex = 0;
-            this.ReplaceAllButton.Text = "すべて置換";
+            this.ReplaceAllButton.Text = "次を検索";
             this.ReplaceAllButton.UseVisualStyleBackColor = false;
+            // 
+            // ReplaceShadow
+            // 
+            this.ReplaceShadow.BackColor = System.Drawing.Color.Gainsboro;
+            this.ReplaceShadow.Controls.Add(this.ReplaceButton);
+            this.ReplaceShadow.Location = new System.Drawing.Point(194, 0);
+            this.ReplaceShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.ReplaceShadow.Name = "ReplaceShadow";
+            this.ReplaceShadow.Size = new System.Drawing.Size(100, 32);
+            this.ReplaceShadow.TabIndex = 8;
+            // 
+            // ReplaceButton
+            // 
+            this.ReplaceButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.ReplaceButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ReplaceButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.ReplaceButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReplaceButton.ForeColor = System.Drawing.Color.White;
+            this.ReplaceButton.Location = new System.Drawing.Point(0, 0);
+            this.ReplaceButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ReplaceButton.Name = "ReplaceButton";
+            this.ReplaceButton.Size = new System.Drawing.Size(100, 30);
+            this.ReplaceButton.TabIndex = 0;
+            this.ReplaceButton.Text = "前を検索";
+            this.ReplaceButton.UseVisualStyleBackColor = false;
+            // 
+            // ReplaceSearchShadow
+            // 
+            this.ReplaceSearchShadow.BackColor = System.Drawing.Color.Gainsboro;
+            this.ReplaceSearchShadow.Controls.Add(this.ReplaceSearchButton);
+            this.ReplaceSearchShadow.Location = new System.Drawing.Point(90, 0);
+            this.ReplaceSearchShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.ReplaceSearchShadow.Name = "ReplaceSearchShadow";
+            this.ReplaceSearchShadow.Size = new System.Drawing.Size(100, 32);
+            this.ReplaceSearchShadow.TabIndex = 9;
+            // 
+            // ReplaceSearchButton
+            // 
+            this.ReplaceSearchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ReplaceSearchButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ReplaceSearchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ReplaceSearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReplaceSearchButton.ForeColor = System.Drawing.Color.White;
+            this.ReplaceSearchButton.Location = new System.Drawing.Point(0, 0);
+            this.ReplaceSearchButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ReplaceSearchButton.Name = "ReplaceSearchButton";
+            this.ReplaceSearchButton.Size = new System.Drawing.Size(100, 30);
+            this.ReplaceSearchButton.TabIndex = 0;
+            this.ReplaceSearchButton.Text = "検索";
+            this.ReplaceSearchButton.UseVisualStyleBackColor = false;
+            // 
+            // ReplaceTabPage
+            // 
+            this.ReplaceTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ReplaceTabPage.Name = "ReplaceTabPage";
+            this.ReplaceTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ReplaceTabPage.Size = new System.Drawing.Size(434, 178);
+            this.ReplaceTabPage.TabIndex = 1;
+            this.ReplaceTabPage.Text = "置 換";
+            this.ReplaceTabPage.UseVisualStyleBackColor = true;
             // 
             // ResultPanel
             // 
@@ -506,59 +383,8 @@
             this.FooterStatusStrip.TabIndex = 2;
             this.FooterStatusStrip.Text = "statusStrip1";
             // 
-            // ReplaceButton
-            // 
-            this.ReplaceButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.ReplaceButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ReplaceButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.ReplaceButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ReplaceButton.ForeColor = System.Drawing.Color.White;
-            this.ReplaceButton.Location = new System.Drawing.Point(0, 0);
-            this.ReplaceButton.Margin = new System.Windows.Forms.Padding(0);
-            this.ReplaceButton.Name = "ReplaceButton";
-            this.ReplaceButton.Size = new System.Drawing.Size(100, 30);
-            this.ReplaceButton.TabIndex = 0;
-            this.ReplaceButton.Text = "次を置換";
-            this.ReplaceButton.UseVisualStyleBackColor = false;
-            // 
-            // ReplaceShadow
-            // 
-            this.ReplaceShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.ReplaceShadow.Controls.Add(this.ReplaceButton);
-            this.ReplaceShadow.Location = new System.Drawing.Point(194, 0);
-            this.ReplaceShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.ReplaceShadow.Name = "ReplaceShadow";
-            this.ReplaceShadow.Size = new System.Drawing.Size(100, 32);
-            this.ReplaceShadow.TabIndex = 8;
-            // 
-            // ReplaceSearchButton
-            // 
-            this.ReplaceSearchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ReplaceSearchButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ReplaceSearchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ReplaceSearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ReplaceSearchButton.ForeColor = System.Drawing.Color.White;
-            this.ReplaceSearchButton.Location = new System.Drawing.Point(0, 0);
-            this.ReplaceSearchButton.Margin = new System.Windows.Forms.Padding(0);
-            this.ReplaceSearchButton.Name = "ReplaceSearchButton";
-            this.ReplaceSearchButton.Size = new System.Drawing.Size(100, 30);
-            this.ReplaceSearchButton.TabIndex = 0;
-            this.ReplaceSearchButton.Text = "検索";
-            this.ReplaceSearchButton.UseVisualStyleBackColor = false;
-            // 
-            // ReplaceSearchShadow
-            // 
-            this.ReplaceSearchShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.ReplaceSearchShadow.Controls.Add(this.ReplaceSearchButton);
-            this.ReplaceSearchShadow.Location = new System.Drawing.Point(90, 0);
-            this.ReplaceSearchShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.ReplaceSearchShadow.Name = "ReplaceSearchShadow";
-            this.ReplaceSearchShadow.Size = new System.Drawing.Size(100, 32);
-            this.ReplaceSearchShadow.TabIndex = 9;
-            // 
             // SearchForm
             // 
-            this.AcceptButton = this.SearchButton;
             this.ClientSize = new System.Drawing.Size(450, 350);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
@@ -576,21 +402,14 @@
             this.ContentsPanel.ResumeLayout(false);
             this.MenuTabControl.ResumeLayout(false);
             this.SearchTabPage.ResumeLayout(false);
-            this.SearchPanel.ResumeLayout(false);
-            this.SearchPanel.PerformLayout();
-            this.SearchButtonsPanel.ResumeLayout(false);
-            this.SearchNextShadow.ResumeLayout(false);
-            this.SearchPrevShadow.ResumeLayout(false);
-            this.SearchShadow.ResumeLayout(false);
-            this.ReplaceTabPage.ResumeLayout(false);
             this.ReplacePanel.ResumeLayout(false);
             this.ReplacePanel.PerformLayout();
             this.ReplaceButtonsPanel.ResumeLayout(false);
             this.ReplaceAllShadow.ResumeLayout(false);
-            this.ResultPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Separator)).EndInit();
             this.ReplaceShadow.ResumeLayout(false);
             this.ReplaceSearchShadow.ResumeLayout(false);
+            this.ResultPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Separator)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -604,18 +423,9 @@
         private System.Windows.Forms.TabControl MenuTabControl;
         private System.Windows.Forms.TabPage SearchTabPage;
         private System.Windows.Forms.TabPage ReplaceTabPage;
-        private System.Windows.Forms.FlowLayoutPanel SearchPanel;
-        private System.Windows.Forms.Label Label11;
-        private System.Windows.Forms.TextBox KeywordTextBox;
-        private System.Windows.Forms.Label Label12;
-        private System.Windows.Forms.ComboBox SearchRangeComboBox;
         private System.Windows.Forms.PictureBox Separator;
         private System.Windows.Forms.Panel ResultPanel;
         private PageListView ResultListView;
-        private System.Windows.Forms.CheckBox SearchCaseSensitiveCheckBox;
-        private System.Windows.Forms.FlowLayoutPanel SearchButtonsPanel;
-        private System.Windows.Forms.Panel SearchNextShadow;
-        private Forms.Button SearchNextButton;
         private System.Windows.Forms.FlowLayoutPanel ReplacePanel;
         private System.Windows.Forms.Label Label21;
         private System.Windows.Forms.TextBox SearchTextBox;
@@ -627,10 +437,6 @@
         private System.Windows.Forms.FlowLayoutPanel ReplaceButtonsPanel;
         private System.Windows.Forms.Panel ReplaceAllShadow;
         private Forms.Button ReplaceAllButton;
-        private System.Windows.Forms.Panel SearchPrevShadow;
-        private Forms.Button SearchPrevButton;
-        private System.Windows.Forms.Panel SearchShadow;
-        private Forms.Button SearchButton;
         private System.Windows.Forms.Panel ReplaceShadow;
         private Forms.Button ReplaceButton;
         private System.Windows.Forms.Panel ReplaceSearchShadow;

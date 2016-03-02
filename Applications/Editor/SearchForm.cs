@@ -49,10 +49,14 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            SearchPanel.Resize += SearchPanel_Resize;
-            SearchButton.Click += (s, e) => RaiseSearchEvent();
+            // ReplacePanel.Resize += ReplacePanel_Resize;
 
             Caption = TitleControl;
+
+            // Layout
+            ReplaceButtonsPanel.Margin = new Padding(3, 32, 3, 3);
+            Label22.Visible = false;
+            ReplaceTextBox.Visible = false;
         }
 
         #endregion
@@ -71,12 +75,8 @@ namespace Cube.Note.App.Editor
         [Browsable(false)]
         public string Keyword
         {
-            get { return KeywordTextBox.Text; }
-            set
-            {
-                KeywordTextBox.Text = value;
-                SearchTextBox.Text  = value;
-            }
+            get { return SearchTextBox.Text; }
+            set { SearchTextBox.Text  = value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -107,12 +107,8 @@ namespace Cube.Note.App.Editor
         [Browsable(false)]
         public bool CaseSensitive
         {
-            get { return SearchCaseSensitiveCheckBox.Checked; }
-            set
-            {
-                SearchCaseSensitiveCheckBox.Checked  = value;
-                ReplaceCaseSensitiveCheckBox.Checked = value;
-            }
+            get { return ReplaceCaseSensitiveCheckBox.Checked; }
+            set { ReplaceCaseSensitiveCheckBox.Checked = value; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -177,7 +173,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public ComboBox SearchRange => SearchRangeComboBox;
+        public ComboBox SearchRange => ReplaceRangeComboBox;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -213,7 +209,7 @@ namespace Cube.Note.App.Editor
             base.OnShown(e);
             ShowPages = false;
             Height = MinimumSize.Height;
-            KeywordTextBox.Focus();
+            SearchTextBox.Focus();
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 
@@ -239,27 +235,67 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SearchPanel_Resize
+        /// MenuTabControl_Selecting
         ///
         /// <summary>
-        /// SearchPanel のリサイズ時に実行されるハンドラです。
+        /// MenuTabControl のタブが選択される前に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SearchPanel_Resize(object sender, EventArgs e)
+        private void MenuTabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            SearchPanel.SuspendLayout();
+            ReplacePanel.SuspendLayout();
+                        
+            switch (e.TabPage.Name)
+            {
+                case nameof(SearchTabPage):
+                    ReplaceTabPage.Controls.Remove(ReplacePanel);
+                    Label22.Visible = false;
+                    ReplaceTextBox.Visible = false;
+                    ReplacePanel.SetFlowBreak(ReplaceTextBox, false);
+                    ReplaceButtonsPanel.Margin = new Padding(3, 32, 3, 3);
+                    ReplaceButton.Text = "前を検索";
+                    ReplaceAllButton.Text = "次を検索";
+                    ReplacePanel.Dock = DockStyle.Fill;
+                    SearchTabPage.Controls.Add(ReplacePanel);
+                    break;
+                case nameof(ReplaceTabPage):
+                    SearchTabPage.Controls.Remove(ReplacePanel);
+                    Label22.Visible = true;
+                    ReplaceTextBox.Visible = true;
+                    ReplacePanel.SetFlowBreak(ReplaceTextBox, true);
+                    ReplaceButtonsPanel.Margin = new Padding(3);
+                    ReplaceButton.Text = "次を置換";
+                    ReplaceAllButton.Text = "すべて置換";
+                    ReplacePanel.Dock = DockStyle.Fill;
+                    ReplaceTabPage.Controls.Add(ReplacePanel);
+                    break;
+                default:
+                    break;
+            }
+            ReplacePanel.ResumeLayout();
+        }
 
-            var width = SearchPanel.Width - SearchPanel.Padding.Right;
-            SetWidth(SearchButtonsPanel,   width);
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplacePanel_Resize
+        ///
+        /// <summary>
+        /// ReplacePanel のリサイズ時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ReplacePanel_Resize(object sender, EventArgs e)
+        {
+            ReplacePanel.SuspendLayout();
+
+            var width = ReplacePanel.Width - ReplacePanel.Padding.Right;
             SetWidth(ReplaceButtonsPanel,  width);
-            SetWidth(KeywordTextBox,       width);
             SetWidth(SearchTextBox,        width);
             SetWidth(ReplaceTextBox,       width);
-            SetWidth(SearchRangeComboBox,  width);
             SetWidth(ReplaceRangeComboBox, width);
 
-            SearchNextButton.ResumeLayout();
+            ReplaceAllButton.ResumeLayout();
         }
 
         #endregion
