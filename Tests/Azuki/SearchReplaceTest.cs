@@ -56,6 +56,24 @@ namespace Cube.Note.Tests.Azuki
             Assert.That(src.Results.Count(), Is.EqualTo(expected));
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// リセットのテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Hello", false)]
+        public void Reset(string keyword, bool sensitive)
+        {
+            var src = Create();
+            src.Search(keyword, sensitive, Pages.Everyone);
+            src.Reset();
+            Assert.That(src.Results.Count(), Is.EqualTo(0));
+        }
+
         #endregion
 
         #region Helper methods
