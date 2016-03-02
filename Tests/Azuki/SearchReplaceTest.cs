@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageCollectionResource.cs
+/// SearchReplaceTest.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,80 +17,59 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using IoEx = System.IO;
+using System.Linq;
+using NUnit.Framework;
+using Cube.Note.Azuki;
 
-namespace Cube.Note.Tests
+namespace Cube.Note.Tests.Azuki
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageCollectionResource
+    /// SearchReplaceTest
     /// 
     /// <summary>
-    /// PageCollection のテストを補助するクラスです。
+    /// SearchReplace のテスト用クラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    class PageCollectionResource : FileResource
+    [Parallelizable]
+    [TestFixture]
+    class SearchReplaceTest : PageCollectionResource
     {
-        #region Constructors
+        #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCollectionResource
+        /// Search_Count
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// 検索のテストを行います。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PageCollectionResource() : base()
+        [TestCase("Hello", true,  1)]
+        [TestCase("Hello", false, 2)]
+        public void Search_Count(string keyword, bool sensitive, int expected)
         {
-            Copy("Order.json");
-            Copy("05859d5f90094ab0b8ec739b6150f455");
-            Copy("2e0eee1d20d143db882e5fe63c225a9d");
-            Copy("a65006b41d3c47a8981a8feaec7523bc");
-
-            Pages = new PageCollection(Results);
-            Pages.Load();
-            Pages.Everyone = new Tag("Everyone");
+            var src = Create();
+            src.Search(keyword, sensitive, Pages.Everyone);
+            Assert.That(src.Results.Count(), Is.EqualTo(expected));
         }
 
         #endregion
 
-        #region Properties
+        #region Helper methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pages
+        /// Create
         ///
         /// <summary>
-        /// PageCollection オブジェクトを取得または設定します。
+        /// SearchReplace オブエジェクトを生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PageCollection Pages { get; set; }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Copy
-        ///
-        /// <summary>
-        /// Examples フォルダから Results フォルダへファイルをコピーします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Copy(string filename)
-        {
-            IoEx.File.Copy(
-                IoEx.Path.Combine(Examples, filename),
-                IoEx.Path.Combine(Results, filename),
-                true
-            );
-        }
+        public SearchReplace Create() => new SearchReplace(Pages);
 
         #endregion
     }

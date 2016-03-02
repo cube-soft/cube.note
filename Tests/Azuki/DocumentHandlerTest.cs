@@ -80,25 +80,6 @@ namespace Cube.Note.Tests.Azuki
             );
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Search_Count
-        ///
-        /// <summary>
-        /// 検索のテストを行います。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("Hello", true,  1)]
-        [TestCase("Hello", false, 2)]
-        public void Search_Count(string keyword, bool sensitive, int expected)
-        {
-            Assert.That(
-                Pages.Search(keyword, sensitive, 0, Pages.Directory).Count(),
-                Is.EqualTo(expected)
-            );
-        }
-
         #endregion
     }
 }

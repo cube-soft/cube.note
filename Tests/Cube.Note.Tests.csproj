@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Azuki\DocumentHandlerTest.cs" />
+    <Compile Include="Azuki\SearchReplaceTest.cs" />
     <Compile Include="Detail\PageCollectionResource.cs" />
     <Compile Include="PageCollectionTest.cs" />
     <Compile Include="Detail\FileResource.cs" />
