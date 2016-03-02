@@ -735,6 +735,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Attach(IList pages)
         {
+            if (pages == null) return;
+
             foreach (Page page in pages)
             {
                 page.PropertyChanged -= DS_PropertyChanged;
@@ -753,7 +755,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Detach(IList pages)
         {
-            foreach (Page page in pages) page.PropertyChanged -= DS_PropertyChanged;
+            if (pages == null) return;
+
+            foreach (Page page in pages)
+            {
+                page.PropertyChanged -= DS_PropertyChanged;
+            }
         }
 
         #endregion
