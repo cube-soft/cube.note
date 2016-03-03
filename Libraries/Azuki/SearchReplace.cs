@@ -168,7 +168,7 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         public void Search(string keyword, bool sensitive, Page page)
         {
-            Results.Clear();
+            Reset();
             Keyword = keyword;
             CaseSensitive = sensitive;
 
@@ -190,7 +190,7 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         public void Search(string keyword, bool sensitive, Tag range)
         {
-            Results.Clear();
+            Reset();
             Keyword = keyword;
             CaseSensitive = sensitive;
 
