@@ -348,7 +348,7 @@ namespace Cube.Note.Azuki
             if (result != null)
             {
                 Current = index;
-                document.SetSelection(result.Begin, result.End);
+                document.SetSelection(result.End, result.Begin);
             }
             else
             {
