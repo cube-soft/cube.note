@@ -275,6 +275,27 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnMouseDown
+        /// 
+        /// <summary>
+        /// マウスがクリックされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.Button != MouseButtons.Left) return;
+
+            var item = GetItemAt(e.Location.X, e.Location.Y);
+            var bounds = item?.Bounds ?? Rectangle.Empty;
+
+            if (IsRemoveButton(e.Location, bounds)) Aggregator?.Remove.Raise();
+            else if (IsPropertyButton(e.Location, bounds)) Aggregator?.Property.Raise();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnMouseUp
         /// 
         /// <summary>
@@ -310,27 +331,6 @@ namespace Cube.Note.App.Editor
             Cursor = IsRemoveButton(e.Location, bounds) ||
                      IsPropertyButton(e.Location, bounds) ?
                      Cursors.Hand : Cursors.Default;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnMouseClick
-        /// 
-        /// <summary>
-        /// マウスがクリックされた時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            base.OnMouseClick(e);
-            if (e.Button != MouseButtons.Left) return;
-
-            var item   = GetItemAt(e.Location.X, e.Location.Y);
-            var bounds = item?.Bounds ?? Rectangle.Empty;
-
-            if (IsRemoveButton(e.Location, bounds)) Aggregator?.Remove.Raise();
-            else if (IsPropertyButton(e.Location, bounds)) Aggregator?.Property.Raise();
         }
 
         /* ----------------------------------------------------------------- */
