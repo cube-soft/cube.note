@@ -427,7 +427,7 @@ namespace Cube.Note.Azuki
         #endregion
 
         #region Fields
-        private int _current;
+        private int _current = -1;
         #endregion
     }
 }

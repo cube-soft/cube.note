@@ -110,11 +110,7 @@ namespace Cube.Note.App.Editor
         private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
             if (e.NewValue == null) return;
-
-            var index = Model.Results.IndexOf(e.NewValue);
-            if (index < 0 || index >= Model.Results.Count) return;
-
-            Sync(() => View.Pages.Select(index));
+            Model.Current = Model.Results.IndexOf(e.NewValue);
         }
 
         #endregion
@@ -144,12 +140,7 @@ namespace Cube.Note.App.Editor
                 else Model.Search(keyword, sensitive, Model.Pages.Everyone);
             });
 
-            if (!one && Model.Results.Count > 0)
-            {
-                View.ShowPages = true;
-                View.Pages.Select(0);
-            }
-            else View.ShowPages = false;
+            View.ShowPages = !one && Model.Results.Count > 0;
         }
 
         /* ----------------------------------------------------------------- */
@@ -194,11 +185,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_SelectedIndexChanged(object sender, EventArgs e)
+        private void View_SelectedIndexChanged(object sender, EventArgs e) => Sync(() =>
         {
-            SetPage();
-            Events.Refresh.Raise();
-        }
+            if (!View.Pages.AnyItemsSelected) return;
+            Model.Current = View.Pages.SelectedIndices[0];
+        });
 
         #endregion
 
@@ -259,25 +250,12 @@ namespace Cube.Note.App.Editor
         private void SetPage(int index)
         {
             if (index < 0 || index >= Model.Results.Count) return;
-            Settings.Current.Page = Model.Results[index];
-        }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetPage
-        /// 
-        /// <summary>
-        /// 現在のページを設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetPage()
-        {
-            Sync(() =>
-            {
-                if (!View.Pages.AnyItemsSelected) return;
-                SetPage(View.Pages.SelectedIndices[0]);
-            });
+            var page = Model.Results[index];
+            if (page != Settings.Current.Page) Settings.Current.Page = page;
+            else Events.Refresh.Raise();
+
+            Sync(() => View.Pages.Select(index));
         }
 
         #endregion
