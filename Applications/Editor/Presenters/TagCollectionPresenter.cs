@@ -254,6 +254,7 @@ namespace Cube.Note.App.Editor
         {
             SyncWait(() =>
             {
+                View.BeginUpdate();
                 View.SelectedIndexChanged -= View_SelectedIndexChanged;
 
                 if (View.Items.Count > 0) View.Items.Clear();
@@ -272,6 +273,7 @@ namespace Cube.Note.App.Editor
                 View.Items.Add(Properties.Resources.EditTag);
                 View.SelectedIndexChanged += View_SelectedIndexChanged;
                 View.SelectedIndex = 0;
+                View.EndUpdate();
             });
         }
 
