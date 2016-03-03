@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Linq;
 using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
@@ -233,9 +234,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ResetSearchRange()
         {
+            View.SearchRange.BeginUpdate();
             View.SearchRange.Items.Clear();
             View.SearchRange.Items.Add(Properties.Resources.CurrentNote);
             View.SearchRange.Items.Add(Model.Pages.Everyone);
+            View.SearchRange.Items.AddRange(Model.Pages.Tags.ToArray());
+            View.SearchRange.BeginUpdate();
         }
 
         /* ----------------------------------------------------------------- */
