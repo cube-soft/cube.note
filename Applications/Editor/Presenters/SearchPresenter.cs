@@ -51,6 +51,7 @@ namespace Cube.Note.App.Editor
             : base(view, new SearchReplace(parent), settings, events)
         {
             Events.Search.Handle += SearchMode_Handle;
+            Settings.Current.PageChanged += Settings_PageChanged;
 
             View.Showing += View_Showing;
             View.Hiding += View_Hiding;
@@ -61,7 +62,7 @@ namespace Cube.Note.App.Editor
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
 
-            Model.PropertyChanged += Model_PropertyChanged;
+            Model.CurrentChanged += Model_CurrentChanged;
         }
 
         #endregion
@@ -95,6 +96,29 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_PageChanged
+        /// 
+        /// <summary>
+        /// 現在のページが変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
+        {
+            if (e.NewValue == null) return;
+
+            var index = Model.Results.IndexOf(e.NewValue);
+            if (index < 0 || index >= Model.Results.Count) return;
+
+            Sync(() => View.Pages.Select(index));
+        }
+
+        #endregion
+
         #region View
 
         /* ----------------------------------------------------------------- */
@@ -120,7 +144,12 @@ namespace Cube.Note.App.Editor
                 else Model.Search(keyword, sensitive, Model.Pages.Everyone);
             });
 
-            View.ShowPages = !one && Model.Results.Count > 0;
+            if (!one && Model.Results.Count > 0)
+            {
+                View.ShowPages = true;
+                View.Pages.Select(0);
+            }
+            else View.ShowPages = false;
         }
 
         /* ----------------------------------------------------------------- */
@@ -179,23 +208,22 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_PropertyChanged
+        /// Model_CurrentChanged
         /// 
         /// <summary>
-        /// プロパティの内容が変化した時に実行されるハンドラです。
+        /// Current の内容が変化した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Model_CurrentChanged(object sender,
+            ValueChangedEventArgs<SearchReplace.Position> e)
         {
-            switch (e.PropertyName)
+            if (e.OldValue != null)
             {
-                case nameof(Model.Current):
-                    SetSelection(Model.Current);
-                    break;
-                default:
-                    break;
+                // reset selection
+                SetSelection(e.OldValue.Index, e.OldValue.End, e.OldValue.End);
             }
+            SetPageAndSelection(e.NewValue);
         }
 
         #endregion
@@ -229,7 +257,31 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetSelection(SearchReplace.Position pos)
+        private void SetSelection(int index, int begin, int end)
+        {
+            if (index < 0 || index >= Model.Results.Count) return;
+
+            var page = Model.Results[index];
+            var doc = page?.CreateDocument(Model.Pages.Directory);
+            if (doc == null) return;
+
+            Sync(() =>
+            {
+                doc.SetSelection(begin, end);
+                if (begin == end) Events.Refresh.Raise();
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetPageAndSelection
+        /// 
+        /// <summary>
+        /// 現在のページと選択範囲を設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetPageAndSelection(SearchReplace.Position pos)
         {
             if (pos == null) return;
             if (pos.Index < 0 || pos.Index >= Model.Results.Count) return;
@@ -237,10 +289,7 @@ namespace Cube.Note.App.Editor
             var page = Model.Results[pos.Index];
             Settings.Current.Page = page;
 
-            var doc = page?.CreateDocument(Model.Pages.Directory);
-            if (doc == null) return;
-
-            Sync(() => doc.SetSelection(pos.Begin, pos.End));
+            SetSelection(pos.Index, pos.Begin, pos.End);
         }
 
         /* ----------------------------------------------------------------- */

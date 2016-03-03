@@ -35,7 +35,7 @@ namespace Cube.Note.Azuki
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SearchReplace : INotifyPropertyChanged
+    public class SearchReplace
     {
         #region Constructors
 
@@ -121,8 +121,9 @@ namespace Cube.Note.Azuki
                     _current.Begin == value.Begin &&
                     _current.End   == value.End   ) return;
 
+                var before = _current;
                 _current = value;
-                RaisePropertyChanged(nameof(Current));
+                RaiseCurrentChanged(before, value);
             }
         }
 
@@ -132,14 +133,14 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PropertyChanged
+        /// PositionChanged
         /// 
         /// <summary>
-        /// プロパティの内容が変更された時に発生するイベントです。
+        /// Current プロパティの内容が変化した時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<ValueChangedEventArgs<Position>> CurrentChanged;
 
         #endregion
 
@@ -255,15 +256,15 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnPropertyChanged
+        /// OnCurrentChanged
         ///
         /// <summary>
-        /// PropertyChanged イベントを発生させます。
+        /// CurrentChanged イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-            => PropertyChanged?.Invoke(this, e);
+        protected virtual void OnCurrentChanged(ValueChangedEventArgs<Position> e)
+            => CurrentChanged?.Invoke(this, e);
 
         #endregion
 
@@ -271,15 +272,15 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaisePropertyChanged
+        /// RaiseCurrentChanged
         ///
         /// <summary>
-        /// PropertyChanged イベントを発生させます。
+        /// CurrentChanged イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void RaisePropertyChanged([CallerMemberName] string name = null)
-            => OnPropertyChanged(new PropertyChangedEventArgs(name));
+        protected void RaiseCurrentChanged(Position before, Position after)
+            => OnCurrentChanged(new ValueChangedEventArgs<Position>(before, after));
 
         #endregion
 
