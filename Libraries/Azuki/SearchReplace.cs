@@ -180,7 +180,7 @@ namespace Cube.Note.Azuki
             if (result == null) return;
 
             Results.Add(Highlight(page, keyword, sensitive));
-            Current = new Position(0, result.Begin, result.End);
+            Current = new Position(0, 0, 0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -198,16 +198,15 @@ namespace Cube.Note.Azuki
             Keyword = keyword;
             CaseSensitive = sensitive;
 
-            Position current = null;
             foreach(var page in Pages.Search(range))
             {
                 var result = GetResult(page, keyword, sensitive);
                 if (result == null) continue;
 
                 Results.Add(Highlight(page, keyword, sensitive));
-                if (current == null) current = new Position(0, result.Begin, result.End);
             }
-            if (current != null) Current = current;
+
+            if (Results.Count > 0) Current = new Position(0, 0, 0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -245,7 +244,7 @@ namespace Cube.Note.Azuki
 
             var index = Current != null ?
                         Math.Max(Math.Min(Current.Index, Results.Count - 1), 0) :
-                        0;
+                        Results.Count - 1;
 
             Back(index, null);
         }
@@ -340,8 +339,8 @@ namespace Cube.Note.Azuki
                                                offset.Value;
             var result = doc.FindPrev(Keyword, start, CaseSensitive);
 
-            if (result != null) Current = new Position(index, result.Begin, result.End);
-            else if (index >= 0) Back(--index, -1 /* LastIndex */);
+            if (result != null) Current = new Position(index, result.End, result.Begin);
+            else if (index > 0) Back(--index, -1 /* LastIndex */);
             else Current = null;
         }
 

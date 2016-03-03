@@ -72,7 +72,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Refresh_Handle(object sender, EventArgs e)
-            => Sync(() => View.ScrollToCaret());
+            => Sync(() => View.Refresh());
 
         /* ----------------------------------------------------------------- */
         ///

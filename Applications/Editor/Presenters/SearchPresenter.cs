@@ -52,9 +52,11 @@ namespace Cube.Note.App.Editor
         {
             Events.Search.Handle += SearchMode_Handle;
 
-            View.Search += View_Search;
             View.Showing += View_Showing;
             View.Hiding += View_Hiding;
+            View.Search += View_Search;
+            View.SearchNext += (s, e) => Model.Forward();
+            View.SearchPrev += (s, e) => Model.Back();
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
@@ -235,12 +237,10 @@ namespace Cube.Note.App.Editor
             var page = Model.Results[pos.Index];
             Settings.Current.Page = page;
 
-            if (pos.Begin == pos.End) return;
+            var doc = page?.CreateDocument(Model.Pages.Directory);
+            if (doc == null) return;
 
-            var document = page?.CreateDocument(Model.Pages.Directory);
-            if (document == null) return;
-
-            Sync(() => document.SetSelection(pos.Begin, pos.End));
+            Sync(() => doc.SetSelection(pos.Begin, pos.End));
         }
 
         /* ----------------------------------------------------------------- */
