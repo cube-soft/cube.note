@@ -247,6 +247,41 @@ namespace Cube.Note.Azuki
             Back(index, start);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceNext
+        /// 
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ReplaceNext(string oldValue, string newValue)
+        {
+            if (Results.Count <= 0) return;
+
+            var index = Current != -1 ?
+                        Math.Max(Math.Min(Current, Results.Count - 1), 0) :
+                        0;
+            var start = Current != -1 ? default(int?) : 0;
+
+            ReplaceNext(index, start, oldValue, newValue);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceAll
+        /// 
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ReplaceAll()
+        {
+            ReplaceAll("old", "new");
+        }
+
         #endregion
 
         #region Virtual methods
@@ -356,6 +391,47 @@ namespace Cube.Note.Azuki
                 if (index > 0) Back(--index, -1 /* LastIndex */);
                 else Current = -1;
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceNext
+        /// 
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ReplaceNext(int index, int? offset, string oldValue, string newValue)
+        {
+            var document = Results[index].Document as Document;
+            if (document == null) return;
+
+            var start = offset.HasValue ? offset.Value : document.CaretIndex;
+            var result = document.FindNext(Keyword, start, CaseSensitive);
+
+            if (result != null)
+            {
+                document.Replace(newValue, result.Begin, result.Begin+oldValue.Length);
+            }
+            else
+            {
+            }
+
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceAll
+        /// 
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ReplaceAll(string oldValue, string newValue)
+        {
+
         }
 
         /* ----------------------------------------------------------------- */

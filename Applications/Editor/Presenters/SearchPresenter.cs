@@ -58,6 +58,8 @@ namespace Cube.Note.App.Editor
             View.Search += View_Search;
             View.SearchNext += (s, e) => Model.Forward();
             View.SearchPrev += (s, e) => Model.Back();
+            View.ReplaceNext += (s, e) => { Model.ReplaceNext(View.Keyword, View.Replace); View_Search(s, e); };
+            View.ReplaceAll += (s, e) => Model.ReplaceAll();
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
