@@ -35,7 +35,7 @@ namespace Cube.Note.Azuki
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SearchReplace
+    public class SearchReplace : INotifyPropertyChanged
     {
         #region Constructors
 
@@ -111,19 +111,14 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Position Current
+        public int Current
         {
             get { return _current; }
             set
             {
-                if (_current != null && value != null &&
-                    _current.Index == value.Index &&
-                    _current.Begin == value.Begin &&
-                    _current.End   == value.End   ) return;
-
-                var before = _current;
+                if (_current == value) return;
                 _current = value;
-                RaiseCurrentChanged(before, value);
+                RaisePropertyChanged(nameof(Current));
             }
         }
 
@@ -140,7 +135,7 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<ValueChangedEventArgs<Position>> CurrentChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -159,7 +154,7 @@ namespace Cube.Note.Azuki
         {
             foreach (var page in Results) UnHighlight(page);
             Results.Clear();
-            Current = null;
+            Current = -1;
         }
 
         /* ----------------------------------------------------------------- */
@@ -181,7 +176,7 @@ namespace Cube.Note.Azuki
             if (result == null) return;
 
             Results.Add(Highlight(page, keyword, sensitive));
-            Current = new Position(0, 0, 0);
+            Current = 0;
         }
 
         /* ----------------------------------------------------------------- */
@@ -207,7 +202,7 @@ namespace Cube.Note.Azuki
                 Results.Add(Highlight(page, keyword, sensitive));
             }
 
-            if (Results.Count > 0) Current = new Position(0, 0, 0);
+            if (Results.Count > 0) Current = 0;
         }
 
         /* ----------------------------------------------------------------- */
@@ -223,11 +218,12 @@ namespace Cube.Note.Azuki
         {
             if (Results.Count <= 0) return;
 
-            var index = Current != null ?
-                        Math.Max(Math.Min(Current.Index, Results.Count - 1), 0) :
+            var index = Current != -1 ?
+                        Math.Max(Math.Min(Current, Results.Count - 1), 0) :
                         0;
+            var start = Current != -1 ? default(int?) : 0;
 
-            Forward(index, null);
+            Forward(index, start);
         }
 
         /* ----------------------------------------------------------------- */
@@ -243,11 +239,12 @@ namespace Cube.Note.Azuki
         {
             if (Results.Count <= 0) return;
 
-            var index = Current != null ?
-                        Math.Max(Math.Min(Current.Index, Results.Count - 1), 0) :
+            var index = Current != -1 ?
+                        Math.Max(Math.Min(Current, Results.Count - 1), 0) :
                         Results.Count - 1;
+            var start = Current != -1 ? default(int?) : -1;
 
-            Back(index, null);
+            Back(index, start);
         }
 
         #endregion
@@ -263,8 +260,8 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnCurrentChanged(ValueChangedEventArgs<Position> e)
-            => CurrentChanged?.Invoke(this, e);
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+            => PropertyChanged?.Invoke(this, e);
 
         #endregion
 
@@ -272,15 +269,15 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseCurrentChanged
+        /// RaisePropertyChanged
         ///
         /// <summary>
-        /// CurrentChanged イベントを発生させます。
+        /// PropertyChanged イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void RaiseCurrentChanged(Position before, Position after)
-            => OnCurrentChanged(new ValueChangedEventArgs<Position>(before, after));
+        protected void RaisePropertyChanged([CallerMemberName] string name = null)
+            => OnPropertyChanged(new PropertyChangedEventArgs(name));
 
         #endregion
 
@@ -310,15 +307,23 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         private void Forward(int index, int? offset)
         {
-            var doc = Results[index].Document as Document;
-            if (doc == null) return;
+            var document = Results[index].Document as Document;
+            if (document == null) return;
 
-            var start  = offset.HasValue ? offset.Value : doc.CaretIndex;
-            var result = doc.FindNext(Keyword, start, CaseSensitive);
+            var start  = offset.HasValue ? offset.Value : document.CaretIndex;
+            var result = document.FindNext(Keyword, start, CaseSensitive);
 
-            if (result != null) Current = new Position(index, result.Begin, result.End);
-            else if (index < Results.Count - 1) Forward(++index, 0);
-            else Current = null;
+            if (result != null)
+            {
+                Current = index;
+                document.SetSelection(result.Begin, result.End);
+            }
+            else
+            {
+                document.SetSelection(start, start);
+                if (index < Results.Count - 1) Forward(++index, 0);
+                else Current = -1;
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -332,17 +337,25 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         private void Back(int index, int? offset)
         {
-            var doc = Results[index].Document as Document;
-            if (doc == null) return;
+            var document = Results[index].Document as Document;
+            if (document == null) return;
 
-            var start  = !offset.HasValue    ? doc.CaretIndex :
-                          offset.Value == -1 ? doc.Length :
+            var start  = !offset.HasValue    ? document.CaretIndex :
+                          offset.Value == -1 ? document.Length :
                                                offset.Value;
-            var result = doc.FindPrev(Keyword, start, CaseSensitive);
+            var result = document.FindPrev(Keyword, start, CaseSensitive);
 
-            if (result != null) Current = new Position(index, result.End, result.Begin);
-            else if (index > 0) Back(--index, -1 /* LastIndex */);
-            else Current = null;
+            if (result != null)
+            {
+                Current = index;
+                document.SetSelection(result.Begin, result.End);
+            }
+            else
+            {
+                document.SetSelection(start, start);
+                if (index > 0) Back(--index, -1 /* LastIndex */);
+                else Current = -1;
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -414,7 +427,7 @@ namespace Cube.Note.Azuki
         #endregion
 
         #region Fields
-        private Position _current;
+        private int _current;
         #endregion
     }
 }

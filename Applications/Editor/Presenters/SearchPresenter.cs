@@ -62,7 +62,7 @@ namespace Cube.Note.App.Editor
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
 
-            Model.CurrentChanged += Model_CurrentChanged;
+            Model.PropertyChanged += Model_PropertyChanged;
         }
 
         #endregion
@@ -196,9 +196,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var page = SelectedPage();
-            if (page == null) return;
-            Settings.Current.Page = page;
+            SetPage();
             Events.Refresh.Raise();
         }
 
@@ -208,22 +206,23 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_CurrentChanged
+        /// Model_PropertyChanged
         /// 
         /// <summary>
-        /// Current の内容が変化した時に実行されるハンドラです。
+        /// プロパティの内容が変化した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_CurrentChanged(object sender,
-            ValueChangedEventArgs<SearchReplace.Position> e)
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.OldValue != null)
+            switch (e.PropertyName)
             {
-                // reset selection
-                SetSelection(e.OldValue.Index, e.OldValue.End, e.OldValue.End);
+                case nameof(Model.Current):
+                    SetPage(Model.Current);
+                    break;
+                default:
+                    break;
             }
-            SetPageAndSelection(e.NewValue);
         }
 
         #endregion
@@ -250,64 +249,35 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetSelection
+        /// SetPage
         /// 
         /// <summary>
-        /// 選択範囲を設定します。
+        /// 指定されたインデックスに対応するページを設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetSelection(int index, int begin, int end)
+        private void SetPage(int index)
         {
             if (index < 0 || index >= Model.Results.Count) return;
+            Settings.Current.Page = Model.Results[index];
+        }
 
-            var page = Model.Results[index];
-            var doc = page?.CreateDocument(Model.Pages.Directory);
-            if (doc == null) return;
-
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetPage
+        /// 
+        /// <summary>
+        /// 現在のページを設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetPage()
+        {
             Sync(() =>
             {
-                doc.SetSelection(begin, end);
-                if (begin == end) Events.Refresh.Raise();
+                if (!View.Pages.AnyItemsSelected) return;
+                SetPage(View.Pages.SelectedIndices[0]);
             });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetPageAndSelection
-        /// 
-        /// <summary>
-        /// 現在のページと選択範囲を設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetPageAndSelection(SearchReplace.Position pos)
-        {
-            if (pos == null) return;
-            if (pos.Index < 0 || pos.Index >= Model.Results.Count) return;
-
-            var page = Model.Results[pos.Index];
-            Settings.Current.Page = page;
-
-            SetSelection(pos.Index, pos.Begin, pos.End);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SelectedPage
-        /// 
-        /// <summary>
-        /// 選択ページを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Page SelectedPage()
-        {
-            if (!View.Pages.AnyItemsSelected) return null;
-
-            var pages = Model.Results;
-            var index = View.Pages.SelectedIndices[0];
-            return (index >= 0 && index < pages.Count) ? pages[index] : null;
         }
 
         #endregion
