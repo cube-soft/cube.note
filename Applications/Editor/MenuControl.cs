@@ -146,6 +146,9 @@ namespace Cube.Note.App.Editor
             Padding   = new Padding(6, 0, 0, 0);
             Renderer  = new MenuRenderer(BackColor);
 
+            UndoMenu.Enabled = false;
+            RedoMenu.Enabled = false;
+
             Items.AddRange(new ToolStripItem[]
             {
                 VisibleMenu,
@@ -155,8 +158,8 @@ namespace Cube.Note.App.Editor
                 UndoMenu,
                 RedoMenu,
                 CreateSeparator(),
+                SettingsMenu,
                 LogoMenu,
-                SettingsMenu
             });
         }
 
@@ -184,7 +187,7 @@ namespace Cube.Note.App.Editor
             dest.ImageScaling = ToolStripItemImageScaling.None;
             dest.Margin       = new Padding(1);
             dest.Padding      = new Padding(12, 0, 12, 0);
-            dest.Size = new Size(44, 30);
+            dest.Size         = new Size(44, 30);
             dest.Text         = text;
             dest.ToolTipText  = text;
 
@@ -211,7 +214,7 @@ namespace Cube.Note.App.Editor
             dest.Enabled      = false;
             dest.Margin       = new Padding(6, 0, 6, 0);
             dest.Padding      = new Padding(0);
-            dest.Size = new Size(1, 30);
+            dest.Size         = new Size(1, 30);
 
             return dest;
         }

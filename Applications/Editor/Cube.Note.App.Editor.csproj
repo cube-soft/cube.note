@@ -91,6 +91,7 @@
     <Compile Include="PageListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Presenters\MenuPresenter.cs" />
     <Compile Include="Presenters\PageCollectionPresenter.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Presenters\SearchPresenter.cs" />

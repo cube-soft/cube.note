@@ -57,7 +57,6 @@ namespace Cube.Note.App.Editor
 
             Caption = TitleControl;
             TextControl.Status = FooterStatusControl;
-            MenuToolStrip.Renderer = new MenuRenderer(MenuToolStrip.BackColor);
         }
 
         #endregion
@@ -75,31 +74,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            VisibleMenuItem.Click += (s, e) => SwitchMenu();
-            UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
-            RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
-            SearchMenuItem.Click += (s, e) => RaiseSearch();
-            LogoMenuItem.Click += LogoMenuItem_Click;
-            SettingsMenuItem.Click += SettingsMenuItem_Click;
-
+            MenuControl.VisibleMenu.Click += (s, e) => SwitchMenu();
+            MenuControl.SearchMenu.Click += (s, e) => RaiseSearch();
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
-
-            // TODO: Presenter に移譲
-            Aggregator.TagSettings.Handle += SettingsMenuItem_Click;
-            Settings.Current.PropertyChanged += (s, e) =>
-            {
-                switch (e.PropertyName)
-                {
-                    case nameof(Settings.Current.CanUndo):
-                        UndoMenuItem.Enabled = Settings.Current.CanUndo;
-                        break;
-                    case nameof(Settings.Current.CanRedo):
-                        RedoMenuItem.Enabled = Settings.Current.CanRedo;
-                        break;
-                    default:
-                        break;
-                }
-            };
         }
 
         /* ----------------------------------------------------------------- */
@@ -150,6 +127,7 @@ namespace Cube.Note.App.Editor
         {
             PageCollectionControl.Aggregator = Aggregator;
 
+            new MenuPresenter(MenuControl, /* Current, */ Settings, Aggregator);
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
@@ -171,6 +149,22 @@ namespace Cube.Note.App.Editor
         ///
         /* --------------------------------------------------------------------- */
         public ILog Logger { get; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TextControlIsActive
+        ///
+        /// <summary>
+        /// テキスト部分がアクティブかどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool TextControlIsActive()
+            => FindActive(ActiveControl) == TextControl;
 
         #endregion
 
@@ -266,40 +260,6 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// LogoMenuItem_Click
-        ///
-        /// <summary>
-        /// ロゴが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void LogoMenuItem_Click(object sender, EventArgs e)
-        {
-            try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
-            catch (Exception err) { Logger.Error(err); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingsMenuItem_Click
-        ///
-        /// <summary>
-        /// 設定メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SettingsMenuItem_Click(object sender, EventArgs e)
-        {
-            var view = new SettingsForm(Settings.User);
-            using (var presenter = new SettingsPresenter(view, /* User, */ Settings, Aggregator))
-            {
-                view.ShowDialog(this);
-                TextControl.ResetViewWidth(); // refresh
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// ContentsPanel2_ClientSizeChanged
         ///
         /// <summary>
@@ -320,8 +280,8 @@ namespace Cube.Note.App.Editor
                          Properties.Resources.VisibleMenu :
                          Properties.Resources.HideMenu;
 
-            VisibleMenuItem.Text = text;
-            VisibleMenuItem.ToolTipText = text;
+            MenuControl.VisibleMenu.Text = text;
+            MenuControl.VisibleMenu.ToolTipText = text;
         }
 
         #endregion
@@ -337,7 +297,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Control FindActive(Control control)
+        private Control FindActive(Control control)
         {
             var cast = control as IContainerControl;
             return cast != null ? FindActive(cast.ActiveControl) : control;
@@ -377,8 +337,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RaiseSearch()
         {
-            var control = FindActive(ActiveControl);
-            var index = (control == TextControl) ? 0 : 1;
+            var index = TextControlIsActive() ? 0 : 1;
             Aggregator.Search.Raise(new ValueEventArgs<int>(index));
         }
 
