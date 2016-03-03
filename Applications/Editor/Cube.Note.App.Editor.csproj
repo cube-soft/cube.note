@@ -70,6 +70,9 @@
     <Compile Include="FormBase.Designer.cs">
       <DependentUpon>FormBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="MenuControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Models\MenuRenderer.cs" />
     <Compile Include="Models\PageConverter.cs" />
     <Compile Include="Models\PageEx.cs" />

@@ -220,6 +220,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Web ページへ移動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LogoMenu {
+            get {
+                return ResourceManager.GetString("LogoMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Maximize {
@@ -275,6 +284,15 @@ namespace Cube.Note.App.Editor.Properties {
             get {
                 object obj = ResourceManager.GetObject("Redo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   やり直し に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string RedoMenu {
+            get {
+                return ResourceManager.GetString("RedoMenu", resourceCulture);
             }
         }
         
@@ -336,6 +354,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchMenu {
+            get {
+                return ResourceManager.GetString("SearchMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   次を検索 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SearchNext {
@@ -374,6 +401,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SettingsMenu {
+            get {
+                return ResourceManager.GetString("SettingsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   タグを設定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ShowProperty {
@@ -399,6 +435,15 @@ namespace Cube.Note.App.Editor.Properties {
             get {
                 object obj = ResourceManager.GetObject("Undo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   元に戻す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UndoMenu {
+            get {
+                return ResourceManager.GetString("UndoMenu", resourceCulture);
             }
         }
         
