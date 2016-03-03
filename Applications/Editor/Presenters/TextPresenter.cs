@@ -128,6 +128,20 @@ namespace Cube.Note.App.Editor
             Settings.Current.CanRedo = document.CanRedo;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_SelectionChanged
+        ///
+        /// <summary>
+        /// 選択範囲が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Sync(() => View.ScrollToCaret());
+        }
+
         #endregion
 
         #region Settings
@@ -183,12 +197,18 @@ namespace Cube.Note.App.Editor
             var newdoc = newpage?.Document as Document;
             if (newdoc != null)
             {
-                newdoc.ContentChanged -= Model_ContentChanged;
-                newdoc.ContentChanged += Model_ContentChanged;
+                newdoc.ContentChanged   -= Model_ContentChanged;
+                newdoc.SelectionChanged -= Model_SelectionChanged;
+                newdoc.ContentChanged   += Model_ContentChanged;
+                newdoc.SelectionChanged += Model_SelectionChanged;
             }
 
             var olddoc = oldpage?.Document as Document;
-            if (olddoc != null) olddoc.ContentChanged -= Model_ContentChanged;
+            if (olddoc != null)
+            {
+                olddoc.ContentChanged   -= Model_ContentChanged;
+                olddoc.SelectionChanged -= Model_SelectionChanged;
+            }
         }
 
         /* ----------------------------------------------------------------- */
