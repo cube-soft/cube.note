@@ -255,7 +255,11 @@ namespace Cube.Note.App.Editor
             if (page != Settings.Current.Page) Settings.Current.Page = page;
             else Events.Refresh.Raise();
 
-            Sync(() => View.Pages.Select(index));
+            Sync(() =>
+            {
+                View.Pages.Select(index);
+                View.Pages.EnsureVisible(index);
+            });
         }
 
         #endregion
