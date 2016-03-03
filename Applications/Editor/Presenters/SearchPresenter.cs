@@ -51,10 +51,9 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, new SearchReplace(parent), settings, events)
         {
-            Events.Search.Handle += SearchMode_Handle;
+            Events.Search.Handle += Search_Handle;
             Settings.Current.PageChanged += Settings_PageChanged;
 
-            View.Showing += View_Showing;
             View.Hiding += View_Hiding;
             View.Search += View_Search;
             View.SearchNext += (s, e) => Model.Forward();
@@ -74,17 +73,18 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SearchMode_Handle
+        /// Search_Handle
         /// 
         /// <summary>
         /// 検索画面を表示します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SearchMode_Handle(object sender, ValueEventArgs<int> e)
+        private void Search_Handle(object sender, ValueEventArgs<int> e)
         {
             Sync(() =>
             {
+                ResetRange();
                 View.Show();
 
                 var count = View.SearchRange.Items.Count;
@@ -131,30 +131,18 @@ namespace Cube.Note.App.Editor
         {
             var keyword   = View.Keyword;
             var sensitive = View.CaseSensitive;
-            var one       = View.SearchRange.SelectedIndex == 0;
+            var tag       = View.SearchRange.SelectedItem as Tag;
 
             if (string.IsNullOrEmpty(keyword)) return;
 
             await Async(() =>
             {
-                if (one) Model.Search(keyword, sensitive, Settings.Current.Page);
-                else Model.Search(keyword, sensitive, Model.Pages.Everyone);
+                if (tag == null) Model.Search(keyword, sensitive, Settings.Current.Page);
+                else Model.Search(keyword, sensitive, tag);
             });
 
-            View.ShowPages = !one && Model.Results.Count > 0;
+            View.ShowPages = tag != null && Model.Results.Count > 0;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Showing
-        /// 
-        /// <summary>
-        /// 表示時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Showing(object sender, CancelEventArgs e)
-           => SyncWait(() => ResetSearchRange());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -207,14 +195,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
-            {
-                case nameof(Model.Current):
-                    SetPage(Model.Current);
-                    break;
-                default:
-                    break;
-            }
+            if (e.PropertyName != nameof(Model.Current)) return;
+            SetPage(Model.Current);
         }
 
         #endregion
@@ -225,21 +207,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ResetSearchRange
+        /// ResetRange
         /// 
         /// <summary>
         /// 検索範囲用の項目を設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResetSearchRange()
+        private void ResetRange()
         {
             View.SearchRange.BeginUpdate();
             View.SearchRange.Items.Clear();
             View.SearchRange.Items.Add(Properties.Resources.CurrentNote);
             View.SearchRange.Items.Add(Model.Pages.Everyone);
             View.SearchRange.Items.AddRange(Model.Pages.Tags.ToArray());
-            View.SearchRange.BeginUpdate();
+            View.SearchRange.EndUpdate();
         }
 
         /* ----------------------------------------------------------------- */
