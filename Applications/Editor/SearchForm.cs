@@ -55,9 +55,17 @@ namespace Cube.Note.App.Editor
             OptionalButton1.Click += OptionalButton1_Click;
             OptionalButton2.Click += OptionalButton2_Click;
 
+            // for optional buttons
+            Pages.Added += (s, e) => EnableOptionalButtons();
+            Pages.Removed += (s, e) => EnableOptionalButtons();
+            Pages.Cleared += (s, e) => EnableOptionalButtons();
+            SearchTextBox.TextChanged += (s, e) => EnableOptionalButtons(false);
+            CaseSensitiveCheckBox.CheckedChanged += (s, e) => EnableOptionalButtons(false);
+
             Caption = TitleControl;
-            ReplaceLabel.Visible = false;
-            ReplaceTextBox.Visible = false;
+
+            EnableReplaceControls(false);
+            EnableOptionalButtons(false);
         }
 
         #endregion
@@ -374,18 +382,16 @@ namespace Cube.Note.App.Editor
             {
                 case nameof(SearchTabPage):
                     ReplaceTabPage.Controls.Remove(SearchPanel);
-                    ReplaceLabel.Visible   = false;
-                    ReplaceTextBox.Visible = false;
-                    OptionalButton1.Text   = Properties.Resources.SearchPrev;
-                    OptionalButton2.Text   = Properties.Resources.SearchNext;
+                    EnableReplaceControls(false);
+                    OptionalButton1.Text = Properties.Resources.SearchPrev;
+                    OptionalButton2.Text = Properties.Resources.SearchNext;
                     SearchTabPage.Controls.Add(SearchPanel);
                     break;
                 case nameof(ReplaceTabPage):
                     SearchTabPage.Controls.Remove(SearchPanel);
-                    ReplaceLabel.Visible   = true;
-                    ReplaceTextBox.Visible = true;
-                    OptionalButton1.Text   = Properties.Resources.ReplaceNext;
-                    OptionalButton2.Text   = Properties.Resources.ReplaceAll;
+                    EnableReplaceControls(true);
+                    OptionalButton1.Text = Properties.Resources.ReplaceNext;
+                    OptionalButton2.Text = Properties.Resources.ReplaceAll;
                     ReplaceTabPage.Controls.Add(SearchPanel);
                     break;
                 default:
@@ -467,6 +473,48 @@ namespace Cube.Note.App.Editor
             var padding = control.Padding.Left + control.Padding.Right;
 
             control.Width = width - x - margin - padding;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnableOptionalButtons
+        ///
+        /// <summary>
+        /// オプション的なボタンの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void EnableOptionalButtons()
+            => EnableOptionalButtons(Pages.Items.Count > 0);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnableOptionalButtons
+        ///
+        /// <summary>
+        /// オプション的なボタンの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void EnableOptionalButtons(bool enabled)
+        {
+            OptionalShadow1.Enabled = enabled;
+            OptionalShadow2.Enabled = enabled;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnableReplaceControls
+        ///
+        /// <summary>
+        /// 置換用コントロールの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void EnableReplaceControls(bool enabled)
+        {
+            ReplaceLabel.Visible   = enabled;
+            ReplaceTextBox.Visible = enabled;
         }
 
         #endregion
