@@ -183,7 +183,6 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
             InitializeLayout();
-            Saver = new AutoSaver(Pages, Settings);
         }
 
         /* ----------------------------------------------------------------- */
@@ -199,6 +198,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
+            Saver = new AutoSaver(Pages, Settings);
         }
 
         /* ----------------------------------------------------------------- */
