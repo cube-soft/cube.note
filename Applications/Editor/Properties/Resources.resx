@@ -136,6 +136,9 @@
   <data name="DownMenu" xml:space="preserve">
     <value>下へ</value>
   </data>
+  <data name="DuplicateMenu" xml:space="preserve">
+    <value>コピーを作成</value>
+  </data>
   <data name="EditTag" xml:space="preserve">
     <value>タグを編集...</value>
   </data>
@@ -149,13 +152,16 @@
     <value>テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="ExportMenu" xml:space="preserve">
-    <value>ファイルに保存</value>
+    <value>ファイルに保存 (E)</value>
   </data>
   <data name="Font" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Font.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HideMenu" xml:space="preserve">
-    <value>ノート一覧を非表示</value>
+    <value>ノート一覧を非表示 (H)</value>
+  </data>
+  <data name="ImportMenu" xml:space="preserve">
+    <value>ファイルの内容を取り込む (I)</value>
   </data>
   <data name="LastUpdateFormat" xml:space="preserve">
     <value>yyyy/MM/dd HH:mm 更新</value>
@@ -178,6 +184,9 @@
   <data name="Minimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Minimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="NewPageMenu" xml:space="preserve">
+    <value>新しいノートを作成 (N)</value>
+  </data>
   <data name="Normalize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Normalize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -187,17 +196,20 @@
   <data name="Property" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PropertyMenu" xml:space="preserve">
+    <value>タグを設定 (R)</value>
+  </data>
   <data name="Redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RedoMenu" xml:space="preserve">
-    <value>やり直し</value>
+    <value>やり直し (Y)</value>
   </data>
   <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RemoveMenu" xml:space="preserve">
-    <value>削除</value>
+    <value>削除 (D)</value>
   </data>
   <data name="ReplaceAll" xml:space="preserve">
     <value>すべてを置換</value>
@@ -215,7 +227,7 @@
     <value>..\Resources\SearchEnd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SearchMenu" xml:space="preserve">
-    <value>検索</value>
+    <value>検索 (F)</value>
   </data>
   <data name="SearchNext" xml:space="preserve">
     <value>次を検索</value>
@@ -239,7 +251,7 @@
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SettingsMenu" xml:space="preserve">
-    <value>設定</value>
+    <value>設定 (T)</value>
   </data>
   <data name="ShowProperty" xml:space="preserve">
     <value>タグを設定</value>
@@ -251,13 +263,13 @@
     <value>..\Resources\Undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UndoMenu" xml:space="preserve">
-    <value>元に戻す</value>
+    <value>元に戻す (Z)</value>
   </data>
   <data name="UpMenu" xml:space="preserve">
     <value>上へ</value>
   </data>
   <data name="VisibleMenu" xml:space="preserve">
-    <value>ノート一覧を表示</value>
+    <value>ノート一覧を表示 (H)</value>
   </data>
   <data name="WarnRemove" xml:space="preserve">
     <value>このノートを削除しますか？</value>

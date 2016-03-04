@@ -117,6 +117,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   コピーを作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DuplicateMenu {
+            get {
+                return ResourceManager.GetString("DuplicateMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   タグを編集... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string EditTag {
@@ -153,7 +162,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルに保存 に類似しているローカライズされた文字列を検索します。
+        ///   ファイルに保存 (E) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ExportMenu {
             get {
@@ -172,11 +181,20 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ノート一覧を非表示 に類似しているローカライズされた文字列を検索します。
+        ///   ノート一覧を非表示 (H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HideMenu {
             get {
                 return ResourceManager.GetString("HideMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルの内容を取り込む (I) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ImportMenu {
+            get {
+                return ResourceManager.GetString("ImportMenu", resourceCulture);
             }
         }
         
@@ -249,6 +267,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   新しいノートを作成 (N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NewPageMenu {
+            get {
+                return ResourceManager.GetString("NewPageMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Normalize {
@@ -278,6 +305,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   タグを設定 (R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PropertyMenu {
+            get {
+                return ResourceManager.GetString("PropertyMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Redo {
@@ -288,7 +324,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   やり直し に類似しているローカライズされた文字列を検索します。
+        ///   やり直し (Y) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RedoMenu {
             get {
@@ -307,7 +343,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   削除 に類似しているローカライズされた文字列を検索します。
+        ///   削除 (D) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RemoveMenu {
             get {
@@ -363,7 +399,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   検索 に類似しているローカライズされた文字列を検索します。
+        ///   検索 (F) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SearchMenu {
             get {
@@ -437,7 +473,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   設定 に類似しているローカライズされた文字列を検索します。
+        ///   設定 (T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SettingsMenu {
             get {
@@ -475,7 +511,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   元に戻す に類似しているローカライズされた文字列を検索します。
+        ///   元に戻す (Z) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string UndoMenu {
             get {
@@ -493,7 +529,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ノート一覧を表示 に類似しているローカライズされた文字列を検索します。
+        ///   ノート一覧を表示 (H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string VisibleMenu {
             get {

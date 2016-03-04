@@ -95,7 +95,6 @@
             this.PageCollectionControl.Aggregator = null;
             this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
             this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageCollectionControl.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";

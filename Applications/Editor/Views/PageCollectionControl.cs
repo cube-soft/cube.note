@@ -110,17 +110,21 @@ namespace Cube.Note.App.Editor
         {
             var dest = new ContextMenuStrip();
 
-            dest.Items.Add(Properties.Resources.ExportMenu, null,
-                (s, e) => Aggregator?.Export.Raise());
+            dest.Items.Add(Properties.Resources.NewPageMenu);
+            dest.Items.Add(Properties.Resources.DuplicateMenu);
+            dest.Items.Add(Properties.Resources.ImportMenu);
             dest.Items.Add("-");
             dest.Items.Add(Properties.Resources.UpMenu, null,
                 (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(-1)));
             dest.Items.Add(Properties.Resources.DownMenu, null,
                 (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(1)));
+            dest.Items.Add("-");
+            dest.Items.Add(Properties.Resources.ExportMenu, null,
+                (s, e) => Aggregator?.Export.Raise());
             dest.Items.Add(Properties.Resources.RemoveMenu, null,
                 (s, e) => Aggregator?.Remove.Raise());
             dest.Items.Add("-");
-            dest.Items.Add(Properties.Resources.ShowProperty, null,
+            dest.Items.Add(Properties.Resources.PropertyMenu, null,
                 (s, e) => Aggregator?.Property.Raise());
 
             return dest;

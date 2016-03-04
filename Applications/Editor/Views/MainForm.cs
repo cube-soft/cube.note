@@ -214,7 +214,7 @@ namespace Cube.Note.App.Editor
         {
             try
             {
-                if (!e.Control) return;
+                if (!e.Control && !e.Alt) return;
 
                 var result = true;
                 switch (e.KeyCode)
@@ -242,8 +242,11 @@ namespace Cube.Note.App.Editor
                     case Keys.N:
                         Aggregator.NewPage.Raise();
                         break;
-                    case Keys.T:
+                    case Keys.R:
                         RaiseProperty();
+                        break;
+                    case Keys.T:
+                        Aggregator.Settings.Raise();
                         break;
                     default:
                         result = false;

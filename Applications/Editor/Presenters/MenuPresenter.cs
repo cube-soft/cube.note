@@ -48,12 +48,13 @@ namespace Cube.Note.App.Editor
         public MenuPresenter(MenuControl view, SettingsFolder settings, EventAggregator events)
             : base(view, settings.Current, settings, events)
         {
-            Events.TagSettings.Handle += View_SettingsMenu;
+            Events.TagSettings.Handle += Settings_Handle;
+            Events.Settings.Handle += Settings_Handle;
 
             View.UndoMenu.Click += (s, e) => Events.Undo.Raise();
             View.RedoMenu.Click += (s, e) => Events.Redo.Raise();
             View.LogoMenu.Click += View_LogoMenu;
-            View.SettingsMenu.Click += View_SettingsMenu;
+            View.SettingsMenu.Click += Settings_Handle;
 
             Model.PropertyChanged += Model_PropertyChanged;
         }
@@ -61,6 +62,30 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Event handlers
+
+        #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_Handle
+        /// 
+        /// <summary>
+        /// 設定メニューがクリックされた時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_Handle(object sender, EventArgs e)
+            => Sync(() =>
+        {
+            var dialog = new SettingsForm(Settings.User);
+            using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
+            {
+                dialog.ShowDialog();
+                Events.Refresh.Raise();
+            }
+        });
+
+        #endregion
 
         #region View
 
@@ -77,25 +102,6 @@ namespace Cube.Note.App.Editor
         {
             try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
             catch (Exception err) { Logger.Error(err); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_SettingsMenu
-        /// 
-        /// <summary>
-        /// 設定メニューがクリックされた時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_SettingsMenu(object sender, EventArgs e)
-        {
-            var dialog = new SettingsForm(Settings.User);
-            using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
-            {
-                dialog.ShowDialog();
-                Events.Refresh.Raise();
-            }
         }
 
         #endregion
