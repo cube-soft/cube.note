@@ -18,7 +18,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
+using Cube.Forms;
 
 namespace Cube.Note.App.Editor
 {
@@ -47,39 +50,32 @@ namespace Cube.Note.App.Editor
         public StatusControl() : base()
         {
             GripMargin = new Padding(0);
-            Items.AddRange(new ToolStripItem[] {
-                _messageLabel,
-                _positionLabel,
-                _countLabel
-            });
-
-            _messageLabel.Spring = true;
 
             _positionLabel.BorderSides = ToolStripStatusLabelBorderSides.Left;
             _positionLabel.Padding = new Padding(20, 0, 20, 0);
 
             _countLabel.BorderSides = ToolStripStatusLabelBorderSides.Left;
             _countLabel.Padding = new Padding(20, 0, 20, 0);
+
+            _messageLabel.Spring = true;
+            _messageLabel.IsLink = true;
+            _messageLabel.Enabled = true;
+            _messageLabel.LinkBehavior = LinkBehavior.HoverUnderline;
+            _messageLabel.LinkColor = Color.FromArgb(80, 80, 80);
+            _messageLabel.TextAlign = ContentAlignment.MiddleLeft;
+            _messageLabel.Click += MessageLabel_Click;
+
+            Items.AddRange(new ToolStripItem[]
+            {
+                _messageLabel,
+                _positionLabel,
+                _countLabel
+            });
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Message
-        ///
-        /// <summary>
-        /// メッセージを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Message
-        {
-            get { return _messageLabel.Text; }
-            set { _messageLabel.Text = value; }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,6 +86,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public int Count
         {
             get { return _count; }
@@ -110,6 +107,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public int LineCount
         {
             get { return _lineCount; }
@@ -130,6 +128,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public int LineNumber
         {
             get { return _lineNumber; }
@@ -150,6 +149,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public int ColumnNumber
         {
             get { return _columnNumber; }
@@ -160,6 +160,34 @@ namespace Cube.Note.App.Editor
                 UpdatePositionLabel();
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Message
+        ///
+        /// <summary>
+        /// メッセージを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        public string Message
+        {
+            get { return _messageLabel.Text; }
+            set { _messageLabel.Text = value; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uri
+        ///
+        /// <summary>
+        /// メッセージのクリック時に移動する URL を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        public Uri Uri { get; set; }
 
         #endregion
 
@@ -182,6 +210,56 @@ namespace Cube.Note.App.Editor
             if (form == null) return;
 
             Font = form.Font;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnNcHitTest
+        ///
+        /// <summary>
+        /// ヒットテストの発生時に実行されます。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: ライブラリ側の不都合を回避するための処理。ライブラリ側を要修正。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnNcHitTest(QueryEventArgs<Point, Position> e)
+        {
+            var text   = _messageLabel.Text;
+            var font   = _messageLabel.Font;
+            var gs     = CreateGraphics();
+            var width  = gs?.MeasureString(text, font).Width ?? _messageLabel.Width;
+            var height = _messageLabel.Height;
+            var point  = PointToClient(e.Query);
+
+            if (point.X >= 0 && point.X <= width && point.Y >= 0 && point.Y <= height)
+            {
+                e.Cancel = false;
+                e.Result = Position.Client;
+            }
+            else base.OnNcHitTest(e);
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MessageLabel_Click
+        ///
+        /// <summary>
+        /// メッセージをクリックした時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void MessageLabel_Click(object sender, EventArgs e)
+        {
+            if (Uri == null) return;
+            try { System.Diagnostics.Process.Start(Uri.ToString()); }
+            catch (Exception err) { System.Diagnostics.Trace.WriteLine(err.ToString()); }
         }
 
         #endregion
