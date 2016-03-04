@@ -194,7 +194,6 @@
             this.FooterStatusControl.LineCount = 0;
             this.FooterStatusControl.LineNumber = 0;
             this.FooterStatusControl.Location = new System.Drawing.Point(0, 437);
-            this.FooterStatusControl.Message = "";
             this.FooterStatusControl.Name = "FooterStatusControl";
             this.FooterStatusControl.Size = new System.Drawing.Size(782, 22);
             this.FooterStatusControl.TabIndex = 5;

@@ -414,7 +414,7 @@
             // 
             this.MessageLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(433, 17);
+            this.MessageLabel.Size = new System.Drawing.Size(402, 17);
             this.MessageLabel.Spring = true;
             this.MessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
