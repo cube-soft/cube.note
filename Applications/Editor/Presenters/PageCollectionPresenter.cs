@@ -150,17 +150,15 @@ namespace Cube.Note.App.Editor
             // View
             var count = View.DataSource.Count;
             var vold  = View.SelectedIndices[0];
-            var vnew  = Math.Min(Math.Max(vold + e.Value, 0), count);
-            if (vold < 0 || vold >= count) return;
+            var vnew  = Math.Min(Math.Max(vold + e.Value, 0), count - 1);
+            if (vold < 0 || vold >= count || vold == vnew) return;
 
             // Model
             var mold = Model.IndexOf(View.DataSource[vold]);
-            var mnew = vnew == View.DataSource.Count ?
-                        Model.Count :
-                        Model.IndexOf(View.DataSource[vnew]);
-            if (mold  < 0 || mold  >= Model.Count || mnew == -1) return;
+            var mnew = Model.IndexOf(View.DataSource[vnew]);
+            if (mold  < 0 || mnew < 0) return;
             Async(() => Model.Move(mold, mnew));
-
+            
             View.DataSource.Move(vold, vnew);
         });
 
