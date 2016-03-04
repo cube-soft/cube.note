@@ -142,29 +142,27 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Move_Handle(object sender, ValueEventArgs<int> e)
+            => Sync(() =>
         {
-            Sync(() =>
-            {
-                if (View.DataSource == null ||
-                    View.SelectedIndices.Count <= 0) return;
+            if (View.DataSource == null ||
+                View.SelectedIndices.Count <= 0) return;
 
-                // View
-                var count = View.DataSource.Count;
-                var vold  = View.SelectedIndices[0];
-                var vnew  = Math.Min(Math.Max(vold + e.Value, 0), count);
-                if (vold < 0 || vold >= count) return;
+            // View
+            var count = View.DataSource.Count;
+            var vold  = View.SelectedIndices[0];
+            var vnew  = Math.Min(Math.Max(vold + e.Value, 0), count);
+            if (vold < 0 || vold >= count) return;
 
-                // Model
-                var mold = Model.IndexOf(View.DataSource[vold]);
-                var mnew = vnew == View.DataSource.Count ?
-                           Model.Count :
-                           Model.IndexOf(View.DataSource[vnew]);
-                if (mold  < 0 || mold  >= Model.Count || mnew == -1) return;
-                Async(() => Model.Move(mold, mnew));
+            // Model
+            var mold = Model.IndexOf(View.DataSource[vold]);
+            var mnew = vnew == View.DataSource.Count ?
+                        Model.Count :
+                        Model.IndexOf(View.DataSource[vnew]);
+            if (mold  < 0 || mold  >= Model.Count || mnew == -1) return;
+            Async(() => Model.Move(mold, mnew));
 
-                View.DataSource.Move(vold, vnew);
-            });
-        }
+            View.DataSource.Move(vold, vnew);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -176,23 +174,21 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Remove_Handled(object sender, EventArgs e)
+            => Sync(() =>
         {
-            Sync(() =>
-            {
-                var pages = View.DataSource;
-                if (pages == null || !View.AnyItemsSelected) return;
+            var pages = View.DataSource;
+            if (pages == null || !View.AnyItemsSelected) return;
 
-                var index = View.SelectedIndices[0];
-                var page  = pages[index];
-                if (IsRemoveCanceled(page)) return;
+            var index = View.SelectedIndices[0];
+            var page  = pages[index];
+            if (IsRemoveCanceled(page)) return;
 
-                pages.RemoveAt(index);
-                var newindex = Math.Min(index, pages.Count - 1);
-                Settings.Current.Page = (newindex >= 0) ? pages[newindex] : null;
+            pages.RemoveAt(index);
+            var newindex = Math.Min(index, pages.Count - 1);
+            Settings.Current.Page = (newindex >= 0) ? pages[newindex] : null;
 
-                Model.Remove(page);
-            });
-        }
+            Model.Remove(page);
+        });
 
 
         #endregion
