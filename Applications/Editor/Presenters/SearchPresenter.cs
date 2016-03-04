@@ -146,9 +146,8 @@ namespace Cube.Note.App.Editor
                 else Model.Search(keyword, sensitive, tag);
             });
 
-            View.ShowPages = tag != null && Model.Results.Count > 0;
-            View.Message = Model.Results.Count > 0 ? string.Empty :
-                string.Format(Properties.Resources.SearchNotFound, View.Keyword);
+            View.ShowPages = Model.Results.Count > 0 && tag != null;
+            View.Message   = GetMessage(Model.Results.Count, tag);
         }
 
         /* ----------------------------------------------------------------- */
@@ -165,7 +164,7 @@ namespace Cube.Note.App.Editor
             var replaced = View.Replace;
             var count = 0;
             await Async(() => count = Model.ReplaceAll(replaced));
-            View.Message = string.Format(Properties.Resources.ReplaceAllSuccess, count);
+            if (count > 0) View.Message = string.Format(Properties.Resources.ReplaceAllSuccess, count);
         }
 
         /* ----------------------------------------------------------------- */
@@ -279,6 +278,20 @@ namespace Cube.Note.App.Editor
                 View.Pages.EnsureVisible(index);
             });
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetMessage
+        /// 
+        /// <summary>
+        /// メッセージを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetMessage(int count, Tag tag) =>
+            count <= 0  ? string.Format(Properties.Resources.SearchNotFound, View.Keyword) :
+            tag == null ? string.Empty :
+                          string.Format(Properties.Resources.SearchSuccess, count);
 
         #endregion
     }
