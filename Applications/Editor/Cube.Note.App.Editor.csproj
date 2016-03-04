@@ -64,31 +64,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormBase.cs">
+    <Compile Include="Views\FormBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase.Designer.cs">
+    <Compile Include="Views\FormBase.Designer.cs">
       <DependentUpon>FormBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuControl.cs">
+    <Compile Include="Views\MenuControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Models\MenuRenderer.cs" />
     <Compile Include="Models\PageConverter.cs" />
     <Compile Include="Models\PageEx.cs" />
-    <Compile Include="PageCollectionControl.cs">
+    <Compile Include="Views\PageCollectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageCollectionControl.Designer.cs">
+    <Compile Include="Views\PageCollectionControl.Designer.cs">
       <DependentUpon>PageCollectionControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageListView.cs">
+    <Compile Include="Views\PageListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Presenters\MenuPresenter.cs" />
@@ -101,49 +101,49 @@
     <Compile Include="Presenters\TextVisualPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyForm.cs">
+    <Compile Include="Views\PropertyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PropertyForm.Designer.cs">
+    <Compile Include="Views\PropertyForm.Designer.cs">
       <DependentUpon>PropertyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SearchForm.cs">
+    <Compile Include="Views\SearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SearchForm.Designer.cs">
+    <Compile Include="Views\SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsControl.cs">
+    <Compile Include="Views\SettingsControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Views\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Views\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TagButton.cs">
+    <Compile Include="Views\TagButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TextControl.cs">
+    <Compile Include="Views\TextControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="StatusControl.cs">
+    <Compile Include="Views\StatusControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TitleControl.cs">
+    <Compile Include="Views\TitleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TitleControl.Designer.cs">
+    <Compile Include="Views\TitleControl.Designer.cs">
       <DependentUpon>TitleControl.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FormBase.resx">
+    <EmbeddedResource Include="Views\FormBase.resx">
       <DependentUpon>FormBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageCollectionControl.resx">
+    <EmbeddedResource Include="Views\PageCollectionControl.resx">
       <DependentUpon>PageCollectionControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -156,16 +156,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="PropertyForm.resx">
+    <EmbeddedResource Include="Views\PropertyForm.resx">
       <DependentUpon>PropertyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SearchForm.resx">
+    <EmbeddedResource Include="Views\SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Views\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TitleControl.resx">
+    <EmbeddedResource Include="Views\TitleControl.resx">
       <DependentUpon>TitleControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.manifest" />
