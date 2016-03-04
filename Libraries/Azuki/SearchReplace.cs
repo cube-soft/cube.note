@@ -59,6 +59,21 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
+        /// MaxAbstractLength
+        /// 
+        /// <summary>
+        /// Abstract の最大長を取得または設定します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 置換後 Page オブジェクトを編集する際に使用します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int MaxAbstractLength { get; set; } = 100;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Keyword
         /// 
         /// <summary>
@@ -172,7 +187,7 @@ namespace Cube.Note.Azuki
             Keyword = keyword;
             CaseSensitive = sensitive;
 
-            var result = GetResult(page, keyword, sensitive);
+            var result = FindFirst(page, keyword, sensitive);
             if (result == null) return;
 
             Results.Add(Highlight(page, keyword, sensitive));
@@ -196,7 +211,7 @@ namespace Cube.Note.Azuki
 
             foreach(var page in Pages.Search(range))
             {
-                var result = GetResult(page, keyword, sensitive);
+                var result = FindFirst(page, keyword, sensitive);
                 if (result == null) continue;
 
                 Results.Add(Highlight(page, keyword, sensitive));
@@ -249,14 +264,14 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReplaceNext
+        /// Replace
         /// 
         /// <summary>
-        /// 
+        /// 次の検索結果を置換します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void ReplaceNext(string oldValue, string newValue)
+        public void Replace(string replaced)
         {
             if (Results.Count <= 0) return;
 
@@ -265,7 +280,7 @@ namespace Cube.Note.Azuki
                         0;
             var start = Current != -1 ? default(int?) : 0;
 
-            ReplaceNext(index, start, oldValue, newValue);
+            ReplaceNext(index, start, replaced);
         }
 
         /* ----------------------------------------------------------------- */
@@ -273,13 +288,35 @@ namespace Cube.Note.Azuki
         /// ReplaceAll
         /// 
         /// <summary>
-        /// 
+        /// 全ての検索結果を置換します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void ReplaceAll()
+        public int ReplaceAll(string replaced)
         {
-            ReplaceAll("old", "new");
+            var dest   = 0;
+            var index  = 0;
+            var offset = 0;
+
+            while (index < Results.Count)
+            {
+                var document = Results[index].Document as Document;
+                if (document == null) continue;
+
+                var result = document.FindNext(Keyword, offset, CaseSensitive);
+                if (result != null)
+                {
+                    Replace(index, replaced, result.Begin, result.End);
+                    ++dest;
+                }
+                else
+                {
+                    ++index;
+                    offset = 0;
+                }
+            }
+
+            return dest;
         }
 
         #endregion
@@ -320,16 +357,38 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetResult
+        /// FindFirst
         /// 
         /// <summary>
-        /// 次の検索結果を取得します。
+        /// 最初の検索結果を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private SearchResult GetResult(Page page, string keyword, bool sensitive)
+        private SearchResult FindFirst(Page page, string keyword, bool sensitive)
             => page?.CreateDocument(Pages.Directory)
                    ?.FindNext(keyword, 0, sensitive);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetOffset
+        /// 
+        /// <summary>
+        /// Document オブジェクト内の位置を取得します。
+        /// </summary>
+        /// 
+        /// <returns>
+        /// offset が 0 以上の場合はそのままの値、負の値の場合は末尾から
+        /// offset + 1 の値を減じた値が返ります（-1 が末尾を表す）。
+        /// offset が null の場合はキャレット位置が返ります。
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int GetOffset(Document document, int? offset)
+        {
+            return !offset.HasValue ? document.CaretIndex :
+                    offset.Value >= 0 ? offset.Value :
+                    document.Length + (offset.Value + 1);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -345,7 +404,7 @@ namespace Cube.Note.Azuki
             var document = Results[index].Document as Document;
             if (document == null) return;
 
-            var start  = offset.HasValue ? offset.Value : document.CaretIndex;
+            var start  = GetOffset(document, offset);
             var result = document.FindNext(Keyword, start, CaseSensitive);
 
             if (result != null)
@@ -375,9 +434,7 @@ namespace Cube.Note.Azuki
             var document = Results[index].Document as Document;
             if (document == null) return;
 
-            var start  = !offset.HasValue    ? document.CaretIndex :
-                          offset.Value == -1 ? document.Length :
-                                               offset.Value;
+            var start  = GetOffset(document, offset);
             var result = document.FindPrev(Keyword, start, CaseSensitive);
 
             if (result != null)
@@ -398,40 +455,54 @@ namespace Cube.Note.Azuki
         /// ReplaceNext
         /// 
         /// <summary>
-        /// 
+        /// 次の検索結果を置換します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ReplaceNext(int index, int? offset, string oldValue, string newValue)
+        private void ReplaceNext(int index, int? offset, string replaced)
         {
             var document = Results[index].Document as Document;
             if (document == null) return;
 
-            var start = offset.HasValue ? offset.Value : document.CaretIndex;
+            var start  = GetOffset(document, offset);
             var result = document.FindNext(Keyword, start, CaseSensitive);
 
             if (result != null)
             {
-                document.Replace(newValue, result.Begin, result.Begin+oldValue.Length);
+                Current = index;
+                Replace(index, replaced, result.Begin, result.End);
+                document.SetSelection(result.Begin, result.Begin + replaced.Length);
             }
             else
             {
+                document.SetSelection(start, start);
+                if (index < Results.Count - 1) ReplaceNext(++index, 0, replaced);
+                else Current = -1;
             }
-
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReplaceAll
+        /// Replace
         /// 
         /// <summary>
-        /// 
+        /// 置換を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ReplaceAll(string oldValue, string newValue)
+        private void Replace(int index, string replaced, int begin, int end)
         {
+            var document = Results[index].Document as Document;
+            if (document == null) return;
 
+            document.Replace(replaced, begin, end);
+
+            var line   = 0;
+            var column = 0;
+            document.GetLineColumnIndexFromCharIndex(begin, out line, out column);
+            if (line != 0) return;
+
+            Results[index].UpdateAbstract(MaxAbstractLength);
         }
 
         /* ----------------------------------------------------------------- */
