@@ -250,32 +250,29 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ViewReset()
+        private void ViewReset() => SyncWait(() =>
         {
-            SyncWait(() =>
+            View.BeginUpdate();
+            View.SelectedIndexChanged -= View_SelectedIndexChanged;
+
+            if (View.Items.Count > 0) View.Items.Clear();
+
+            Everyone.PropertyChanged -= Model_PropertyChanged;
+            Everyone.PropertyChanged += Model_PropertyChanged;
+            View.Items.Add(Everyone);
+
+            foreach (var tag in Model)
             {
-                View.BeginUpdate();
-                View.SelectedIndexChanged -= View_SelectedIndexChanged;
+                tag.PropertyChanged -= Model_PropertyChanged;
+                tag.PropertyChanged += Model_PropertyChanged;
+                View.Items.Add(tag);
+            }
 
-                if (View.Items.Count > 0) View.Items.Clear();
-
-                Everyone.PropertyChanged -= Model_PropertyChanged;
-                Everyone.PropertyChanged += Model_PropertyChanged;
-                View.Items.Add(Everyone);
-
-                foreach (var tag in Model)
-                {
-                    tag.PropertyChanged -= Model_PropertyChanged;
-                    tag.PropertyChanged += Model_PropertyChanged;
-                    View.Items.Add(tag);
-                }
-
-                View.Items.Add(Properties.Resources.EditTag);
-                View.SelectedIndexChanged += View_SelectedIndexChanged;
-                View.SelectedIndex = 0;
-                View.EndUpdate();
-            });
-        }
+            View.Items.Add(Properties.Resources.EditTag);
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.SelectedIndex = 0;
+            View.EndUpdate();
+        });
 
         #endregion
     }

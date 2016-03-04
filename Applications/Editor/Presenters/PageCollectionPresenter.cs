@@ -230,24 +230,21 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_Loaded(object sender, EventArgs e)
+        private async void Model_Loaded(object sender, EventArgs e)
         {
-            Sync(() =>
-            {
-                Events.NewPage.Handle += NewPage_Handled;
-                Events.Export.Handle += Export_Handle;
-                Events.Edit.Handle += Edit_Handled;
-                Events.Move.Handle += Move_Handle;
-                Events.Remove.Handle += Remove_Handled;
+            Events.NewPage.Handle += NewPage_Handled;
+            Events.Export.Handle += Export_Handle;
+            Events.Edit.Handle += Edit_Handled;
+            Events.Move.Handle += Move_Handle;
+            Events.Remove.Handle += Remove_Handled;
 
-                View.SelectedIndexChanged += View_SelectedIndexChanged;
-                ViewReset(Settings.Current.Tag ?? Model.Everyone);
+            SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
+            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Everyone));
 
-                Model.CollectionChanged += Model_CollectionChanged;
+            Model.CollectionChanged += Model_CollectionChanged;
 
-                Settings.Current.PageChanged += Settings_PageChanged;
-                Settings.Current.TagChanged += Settings_TagChanged;
-            });
+            Settings.Current.PageChanged += Settings_PageChanged;
+            Settings.Current.TagChanged += Settings_TagChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -404,10 +401,13 @@ namespace Cube.Note.App.Editor
         private void ViewReset(Tag tag)
         {
             if (tag == null) return;
+
+            var result = Model.Search(tag)?.ToObservable();
+
             Sync(() =>
             {
-                View.DataSource = Model.Search(tag).ToObservable();
-                if (View.DataSource.Count > 0) View.Select(0);
+                View.DataSource = result;
+                if (View.DataSource?.Count > 0) View.Select(0);
                 else Settings.Current.Page = null;
             });
         }
