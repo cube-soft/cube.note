@@ -325,6 +325,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   {0} 件を置換しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ReplaceAllSuccess {
+            get {
+                return ResourceManager.GetString("ReplaceAllSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   次を置換 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ReplaceNext {
@@ -368,6 +377,24 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string SearchNext {
             get {
                 return ResourceManager.GetString("SearchNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   「{0}」 は見つかりませんでした。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchNotFound {
+            get {
+                return ResourceManager.GetString("SearchNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最後の検索結果まで到達しました。。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchOver {
+            get {
+                return ResourceManager.GetString("SearchOver", resourceCulture);
             }
         }
         

@@ -122,15 +122,19 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Found
+        /// Message
         ///
         /// <summary>
-        /// 検索に一致した件数を取得または設定します。
+        /// メッセージを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public int Found { get; set; } = 0;
+        public string Message
+        {
+            get { return MessageLabel.Text; }
+            set { MessageLabel.Text = value; }
+        }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -65,6 +65,29 @@ namespace Cube.Note.Azuki
             src.IsDirty = false;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetAbstract
+        /// 
+        /// <summary>
+        /// 概要を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetAbstract(this Document document, int maxLength)
+        {
+            for (var i = 0; i < document.LineCount; ++i)
+            {
+                var content = document.GetLineContent(i).Trim();
+                if (content.Length <= 0) continue;
+
+                return content.Length > maxLength ?
+                       content.Substring(0, maxLength) :
+                       content;
+            }
+            return string.Empty;
+        }
+
         #endregion
 
         #region Page extension methods
@@ -106,6 +129,22 @@ namespace Cube.Note.Azuki
             var path = IoEx.Path.Combine(directory, page.FileName);
             doc.Save(path);
             page.LastUpdate = DateTime.Now;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateAbstract
+        /// 
+        /// <summary>
+        /// Abstract プロパティの内容を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void UpdateAbstract(this Page page, int maxLength)
+        {
+            var document = page.Document as Document;
+            if (document == null) return;
+            page.Abstract = document.GetAbstract(maxLength);
         }
 
         #endregion

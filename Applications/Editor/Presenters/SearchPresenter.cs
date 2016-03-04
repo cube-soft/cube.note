@@ -58,11 +58,14 @@ namespace Cube.Note.App.Editor
             View.Search += View_Search;
             View.SearchNext += (s, e) => Model.Forward();
             View.SearchPrev += (s, e) => Model.Back();
+            View.ReplaceNext += (s, e) => Model.Replace(View.Replace);
+            View.ReplaceAll += View_ReplaceAll;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
 
             Model.PropertyChanged += Model_PropertyChanged;
+            Model.MaxAbstractLength = Settings.MaxAbstractLength;
         }
 
         #endregion
@@ -129,6 +132,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void View_Search(object sender, EventArgs e)
         {
+            View.Message = string.Empty;
+
             var keyword   = View.Keyword;
             var sensitive = View.CaseSensitive;
             var tag       = View.SearchRange.SelectedItem as Tag;
@@ -142,6 +147,25 @@ namespace Cube.Note.App.Editor
             });
 
             View.ShowPages = tag != null && Model.Results.Count > 0;
+            View.Message = Model.Results.Count > 0 ? string.Empty :
+                string.Format(Properties.Resources.SearchNotFound, View.Keyword);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_ReplaceAll
+        /// 
+        /// <summary>
+        /// すべてを置換時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private async void View_ReplaceAll(object sender, EventArgs e)
+        {
+            var replaced = View.Replace;
+            var count = 0;
+            await Async(() => count = Model.ReplaceAll(replaced));
+            View.Message = string.Format(Properties.Resources.ReplaceAllSuccess, count);
         }
 
         /* ----------------------------------------------------------------- */
@@ -155,7 +179,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void View_Hiding(object sender, CancelEventArgs e)
         {
-            View.Found = -1;
+            View.Message = string.Empty;
             View.ShowPages = false;
 
             await Async(() =>
@@ -174,7 +198,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_SelectedIndexChanged(object sender, EventArgs e) => Sync(() =>
+        private void View_SelectedIndexChanged(object sender, EventArgs e)
+            => Sync(() =>
         {
             if (!View.Pages.AnyItemsSelected) return;
             Model.Current = View.Pages.SelectedIndices[0];
@@ -196,7 +221,14 @@ namespace Cube.Note.App.Editor
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(Model.Current)) return;
-            SetPage(Model.Current);
+
+            var index   = Model.Current;
+            var message = index >= 0 && index < Model.Results.Count ?
+                          string.Empty :
+                          Properties.Resources.SearchOver;
+
+            Sync(() => View.Message = message);
+            SetPage(index);
         }
 
         #endregion
