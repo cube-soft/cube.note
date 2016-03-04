@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Sgry.Azuki;
@@ -190,7 +191,8 @@ namespace Cube.Note.Azuki
             var result = FindFirst(page, keyword, sensitive);
             if (result == null) return;
 
-            Results.Add(Highlight(page, keyword, sensitive));
+            Highlight(page, keyword, sensitive);
+            Results.Add(page);
             Current = 0;
         }
 
@@ -214,7 +216,8 @@ namespace Cube.Note.Azuki
                 var result = FindFirst(page, keyword, sensitive);
                 if (result == null) continue;
 
-                Results.Add(Highlight(page, keyword, sensitive));
+                Highlight(page, keyword, sensitive);
+                Results.Add(page);
             }
 
             if (Results.Count > 0) Current = 0;
@@ -460,6 +463,7 @@ namespace Cube.Note.Azuki
         ///
         /* ----------------------------------------------------------------- */
         private void ReplaceNext(int index, int? offset, string replaced)
+            => SyncWait(() =>
         {
             var document = Results[index].Document as Document;
             if (document == null) return;
@@ -479,7 +483,7 @@ namespace Cube.Note.Azuki
                 if (index < Results.Count - 1) ReplaceNext(++index, 0, replaced);
                 else Current = -1;
             }
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -491,19 +495,20 @@ namespace Cube.Note.Azuki
         ///
         /* ----------------------------------------------------------------- */
         private void Replace(int index, string replaced, int begin, int end)
+            => SyncWait(() =>
         {
             var document = Results[index].Document as Document;
             if (document == null) return;
 
             document.Replace(replaced, begin, end);
 
-            var line   = 0;
+            var line = 0;
             var column = 0;
             document.GetLineColumnIndexFromCharIndex(begin, out line, out column);
             if (line != 0) return;
 
             Results[index].UpdateAbstract(MaxAbstractLength);
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -514,17 +519,16 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Page Highlight(Page page, string keyword, bool sensitive)
+        private void Highlight(Page page, string keyword, bool sensitive)
+            => SyncWait(() =>
         {
             var src = page?.Document as Document;
-            if (src == null) return page;
+            if (src == null) return;
 
             var highlight = new KeywordHighlighter();
             highlight.AddRegex(keyword, !sensitive, CharClass.Keyword);
             src.Highlighter = highlight;
-            
-            return page;
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -535,14 +539,26 @@ namespace Cube.Note.Azuki
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Page UnHighlight(Page page)
+        private void UnHighlight(Page page)
+            => SyncWait(() =>
         {
             var src = page?.Document as Document;
-            if (src == null) return page;
-
+            if (src == null) return;
             src.Highlighter = null;
-            return page;
-        }
+        });
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// SyncWait
+        /// 
+        /// <summary>
+        /// オブジェクト初期化時のスレッド上で各種操作を実行し、
+        /// 実行が完了するまで待機します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void SyncWait(Action action)
+            => _ui.Send(_ => action(), null);
 
         #endregion
 
@@ -575,6 +591,7 @@ namespace Cube.Note.Azuki
 
         #region Fields
         private int _current = -1;
+        private SynchronizationContext _ui = SynchronizationContext.Current;
         #endregion
     }
 }
