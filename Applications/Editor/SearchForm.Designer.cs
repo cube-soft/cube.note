@@ -53,6 +53,7 @@
             this.ResultListView = new Cube.Note.App.Editor.PageListView();
             this.Separator = new System.Windows.Forms.PictureBox();
             this.FooterStatusStrip = new Cube.Forms.StatusStrip();
+            this.MessageLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -67,6 +68,7 @@
             this.SearchShadow.SuspendLayout();
             this.ResultPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
+            this.FooterStatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -376,11 +378,22 @@
             // 
             // FooterStatusStrip
             // 
+            this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FooterStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MessageLabel});
             this.FooterStatusStrip.Location = new System.Drawing.Point(0, 326);
             this.FooterStatusStrip.Name = "FooterStatusStrip";
             this.FooterStatusStrip.Size = new System.Drawing.Size(448, 22);
             this.FooterStatusStrip.TabIndex = 2;
             this.FooterStatusStrip.Text = "statusStrip1";
+            // 
+            // MessageLabel
+            // 
+            this.MessageLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.MessageLabel.Name = "MessageLabel";
+            this.MessageLabel.Size = new System.Drawing.Size(402, 17);
+            this.MessageLabel.Spring = true;
+            this.MessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SearchForm
             // 
@@ -409,6 +422,8 @@
             this.SearchShadow.ResumeLayout(false);
             this.ResultPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Separator)).EndInit();
+            this.FooterStatusStrip.ResumeLayout(false);
+            this.FooterStatusStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -440,5 +455,6 @@
         private Forms.Button OptionalButton1;
         private System.Windows.Forms.Panel SearchShadow;
         private Forms.Button SearchButton;
+        private System.Windows.Forms.ToolStripStatusLabel MessageLabel;
     }
 }
