@@ -390,7 +390,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   最後の検索結果まで到達しました。。 に類似しているローカライズされた文字列を検索します。
+        ///   最後の検索結果まで到達しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SearchOver {
             get {

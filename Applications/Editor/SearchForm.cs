@@ -365,6 +365,39 @@ namespace Cube.Note.App.Editor
             Hide();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        ///
+        /// <summary>
+        /// キーが押下された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                var result = true;
+                switch (e.KeyCode)
+                {
+                    case Keys.Enter:
+                        OnSearch(EventArgs.Empty);
+                        break;
+                    case Keys.F3:
+                        if (Pages.Items.Count <= 0) OnSearch(EventArgs.Empty);
+                        else if (e.Shift) OnSearchPrev(EventArgs.Empty);
+                        else OnSearchNext(EventArgs.Empty);
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+                e.Handled = result;
+            }
+            finally { base.OnKeyDown(e); }
+        }
+
         #endregion
 
         #region Event handlers
