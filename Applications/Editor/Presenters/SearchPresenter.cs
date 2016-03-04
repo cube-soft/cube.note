@@ -65,6 +65,7 @@ namespace Cube.Note.App.Editor
             View.Aggregator = Events;
 
             Model.PropertyChanged += Model_PropertyChanged;
+            Model.MaxAbstractLength = Settings.MaxAbstractLength;
         }
 
         #endregion
