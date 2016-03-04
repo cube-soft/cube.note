@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -414,7 +415,6 @@ namespace Cube.Note.App.Editor
         private void TabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
             SearchPanel.SuspendLayout();
-
             switch (e.TabPage.Name)
             {
                 case nameof(SearchTabPage):
@@ -434,7 +434,6 @@ namespace Cube.Note.App.Editor
                 default:
                     break;
             }
-
             SearchPanel.ResumeLayout();
         }
 
@@ -450,13 +449,9 @@ namespace Cube.Note.App.Editor
         private void SearchPanel_Resize(object sender, EventArgs e)
         {
             SearchPanel.SuspendLayout();
-
             var width = SearchPanel.Width - SearchPanel.Padding.Right;
-            SetWidth(ButtonsPanel,   width);
-            SetWidth(SearchTextBox,  width);
-            SetWidth(ReplaceTextBox, width);
-            SetWidth(RangeComboBox,  width);
-
+            SetWidth(ButtonsPanel, width);
+            SetWidth(ConditionPanel, width);
             SearchPanel.ResumeLayout();
         }
 
@@ -546,12 +541,21 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 置換用コントロールの状態を更新します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// ConditionPanel の項目数（行数）が増えた場合、60 の部分を調整する
+        /// 必要があります。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void EnableReplaceControls(bool enabled)
         {
+            var space = 30;
+
             ReplaceLabel.Visible   = enabled;
             ReplaceTextBox.Visible = enabled;
+            ConditionPanel.Height  = enabled ? 60 + space : 60;
+            ButtonsPanel.Margin    = new Padding(0, enabled ? 0 : space, 0, 0);
         }
 
         #endregion
