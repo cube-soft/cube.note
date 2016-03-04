@@ -56,6 +56,7 @@ namespace Cube.Note.App.Editor
             InitializePresenters();
 
             Caption = TitleControl;
+            TextControl.ContextMenuStrip = TextMenuControl;
             TextControl.Status = FooterStatusControl;
         }
 
@@ -89,7 +90,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
-        {
+        {            
             var area = Screen.FromControl(this).WorkingArea.Size;
             Width   = (int)(area.Width  * 0.7);
             Height  = (int)(area.Height * 0.7);
@@ -355,6 +356,7 @@ namespace Cube.Note.App.Editor
 
         #region Views
         private SearchForm SearchControl = new SearchForm();
+        private TextMenuControl TextMenuControl = new TextMenuControl();
         #endregion
     }
 }

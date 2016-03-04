@@ -81,6 +81,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   コピー (C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CopyMenu {
+            get {
+                return ResourceManager.GetString("CopyMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   全 {0:#,0} 文字（{1:#,0} 行） に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CountFormat {
@@ -104,6 +113,15 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string CurrentNote {
             get {
                 return ResourceManager.GetString("CurrentNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   切り取り (X) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CutMenu {
+            get {
+                return ResourceManager.GetString("CutMenu", resourceCulture);
             }
         }
         
@@ -177,6 +195,15 @@ namespace Cube.Note.App.Editor.Properties {
             get {
                 object obj = ResourceManager.GetObject("Font", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   インターネットで検索 (G) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GoogleMenu {
+            get {
+                return ResourceManager.GetString("GoogleMenu", resourceCulture);
             }
         }
         
@@ -282,6 +309,15 @@ namespace Cube.Note.App.Editor.Properties {
             get {
                 object obj = ResourceManager.GetObject("Normalize", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付け (V) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteMenu {
+            get {
+                return ResourceManager.GetString("PasteMenu", resourceCulture);
             }
         }
         
@@ -459,6 +495,15 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string SearchSuccess {
             get {
                 return ResourceManager.GetString("SearchSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   すべて選択 (A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectAllMenu {
+            get {
+                return ResourceManager.GetString("SelectAllMenu", resourceCulture);
             }
         }
         
