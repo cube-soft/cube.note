@@ -123,7 +123,7 @@ namespace Cube.Note.App.Editor
         {
             var document = Settings.Current?.Page?.Document as Document;
             if (document == null || document != sender) return;
-            Settings.Current.Page.Abstract = GetAbstract(document);
+            Settings.Current.Page.UpdateAbstract(Settings.MaxAbstractLength);
             Settings.Current.CanUndo = document.CanUndo;
             Settings.Current.CanRedo = document.CanRedo;
         }
@@ -209,29 +209,6 @@ namespace Cube.Note.App.Editor
                 olddoc.ContentChanged   -= Model_ContentChanged;
                 olddoc.SelectionChanged -= Model_SelectionChanged;
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetAbstract
-        ///
-        /// <summary>
-        /// 概要を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetAbstract(Document document)
-        {
-            for (var i = 0; i < document.LineCount; ++i)
-            {
-                var content = document.GetLineContent(i).Trim();
-                if (content.Length <= 0) continue;
-
-                return content.Length > Settings.MaxAbstractLength ?
-                       content.Substring(0, Settings.MaxAbstractLength) :
-                       content;
-            }
-            return string.Empty;
         }
 
         #endregion
