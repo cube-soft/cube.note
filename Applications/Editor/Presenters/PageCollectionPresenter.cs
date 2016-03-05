@@ -72,9 +72,18 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void NewPage_Handled(object sender, ValueEventArgs<int> e)
         {
-            var index = Math.Max(Math.Min(e.Value, Model.Count), 0);
+            var raw = e.Value;
+            if (raw == -1)
+            {
+                SyncWait(() =>
+                    raw = View.AnyItemsSelected ?
+                          View.SelectedIndices[0] + 1 :
+                          0
+                );
+            }
+            var index = Math.Max(Math.Min(raw, Model.Count), 0);
             Model.NewPage(Settings.Current.Tag, index);
-            Sync(() => View.Select(0));
+            Sync(() => View.Select(index));
         }
 
         /* ----------------------------------------------------------------- */

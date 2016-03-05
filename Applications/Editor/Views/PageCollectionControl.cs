@@ -111,7 +111,8 @@ namespace Cube.Note.App.Editor
         {
             var dest = new ContextMenuStrip();
 
-            dest.Items.Add(Properties.Resources.NewPageMenu);
+            dest.Items.Add(Properties.Resources.NewPageMenu, null,
+                (s, e) => Aggregator?.NewPage.Raise(new ValueEventArgs<int>(-1)));
             dest.Items.Add(Properties.Resources.DuplicateMenu);
             dest.Items.Add(Properties.Resources.ImportMenu);
             dest.Items.Add("-");

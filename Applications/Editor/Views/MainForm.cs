@@ -242,7 +242,7 @@ namespace Cube.Note.App.Editor
                         Aggregator.Move.Raise(new ValueEventArgs<int>(-1));
                         break;
                     case Keys.N:
-                        Aggregator.NewPage.Raise(new ValueEventArgs<int>(0));
+                        Aggregator.NewPage.Raise(new ValueEventArgs<int>(e.Shift ? -1 : 0));
                         break;
                     case Keys.R:
                         RaiseProperty();
