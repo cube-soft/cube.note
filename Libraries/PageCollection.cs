@@ -176,17 +176,17 @@ namespace Cube.Note
         /// NewPage
         ///
         /// <summary>
-        /// 新しいページを先頭に追加します。
+        /// 新しいページを指定されたインデックスの位置に追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage() => NewPage(Everyone);
-        public void NewPage(Tag tag)
+        public void NewPage(int index) => NewPage(Everyone, index);
+        public void NewPage(Tag tag, int index)
         {
             var page = new Page();
             if (tag != null && tag != Everyone) page.Tags.Add(tag.Name);
             Touch(page);
-            Insert(0, page);
+            Insert(index, page);
             if (Everyone != null) Everyone.Count++;
             if (tag != null && tag != Everyone) tag.Count++;
         }

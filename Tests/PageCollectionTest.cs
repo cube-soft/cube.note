@@ -126,7 +126,7 @@ namespace Cube.Note.Tests
         [Test]
         public void NewPage()
         {
-            Pages.NewPage();
+            Pages.NewPage(0);
             Assert.That(
                 IoEx.File.Exists(IoEx.Path.Combine(Pages.Directory, Pages[0].FileName)),
                 Is.True
