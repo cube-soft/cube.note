@@ -430,7 +430,7 @@ namespace Cube.Note.App.Editor
         private void RaiseSearch()
         {
             var index = TextControlIsActive() ? 0 : 1;
-            Aggregator.Search.Raise(new ValueEventArgs<int>(index));
+            Aggregator.Search.Raise(new KeyValueEventArgs<int, string>(index, ""));
         }
 
         #endregion

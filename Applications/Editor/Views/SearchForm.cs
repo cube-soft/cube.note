@@ -266,6 +266,26 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectKeyword
+        ///
+        /// <summary>
+        /// キーワードを全選択状態にします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void SelectKeyword()
+        {
+            SearchTextBox.SelectAll();
+            ActiveControl = SearchTextBox;
+            SearchTextBox.Focus();
+        }
+
+        #endregion
+
         #region Virtual methods
 
         /* ----------------------------------------------------------------- */
@@ -346,7 +366,6 @@ namespace Cube.Note.App.Editor
             base.OnShown(e);
             ShowPages = false;
             Height = MinimumSize.Height;
-            SearchTextBox.Focus();
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
         }
 

@@ -241,8 +241,8 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> Search { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
+        public RelayEvent<KeyValueEventArgs<int, string>> Search { get; }
+            = new RelayEvent<KeyValueEventArgs<int, string>>();
 
         /* ----------------------------------------------------------------- */
         ///

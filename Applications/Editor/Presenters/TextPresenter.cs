@@ -321,7 +321,10 @@ namespace Cube.Note.App.Editor
             Settings.Current.PropertyChanged += Settings_CurrentChanged;
 
             var enabled = View.GetSelectedTextLength() > 0;
-            menu.SearchMenu.Click += (s, e) => Events.Search.Raise(new ValueEventArgs<int>(0));
+            menu.SearchMenu.Click += (s, e) => Events.Search.Raise(
+                new KeyValueEventArgs<int, string>(0, View.GetSelectedText())
+            );
+
             menu.GoogleMenu.Click += View_Google;
             menu.GoogleMenu.Enabled = enabled;
             menu.UndoMenu.Click += (s, e) => Events.Undo.Raise();

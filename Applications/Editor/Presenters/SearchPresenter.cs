@@ -83,7 +83,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Search_Handle(object sender, ValueEventArgs<int> e)
+        private void Search_Handle(object sender, KeyValueEventArgs<int, string> e)
         {
             Sync(() =>
             {
@@ -93,8 +93,11 @@ namespace Cube.Note.App.Editor
                 var count = View.SearchRange.Items.Count;
                 if (count <= 0) return;
 
-                var index = Math.Max(Math.Min(e.Value, count - 1), 0);
+                var index = Math.Max(Math.Min(e.Key, count - 1), 0);
                 View.SearchRange.SelectedIndex = index;
+
+                if (!string.IsNullOrEmpty(e.Value)) View.Keyword = e.Value;
+                View.SelectKeyword();
             });
         }
 
