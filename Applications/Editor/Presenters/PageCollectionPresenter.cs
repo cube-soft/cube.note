@@ -447,6 +447,7 @@ namespace Cube.Note.App.Editor
 
             return Settings.Current.Tag == null ||
                    Settings.Current.Tag == Model.Tags.Everyone ||
+                   Settings.Current.Tag == Model.Tags.Nothing && page.Tags.Count == 0 ||
                    page.Tags.Contains(Settings.Current.Tag.Name);
         }
 

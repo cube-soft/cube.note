@@ -241,6 +241,10 @@ namespace Cube.Note.App.Editor
 
             if (View.Items.Count > 0) View.Items.Clear();
 
+            Model.Nothing.PropertyChanged -= Model_PropertyChanged;
+            Model.Nothing.PropertyChanged += Model_PropertyChanged;
+            View.Items.Add(Model.Nothing);
+
             Model.Everyone.PropertyChanged -= Model_PropertyChanged;
             Model.Everyone.PropertyChanged += Model_PropertyChanged;
             View.Items.Add(Model.Everyone);
