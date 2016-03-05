@@ -206,9 +206,9 @@ namespace Cube.Note
         public IEnumerable<Page> Search(Tag tag)
         {
             return Items.Where(item
-                => item.Tags.Contains(tag.Name) ||
-                   tag == Tags.Everyone ||
-                   tag == Tags.Nothing && item.Tags.Count == 0
+                => tag == Tags.Everyone ||
+                   tag == Tags.Nothing && item.Tags.Count == 0 ||
+                   item.Tags.Contains(tag.Name)
             );
         }
 
