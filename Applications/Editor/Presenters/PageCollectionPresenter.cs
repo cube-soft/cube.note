@@ -72,18 +72,28 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void NewPage_Handled(object sender, ValueEventArgs<int> e)
         {
-            var raw = e.Value;
-            if (raw == -1)
-            {
-                SyncWait(() =>
-                    raw = View.AnyItemsSelected ?
-                          View.SelectedIndices[0] + 1 :
-                          0
-                );
-            }
-            var index = Math.Max(Math.Min(raw, Model.Count), 0);
+            var index = GetInsertIndex(e.Value);
             Model.NewPage(Settings.Current.Tag, index);
             Sync(() => View.Select(index));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewPage_Handled
+        /// 
+        /// <summary>
+        /// 新しいページの作成要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Duplicate_Handle(object sender, ValueEventArgs<int> e)
+        {
+            var src = GetIndex(e.Value);
+            if (src < 0 || src >= Model.Count) return;
+
+            var dest = GetInsertIndex(e.Value);
+            Model.Duplicate(Model[src], dest);
+            Sync(() => View.Select(dest));
         }
 
         /* ----------------------------------------------------------------- */
@@ -95,7 +105,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Export_Handle(object sender, EventArgs e)
+        private void Export_Handle(object sender, ValueEventArgs<int> e)
         {
             Sync(() =>
             {
@@ -177,11 +187,11 @@ namespace Cube.Note.App.Editor
         /// Remove_Handled
         /// 
         /// <summary>
-        /// 選択ページの削除要求が発生した時に実行されるハンドラです。
+        /// ページの削除要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Remove_Handled(object sender, EventArgs e)
+        private void Remove_Handled(object sender, ValueEventArgs<int> e)
             => Sync(() =>
         {
             var pages = View.DataSource;
@@ -237,6 +247,7 @@ namespace Cube.Note.App.Editor
         private async void Model_Loaded(object sender, EventArgs e)
         {
             Events.NewPage.Handle += NewPage_Handled;
+            Events.Duplicate.Handle += Duplicate_Handle;
             Events.Export.Handle += Export_Handle;
             Events.Edit.Handle += Edit_Handled;
             Events.Move.Handle += Move_Handle;
@@ -342,6 +353,52 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetIndex
+        /// 
+        /// <summary>
+        /// インデックスを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private int GetIndex(int index)
+        {
+            var dest = index;
+            if (dest == -1)
+            {
+                SyncWait(() =>
+                    dest = View.AnyItemsSelected ?
+                           View.SelectedIndices[0] :
+                           -1
+                );
+            }
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetInsertIndex
+        /// 
+        /// <summary>
+        /// 挿入先インデックスを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private int GetInsertIndex(int index)
+        {
+            var dest = index;
+            if (dest == -1)
+            {
+                SyncWait(() =>
+                    dest = View.AnyItemsSelected ?
+                           View.SelectedIndices[0] + 1 :
+                           0
+                );
+            }
+            return Math.Max(Math.Min(dest, Model.Count), 0);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
