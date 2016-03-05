@@ -89,6 +89,31 @@ namespace Cube.Note.App.Editor
             SettingsControl.Update(settings);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// 各種タグの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Update(IEnumerable<Tag> tags)
+        {
+            TagsPanel.SuspendLayout();
+            TagsPanel.Controls.Clear();
+            foreach (var tag in tags)
+            {
+                var control = new CheckBox();
+                control.AutoSize = true;
+                control.Text = tag.ToString();
+                control.Tag = tag;
+                control.Margin = new Padding(3, 3, 6, 6);
+                TagsPanel.Controls.Add(control);
+            }
+            TagsPanel.ResumeLayout();
+        }
+
         #endregion
 
         #region Initialize methods
@@ -336,7 +361,7 @@ namespace Cube.Note.App.Editor
             var enable = WordWrapCheckBox.Checked;
             var cmode  = WordWrapCheckBox.Checked && !WordWrapAsWindowCheckBox.Checked;
 
-            WordWrapTitleLabel.Enabled              = enable;
+            WordWrapTitleLabel.Enabled         = enable;
             WordWrapAsWindowCheckBox.Enabled   = enable;
             WordWrapCountNumericUpDown.Enabled = cmode;
         }

@@ -129,6 +129,7 @@ namespace Cube.Note.App.Editor
             => Sync(() =>
         {
             var dialog = new SettingsForm(Settings.User, index);
+            dialog.Update(Model.Tags);
             using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
             {
                 dialog.ShowDialog();
