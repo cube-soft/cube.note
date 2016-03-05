@@ -106,20 +106,20 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Export_Handle(object sender, ValueEventArgs<int> e)
+            => Sync(() =>
         {
-            Sync(() =>
-            {
-                var dialog = new SaveFileDialog();
-                dialog.Filter = Properties.Resources.ExportFilter;
-                dialog.OverwritePrompt = true;
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+            if (Settings.Current.Page == null) return;
 
-                Async(() => Settings.Current.Page?
-                    .CreateDocument(Model.Directory)?
-                    .Save(dialog.FileName)
-                );
-            });
-        }
+            var page = Settings.Current.Page;
+            var filename = page.GetAbstract();
+            var dialog = new SaveFileDialog();
+            dialog.FileName = filename.Length <= 30 ? filename : filename.Substring(0, 30);
+            dialog.Filter = Properties.Resources.ExportFilter;
+            dialog.OverwritePrompt = true;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            Async(() => page.CreateDocument(Model.Directory)?.Save(dialog.FileName));
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -136,23 +136,21 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Edit_Handled(object sender, ValueEventArgs<Page> e)
+            => Sync(() =>
         {
             var page = e.Value;
             if (page == null) return;
 
-            Sync(() =>
+            if (ViewContains(page)) View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
+            else
             {
-                if (ViewContains(page)) View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
-                else
-                {
-                    var source = View.DataSource;
-                    if (source == null) return;
+                var source = View.DataSource;
+                if (source == null) return;
 
-                    source.Remove(page);
-                    if (source.Count <= 0) Settings.Current.Page = null;
-                }
-            });
-        }
+                source.Remove(page);
+                if (source.Count <= 0) Settings.Current.Page = null;
+            }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -324,19 +322,17 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Settings_PageChanged(object sender, EventArgs e)
+            => Sync(() =>
         {
             if (Settings.Current.Page == null) return;
 
-            Sync(() =>
-            {
-                var current = View.SelectedIndices.Count > 0 ?
-                              View.SelectedIndices[0] : -1;
-                var changed = View.DataSource?.IndexOf(Settings.Current.Page) ?? -1;
-                if (changed == -1 || changed == current) return;
+            var current = View.SelectedIndices.Count > 0 ?
+                            View.SelectedIndices[0] : -1;
+            var changed = View.DataSource?.IndexOf(Settings.Current.Page) ?? -1;
+            if (changed == -1 || changed == current) return;
 
-                View.Select(changed);
-            });
-        }
+            View.Select(changed);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
