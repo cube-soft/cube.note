@@ -134,6 +134,7 @@ namespace Cube.Note.App.Editor
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
             new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
+            new NewsPresenter(FooterStatusControl, Settings, Aggregator);
         }
 
         #endregion
