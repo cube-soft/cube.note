@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using Sgry.Azuki;
 using Cube.Note.Azuki;
 
@@ -55,7 +56,25 @@ namespace Cube.Note.App.Editor
             Events.Redo.Handle += Redo_Handle;
             Settings.Current.PageChanged += Settings_PageChanged;
             View.DoubleClick += View_DoubleClick;
+
+            InitializeTextMenu();
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TextMenu
+        ///
+        /// <summary>
+        /// TextMenuControl を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public TextMenuControl TextMenu
+            => View.ContextMenuStrip as TextMenuControl;
 
         #endregion
 
@@ -139,6 +158,30 @@ namespace Cube.Note.App.Editor
             catch (Exception err) { Logger.Error(err); }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Google
+        ///
+        /// <summary>
+        /// インターネットで検索ボタンが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Google(object sender, EventArgs e)
+            => Sync(() =>
+        {
+            var keyword = View.GetSelectedText();
+            System.Diagnostics.Trace.WriteLine($"Google: {keyword}");
+            if (string.IsNullOrEmpty(keyword)) return;
+
+            try
+            {
+                var query = $"http://s.cube-soft.jp/search/?q={keyword}";
+                System.Diagnostics.Process.Start(query);
+            }
+            catch (Exception err) { Logger.Error(err); }
+        });
+
         #endregion
 
         #region Model
@@ -153,13 +196,16 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Model_ContentChanged(object sender, ContentChangedEventArgs e)
+            => Sync(() =>
         {
             var document = Settings.Current?.Page?.Document as Document;
             if (document == null || document != sender) return;
             Settings.Current.Page.UpdateAbstract(Settings.MaxAbstractLength);
-            Settings.Current.CanUndo = document.CanUndo;
-            Settings.Current.CanRedo = document.CanRedo;
-        }
+            Settings.Current.CanUndo  = document.CanUndo;
+            Settings.Current.CanRedo  = document.CanRedo;
+            Settings.Current.CanCopy  = View.GetSelectedTextLength() > 0;
+            Settings.Current.CanPaste = View.CanPaste;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,9 +217,12 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Model_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            => Sync(() =>
         {
-            Sync(() => View.ScrollToCaret());
-        }
+            Settings.Current.CanCopy  = View.GetSelectedTextLength() > 0;
+            Settings.Current.CanPaste = View.CanPaste;
+            View.ScrollToCaret();
+        });
 
         #endregion
 
@@ -210,11 +259,80 @@ namespace Cube.Note.App.Editor
             finally { UpdateModel(e.NewValue, e.OldValue); }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_CurrentChanged
+        ///
+        /// <summary>
+        /// Current のプロパティが変更された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Settings_CurrentChanged(object sender, PropertyChangedEventArgs e)
+            => Sync(() =>
+        {
+            var menu = TextMenu;
+            if (menu == null) return;
+
+            switch (e.PropertyName)
+            {
+                case nameof(Settings.Current.CanCopy):
+                    menu.CutMenu.Enabled    = Settings.Current.CanCopy;
+                    menu.CopyMenu.Enabled   = Settings.Current.CanCopy;
+                    menu.GoogleMenu.Enabled = Settings.Current.CanCopy;
+                    break;
+                case nameof(Settings.Current.CanPaste):
+                    menu.PasteMenu.Enabled = Settings.Current.CanPaste;
+                    break;
+                case nameof(Settings.Current.CanUndo):
+                    menu.UndoMenu.Enabled = Settings.Current.CanUndo;
+                    break;
+                case nameof(Settings.Current.CanRedo):
+                    menu.RedoMenu.Enabled = Settings.Current.CanRedo;
+                    break;
+                default:
+                    break;
+            }
+        });
+
         #endregion
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeTextMenu
+        ///
+        /// <summary>
+        /// コンテキストメニューを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeTextMenu()
+        {
+            var menu = TextMenu;
+            if (menu == null) return;
+
+            Settings.Current.PropertyChanged += Settings_CurrentChanged;
+
+            var enabled = View.GetSelectedTextLength() > 0;
+            menu.SearchMenu.Click += (s, e) => Events.Search.Raise(new ValueEventArgs<int>(0));
+            menu.GoogleMenu.Click += View_Google;
+            menu.GoogleMenu.Enabled = enabled;
+            menu.UndoMenu.Click += (s, e) => Events.Undo.Raise();
+            menu.UndoMenu.Enabled = View.CanUndo;
+            menu.RedoMenu.Click += (s, e) => Events.Redo.Raise();
+            menu.RedoMenu.Enabled = View.CanRedo;
+            menu.CutMenu.Click += (s, e) => { if (View.CanCut) View.Cut(); };
+            menu.CutMenu.Enabled = enabled;
+            menu.CopyMenu.Click += (s, e) => { if (View.CanCopy) View.Copy(); };
+            menu.CopyMenu.Enabled = enabled;
+            menu.PasteMenu.Click += (s, e) => { if (View.CanPaste) View.Paste(); };
+            menu.PasteMenu.Enabled = View.CanPaste;
+            menu.SelectAllMenu.Click += (s, e) => View.SelectAll();
+        }
 
         /* ----------------------------------------------------------------- */
         ///

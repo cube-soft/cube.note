@@ -52,12 +52,13 @@ namespace Cube.Note.App.Editor
 
             InitializeComponent();
             InitializeModels();
-            InitializeEvents();
-            InitializePresenters();
 
             Caption = TitleControl;
             TextControl.ContextMenuStrip = TextMenuControl;
             TextControl.Status = FooterStatusControl;
+
+            InitializeEvents();
+            InitializePresenters();
         }
 
         #endregion
