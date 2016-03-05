@@ -80,6 +80,9 @@ namespace Cube.Note.App.Editor
             MenuControl.VisibleMenu.Click += (s, e) => SwitchMenu();
             MenuControl.SearchMenu.Click += (s, e) => RaiseSearch();
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
+            PageCollectionControl.Pages.DragEnter += (s, e) => OnDragEnter(e);
+            PageCollectionControl.Pages.DragOver += (s, e) => OnDragEnter(e);
+            PageCollectionControl.Pages.DragDrop += (s, e) => OnDragDrop(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -267,6 +270,9 @@ namespace Cube.Note.App.Editor
                     case Keys.H:
                         SwitchMenu();
                         break;
+                    case Keys.I:
+                        Aggregator.Import.Raise(new KeyValueEventArgs<int, string>(0, ""));
+                        break;
                     case Keys.J:
                     case Keys.Down:
                         Aggregator.Move.Raise(new ValueEventArgs<int>(1));
@@ -294,6 +300,49 @@ namespace Cube.Note.App.Editor
                 e.Handled = result;
             }
             finally { base.OnKeyDown(e); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragEnter
+        ///
+        /// <summary>
+        /// ファイルがドラッグされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            var prev = e.Effect;
+            base.OnDragEnter(e);
+            if (e.Effect != prev) return;
+
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ?
+                       DragDropEffects.Copy :
+                       DragDropEffects.None;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragDrop
+        ///
+        /// <summary>
+        /// ファイルがドロップされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+
+            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+            if (files == null) return;
+            foreach (var path in files)
+            {
+                Aggregator.Import.Raise(
+                    new KeyValueEventArgs<int, string>(0, path)
+                );
+            }
         }
 
         #endregion
