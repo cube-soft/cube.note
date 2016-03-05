@@ -335,7 +335,7 @@ namespace Cube.Note.App.Editor
             var enable = WordWrapCheckBox.Checked;
             var cmode  = WordWrapCheckBox.Checked && !WordWrapAsWindowCheckBox.Checked;
 
-            WordWrapLabel.Enabled              = enable;
+            WordWrapTitleLabel.Enabled              = enable;
             WordWrapAsWindowCheckBox.Enabled   = enable;
             WordWrapCountNumericUpDown.Enabled = cmode;
         }

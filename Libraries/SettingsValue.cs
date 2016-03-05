@@ -728,6 +728,50 @@ namespace Cube.Note
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenUri
+        ///
+        /// <summary>
+        /// URL ダブルクリック時に既定ブラウザで開くかどうかを示す値を取得または
+        /// 設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool OpenUri
+        {
+            get { return _openUri; }
+            set
+            {
+                if (_openUri == value) return;
+                _openUri = value;
+                RaisePropertyChanged(nameof(OpenUri));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowNews
+        ///
+        /// <summary>
+        /// ステータスバーに新着ニュースを表示するかどうかを示す値を取得または
+        /// 設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool ShowNews
+        {
+            get { return _showNews; }
+            set
+            {
+                if (_showNews == value) return;
+                _showNews = value;
+                RaisePropertyChanged(nameof(ShowNews));
+            }
+        }
+
         #endregion
 
         #region Others
@@ -789,6 +833,8 @@ namespace Cube.Note
             ModifiedLineVisible = false;
             BracketVisible      = false;
             RemoveWarning       = true;
+            OpenUri             = true;
+            ShowNews            = true;
         }
 
         #endregion
@@ -825,6 +871,8 @@ namespace Cube.Note
         private bool _modifiedLineVisible;
         private bool _bracketVisible;
         private bool _removeWarning;
+        private bool _openUri;
+        private bool _showNews;
         #endregion
     }
 }

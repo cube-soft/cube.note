@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
@@ -143,6 +144,10 @@ namespace Cube.Note.App.Editor
                     break;
                 case nameof(Model.ForeColor):
                     View.ForeColor = Model.ForeColor;
+                    break;
+                case nameof(Model.UriColor):
+                    View.ColorScheme.SetMarkingDecoration(Marking.Uri,
+                        new BgColorTextDecoration(Model.UriColor, Color.Transparent));
                     break;
                 case nameof(Model.HighlightBackColor):
                     View.ColorScheme.SelectionBack = Model.HighlightBackColor;
