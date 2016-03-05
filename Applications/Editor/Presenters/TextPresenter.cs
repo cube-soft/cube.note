@@ -125,7 +125,7 @@ namespace Cube.Note.App.Editor
             try
             {
                 var ev = e as IMouseEventArgs;
-                if (ev == null) return;
+                if (ev == null || !Settings.User.OpenUri) return;
 
                 var doc = Settings.Current.Page?.Document as Document;
                 if (doc == null || ev.Index >= doc.Length || !doc.IsMarked(ev.Index, Marking.Uri)) return;
