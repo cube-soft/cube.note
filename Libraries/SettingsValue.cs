@@ -389,6 +389,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SearchQuery
+        ///
+        /// <summary>
+        /// 検索クエリーを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string SearchQuery
+        {
+            get { return _searchQuery; }
+            set
+            {
+                if (_searchQuery == value) return;
+                _searchQuery = value;
+                RaisePropertyChanged(nameof(SearchQuery));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// TabWidth
         ///
         /// <summary>
@@ -816,6 +837,7 @@ namespace Cube.Note
             CurrentLineColor    = SystemColors.ControlDark;
 
             AutoSaveTime        = TimeSpan.FromSeconds(30);
+            SearchQuery         = "http://s.cube-soft.jp/search/?q=";
             TabWidth            = 8;
             WordWrapCount       = 80;
 
@@ -852,6 +874,7 @@ namespace Cube.Note
         private Color _specialCharsColor;
         private Color _currentLineColor;
         private TimeSpan _autoSaveTime;
+        private string _searchQuery;
         private string _fontName;
         private double _fontSize;
         private FontStyle _fontStyle;

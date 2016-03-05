@@ -176,7 +176,7 @@ namespace Cube.Note.App.Editor
 
             try
             {
-                var query = $"http://s.cube-soft.jp/search/?q={keyword}";
+                var query = Settings.User.SearchQuery + keyword;
                 System.Diagnostics.Process.Start(query);
             }
             catch (Exception err) { Logger.Error(err); }
