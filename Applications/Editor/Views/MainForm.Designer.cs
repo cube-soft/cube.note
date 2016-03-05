@@ -203,6 +203,7 @@
             // 
             // MainForm
             // 
+            this.AllowDrop = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.LayoutPanel);

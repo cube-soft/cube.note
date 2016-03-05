@@ -335,6 +335,65 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnItemDrag
+        /// 
+        /// <summary>
+        /// 項目がドラッグされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnItemDrag(ItemDragEventArgs e)
+        {
+            base.OnItemDrag(e);
+            if (Items.Count <= 1) return;
+            DoDragDrop(e.Item as ListViewItem, DragDropEffects.Move);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragEnter
+        /// 
+        /// <summary>
+        /// 項目がドラッグ移動された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            base.OnDragEnter(e);
+            e.Effect = e.Data.GetDataPresent(typeof(ListViewItem)) ?
+                       DragDropEffects.Move :
+                       DragDropEffects.None;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragDrop
+        /// 
+        /// <summary>
+        /// 項目がドロップされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+
+            var item = e.Data.GetData(typeof(ListViewItem)) as ListViewItem;
+            if (item == null) return;
+
+            var src = Items.IndexOf(item);
+            if (src == -1) return;
+
+            var pt = PointToClient(new Point(e.X, e.Y));
+            int dest = Items.IndexOf(GetItemAt(pt.X, pt.Y));
+            if (dest == -1) dest = Items.Count - 1;
+
+            Aggregator?.Move.Raise(new ValueEventArgs<int>(dest - src));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnRemoved
         /// 
         /// <summary>

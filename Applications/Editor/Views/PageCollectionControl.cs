@@ -51,6 +51,7 @@ namespace Cube.Note.App.Editor
                 => Aggregator?.NewPage.Raise(new ValueEventArgs<int>(0));
 
             Pages.ContextMenuStrip = CreateContextMenu();
+            Pages.AllowDrop = true;
         }
 
         #endregion
