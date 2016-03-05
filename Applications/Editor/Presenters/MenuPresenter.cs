@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
 {
@@ -150,6 +151,16 @@ namespace Cube.Note.App.Editor
         {
             var dialog = new TagForm(Model.Tags);
             dialog.ShowDialog();
+            if (dialog.DialogResult == DialogResult.Cancel) return;
+
+            var add = dialog.NewTags;
+            var remove = dialog.RemoveTags;
+
+            Async(() =>
+            {
+                foreach (var tag in add) Events.NewTag.Raise(new ValueEventArgs<Tag>(tag));
+                foreach (var tag in remove) Events.RemoveTag.Raise(new ValueEventArgs<Tag>(tag));
+            });
         });
 
         #endregion
