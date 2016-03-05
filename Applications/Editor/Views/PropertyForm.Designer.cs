@@ -255,6 +255,7 @@
             this.ClientSize = new System.Drawing.Size(400, 350);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
+            this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "PropertyForm";
             this.Sizable = true;
             this.Text = "PropertyForm";

@@ -57,7 +57,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsForm(SettingsValue settings)
+        public SettingsForm(SettingsValue settings, int index = 0)
         {
             InitializeComponent();
             InitializeVersionControl();
@@ -67,6 +67,7 @@ namespace Cube.Note.App.Editor
             Caption = TitleControl;
             SettingsControl.OKButton = ApplyButton;
             SettingsControl.CancelButton = ExitButton;
+            TabControl.SelectTab(index);
         }
 
         #endregion
