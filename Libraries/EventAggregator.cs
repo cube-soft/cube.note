@@ -60,6 +60,8 @@ namespace Cube.Note
 
         #region Events
 
+        #region TextControl and document events
+
         /* ----------------------------------------------------------------- */
         ///
         /// Refresh
@@ -70,6 +72,32 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Refresh { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Undo
+        ///
+        /// <summary>
+        /// 元に戻すイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Undo { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Redo
+        ///
+        /// <summary>
+        /// やり直しを実行するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Redo { get; } = new RelayEvent();
+
+        #endregion
+
+        #region Page events
 
         /* ----------------------------------------------------------------- */
         ///
@@ -106,18 +134,6 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public RelayEvent<ValueEventArgs<int>> Export { get; }
            = new RelayEvent<ValueEventArgs<int>>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Property
-        ///
-        /// <summary>
-        /// ページのプロパティ画面を表示するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> Property { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -160,27 +176,9 @@ namespace Cube.Note
         public RelayEvent<ValueEventArgs<int>> Move { get; }
             = new RelayEvent<ValueEventArgs<int>>();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Undo
-        ///
-        /// <summary>
-        /// 元に戻すイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Undo { get; } = new RelayEvent();
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Redo
-        ///
-        /// <summary>
-        /// やり直しを実行するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Redo { get; } = new RelayEvent();
+        #region Tag events
 
         /* ----------------------------------------------------------------- */
         ///
@@ -205,6 +203,22 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public RelayEvent<ValueEventArgs<Tag>> RemoveTag { get; }
             = new RelayEvent<ValueEventArgs<Tag>>();
+
+        #endregion
+
+        #region Additional dialog events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Property
+        ///
+        /// <summary>
+        /// ページのプロパティ画面を表示するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Property { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -239,6 +253,8 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent TagSettings { get; } = new RelayEvent();
+
+        #endregion
 
         #endregion
     }
