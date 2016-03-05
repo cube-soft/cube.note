@@ -54,8 +54,11 @@ namespace Cube.Note.App.Editor
             Events.Refresh.Handle += Refresh_Handle;
             Events.Undo.Handle += Undo_Handle;
             Events.Redo.Handle += Redo_Handle;
-            Settings.Current.PageChanged += Settings_PageChanged;
+
             View.DoubleClick += View_DoubleClick;
+            View.Visible = (Settings.Current.Page != null);
+
+            Settings.Current.PageChanged += Settings_PageChanged;
 
             InitializeTextMenu();
         }

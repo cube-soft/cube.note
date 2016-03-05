@@ -256,7 +256,7 @@ namespace Cube.Note.App.Editor
             Events.Remove.Handle += Remove_Handled;
 
             SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
-            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Tags.Everyone));
+            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Tags.Nothing));
 
             Model.CollectionChanged += Model_CollectionChanged;
 
