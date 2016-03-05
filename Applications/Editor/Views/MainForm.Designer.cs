@@ -213,6 +213,7 @@
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "MainForm";
             this.Sizable = true;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
             this.ContentsPanel.Panel1.ResumeLayout(false);

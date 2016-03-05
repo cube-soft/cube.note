@@ -18,11 +18,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.ComponentModel;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Drawing;
-using IoEx = System.IO;
 
 namespace Cube.Note
 {
@@ -57,6 +54,90 @@ namespace Cube.Note
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// X
+        ///
+        /// <summary>
+        /// メイン画面の x 座標を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int X
+        {
+            get { return _x; }
+            set
+            {
+                if (_x == value) return;
+                _x = value;
+                RaisePropertyChanged(nameof(X));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Y
+        ///
+        /// <summary>
+        /// メイン画面の y 座標を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Y
+        {
+            get { return _y; }
+            set
+            {
+                if (_y == value) return;
+                _y = value;
+                RaisePropertyChanged(nameof(Y));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Width
+        ///
+        /// <summary>
+        /// メイン画面の幅を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Width
+        {
+            get { return _width; }
+            set
+            {
+                if (_width == value) return;
+                _width = value;
+                RaisePropertyChanged(nameof(Width));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Height
+        ///
+        /// <summary>
+        /// メイン画面の高さを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Height
+        {
+            get { return _height; }
+            set
+            {
+                if (_height == value) return;
+                _height = value;
+                RaisePropertyChanged(nameof(Height));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -820,6 +901,11 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private void InitializeValues()
         {
+            X                   = -1;
+            Y                   = -1;
+            Width               = -1;
+            Height              = -1;
+
             FontName            = "Meiryo";
             FontSize            = 11.25;
             FontStyle           = FontStyle.Regular;
@@ -862,6 +948,10 @@ namespace Cube.Note
         #endregion
 
         #region Fields
+        private int _x;
+        private int _y;
+        private int _width;
+        private int _height;
         private Color _backColor;
         private Color _foreColor;
         private Color _uriColor;

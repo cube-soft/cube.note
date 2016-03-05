@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
+using System.Drawing;
 using System.Windows.Forms;
 using log4net;
 
@@ -93,8 +94,21 @@ namespace Cube.Note.App.Editor
         private void InitializeLayout()
         {            
             var area = Screen.FromControl(this).WorkingArea.Size;
-            Width   = (int)(area.Width  * 0.7);
-            Height  = (int)(area.Height * 0.7);
+
+            var x = Settings.User.X >= 0 ?
+                    Math.Max(Math.Min(Settings.User.X, area.Width), 0) :
+                    (int)(area.Width * 0.05);
+            var y = Settings.User.Y >= 0 ?
+                    Math.Max(Math.Min(Settings.User.Y, area.Height), 0) :
+                    (int)(area.Height * 0.05);
+            Location = new Point(x, y);
+
+            Width  = Settings.User.Width >= 0 ?
+                     Settings.User.Width :
+                     (int)(area.Width * 0.7);
+            Height = Settings.User.Height >= 0 ?
+                     Settings.User.Height :
+                     (int)(area.Height * 0.7);
         }
 
         /* ----------------------------------------------------------------- */
@@ -203,6 +217,24 @@ namespace Cube.Note.App.Editor
             base.OnShown(e);
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
             Saver = new AutoSaver(Pages, Settings);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnFormClosing
+        ///
+        /// <summary>
+        /// フォームが閉じると直前に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            Settings.User.X      = Location.X;
+            Settings.User.Y      = Location.Y;
+            Settings.User.Width  = Width;
+            Settings.User.Height = Height;
         }
 
         /* ----------------------------------------------------------------- */
