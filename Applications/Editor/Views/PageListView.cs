@@ -360,7 +360,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDragEnter(DragEventArgs e)
         {
+            var prev = e.Effect;
             base.OnDragEnter(e);
+            if (e.Effect != prev) return;
+
             e.Effect = e.Data.GetDataPresent(typeof(ListViewItem)) ?
                        DragDropEffects.Move :
                        DragDropEffects.None;
@@ -378,15 +381,15 @@ namespace Cube.Note.App.Editor
         protected override void OnDragDrop(DragEventArgs e)
         {
             base.OnDragDrop(e);
-
+            
             var item = e.Data.GetData(typeof(ListViewItem)) as ListViewItem;
             if (item == null) return;
 
             var src = Items.IndexOf(item);
             if (src == -1) return;
 
-            var pt = PointToClient(new Point(e.X, e.Y));
-            int dest = Items.IndexOf(GetItemAt(pt.X, pt.Y));
+            var point = PointToClient(new Point(e.X, e.Y));
+            int dest = Items.IndexOf(GetItemAt(point.X, point.Y));
             if (dest == -1) dest = Items.Count - 1;
 
             Aggregator?.Move.Raise(new ValueEventArgs<int>(dest - src));
