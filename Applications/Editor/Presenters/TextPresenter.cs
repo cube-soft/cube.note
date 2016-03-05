@@ -54,6 +54,7 @@ namespace Cube.Note.App.Editor
             Events.Undo.Handle += Undo_Handle;
             Events.Redo.Handle += Redo_Handle;
             Settings.Current.PageChanged += Settings_PageChanged;
+            View.DoubleClick += View_DoubleClick;
         }
 
         #endregion
@@ -104,6 +105,38 @@ namespace Cube.Note.App.Editor
             var document = Settings.Current?.Page?.Document as Document;
             if (document == null || !document.CanRedo) return;
             document.Redo();
+        }
+
+        #endregion
+
+        #region View
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_DoubleClick
+        ///
+        /// <summary>
+        /// テキストのダブルクリック時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                var ev = e as IMouseEventArgs;
+                if (ev == null) return;
+
+                var doc = Settings.Current.Page?.Document as Document;
+                if (doc == null || ev.Index >= doc.Length || !doc.IsMarked(ev.Index, Marking.Uri)) return;
+
+                var uri = doc.GetMarkedText(ev.Index, Marking.Uri);
+                if (string.IsNullOrEmpty(uri)) return;
+
+                System.Diagnostics.Process.Start(uri);
+                ev.Handled = true;
+            }
+            catch (Exception err) { Logger.Error(err); }
         }
 
         #endregion

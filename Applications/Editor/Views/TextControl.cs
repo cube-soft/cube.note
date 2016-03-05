@@ -69,6 +69,10 @@ namespace Cube.Note.App.Editor
 
             ColorScheme.SetColor(CharClass.Keyword, Color.Black, Color.Orange);
 
+            var uriColor = Color.FromArgb(0, 50, 155);
+            ColorScheme.SetMarkingDecoration(Marking.Uri,
+                new BgColorTextDecoration(uriColor, Color.Transparent));
+
             CaretMoved += (s, e) => Report();
         }
 

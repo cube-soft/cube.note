@@ -162,9 +162,9 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         private static Document CreateDocument(string path)
         {
-            var dest = new Document();
+            var dest = new Document { MarksUri = true };
             if (!IoEx.File.Exists(path)) return dest;
-
+            
             using (var stream = IoEx.File.Open(path,
                 IoEx.FileMode.Open, IoEx.FileAccess.Read, IoEx.FileShare.ReadWrite))
             using (var reader = new IoEx.StreamReader(stream, _Encoding, true))
