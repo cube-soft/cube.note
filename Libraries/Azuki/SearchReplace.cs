@@ -558,7 +558,10 @@ namespace Cube.Note.Azuki
         ///
         /* --------------------------------------------------------------------- */
         private void SyncWait(Action action)
-            => _ui.Send(_ => action(), null);
+        {
+            if (_ui != null) _ui.Send(_ => action(), null);
+            else action();
+        }
 
         #endregion
 
