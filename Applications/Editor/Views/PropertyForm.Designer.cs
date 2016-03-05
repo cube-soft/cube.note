@@ -262,7 +262,7 @@
             // 
             // PropertyForm
             // 
-            this.AcceptButton = this.ApplyButton;
+            this.AcceptButton = this.NewTagButton;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.CancelButton = this.ExitButton;
             this.ClientSize = new System.Drawing.Size(400, 300);

@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms; 
 
@@ -60,7 +59,6 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings, int index = 0)
         {
             InitializeComponent();
-            InitializeLayout();
             InitializeVersionControl();
             Update(settings);
             InitializeEvents();
@@ -90,49 +88,9 @@ namespace Cube.Note.App.Editor
             SettingsControl.Update(settings);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Update
-        ///
-        /// <summary>
-        /// 各種タグの状態を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Update(IEnumerable<Tag> tags)
-        {
-            TagsPanel.SuspendLayout();
-            TagsPanel.Controls.Clear();
-            foreach (var tag in tags)
-            {
-                var control = new CheckBox();
-                control.AutoSize = true;
-                control.Text = tag.ToString();
-                control.Tag = tag;
-                control.Margin = new Padding(3, 3, 6, 6);
-                TagsPanel.Controls.Add(control);
-            }
-            TagsPanel.ResumeLayout();
-        }
-
         #endregion
 
         #region Initialize methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeLayout
-        ///
-        /// <summary>
-        /// レイアウトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeLayout()
-        {
-            var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
-            NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
-        }
 
         /* ----------------------------------------------------------------- */
         ///

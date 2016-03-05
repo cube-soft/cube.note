@@ -146,7 +146,7 @@
     <value>コピーを作成</value>
   </data>
   <data name="EditTag" xml:space="preserve">
-    <value>タグを編集...</value>
+    <value>タグの追加と削除 ...</value>
   </data>
   <data name="EmptyPage" xml:space="preserve">
     <value>無題のページ</value>

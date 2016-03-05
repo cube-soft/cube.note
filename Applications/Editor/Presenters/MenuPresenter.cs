@@ -50,7 +50,7 @@ namespace Cube.Note.App.Editor
             : base(view, model, settings, events)
         {
             Events.Settings.Handle += (s, e) => ShowSettings(0);
-            Events.TagSettings.Handle += (s, e) => ShowSettings(3 /* Tag */);
+            Events.TagSettings.Handle += (s, e) => ShowTagSettings();
 
             View.UndoMenu.Click += (s, e) => Events.Undo.Raise();
             View.RedoMenu.Click += (s, e) => Events.Redo.Raise();
@@ -129,12 +129,27 @@ namespace Cube.Note.App.Editor
             => Sync(() =>
         {
             var dialog = new SettingsForm(Settings.User, index);
-            dialog.Update(Model.Tags);
             using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
             {
                 dialog.ShowDialog();
                 Events.Refresh.Raise();
             }
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowTagSettings
+        /// 
+        /// <summary>
+        /// タグ設定フォームを開きます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ShowTagSettings()
+            => Sync(() =>
+        {
+            var dialog = new TagForm(Model.Tags);
+            dialog.ShowDialog();
         });
 
         #endregion

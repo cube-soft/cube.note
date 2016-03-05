@@ -65,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presenters\NewsPresenter.cs" />
+    <Compile Include="Views\TagForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TagForm.Designer.cs">
+      <DependentUpon>TagForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\TextMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -168,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TagForm.resx">
+      <DependentUpon>TagForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TitleControl.resx">
       <DependentUpon>TitleControl.cs</DependentUpon>

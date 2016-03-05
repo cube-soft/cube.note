@@ -144,7 +144,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   タグを編集... に類似しているローカライズされた文字列を検索します。
+        ///   タグの追加と削除 ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string EditTag {
             get {
