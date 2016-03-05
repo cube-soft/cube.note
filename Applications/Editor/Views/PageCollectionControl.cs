@@ -112,8 +112,9 @@ namespace Cube.Note.App.Editor
             var dest = new ContextMenuStrip();
 
             dest.Items.Add(Properties.Resources.NewPageMenu, null,
-                (s, e) => Aggregator?.NewPage.Raise(new ValueEventArgs<int>(-1)));
-            dest.Items.Add(Properties.Resources.DuplicateMenu);
+                (s, e) => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage));
+            dest.Items.Add(Properties.Resources.DuplicateMenu, null,
+                (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage));
             dest.Items.Add(Properties.Resources.ImportMenu);
             dest.Items.Add("-");
             dest.Items.Add(Properties.Resources.UpMenu, null,
@@ -122,12 +123,12 @@ namespace Cube.Note.App.Editor
                 (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(1)));
             dest.Items.Add("-");
             dest.Items.Add(Properties.Resources.ExportMenu, null,
-                (s, e) => Aggregator?.Export.Raise());
+                (s, e) => Aggregator?.Export.Raise(EventAggregator.SelectedPage));
             dest.Items.Add(Properties.Resources.RemoveMenu, null,
-                (s, e) => Aggregator?.Remove.Raise());
+                (s, e) => Aggregator?.Remove.Raise(EventAggregator.SelectedPage));
             dest.Items.Add("-");
             dest.Items.Add(Properties.Resources.PropertyMenu, null,
-                (s, e) => Aggregator?.Property.Raise());
+                (s, e) => Aggregator?.Property.Raise(EventAggregator.SelectedPage));
 
             return dest;
         }

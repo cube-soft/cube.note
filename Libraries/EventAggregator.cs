@@ -30,6 +30,36 @@ namespace Cube.Note
     /* --------------------------------------------------------------------- */
     public class EventAggregator
     {
+        #region EventArgs
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedPage
+        ///
+        /// <summary>
+        /// 選択ページを表す EventArgs オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static ValueEventArgs<int> SelectedPage { get; }
+            = new ValueEventArgs<int>(-1);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TopPage
+        ///
+        /// <summary>
+        /// 最初のページを表す EventArgs オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static ValueEventArgs<int> TopPage { get; }
+            = new ValueEventArgs<int>(0);
+
+        #endregion
+
+        #region Events
+
         /* ----------------------------------------------------------------- */
         ///
         /// Refresh
@@ -55,6 +85,18 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Duplicate
+        ///
+        /// <summary>
+        /// ページを複製するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Duplicate { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Export
         ///
         /// <summary>
@@ -62,7 +104,8 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Export { get; } = new RelayEvent();
+        public RelayEvent<ValueEventArgs<int>> Export { get; }
+           = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -73,7 +116,8 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Property { get; } = new RelayEvent();
+        public RelayEvent<ValueEventArgs<int>> Property { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,26 +133,32 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Remove
+        ///
+        /// <summary>
+        /// ページを削除するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Remove { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Move
         ///
         /// <summary>
         /// ページを移動するイベントです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// Move イベントの Value に設定される値はインデックスではなく移動量に
+        /// なります。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent<ValueEventArgs<int>> Move { get; }
             = new RelayEvent<ValueEventArgs<int>>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        ///
-        /// <summary>
-        /// 選択ページを削除するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Remove { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -165,5 +215,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent TagSettings { get; } = new RelayEvent();
+
+        #endregion
     }
 }

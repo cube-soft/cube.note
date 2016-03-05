@@ -222,10 +222,10 @@ namespace Cube.Note.App.Editor
                 switch (e.KeyCode)
                 {
                     case Keys.D:
-                        Aggregator.Remove.Raise();
+                        Aggregator.Remove.Raise(EventAggregator.SelectedPage);
                         break;
                     case Keys.E:
-                        Aggregator.Export.Raise();
+                        Aggregator.Export.Raise(EventAggregator.SelectedPage);
                         break;
                     case Keys.F:
                         RaiseSearch();
@@ -242,7 +242,10 @@ namespace Cube.Note.App.Editor
                         Aggregator.Move.Raise(new ValueEventArgs<int>(-1));
                         break;
                     case Keys.N:
-                        Aggregator.NewPage.Raise(new ValueEventArgs<int>(e.Shift ? -1 : 0));
+                        Aggregator.NewPage.Raise(e.Shift ?
+                            EventAggregator.SelectedPage :
+                            EventAggregator.TopPage
+                        );
                         break;
                     case Keys.R:
                         RaiseProperty();
@@ -329,7 +332,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseProperty() => Aggregator.Property.Raise();
+        private void RaiseProperty()
+            => Aggregator.Property.Raise(EventAggregator.SelectedPage);
 
         /* ----------------------------------------------------------------- */
         ///

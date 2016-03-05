@@ -290,8 +290,8 @@ namespace Cube.Note.App.Editor
             var item = GetItemAt(e.Location.X, e.Location.Y);
             var bounds = item?.Bounds ?? Rectangle.Empty;
 
-            if (IsRemoveButton(e.Location, bounds)) Aggregator?.Remove.Raise();
-            else if (IsPropertyButton(e.Location, bounds)) Aggregator?.Property.Raise();
+            if (IsRemoveButton(e.Location, bounds)) Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
+            else if (IsPropertyButton(e.Location, bounds)) Aggregator?.Property.Raise(EventAggregator.SelectedPage);
         }
 
         /* ----------------------------------------------------------------- */
