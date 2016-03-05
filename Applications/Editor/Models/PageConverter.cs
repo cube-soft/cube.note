@@ -17,10 +17,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Text;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor

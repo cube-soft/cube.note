@@ -85,7 +85,7 @@
     </Compile>
     <Compile Include="Models\MenuRenderer.cs" />
     <Compile Include="Models\PageConverter.cs" />
-    <Compile Include="Models\PageEx.cs" />
+    <Compile Include="Models\PageHandler.cs" />
     <Compile Include="Views\PageCollectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
