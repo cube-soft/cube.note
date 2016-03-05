@@ -142,13 +142,15 @@ namespace Cube.Note.App.Editor
 
             Sync(() =>
             {
-                if (Settings.Current.Tag == null ||
-                    Settings.Current.Tag == Model.Tags.Everyone ||
-                    page.Tags.Contains(Settings.Current.Tag.Name))
+                if (ViewContains(page)) View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
+                else
                 {
-                    View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
+                    var source = View.DataSource;
+                    if (source == null) return;
+
+                    source.Remove(page);
+                    if (source.Count <= 0) Settings.Current.Page = null;
                 }
-                else View.DataSource?.Remove(page);
             });
         }
 

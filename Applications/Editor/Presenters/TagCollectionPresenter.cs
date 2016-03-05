@@ -80,9 +80,12 @@ namespace Cube.Note.App.Editor
                 var dialog = new PropertyForm(page, Model);
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-                Model.Decrease(page.Tags);
+                if (page.Tags.Count == 0) Model.Nothing?.Decrement();
+                else Model.Decrease(page.Tags);
                 page.Tags.Clear();
-                foreach (var name in dialog.Tags)
+
+                if (dialog.Tags.Count == 0) Model.Nothing?.Increment();
+                else foreach (var name in dialog.Tags)
                 {
                     Model.Create(name).Count++;
                     page.Tags.Add(name);

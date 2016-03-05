@@ -165,8 +165,8 @@ namespace Cube.Note
         {
             var page = new Page();
             Touch(page);
-            Increment(Tags.Everyone);
-            if (tag != Tags.Everyone) Increment(tag);
+            Tags.Everyone?.Increment();
+            if (tag != Tags.Everyone) tag?.Increment();
             if (tag != null && tag != Tags.Everyone && tag != Tags.Nothing) page.Tags.Add(tag.Name);
             Insert(index, page);
         }
@@ -184,12 +184,12 @@ namespace Cube.Note
         {
             var page = new Page { Abstract = src.Abstract };
             CopyFile(src, page);
-            Increment(Tags.Everyone);
-            if (page.Tags.Count == 0) Increment(Tags.Nothing);
+            Tags.Everyone?.Increment();
+            if (page.Tags.Count == 0) Tags.Nothing?.Increment();
             else foreach (var tag in src.Tags)
             {
                 page.Tags.Add(tag);
-                Increment(Tags.Get(tag));
+                Tags.Get(tag)?.Increment();
             }
             Insert(index, page);
         }
@@ -233,9 +233,9 @@ namespace Cube.Note
             {
                 if (!IoEx.File.Exists(ToPath(page))) continue;
                 Add(page);
-                Increment(Tags.Everyone);
-                if (page.Tags.Count == 0) Increment(Tags.Nothing);
-                else foreach (var tag in page.Tags) Increment(Tags.Create(tag));
+                Tags.Everyone?.Increment();
+                if (page.Tags.Count == 0) Tags.Nothing?.Increment();
+                else foreach (var tag in page.Tags) Tags.Create(tag)?.Increment();
             }
 
             OnLoaded(EventArgs.Empty);
@@ -294,8 +294,8 @@ namespace Cube.Note
                 var page = Items[index];
                 if (page == null) return;
 
-                Decrement(Tags.Everyone);
-                if (page.Tags.Count == 0) Decrement(Tags.Nothing);
+                Tags.Everyone?.Decrement();
+                if (page.Tags.Count == 0) Tags.Nothing?.Decrement();
                 else Tags.Decrease(page.Tags);
                 Clean(page);
             }
@@ -395,43 +395,6 @@ namespace Cube.Note
             if (IoEx.Directory.Exists(path)) return;
             IoEx.Directory.CreateDirectory(path);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Plus
-        ///
-        /// <summary>
-        /// タグの Count を加算します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Plus(Tag tag, int value)
-        {
-            if (tag == null) return;
-            tag.Count += value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Increment
-        ///
-        /// <summary>
-        /// タグの Count を 1 加算します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Increment(Tag tag) => Plus(tag, 1);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Decrement
-        ///
-        /// <summary>
-        /// タグの Count を 1 減算します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Decrement(Tag tag) => Plus(tag, -1);
 
         #endregion
     }

@@ -240,20 +240,16 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Increase
+        /// Increment
         ///
         /// <summary>
-        /// 指定されたタグの Count を増加させます。
+        /// 指定されたタグの Count を 1 増加させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Increase(IEnumerable<string> tags)
+        public void Increment(IEnumerable<string> tags)
         {
-            foreach (var name in tags)
-            {
-                var tag = Create(name);
-                tag.Count++;
-            }
+            foreach (var name in tags) Create(name)?.Increment();
         }
 
         /* ----------------------------------------------------------------- */
@@ -267,12 +263,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public void Decrease(IEnumerable<string> tags)
         {
-            foreach (var name in tags)
-            {
-                var tag = Get(name);
-                if (tag == null) continue;
-                tag.Count = Math.Max(tag.Count - 1, 0);
-            }
+            foreach (var name in tags) Get(name)?.Decrement();
         }
 
         /* ----------------------------------------------------------------- */
