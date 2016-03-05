@@ -129,7 +129,7 @@ namespace Cube.Note.App.Editor
         {
             PageCollectionControl.Aggregator = Aggregator;
 
-            new MenuPresenter(MenuControl, /* Current, */ Settings, Aggregator);
+            new MenuPresenter(MenuControl, Pages, Settings, Aggregator);
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);

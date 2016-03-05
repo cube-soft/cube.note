@@ -32,7 +32,7 @@ namespace Cube.Note.App.Editor
     /// 
     /* --------------------------------------------------------------------- */
     public class MenuPresenter
-        : PresenterBase<MenuControl, ConditionsValue>
+        : PresenterBase<MenuControl, PageCollection>
     {
         #region Constructors
 
@@ -45,8 +45,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuPresenter(MenuControl view, SettingsFolder settings, EventAggregator events)
-            : base(view, settings.Current, settings, events)
+        public MenuPresenter(MenuControl view, PageCollection model,
+            SettingsFolder settings, EventAggregator events)
+            : base(view, model, settings, events)
         {
             Events.Settings.Handle += (s, e) => ShowSettings(0);
             Events.TagSettings.Handle += (s, e) => ShowSettings(3 /* Tag */);
@@ -56,7 +57,7 @@ namespace Cube.Note.App.Editor
             View.SettingsMenu.Click += (s, e) => Events.Settings.Raise();
             View.LogoMenu.Click += View_LogoMenu;
 
-            Model.PropertyChanged += Model_PropertyChanged;
+            Settings.Current.PropertyChanged += Settings_CurrentChanged;
         }
 
         #endregion
@@ -82,32 +83,32 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Model
+        #region Settings
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_PropertyChanged
+        /// Settings_CurrentChanged
         /// 
         /// <summary>
         /// プロパティの内容が変化した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_PropertyChanged(object sender,
+        private void Settings_CurrentChanged(object sender,
             PropertyChangedEventArgs e) => Sync(() =>
+        {
+            switch (e.PropertyName)
             {
-                switch (e.PropertyName)
-                {
-                    case nameof(Settings.Current.CanUndo):
-                        View.UndoMenu.Enabled = Settings.Current.CanUndo;
-                        break;
-                    case nameof(Settings.Current.CanRedo):
-                        View.RedoMenu.Enabled = Settings.Current.CanRedo;
-                        break;
-                    default:
-                        break;
-                }
-            });
+                case nameof(Settings.Current.CanUndo):
+                    View.UndoMenu.Enabled = Settings.Current.CanUndo;
+                    break;
+                case nameof(Settings.Current.CanRedo):
+                    View.RedoMenu.Enabled = Settings.Current.CanRedo;
+                    break;
+                default:
+                    break;
+            }
+        });
 
         #endregion
 
