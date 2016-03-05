@@ -143,7 +143,7 @@ namespace Cube.Note.App.Editor
             Sync(() =>
             {
                 if (Settings.Current.Tag == null ||
-                    Settings.Current.Tag == Model.Everyone ||
+                    Settings.Current.Tag == Model.Tags.Everyone ||
                     page.Tags.Contains(Settings.Current.Tag.Name))
                 {
                     View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
@@ -254,7 +254,7 @@ namespace Cube.Note.App.Editor
             Events.Remove.Handle += Remove_Handled;
 
             SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
-            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Everyone));
+            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Tags.Everyone));
 
             Model.CollectionChanged += Model_CollectionChanged;
 
@@ -446,7 +446,7 @@ namespace Cube.Note.App.Editor
             if (View.DataSource == null) return false;
 
             return Settings.Current.Tag == null ||
-                   Settings.Current.Tag == Model.Everyone ||
+                   Settings.Current.Tag == Model.Tags.Everyone ||
                    page.Tags.Contains(Settings.Current.Tag.Name);
         }
 

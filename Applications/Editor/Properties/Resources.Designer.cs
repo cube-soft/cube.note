@@ -313,6 +313,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   未整理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NothingTag {
+            get {
+                return ResourceManager.GetString("NothingTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   貼り付け (V) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PasteMenu {

@@ -52,24 +52,8 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, pages.Tags, settings, events)
         {
-            Everyone = pages.Everyone;
             Model.Loaded += Model_Loaded;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Everyone
-        ///
-        /// <summary>
-        /// すべてのノートを表示する事を表すタグを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Tag Everyone { get; }
 
         #endregion
 
@@ -257,9 +241,9 @@ namespace Cube.Note.App.Editor
 
             if (View.Items.Count > 0) View.Items.Clear();
 
-            Everyone.PropertyChanged -= Model_PropertyChanged;
-            Everyone.PropertyChanged += Model_PropertyChanged;
-            View.Items.Add(Everyone);
+            Model.Everyone.PropertyChanged -= Model_PropertyChanged;
+            Model.Everyone.PropertyChanged += Model_PropertyChanged;
+            View.Items.Add(Model.Everyone);
 
             foreach (var tag in Model)
             {

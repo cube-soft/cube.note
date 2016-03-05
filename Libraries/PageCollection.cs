@@ -132,26 +132,6 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public TagCollection Tags { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Everyone
-        ///
-        /// <summary>
-        /// すべてのノートを表示する事に該当するタグを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Tag Everyone
-        {
-            get { return _everyone; }
-            set
-            {
-                if (_everyone == value) return;
-                _everyone = value;
-                if (_everyone != null) _everyone.Count = Count;
-            }
-        }
-
         #endregion
 
         #region Events
@@ -180,15 +160,15 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage(int index = 0) => NewPage(Everyone, index);
+        public void NewPage(int index = 0) => NewPage(Tags.Everyone, index);
         public void NewPage(Tag tag, int index = 0)
         {
             var page = new Page();
-            if (tag != null && tag != Everyone) page.Tags.Add(tag.Name);
+            if (tag != null && tag != Tags.Everyone) page.Tags.Add(tag.Name);
             Touch(page);
             Insert(index, page);
-            if (Everyone != null) Everyone.Count++;
-            if (tag != null && tag != Everyone) tag.Count++;
+            if (Tags.Everyone != null) Tags.Everyone.Count++;
+            if (tag != null && tag != Tags.Everyone) tag.Count++;
         }
 
         /* ----------------------------------------------------------------- */
@@ -209,7 +189,7 @@ namespace Cube.Note
                 page.Tags.Add(tag);
                 Tags.Get(tag).Count++;
             }
-            if (Everyone != null) Everyone.Count++;
+            if (Tags.Everyone != null) Tags.Everyone.Count++;
             Insert(index, page);
         }
 
@@ -226,7 +206,7 @@ namespace Cube.Note
         {
             return Items.Where(item
                 => item.Tags.Contains(tag.Name) ||
-                   tag == Everyone
+                   tag == Tags.Everyone
             );
         }
 
@@ -251,7 +231,7 @@ namespace Cube.Note
             {
                 if (!IoEx.File.Exists(ToPath(page))) continue;
                 Add(page);
-                if (Everyone != null) Everyone.Count++;
+                if (Tags.Everyone != null) Tags.Everyone.Count++;
                 foreach (var tag in page.Tags) Tags.Create(tag).Count++;
             }
 
@@ -312,7 +292,7 @@ namespace Cube.Note
                 if (page == null) return;
 
                 Tags.Decrease(page.Tags);
-                if (Everyone != null) Everyone.Count--;
+                if (Tags.Everyone != null) Tags.Everyone.Count--;
                 Clean(page);
             }
             finally { base.RemoveItem(index); }
@@ -412,10 +392,6 @@ namespace Cube.Note
             IoEx.Directory.CreateDirectory(path);
         }
 
-        #endregion
-
-        #region Fields
-        private Tag _everyone;
         #endregion
     }
 }

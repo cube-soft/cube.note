@@ -118,6 +118,46 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public string Path { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Everyone
+        ///
+        /// <summary>
+        /// すべてのノートを表示する事に該当するタグを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Everyone
+        {
+            get { return _everyone; }
+            set
+            {
+                if (_everyone == value) return;
+                _everyone = value;
+                if (_everyone != null) _everyone.Count = Count;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Nothing
+        ///
+        /// <summary>
+        /// 一つもタグが設定されていない事を示すタグを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Nothing
+        {
+            get { return _nothing; }
+            set
+            {
+                if (_nothing == value) return;
+                _nothing = value;
+                if (_nothing != null) _nothing.Count = Count;
+            }
+        }
+
         #endregion
 
         #region Events
@@ -307,6 +347,11 @@ namespace Cube.Note
             IoEx.Directory.CreateDirectory(directory);
         }
 
+        #endregion
+
+        #region Fields
+        private Tag _everyone;
+        private Tag _nothing;
         #endregion
     }
 }

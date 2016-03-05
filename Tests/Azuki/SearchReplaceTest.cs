@@ -52,7 +52,7 @@ namespace Cube.Note.Tests.Azuki
         public void Search_Count(string keyword, bool sensitive, int expected)
         {
             var src = Create();
-            src.Search(keyword, sensitive, Pages.Everyone);
+            src.Search(keyword, sensitive, Pages.Tags.Everyone);
             Assert.That(src.Results.Count(), Is.EqualTo(expected));
         }
 
@@ -69,7 +69,7 @@ namespace Cube.Note.Tests.Azuki
         public void Reset(string keyword, bool sensitive)
         {
             var src = Create();
-            src.Search(keyword, sensitive, Pages.Everyone);
+            src.Search(keyword, sensitive, Pages.Tags.Everyone);
             src.Reset();
             Assert.That(src.Results.Count(), Is.EqualTo(0));
         }

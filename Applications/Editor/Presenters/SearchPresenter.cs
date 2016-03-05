@@ -250,7 +250,7 @@ namespace Cube.Note.App.Editor
             View.SearchRange.BeginUpdate();
             View.SearchRange.Items.Clear();
             View.SearchRange.Items.Add(Properties.Resources.CurrentNote);
-            View.SearchRange.Items.Add(Model.Pages.Everyone);
+            View.SearchRange.Items.Add(Model.Pages.Tags.Everyone);
             View.SearchRange.Items.AddRange(Model.Pages.Tags.ToArray());
             View.SearchRange.EndUpdate();
         }
