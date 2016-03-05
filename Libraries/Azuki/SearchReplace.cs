@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
 using Sgry.Azuki;
 using Sgry.Azuki.Highlighter;
@@ -526,7 +527,7 @@ namespace Cube.Note.Azuki
             if (src == null) return;
 
             var highlight = new KeywordHighlighter();
-            highlight.AddRegex(keyword, !sensitive, CharClass.Keyword);
+            highlight.AddRegex(Regex.Escape(keyword), !sensitive, CharClass.Keyword);
             src.Highlighter = highlight;
         });
 

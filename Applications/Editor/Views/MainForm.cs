@@ -316,10 +316,9 @@ namespace Cube.Note.App.Editor
             var prev = e.Effect;
             base.OnDragEnter(e);
             if (e.Effect != prev) return;
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
 
-            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ?
-                       DragDropEffects.Copy :
-                       DragDropEffects.None;
+            e.Effect = DragDropEffects.Copy;
         }
 
         /* ----------------------------------------------------------------- */
@@ -337,11 +336,11 @@ namespace Cube.Note.App.Editor
 
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
             if (files == null) return;
+
             foreach (var path in files)
             {
-                Aggregator.Import.Raise(
-                    new KeyValueEventArgs<int, string>(0, path)
-                );
+                var args = new KeyValueEventArgs<int, string>(0, path);
+                Aggregator.Import.Raise(args);
             }
         }
 
@@ -429,8 +428,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RaiseSearch()
         {
-            var index = TextControlIsActive() ? 0 : 1;
-            Aggregator.Search.Raise(new KeyValueEventArgs<int, string>(index, ""));
+            var index   = TextControlIsActive() ? 0 : 1;
+            var keyword = TextControl.Enabled ? TextControl.GetSelectedText() : "";
+            Aggregator.Search.Raise(new KeyValueEventArgs<int, string>(index, keyword));
         }
 
         #endregion

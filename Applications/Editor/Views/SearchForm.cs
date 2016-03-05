@@ -80,13 +80,24 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 検索キーワードを取得または設定します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 複数行に渡る文字列の場合、最初の 1 行だけを対象とします。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
         public string Keyword
         {
             get { return SearchTextBox.Text; }
-            set { SearchTextBox.Text  = value; }
+            set
+            {
+                var index = value?.IndexOf(Environment.NewLine);
+                SearchTextBox.Text =
+                    index.HasValue && index.Value != -1 ?
+                    value.Substring(0, index.Value) :
+                    value;
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -273,7 +284,7 @@ namespace Cube.Note.App.Editor
         /// SelectKeyword
         ///
         /// <summary>
-        /// キーワードを全選択状態にします。
+        /// キーワードを全選択状態に設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
