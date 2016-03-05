@@ -239,12 +239,12 @@
             // 
             // NewTagTextBox
             // 
-            this.NewTagTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.NewTagTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.NewTagTextBox.Location = new System.Drawing.Point(0, 1);
+            this.NewTagTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NewTagTextBox.Location = new System.Drawing.Point(0, 0);
             this.NewTagTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.NewTagTextBox.Name = "NewTagTextBox";
-            this.NewTagTextBox.Size = new System.Drawing.Size(239, 16);
+            this.NewTagTextBox.Size = new System.Drawing.Size(237, 16);
             this.NewTagTextBox.TabIndex = 8;
             // 
             // PropertyForm
