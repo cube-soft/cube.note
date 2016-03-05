@@ -57,11 +57,10 @@ namespace Cube.Note.App.Editor
             _countLabel.BorderSides = ToolStripStatusLabelBorderSides.Left;
             _countLabel.Padding = new Padding(20, 0, 20, 0);
 
-            _messageLabel.Spring = true;
             _messageLabel.IsLink = true;
-            _messageLabel.Enabled = true;
             _messageLabel.LinkBehavior = LinkBehavior.HoverUnderline;
             _messageLabel.LinkColor = Color.FromArgb(80, 80, 80);
+            _messageLabel.Spring = true;
             _messageLabel.TextAlign = ContentAlignment.MiddleLeft;
             _messageLabel.Click += MessageLabel_Click;
 

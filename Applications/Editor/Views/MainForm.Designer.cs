@@ -95,6 +95,7 @@
             this.PageCollectionControl.Aggregator = null;
             this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
             this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(128)));
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
@@ -194,9 +195,11 @@
             this.FooterStatusControl.LineCount = 0;
             this.FooterStatusControl.LineNumber = 0;
             this.FooterStatusControl.Location = new System.Drawing.Point(0, 437);
+            this.FooterStatusControl.Message = "";
             this.FooterStatusControl.Name = "FooterStatusControl";
             this.FooterStatusControl.Size = new System.Drawing.Size(782, 22);
             this.FooterStatusControl.TabIndex = 5;
+            this.FooterStatusControl.Uri = null;
             // 
             // MainForm
             // 
@@ -207,7 +210,7 @@
             this.KeyPreview = true;
             this.MaximizeBox = true;
             this.MinimizeBox = true;
-            this.MinimumSize = new System.Drawing.Size(400, 300);
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "MainForm";
             this.Sizable = true;
             this.LayoutPanel.ResumeLayout(false);
