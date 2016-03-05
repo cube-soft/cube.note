@@ -72,7 +72,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void NewPage_Handled(object sender, EventArgs e)
         {
-            Model.NewPage(Settings.Current.Tag, 0);
+            Model.NewPage(Settings.Current.Tag);
             Sync(() => View.Select(0));
         }
 

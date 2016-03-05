@@ -180,8 +180,8 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage(int index) => NewPage(Everyone, index);
-        public void NewPage(Tag tag, int index)
+        public void NewPage(int index = 0) => NewPage(Everyone, index);
+        public void NewPage(Tag tag, int index = 0)
         {
             var page = new Page();
             if (tag != null && tag != Everyone) page.Tags.Add(tag.Name);
