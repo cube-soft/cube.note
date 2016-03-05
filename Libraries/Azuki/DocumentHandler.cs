@@ -17,9 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using Sgry.Azuki;
 using IoEx = System.IO;
 
@@ -31,143 +29,31 @@ namespace Cube.Note.Azuki
     /// 
     /// <summary>
     /// Azuki.Document オブジェクトを扱うためのクラスです。
-    /// Page および PageCollection クラスに対する拡張メソッドとして
-    /// 実装されます。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
     public static class DocumentHandler
     {
-        #region Document extension methods
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Save
-        /// 
-        /// <summary>
-        /// Document の内容をファイルに保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Save(this Document src, string path)
-        {
-            var bytes = _Encoding.GetBytes(src.Text);
-            var bom = _Encoding.GetBytes("\xFEFF");
-
-            using (var stream = IoEx.File.Open(path,
-                IoEx.FileMode.OpenOrCreate, IoEx.FileAccess.ReadWrite, IoEx.FileShare.ReadWrite))
-            {
-                stream.SetLength(0);
-                stream.Write(bom, 0, bom.Length);
-                stream.Write(bytes, 0, bytes.Length);
-            }
-
-            src.IsDirty = false;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetAbstract
-        /// 
-        /// <summary>
-        /// 概要を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string GetAbstract(this Document document, int maxLength)
-        {
-            for (var i = 0; i < document.LineCount; ++i)
-            {
-                var content = document.GetLineContent(i).Trim();
-                if (content.Length <= 0) continue;
-
-                return content.Length > maxLength ?
-                       content.Substring(0, maxLength) :
-                       content;
-            }
-            return string.Empty;
-        }
-
-        #endregion
-
-        #region Page extension methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateDocument
-        /// 
-        /// <summary>
-        /// 新しい Document オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Document CreateDocument(this Page page, string directory)
-        {
-            var done = page.Document as Document;
-            if (done != null) return done;
-
-            var path = IoEx.Path.Combine(directory, page.FileName);
-            var dest = CreateDocument(path);
-            page.Document = dest;
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveDocument
-        /// 
-        /// <summary>
-        /// 内容を保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void SaveDocument(this Page page, string directory)
-        {
-            var doc = page.Document as Document;
-            if (doc == null || doc.IsReadOnly || !doc.IsDirty) return;
-            
-            var path = IoEx.Path.Combine(directory, page.FileName);
-            doc.Save(path);
-            page.LastUpdate = DateTime.Now;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateAbstract
-        /// 
-        /// <summary>
-        /// Abstract プロパティの内容を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void UpdateAbstract(this Page page, int maxLength)
-        {
-            var document = page.Document as Document;
-            if (document == null) return;
-            page.Abstract = document.GetAbstract(maxLength);
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateDocument
+        /// Create
         /// 
         /// <summary>
         /// ファイルから内容を読み込だ Document オブジェクトを生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Document CreateDocument(string path)
+        public static Document Create(string path) => Create(path, Encoding.UTF8);
+        public static Document Create(string path, Encoding encoding)
         {
             var dest = new Document { MarksUri = true };
             if (!IoEx.File.Exists(path)) return dest;
-            
+
             using (var stream = IoEx.File.Open(path,
                 IoEx.FileMode.Open, IoEx.FileAccess.Read, IoEx.FileShare.ReadWrite))
-            using (var reader = new IoEx.StreamReader(stream, _Encoding, true))
+            using (var reader = new IoEx.StreamReader(stream, encoding, true))
             {
                 dest.Capacity = (int)(reader.BaseStream.Length / 2);
 
@@ -189,10 +75,55 @@ namespace Cube.Note.Azuki
             return dest;
         }
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        /// 
+        /// <summary>
+        /// Document の内容をファイルに保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Save(this Document src, string path)
+        {
+            var encoding = Encoding.UTF8;
+            var bytes    = encoding.GetBytes(src.Text);
+            var bom      = encoding.GetBytes("\xFEFF");
 
-        #region Fields
-        private static System.Text.Encoding _Encoding = System.Text.Encoding.UTF8;
+            using (var stream = IoEx.File.Open(path,
+                IoEx.FileMode.OpenOrCreate, IoEx.FileAccess.ReadWrite, IoEx.FileShare.ReadWrite))
+            {
+                stream.SetLength(0);
+                stream.Write(bom, 0, bom.Length);
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
+            src.IsDirty = false;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetAbstract
+        ///
+        /// <summary>
+        /// 概要を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetAbstract(this Document document, int maxLength)
+        {
+            for (var i = 0; i < document.LineCount; ++i)
+            {
+                var content = document.GetLineContent(i).Trim();
+                if (content.Length <= 0) continue;
+
+                return content.Length > maxLength ?
+                       content.Substring(0, maxLength) :
+                       content;
+            }
+            return string.Empty;
+        }
+
         #endregion
     }
 }
