@@ -113,6 +113,8 @@
             this.RemoveTagButton = new Cube.Forms.Button();
             this.AddTagShadow = new System.Windows.Forms.Panel();
             this.AddTagButton = new Cube.Forms.Button();
+            this.NewTagWrapper = new System.Windows.Forms.Panel();
+            this.NewTagTextBox = new System.Windows.Forms.TextBox();
             this.VersionTabPage = new System.Windows.Forms.TabPage();
             this.TextColorColorButton = new Cube.Forms.ColorButton();
             this.LayoutPanel.SuspendLayout();
@@ -135,6 +137,7 @@
             this.TagButtonsPanel.SuspendLayout();
             this.RemoveTagShadow.SuspendLayout();
             this.AddTagShadow.SuspendLayout();
+            this.NewTagWrapper.SuspendLayout();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -1126,7 +1129,7 @@
             this.TagSettingsPanel.Name = "TagSettingsPanel";
             this.TagSettingsPanel.RowCount = 2;
             this.TagSettingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TagSettingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.TagSettingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.TagSettingsPanel.Size = new System.Drawing.Size(460, 380);
             this.TagSettingsPanel.TabIndex = 0;
             // 
@@ -1136,19 +1139,20 @@
             this.TagsPanel.Location = new System.Drawing.Point(12, 20);
             this.TagsPanel.Margin = new System.Windows.Forms.Padding(12, 20, 12, 4);
             this.TagsPanel.Name = "TagsPanel";
-            this.TagsPanel.Size = new System.Drawing.Size(436, 318);
+            this.TagsPanel.Size = new System.Drawing.Size(436, 323);
             this.TagsPanel.TabIndex = 0;
             // 
             // TagButtonsPanel
             // 
             this.TagButtonsPanel.Controls.Add(this.RemoveTagShadow);
             this.TagButtonsPanel.Controls.Add(this.AddTagShadow);
+            this.TagButtonsPanel.Controls.Add(this.NewTagWrapper);
             this.TagButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TagButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.TagButtonsPanel.Location = new System.Drawing.Point(0, 342);
+            this.TagButtonsPanel.Location = new System.Drawing.Point(0, 347);
             this.TagButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.TagButtonsPanel.Name = "TagButtonsPanel";
-            this.TagButtonsPanel.Size = new System.Drawing.Size(460, 38);
+            this.TagButtonsPanel.Size = new System.Drawing.Size(460, 33);
             this.TagButtonsPanel.TabIndex = 1;
             // 
             // RemoveTagShadow
@@ -1158,7 +1162,7 @@
             this.RemoveTagShadow.Location = new System.Drawing.Point(348, 3);
             this.RemoveTagShadow.Margin = new System.Windows.Forms.Padding(3, 3, 12, 3);
             this.RemoveTagShadow.Name = "RemoveTagShadow";
-            this.RemoveTagShadow.Size = new System.Drawing.Size(100, 32);
+            this.RemoveTagShadow.Size = new System.Drawing.Size(100, 27);
             this.RemoveTagShadow.TabIndex = 5;
             // 
             // RemoveTagButton
@@ -1171,7 +1175,7 @@
             this.RemoveTagButton.Location = new System.Drawing.Point(0, 0);
             this.RemoveTagButton.Margin = new System.Windows.Forms.Padding(0);
             this.RemoveTagButton.Name = "RemoveTagButton";
-            this.RemoveTagButton.Size = new System.Drawing.Size(100, 30);
+            this.RemoveTagButton.Size = new System.Drawing.Size(100, 25);
             this.RemoveTagButton.TabIndex = 0;
             this.RemoveTagButton.Text = "タグを削除";
             this.RemoveTagButton.UseVisualStyleBackColor = false;
@@ -1180,26 +1184,45 @@
             // 
             this.AddTagShadow.BackColor = System.Drawing.Color.Gainsboro;
             this.AddTagShadow.Controls.Add(this.AddTagButton);
-            this.AddTagShadow.Location = new System.Drawing.Point(242, 3);
+            this.AddTagShadow.Location = new System.Drawing.Point(222, 3);
             this.AddTagShadow.Name = "AddTagShadow";
-            this.AddTagShadow.Size = new System.Drawing.Size(100, 32);
+            this.AddTagShadow.Size = new System.Drawing.Size(120, 27);
             this.AddTagShadow.TabIndex = 4;
             // 
             // AddTagButton
             // 
-            this.AddTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.AddTagButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.AddTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.AddTagButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AddTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.AddTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.AddTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddTagButton.ForeColor = System.Drawing.Color.White;
             this.AddTagButton.Location = new System.Drawing.Point(0, 0);
             this.AddTagButton.Margin = new System.Windows.Forms.Padding(0);
             this.AddTagButton.Name = "AddTagButton";
-            this.AddTagButton.Size = new System.Drawing.Size(100, 30);
+            this.AddTagButton.Size = new System.Drawing.Size(120, 25);
             this.AddTagButton.TabIndex = 1;
-            this.AddTagButton.Text = "タグを追加";
+            this.AddTagButton.Text = "新しいタグを追加";
             this.AddTagButton.UseVisualStyleBackColor = false;
+            // 
+            // NewTagWrapper
+            // 
+            this.NewTagWrapper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NewTagWrapper.Controls.Add(this.NewTagTextBox);
+            this.NewTagWrapper.Dock = System.Windows.Forms.DockStyle.Top;
+            this.NewTagWrapper.Location = new System.Drawing.Point(16, 3);
+            this.NewTagWrapper.Name = "NewTagWrapper";
+            this.NewTagWrapper.Size = new System.Drawing.Size(200, 25);
+            this.NewTagWrapper.TabIndex = 10;
+            // 
+            // NewTagTextBox
+            // 
+            this.NewTagTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.NewTagTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NewTagTextBox.Location = new System.Drawing.Point(0, 0);
+            this.NewTagTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.NewTagTextBox.Name = "NewTagTextBox";
+            this.NewTagTextBox.Size = new System.Drawing.Size(198, 16);
+            this.NewTagTextBox.TabIndex = 2;
             // 
             // VersionTabPage
             // 
@@ -1256,6 +1279,8 @@
             this.TagButtonsPanel.ResumeLayout(false);
             this.RemoveTagShadow.ResumeLayout(false);
             this.AddTagShadow.ResumeLayout(false);
+            this.NewTagWrapper.ResumeLayout(false);
+            this.NewTagWrapper.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1349,5 +1374,7 @@
         private Forms.Button AddTagButton;
         private System.Windows.Forms.Label SearchQueryTitleLabel;
         private System.Windows.Forms.TextBox SearchQueryTextBox;
+        private System.Windows.Forms.Panel NewTagWrapper;
+        private System.Windows.Forms.TextBox NewTagTextBox;
     }
 }

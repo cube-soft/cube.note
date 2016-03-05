@@ -60,6 +60,7 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings, int index = 0)
         {
             InitializeComponent();
+            InitializeLayout();
             InitializeVersionControl();
             Update(settings);
             InitializeEvents();
@@ -117,6 +118,21 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Initialize methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeLayout
+        ///
+        /// <summary>
+        /// レイアウトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeLayout()
+        {
+            var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
+            NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
