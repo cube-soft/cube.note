@@ -179,6 +179,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// UriColor
+        ///
+        /// <summary>
+        /// URL 色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color UriColor
+        {
+            get { return _uriColor; }
+            set
+            {
+                if (_uriColor == value) return;
+                _uriColor = value;
+                RaisePropertyChanged(nameof(UriColor));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// HighlightBackColor
         ///
         /// <summary>
@@ -740,6 +761,7 @@ namespace Cube.Note
 
             BackColor           = SystemColors.Window;
             ForeColor           = SystemColors.WindowText;
+            UriColor            = Color.Navy;
             HighlightBackColor  = SystemColors.Highlight;
             HighlightForeColor  = SystemColors.HighlightText;
             SearchBackColor     = Color.Orange;
@@ -774,6 +796,7 @@ namespace Cube.Note
         #region Fields
         private Color _backColor;
         private Color _foreColor;
+        private Color _uriColor;
         private Color _highlightBackColor;
         private Color _highlightForeColor;
         private Color _searchBackColor;
