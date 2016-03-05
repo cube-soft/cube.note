@@ -52,6 +52,7 @@ namespace Cube.Note.App.Editor
 
             Pages.ContextMenuStrip = CreateContextMenu();
             Pages.AllowDrop = true;
+            Pages.KeyDown += (s, e) => OnKeyDown(e);
         }
 
         #endregion
@@ -93,6 +94,38 @@ namespace Cube.Note.App.Editor
         {
             get { return Pages.Aggregator; }
             set { Pages.Aggregator = value; }
+        }
+
+        #endregion
+
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        ///
+        /// <summary>
+        /// キーが押下された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                var result = true;
+                switch (e.KeyCode)
+                {
+                    case Keys.Delete:
+                        Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+                e.Handled = result;
+            }
+            finally { base.OnKeyDown(e); }
         }
 
         #endregion

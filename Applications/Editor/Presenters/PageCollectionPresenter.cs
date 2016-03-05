@@ -87,14 +87,16 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Duplicate_Handle(object sender, ValueEventArgs<int> e)
+            => Sync(() =>
         {
+            if (View.DataSource == null) return;
             var src = GetIndex(e.Value);
-            if (src < 0 || src >= Model.Count) return;
+            if (src < 0 || src >= View.DataSource.Count) return;
 
             var dest = GetInsertIndex(e.Value);
-            Model.Duplicate(Model[src], dest);
-            Sync(() => View.Select(dest));
-        }
+            Model.Duplicate(View.DataSource[src], dest);
+            View.Select(dest);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -414,7 +416,7 @@ namespace Cube.Note.App.Editor
                            0
                 );
             }
-            return Math.Max(Math.Min(dest, Model.Count), 0);
+            return Math.Max(Math.Min(dest, View.DataSource?.Count ?? 0), 0);
         }
 
         /* ----------------------------------------------------------------- */

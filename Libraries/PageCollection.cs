@@ -185,7 +185,7 @@ namespace Cube.Note
             var page = new Page { Abstract = src.Abstract };
             CopyFile(src, page);
             Tags.Everyone?.Increment();
-            if (page.Tags.Count == 0) Tags.Nothing?.Increment();
+            if (src.Tags.Count == 0) Tags.Nothing?.Increment();
             else foreach (var tag in src.Tags)
             {
                 page.Tags.Add(tag);

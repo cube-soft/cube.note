@@ -288,7 +288,8 @@ namespace Cube.Note.App.Editor
                         );
                         break;
                     case Keys.R:
-                        RaiseProperty();
+                        if (e.Shift) Aggregator.TagSettings.Raise();
+                        else RaiseProperty();
                         break;
                     case Keys.T:
                         Aggregator.Settings.Raise();
