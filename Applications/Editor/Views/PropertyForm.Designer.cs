@@ -76,7 +76,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.LayoutPanel.Size = new System.Drawing.Size(398, 348);
+            this.LayoutPanel.Size = new System.Drawing.Size(398, 298);
             this.LayoutPanel.TabIndex = 0;
             // 
             // NewTagButton
@@ -86,7 +86,7 @@
             this.NewTagButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
             this.NewTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewTagButton.ForeColor = System.Drawing.Color.White;
-            this.NewTagButton.Location = new System.Drawing.Point(261, 251);
+            this.NewTagButton.Location = new System.Drawing.Point(261, 201);
             this.NewTagButton.Margin = new System.Windows.Forms.Padding(3, 3, 16, 0);
             this.NewTagButton.Name = "NewTagButton";
             this.NewTagButton.Size = new System.Drawing.Size(121, 25);
@@ -116,7 +116,7 @@
             this.TagsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.TagsPanel.Name = "TagsPanel";
             this.TagsPanel.Padding = new System.Windows.Forms.Padding(12, 4, 12, 4);
-            this.TagsPanel.Size = new System.Drawing.Size(398, 120);
+            this.TagsPanel.Size = new System.Drawing.Size(398, 70);
             this.TagsPanel.TabIndex = 2;
             // 
             // ButtonsPanel
@@ -127,7 +127,7 @@
             this.ButtonsPanel.Controls.Add(this.ApplyButtonShadow);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 288);
+            this.ButtonsPanel.Location = new System.Drawing.Point(0, 238);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
@@ -231,7 +231,7 @@
             this.NewTagWrapper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.NewTagWrapper.Controls.Add(this.NewTagTextBox);
             this.NewTagWrapper.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NewTagWrapper.Location = new System.Drawing.Point(16, 251);
+            this.NewTagWrapper.Location = new System.Drawing.Point(16, 201);
             this.NewTagWrapper.Margin = new System.Windows.Forms.Padding(16, 3, 3, 3);
             this.NewTagWrapper.Name = "NewTagWrapper";
             this.NewTagWrapper.Size = new System.Drawing.Size(239, 25);
@@ -252,7 +252,7 @@
             this.AcceptButton = this.ApplyButton;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.CancelButton = this.ExitButton;
-            this.ClientSize = new System.Drawing.Size(400, 350);
+            this.ClientSize = new System.Drawing.Size(400, 300);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(400, 300);
