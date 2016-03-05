@@ -98,6 +98,24 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Import_Handle
+        /// 
+        /// <summary>
+        /// ページのエクスポート時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Import_Handle(object sender, KeyValueEventArgs<int, string> e)
+        {
+            var path = !string.IsNullOrEmpty(e.Value) ? e.Value : GetImportFile();
+            if (string.IsNullOrEmpty(path)) return;
+
+            var index = GetInsertIndex(e.Key);
+            Async(() => Model.Import(path, index));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Export_Handle
         /// 
         /// <summary>
@@ -114,7 +132,7 @@ namespace Cube.Note.App.Editor
             var filename = page.GetAbstract();
             var dialog = new SaveFileDialog();
             dialog.FileName = filename.Length <= 30 ? filename : filename.Substring(0, 30);
-            dialog.Filter = Properties.Resources.ExportFilter;
+            dialog.Filter = Properties.Resources.TextFilter;
             dialog.OverwritePrompt = true;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
@@ -248,6 +266,7 @@ namespace Cube.Note.App.Editor
         {
             Events.NewPage.Handle += NewPage_Handled;
             Events.Duplicate.Handle += Duplicate_Handle;
+            Events.Import.Handle += Import_Handle;
             Events.Export.Handle += Export_Handle;
             Events.Edit.Handle += Edit_Handled;
             Events.Move.Handle += Move_Handle;
@@ -396,6 +415,31 @@ namespace Cube.Note.App.Editor
                 );
             }
             return Math.Max(Math.Min(dest, Model.Count), 0);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImportFile
+        /// 
+        /// <summary>
+        /// インポートするファイルを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private string GetImportFile()
+        {
+            var dest = string.Empty;
+            SyncWait(() =>
+            {
+                var dialog = new OpenFileDialog();
+                dialog.Title = Properties.Resources.ImportTitle;
+                dialog.Filter = Properties.Resources.TextFilter;
+                dialog.CheckFileExists = true;
+                dialog.Multiselect = false;
+                var result = dialog.ShowDialog();
+                if (result != DialogResult.Cancel) dest = dialog.FileName;
+            });
+            return dest;
         }
 
         /* ----------------------------------------------------------------- */

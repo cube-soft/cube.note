@@ -116,18 +116,25 @@ namespace Cube.Note.App.Editor
                 (s, e) => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage));
             dest.Items.Add(Properties.Resources.DuplicateMenu, null,
                 (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage));
-            dest.Items.Add(Properties.Resources.ImportMenu);
+            dest.Items.Add(Properties.Resources.ImportMenu, null,
+                (s, e) => Aggregator?.Import.Raise(new KeyValueEventArgs<int, string>(-1, "")));
+
             dest.Items.Add("-");
+
             dest.Items.Add(Properties.Resources.UpMenu, null,
                 (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(-1)));
             dest.Items.Add(Properties.Resources.DownMenu, null,
                 (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(1)));
+
             dest.Items.Add("-");
+
             dest.Items.Add(Properties.Resources.ExportMenu, null,
                 (s, e) => Aggregator?.Export.Raise(EventAggregator.SelectedPage));
             dest.Items.Add(Properties.Resources.RemoveMenu, null,
                 (s, e) => Aggregator?.Remove.Raise(EventAggregator.SelectedPage));
+
             dest.Items.Add("-");
+
             dest.Items.Add(Properties.Resources.PropertyMenu, null,
                 (s, e) => Aggregator?.Property.Raise(EventAggregator.SelectedPage));
 

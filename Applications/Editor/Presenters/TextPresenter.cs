@@ -59,7 +59,7 @@ namespace Cube.Note.App.Editor
             View.Visible = (Settings.Current.Page != null);
 
             Settings.Current.PageChanged += Settings_PageChanged;
-
+            
             InitializeTextMenu();
         }
 

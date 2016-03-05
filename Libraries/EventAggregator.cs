@@ -125,6 +125,18 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Import
+        ///
+        /// <summary>
+        /// ファイルをインポートするイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<KeyValueEventArgs<int, string>> Import { get; }
+            = new RelayEvent<KeyValueEventArgs<int, string>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Export
         ///
         /// <summary>

@@ -171,15 +171,6 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ExportFilter {
-            get {
-                return ResourceManager.GetString("ExportFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   ファイルに保存 (E) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ExportMenu {
@@ -217,11 +208,20 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルの内容を取り込む (I) に類似しているローカライズされた文字列を検索します。
+        ///   ファイルから作成 (I) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ImportMenu {
             get {
                 return ResourceManager.GetString("ImportMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubeNote に取り込むファイルを選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ImportTitle {
+            get {
+                return ResourceManager.GetString("ImportTitle", resourceCulture);
             }
         }
         
@@ -541,6 +541,15 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string ShowProperty {
             get {
                 return ResourceManager.GetString("ShowProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextFilter {
+            get {
+                return ResourceManager.GetString("TextFilter", resourceCulture);
             }
         }
         
