@@ -96,16 +96,16 @@
             this.SpecialCharsColorColorButton = new Cube.Forms.ColorButton();
             this.SpecialCharsColorLabel = new System.Windows.Forms.Label();
             this.BehaviorTabPage = new System.Windows.Forms.TabPage();
-            this.TagTabPage = new System.Windows.Forms.TabPage();
-            this.VersionTabPage = new System.Windows.Forms.TabPage();
-            this.TextColorColorButton = new Cube.Forms.ColorButton();
             this.BehaviorSettingsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.AutoSaveTimeTitleLabel = new System.Windows.Forms.Label();
             this.AutoSaveTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.AutoSaveTimeUnitLabel = new System.Windows.Forms.Label();
+            this.SearchQueryTitleLabel = new System.Windows.Forms.Label();
+            this.SearchQueryTextBox = new System.Windows.Forms.TextBox();
             this.RemoveWarningCheckBox = new System.Windows.Forms.CheckBox();
             this.OpenUriCheckBox = new System.Windows.Forms.CheckBox();
             this.ShowNewsCheckBox = new System.Windows.Forms.CheckBox();
+            this.TagTabPage = new System.Windows.Forms.TabPage();
             this.TagSettingsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.TagsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.TagButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -113,6 +113,8 @@
             this.RemoveTagButton = new Cube.Forms.Button();
             this.AddTagShadow = new System.Windows.Forms.Panel();
             this.AddTagButton = new Cube.Forms.Button();
+            this.VersionTabPage = new System.Windows.Forms.TabPage();
+            this.TextColorColorButton = new Cube.Forms.ColorButton();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
@@ -126,9 +128,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.TabWidthNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WordWrapCountNumericUpDown)).BeginInit();
             this.BehaviorTabPage.SuspendLayout();
-            this.TagTabPage.SuspendLayout();
             this.BehaviorSettingsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutoSaveTimeNumericUpDown)).BeginInit();
+            this.TagTabPage.SuspendLayout();
             this.TagSettingsPanel.SuspendLayout();
             this.TagButtonsPanel.SuspendLayout();
             this.RemoveTagShadow.SuspendLayout();
@@ -993,45 +995,13 @@
             this.BehaviorTabPage.Text = "動作オプション";
             this.BehaviorTabPage.UseVisualStyleBackColor = true;
             // 
-            // TagTabPage
-            // 
-            this.TagTabPage.Controls.Add(this.TagSettingsPanel);
-            this.TagTabPage.Location = new System.Drawing.Point(4, 24);
-            this.TagTabPage.Name = "TagTabPage";
-            this.TagTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TagTabPage.Size = new System.Drawing.Size(466, 386);
-            this.TagTabPage.TabIndex = 5;
-            this.TagTabPage.Text = "タグ編集";
-            this.TagTabPage.UseVisualStyleBackColor = true;
-            // 
-            // VersionTabPage
-            // 
-            this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
-            this.VersionTabPage.Margin = new System.Windows.Forms.Padding(0);
-            this.VersionTabPage.Name = "VersionTabPage";
-            this.VersionTabPage.Size = new System.Drawing.Size(466, 386);
-            this.VersionTabPage.TabIndex = 2;
-            this.VersionTabPage.Text = "CubeNote について";
-            this.VersionTabPage.UseVisualStyleBackColor = true;
-            // 
-            // TextColorColorButton
-            // 
-            this.TextColorColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.TextColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.TextColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TextColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.TextColorColorButton.Location = new System.Drawing.Point(121, 81);
-            this.TextColorColorButton.Name = "TextColorColorButton";
-            this.TextColorColorButton.Size = new System.Drawing.Size(50, 23);
-            this.TextColorColorButton.TabIndex = 30;
-            this.TextColorColorButton.Text = "colorButton1";
-            this.TextColorColorButton.UseVisualStyleBackColor = false;
-            // 
             // BehaviorSettingsPanel
             // 
             this.BehaviorSettingsPanel.Controls.Add(this.AutoSaveTimeTitleLabel);
             this.BehaviorSettingsPanel.Controls.Add(this.AutoSaveTimeNumericUpDown);
             this.BehaviorSettingsPanel.Controls.Add(this.AutoSaveTimeUnitLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTextBox);
             this.BehaviorSettingsPanel.Controls.Add(this.RemoveWarningCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.OpenUriCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.ShowNewsCheckBox);
@@ -1082,14 +1052,33 @@
             this.AutoSaveTimeUnitLabel.Text = "秒";
             this.AutoSaveTimeUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // SearchQueryTitleLabel
+            // 
+            this.SearchQueryTitleLabel.Location = new System.Drawing.Point(15, 52);
+            this.SearchQueryTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SearchQueryTitleLabel.Name = "SearchQueryTitleLabel";
+            this.SearchQueryTitleLabel.Size = new System.Drawing.Size(100, 23);
+            this.SearchQueryTitleLabel.TabIndex = 117;
+            this.SearchQueryTitleLabel.Text = "検索 URL";
+            this.SearchQueryTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SearchQueryTextBox
+            // 
+            this.BehaviorSettingsPanel.SetFlowBreak(this.SearchQueryTextBox, true);
+            this.SearchQueryTextBox.Location = new System.Drawing.Point(121, 52);
+            this.SearchQueryTextBox.Name = "SearchQueryTextBox";
+            this.SearchQueryTextBox.Size = new System.Drawing.Size(300, 23);
+            this.SearchQueryTextBox.TabIndex = 1;
+            // 
             // RemoveWarningCheckBox
             // 
             this.RemoveWarningCheckBox.AutoSize = true;
             this.BehaviorSettingsPanel.SetFlowBreak(this.RemoveWarningCheckBox, true);
-            this.RemoveWarningCheckBox.Location = new System.Drawing.Point(15, 52);
+            this.RemoveWarningCheckBox.Location = new System.Drawing.Point(15, 90);
+            this.RemoveWarningCheckBox.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             this.RemoveWarningCheckBox.Name = "RemoveWarningCheckBox";
             this.RemoveWarningCheckBox.Size = new System.Drawing.Size(218, 19);
-            this.RemoveWarningCheckBox.TabIndex = 1;
+            this.RemoveWarningCheckBox.TabIndex = 2;
             this.RemoveWarningCheckBox.Text = "ノート削除時に警告メッセージを表示する";
             this.RemoveWarningCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -1097,10 +1086,10 @@
             // 
             this.OpenUriCheckBox.AutoSize = true;
             this.BehaviorSettingsPanel.SetFlowBreak(this.OpenUriCheckBox, true);
-            this.OpenUriCheckBox.Location = new System.Drawing.Point(15, 77);
+            this.OpenUriCheckBox.Location = new System.Drawing.Point(15, 115);
             this.OpenUriCheckBox.Name = "OpenUriCheckBox";
             this.OpenUriCheckBox.Size = new System.Drawing.Size(221, 19);
-            this.OpenUriCheckBox.TabIndex = 2;
+            this.OpenUriCheckBox.TabIndex = 3;
             this.OpenUriCheckBox.Text = "URL ダブルクリック時に既定ブラウザで開く";
             this.OpenUriCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -1108,12 +1097,23 @@
             // 
             this.ShowNewsCheckBox.AutoSize = true;
             this.BehaviorSettingsPanel.SetFlowBreak(this.ShowNewsCheckBox, true);
-            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 102);
+            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 140);
             this.ShowNewsCheckBox.Name = "ShowNewsCheckBox";
             this.ShowNewsCheckBox.Size = new System.Drawing.Size(212, 19);
-            this.ShowNewsCheckBox.TabIndex = 3;
+            this.ShowNewsCheckBox.TabIndex = 4;
             this.ShowNewsCheckBox.Text = "ステータスバーに新着ニュースを表示する";
             this.ShowNewsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // TagTabPage
+            // 
+            this.TagTabPage.Controls.Add(this.TagSettingsPanel);
+            this.TagTabPage.Location = new System.Drawing.Point(4, 24);
+            this.TagTabPage.Name = "TagTabPage";
+            this.TagTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.TagTabPage.Size = new System.Drawing.Size(466, 386);
+            this.TagTabPage.TabIndex = 5;
+            this.TagTabPage.Text = "タグ編集";
+            this.TagTabPage.UseVisualStyleBackColor = true;
             // 
             // TagSettingsPanel
             // 
@@ -1201,6 +1201,29 @@
             this.AddTagButton.Text = "タグを追加";
             this.AddTagButton.UseVisualStyleBackColor = false;
             // 
+            // VersionTabPage
+            // 
+            this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
+            this.VersionTabPage.Margin = new System.Windows.Forms.Padding(0);
+            this.VersionTabPage.Name = "VersionTabPage";
+            this.VersionTabPage.Size = new System.Drawing.Size(466, 386);
+            this.VersionTabPage.TabIndex = 2;
+            this.VersionTabPage.Text = "CubeNote について";
+            this.VersionTabPage.UseVisualStyleBackColor = true;
+            // 
+            // TextColorColorButton
+            // 
+            this.TextColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.TextColorColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.TextColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TextColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.TextColorColorButton.Location = new System.Drawing.Point(121, 81);
+            this.TextColorColorButton.Name = "TextColorColorButton";
+            this.TextColorColorButton.Size = new System.Drawing.Size(50, 23);
+            this.TextColorColorButton.TabIndex = 30;
+            this.TextColorColorButton.Text = "colorButton1";
+            this.TextColorColorButton.UseVisualStyleBackColor = false;
+            // 
             // SettingsForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
@@ -1225,10 +1248,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.TabWidthNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WordWrapCountNumericUpDown)).EndInit();
             this.BehaviorTabPage.ResumeLayout(false);
-            this.TagTabPage.ResumeLayout(false);
             this.BehaviorSettingsPanel.ResumeLayout(false);
             this.BehaviorSettingsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutoSaveTimeNumericUpDown)).EndInit();
+            this.TagTabPage.ResumeLayout(false);
             this.TagSettingsPanel.ResumeLayout(false);
             this.TagButtonsPanel.ResumeLayout(false);
             this.RemoveTagShadow.ResumeLayout(false);
@@ -1324,5 +1347,7 @@
         private Forms.Button RemoveTagButton;
         private System.Windows.Forms.Panel AddTagShadow;
         private Forms.Button AddTagButton;
+        private System.Windows.Forms.Label SearchQueryTitleLabel;
+        private System.Windows.Forms.TextBox SearchQueryTextBox;
     }
 }
