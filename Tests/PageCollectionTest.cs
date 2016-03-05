@@ -135,6 +135,25 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Duplicate
+        ///
+        /// <summary>
+        /// ページを複製するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Duplicate()
+        {
+            Pages.Duplicate(Pages[0], 0);
+            Assert.That(
+                Pages[0].Abstract,
+                Is.EqualTo(Pages[1].Abstract)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Remove
         ///
         /// <summary>

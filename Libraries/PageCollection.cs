@@ -193,6 +193,28 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Duplicate
+        ///
+        /// <summary>
+        /// 新しいページを指定されたインデックスの位置に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Duplicate(Page src, int index)
+        {
+            var page = new Page { Abstract = src.Abstract };
+            CopyFile(src, page);
+            foreach (var tag in src.Tags)
+            {
+                page.Tags.Add(tag);
+                Tags.Get(tag).Count++;
+            }
+            if (Everyone != null) Everyone.Count++;
+            Insert(index, page);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Search
         ///
         /// <summary>
@@ -314,6 +336,23 @@ namespace Cube.Note
             var path = ToPath(page);
             CreateDirectory(IoEx.Path.GetDirectoryName(path));
             IoEx.File.Create(path).Close();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CopyFile
+        ///
+        /// <summary>
+        /// ファイルをコピーします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void CopyFile(Page src, Page dest)
+        {
+            var sp = ToPath(src);
+            var dp = ToPath(dest);
+            CreateDirectory(IoEx.Path.GetDirectoryName(dp));
+            IoEx.File.Copy(sp, dp);
         }
 
         /* ----------------------------------------------------------------- */
