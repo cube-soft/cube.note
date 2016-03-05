@@ -70,9 +70,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void NewPage_Handled(object sender, EventArgs e)
+        private void NewPage_Handled(object sender, ValueEventArgs<int> e)
         {
-            Model.NewPage(Settings.Current.Tag);
+            var index = Math.Max(Math.Min(e.Value, Model.Count), 0);
+            Model.NewPage(Settings.Current.Tag, index);
             Sync(() => View.Select(0));
         }
 
@@ -258,7 +259,7 @@ namespace Cube.Note.App.Editor
                     Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    if (Model.Count <= 0) NewPage_Handled(sender, EventArgs.Empty);
+                    if (Model.Count <= 0) NewPage_Handled(sender, new ValueEventArgs<int>(0));
                     break;
             }
         }

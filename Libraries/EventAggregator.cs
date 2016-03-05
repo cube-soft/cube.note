@@ -50,7 +50,8 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent NewPage { get; } = new RelayEvent();
+        public RelayEvent<ValueEventArgs<int>> NewPage { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
         ///

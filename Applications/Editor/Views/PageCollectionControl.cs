@@ -47,7 +47,8 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            NewPageButton.Click += (s, e) => Aggregator?.NewPage.Raise();
+            NewPageButton.Click += (s, e)
+                => Aggregator?.NewPage.Raise(new ValueEventArgs<int>(0));
 
             Pages.ContextMenuStrip = CreateContextMenu();
         }
