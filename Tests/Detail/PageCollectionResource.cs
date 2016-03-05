@@ -52,8 +52,6 @@ namespace Cube.Note.Tests
 
             Pages = new PageCollection(Results);
             Pages.Load();
-            Pages.Tags.Everyone = new Tag("Everyone");
-            Pages.Tags.Nothing  = new Tag("Nothing");
         }
 
         #endregion

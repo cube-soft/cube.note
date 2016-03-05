@@ -112,8 +112,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeModels()
         {
-            Pages.Tags.Everyone = new Tag(Properties.Resources.EveryoneTag);
-            Pages.Tags.Nothing  = new Tag(Properties.Resources.NothingTag);
+            Pages.Tags.Everyone.Name = Properties.Resources.EveryoneTag;
+            Pages.Tags.Nothing.Name  = Properties.Resources.NothingTag;
             Settings.Load();
         }
 

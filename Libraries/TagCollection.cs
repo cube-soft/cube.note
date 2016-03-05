@@ -341,8 +341,8 @@ namespace Cube.Note
         #endregion
 
         #region Fields
-        private Tag _everyone;
-        private Tag _nothing;
+        private Tag _everyone = new Tag("Everyone");
+        private Tag _nothing  = new Tag("Nothing");
         #endregion
     }
 }
