@@ -200,7 +200,18 @@ namespace Cube.Note.App.Editor
         public void Update(int index)
         {
             if (DataSource == null || index < 0 || index >= DataSource.Count) return;
-            Replace(index, DataSource[index]);
+
+            var src = Items[index];
+            var cvt = Converter.Convert(DataSource[index]);
+
+            Update(() =>
+            {
+                for (var i = 0; i < src.SubItems.Count; ++i)
+                {
+                    if (src.SubItems[i].Text == cvt.SubItems[i].Text) continue;
+                    src.SubItems[i].Text = cvt.SubItems[i].Text;
+                }
+            });
         }
 
         #endregion
@@ -512,17 +523,7 @@ namespace Cube.Note.App.Editor
             var index = DataSource?.IndexOf(page) ?? -1;
             if (index < 0 || index >= Items.Count) return;
 
-            var src = Items[index];
-            var cvt = Converter.Convert(page);
-
-            Update(() =>
-            {
-                for (var i = 0; i < src.SubItems.Count; ++i)
-                {
-                    if (src.SubItems[i].Text == cvt.SubItems[i].Text) continue;
-                    src.SubItems[i].Text = cvt.SubItems[i].Text;
-                }
-            });
+            Update(index);
         }
 
         #endregion

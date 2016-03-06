@@ -358,7 +358,7 @@ namespace Cube.Note.App.Editor
             if (Settings.Current.Page == null) return;
 
             var current = View.SelectedIndices.Count > 0 ?
-                            View.SelectedIndices[0] : -1;
+                          View.SelectedIndices[0] : -1;
             var changed = View.DataSource?.IndexOf(Settings.Current.Page) ?? -1;
             if (changed == -1 || changed == current) return;
 
