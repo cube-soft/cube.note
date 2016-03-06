@@ -260,7 +260,7 @@
             this.ClientSize = new System.Drawing.Size(450, 300);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
-            this.MinimumSize = new System.Drawing.Size(400, 200);
+            this.MinimumSize = new System.Drawing.Size(350, 180);
             this.Name = "TagForm";
             this.ShowInTaskbar = false;
             this.Sizable = true;

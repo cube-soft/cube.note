@@ -65,7 +65,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.LayoutPanel.Size = new System.Drawing.Size(782, 459);
+            this.LayoutPanel.Size = new System.Drawing.Size(698, 398);
             this.LayoutPanel.TabIndex = 2;
             // 
             // ContentsPanel
@@ -85,7 +85,7 @@
             // ContentsPanel.Panel2
             // 
             this.ContentsPanel.Panel2.Controls.Add(this.RightContentsPanel);
-            this.ContentsPanel.Size = new System.Drawing.Size(782, 407);
+            this.ContentsPanel.Size = new System.Drawing.Size(698, 346);
             this.ContentsPanel.SplitterDistance = 270;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
@@ -99,7 +99,7 @@
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
-            this.PageCollectionControl.Size = new System.Drawing.Size(270, 407);
+            this.PageCollectionControl.Size = new System.Drawing.Size(270, 346);
             this.PageCollectionControl.TabIndex = 0;
             // 
             // RightContentsPanel
@@ -117,7 +117,7 @@
             this.RightContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.RightContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.RightContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.RightContentsPanel.Size = new System.Drawing.Size(511, 407);
+            this.RightContentsPanel.Size = new System.Drawing.Size(427, 346);
             this.RightContentsPanel.TabIndex = 0;
             // 
             // TextControl
@@ -144,7 +144,7 @@
             this.TextControl.Margin = new System.Windows.Forms.Padding(0);
             this.TextControl.Name = "TextControl";
             this.TextControl.ScrollPos = new System.Drawing.Point(0, 0);
-            this.TextControl.Size = new System.Drawing.Size(511, 374);
+            this.TextControl.Size = new System.Drawing.Size(427, 313);
             this.TextControl.Status = null;
             this.TextControl.TabIndex = 1;
             this.TextControl.TopMargin = 6;
@@ -158,7 +158,7 @@
             this.VerticalSeparator.Location = new System.Drawing.Point(0, 32);
             this.VerticalSeparator.Margin = new System.Windows.Forms.Padding(0);
             this.VerticalSeparator.Name = "VerticalSeparator";
-            this.VerticalSeparator.Size = new System.Drawing.Size(511, 1);
+            this.VerticalSeparator.Size = new System.Drawing.Size(427, 1);
             this.VerticalSeparator.TabIndex = 3;
             this.VerticalSeparator.TabStop = false;
             // 
@@ -170,7 +170,7 @@
             this.MenuControl.Location = new System.Drawing.Point(0, 0);
             this.MenuControl.Name = "MenuControl";
             this.MenuControl.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.MenuControl.Size = new System.Drawing.Size(511, 32);
+            this.MenuControl.Size = new System.Drawing.Size(427, 32);
             this.MenuControl.TabIndex = 4;
             this.MenuControl.Text = "menuControl1";
             // 
@@ -183,7 +183,7 @@
             this.TitleControl.MaximizeBox = true;
             this.TitleControl.MinimizeBox = true;
             this.TitleControl.Name = "TitleControl";
-            this.TitleControl.Size = new System.Drawing.Size(782, 30);
+            this.TitleControl.Size = new System.Drawing.Size(698, 30);
             this.TitleControl.TabIndex = 4;
             // 
             // FooterStatusControl
@@ -194,10 +194,10 @@
             this.FooterStatusControl.GripMargin = new System.Windows.Forms.Padding(0);
             this.FooterStatusControl.LineCount = 0;
             this.FooterStatusControl.LineNumber = 0;
-            this.FooterStatusControl.Location = new System.Drawing.Point(0, 437);
+            this.FooterStatusControl.Location = new System.Drawing.Point(0, 376);
             this.FooterStatusControl.Message = "";
             this.FooterStatusControl.Name = "FooterStatusControl";
-            this.FooterStatusControl.Size = new System.Drawing.Size(782, 22);
+            this.FooterStatusControl.Size = new System.Drawing.Size(698, 22);
             this.FooterStatusControl.TabIndex = 5;
             this.FooterStatusControl.Uri = null;
             // 
@@ -205,13 +205,13 @@
             // 
             this.AllowDrop = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(700, 400);
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = true;
             this.MinimizeBox = true;
-            this.MinimumSize = new System.Drawing.Size(600, 400);
+            this.MinimumSize = new System.Drawing.Size(600, 210);
             this.Name = "MainForm";
             this.Sizable = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

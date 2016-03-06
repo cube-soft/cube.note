@@ -141,7 +141,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.LayoutPanel.Size = new System.Drawing.Size(498, 538);
+            this.LayoutPanel.Size = new System.Drawing.Size(498, 548);
             this.LayoutPanel.TabIndex = 0;
             // 
             // ResetButton
@@ -152,7 +152,7 @@
             this.ResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetButton.Font = new System.Drawing.Font("Meiryo UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.ResetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.ResetButton.Location = new System.Drawing.Point(12, 457);
+            this.ResetButton.Location = new System.Drawing.Point(12, 467);
             this.ResetButton.Margin = new System.Windows.Forms.Padding(12, 1, 0, 1);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(120, 25);
@@ -178,7 +178,7 @@
             this.ButtonsPanel.Controls.Add(this.ApplyButtonShadow);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 483);
+            this.ButtonsPanel.Location = new System.Drawing.Point(0, 493);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
@@ -242,7 +242,7 @@
             this.SettingsControl.Location = new System.Drawing.Point(12, 42);
             this.SettingsControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 0);
             this.SettingsControl.Name = "SettingsControl";
-            this.SettingsControl.Size = new System.Drawing.Size(474, 414);
+            this.SettingsControl.Size = new System.Drawing.Size(474, 424);
             this.SettingsControl.TabIndex = 5;
             // 
             // TabControl
@@ -256,7 +256,7 @@
             this.TabControl.Margin = new System.Windows.Forms.Padding(0);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(474, 414);
+            this.TabControl.Size = new System.Drawing.Size(474, 424);
             this.TabControl.TabIndex = 2;
             // 
             // GeneralTabPage
@@ -587,7 +587,7 @@
             this.VisibleTabPage.Location = new System.Drawing.Point(4, 24);
             this.VisibleTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleTabPage.Name = "VisibleTabPage";
-            this.VisibleTabPage.Size = new System.Drawing.Size(466, 386);
+            this.VisibleTabPage.Size = new System.Drawing.Size(466, 396);
             this.VisibleTabPage.TabIndex = 0;
             this.VisibleTabPage.Text = "表示オプション";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
@@ -629,7 +629,7 @@
             this.VisibleSettinsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleSettinsPanel.Name = "VisibleSettinsPanel";
             this.VisibleSettinsPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 386);
+            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 396);
             this.VisibleSettinsPanel.TabIndex = 0;
             // 
             // TabWidthTitleLabel
@@ -976,7 +976,7 @@
             this.BehaviorTabPage.Location = new System.Drawing.Point(4, 24);
             this.BehaviorTabPage.Name = "BehaviorTabPage";
             this.BehaviorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.BehaviorTabPage.Size = new System.Drawing.Size(466, 386);
+            this.BehaviorTabPage.Size = new System.Drawing.Size(466, 396);
             this.BehaviorTabPage.TabIndex = 4;
             this.BehaviorTabPage.Text = "動作オプション";
             this.BehaviorTabPage.UseVisualStyleBackColor = true;
@@ -996,7 +996,7 @@
             this.BehaviorSettingsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.BehaviorSettingsPanel.Name = "BehaviorSettingsPanel";
             this.BehaviorSettingsPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.BehaviorSettingsPanel.Size = new System.Drawing.Size(460, 380);
+            this.BehaviorSettingsPanel.Size = new System.Drawing.Size(460, 390);
             this.BehaviorSettingsPanel.TabIndex = 0;
             // 
             // AutoSaveTimeTitleLabel
@@ -1116,13 +1116,14 @@
             // SettingsForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
-            this.ClientSize = new System.Drawing.Size(500, 540);
+            this.ClientSize = new System.Drawing.Size(500, 550);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
-            this.MinimumSize = new System.Drawing.Size(500, 320);
+            this.MinimumSize = new System.Drawing.Size(480, 320);
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
             this.Sizable = true;
+            this.Text = "CubeNote 設定";
             this.LayoutPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
             this.ExitButtonShadow.ResumeLayout(false);
