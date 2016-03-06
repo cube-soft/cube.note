@@ -93,6 +93,18 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// RemoveTag_Handle
+        ///
+        /// <summary>
+        /// タグが削除された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveTag_Handle(object sender, ValueEventArgs<Tag> e)
+            => Model.Remove(e.Value);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Property_Handled
         ///
         /// <summary>
@@ -213,6 +225,7 @@ namespace Cube.Note.App.Editor
         private void Model_Loaded(object sender, EventArgs e)
         {
             Events.NewTag.Handle += NewTag_Handle;
+            Events.RemoveTag.Handle += RemoveTag_Handle;
             Events.Property.Handle += Property_Handled;
             Settings.Current.TagChanged += Settings_TagChanged;
             ViewReset(Model.Get(Settings.User.Tag));
@@ -233,12 +246,12 @@ namespace Cube.Note.App.Editor
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    SyncWait(() => InsertItem(e.NewStartingIndex, Model[e.NewStartingIndex]));
+                    SyncWait(() => InsertItem(e.NewStartingIndex));
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
-                    SyncWait(() => View.Items.RemoveAt(e.OldStartingIndex));
+                    SyncWait(() => RemoveItem(e.OldStartingIndex));
                     break;
                 default:
                     break;
@@ -286,15 +299,41 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        private void Attach(Tag tag)
+        {
+            if (tag == null) return;
+            tag.PropertyChanged -= Tag_PropertyChanged;
+            tag.PropertyChanged += Tag_PropertyChanged;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// イベントハンドラを関連付けます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private void Attach(IList tags)
         {
             if (tags == null) return;
+            foreach (Tag tag in tags) Attach(tag);
+        }
 
-            foreach (Tag tag in tags)
-            {
-                tag.PropertyChanged -= Tag_PropertyChanged;
-                tag.PropertyChanged += Tag_PropertyChanged;
-            }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// 関連付けられているイベントハンドラを解除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Detach(Tag tag)
+        {
+            if (tag == null) return;
+            tag.PropertyChanged -= Tag_PropertyChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -309,8 +348,61 @@ namespace Cube.Note.App.Editor
         private void Detach(IList tags)
         {
             if (tags == null) return;
+            foreach (Tag tag in tags) Detach(tag);
+        }
 
-            foreach (Tag tag in tags) tag.PropertyChanged -= Tag_PropertyChanged;
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddItem
+        ///
+        /// <summary>
+        /// タグを View.Items に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddItem(Tag tag)
+        {
+            if (tag == null) return;
+            Attach(tag);
+            View.Items.Add(tag);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertItem
+        ///
+        /// <summary>
+        /// タグを View.Items に挿入します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InsertItem(int modelIndex)
+        {
+            if (modelIndex < 0 || modelIndex >= Model.Count) return;
+
+            var tag = Model[modelIndex];
+            if (tag == null) return;
+
+            Attach(tag);
+
+            var index = Math.Min(modelIndex + Model.SystemTagCount, EditIndex);
+            View.Items.Insert(index, tag);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveItem
+        ///
+        /// <summary>
+        /// タグを View.Items から削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveItem(int modelIndex)
+        {
+            if (modelIndex < 0) return;
+            var index = Math.Min(modelIndex + Model.SystemTagCount, EditIndex - 1);
+            View.Items.RemoveAt(index);
         }
 
         /* ----------------------------------------------------------------- */
@@ -327,7 +419,7 @@ namespace Cube.Note.App.Editor
             var index = init == null ? 1 :
                         init == Model.Everyone ? 0 :
                         init == Model.Nothing  ? 1 :
-                        Model.IndexOf(init) + 2;
+                        Model.IndexOf(init) + Model.SystemTagCount;
 
             View.BeginUpdate();
             View.SelectedIndexChanged -= View_SelectedIndexChanged;
@@ -342,45 +434,6 @@ namespace Cube.Note.App.Editor
             View.SelectedIndex = Math.Max(Math.Min(index, EditIndex - 1), 0);
             View.EndUpdate();
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddItem
-        ///
-        /// <summary>
-        /// タグを View.Items に追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddItem(Tag tag)
-        {
-            if (tag == null) return;
-
-            tag.PropertyChanged -= Tag_PropertyChanged;
-            tag.PropertyChanged += Tag_PropertyChanged;
-
-            View.Items.Add(tag);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InsertItem
-        ///
-        /// <summary>
-        /// タグを View.Items に挿入します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InsertItem(int modelIndex, Tag tag)
-        {
-            if (tag == null) return;
-
-            tag.PropertyChanged -= Tag_PropertyChanged;
-            tag.PropertyChanged += Tag_PropertyChanged;
-
-            var index = Math.Min(modelIndex + Model.SystemTagCount, EditIndex);
-            View.Items.Insert(index, tag);
-        }
 
         #endregion
     }

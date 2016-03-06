@@ -80,7 +80,7 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// NewPage_Handled
+        /// Duplicate_Handle
         /// 
         /// <summary>
         /// 新しいページの作成要求が発生した時に実行されるハンドラです。
@@ -171,7 +171,7 @@ namespace Cube.Note.App.Editor
             var page = e.Value;
             if (page == null) return;
 
-            if (ViewContains(page)) View.Update(View.DataSource?.IndexOf(e.Value) ?? -1);
+            if (ViewContains(page)) View.Update(View.DataSource?.IndexOf(page) ?? -1);
             else
             {
                 var source = View.DataSource;
@@ -239,6 +239,28 @@ namespace Cube.Note.App.Editor
         });
 
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveTag_Handle
+        /// 
+        /// <summary>
+        /// タグの削除要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveTag_Handle(object sender, ValueEventArgs<Tag> e)
+            => Sync(() =>
+        {
+            if (e.Value == null) return;
+
+            foreach (var page in Model.Search(e.Value))
+            {
+                page.Tags.Remove(e.Value.Name);
+                if (!ViewContains(page)) continue;
+                View.Update(View.DataSource?.IndexOf(page) ?? -1);
+            }
+        });
+
         #endregion
 
         #region View
@@ -283,6 +305,7 @@ namespace Cube.Note.App.Editor
             Events.Edit.Handle += Edit_Handled;
             Events.Move.Handle += Move_Handle;
             Events.Remove.Handle += Remove_Handled;
+            Events.RemoveTag.Handle += RemoveTag_Handle;
 
             SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
             await Async(() => ViewReset(Settings.Current.Tag ?? Model.Tags.Nothing));
