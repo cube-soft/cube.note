@@ -402,6 +402,7 @@ namespace Cube.Note.App.Editor
         {
             if (modelIndex < 0) return;
             var index = Math.Min(modelIndex + Model.SystemTagCount, EditIndex - 1);
+            if (View.SelectedIndex == index) View.SelectedIndex = 0;
             View.Items.RemoveAt(index);
         }
 
