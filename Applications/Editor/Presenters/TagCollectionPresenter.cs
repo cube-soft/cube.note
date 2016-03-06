@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -52,6 +53,8 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, pages.Tags, settings, events)
         {
+            View.DrawMode = DrawMode.OwnerDrawFixed;
+            View.DrawItem += View_DrawItem;
             Model.Loaded += Model_Loaded;
         }
 
@@ -132,6 +135,39 @@ namespace Cube.Note.App.Editor
                 Events.TagSettings.Raise();
             }
             else Settings.Current.Tag = View.SelectedItem as Tag;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_DrawItem
+        ///
+        /// <summary>
+        /// 項目を描画します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var control = sender as ComboBox;
+            if (control == null || e.Index < 0) return;
+
+            var text = control.Items[e.Index].ToString();
+
+            if ((e.State & DrawItemState.ComboBoxEdit) != 0)
+            {
+                e.Graphics.FillRectangle(Brushes.Transparent, e.Bounds);
+                e.Graphics.DrawString(text, control.Font, Brushes.Black, e.Bounds.X, e.Bounds.Y);
+                return;
+            }
+
+            var system = (e.Index == 0 || e.Index == 1 || e.Index == View.Items.Count - 1);
+            var style  = system ? FontStyle.Bold : FontStyle.Regular;
+            using (var font = new Font(control.Font, style))
+            using (var brush = new SolidBrush(e.ForeColor))
+            {
+                e.DrawBackground();
+                e.Graphics.DrawString(text, font, brush, e.Bounds.X, e.Bounds.Y);
+            }
         }
 
         #endregion
