@@ -167,9 +167,15 @@ namespace Cube.Note
         {
             var page = new Page();
             Touch(page);
-            Tags.Everyone?.Increment();
-            if (tag != Tags.Everyone) tag?.Increment();
-            if (tag != null && tag != Tags.Everyone && tag != Tags.Nothing) page.Tags.Add(tag.Name);
+
+            Tags.Everyone.Increment();
+            if (tag != null && tag != Tags.Everyone && tag != Tags.Nothing)
+            {
+                tag.Increment();
+                page.Tags.Add(tag.Name);
+            }
+            else Tags.Nothing.Increment();
+
             if (initialize != null) initialize(page);
             Insert(index, page);
         }
@@ -188,11 +194,14 @@ namespace Cube.Note
         {
             page.Abstract = src.Abstract;
             CopyFile(src, page);
-            if (src.Tags.Count == 0) Tags.Nothing?.Increment();
-            else foreach (var tag in src.Tags)
+            if (src.Tags.Count > 0)
             {
-                page.Tags.Add(tag);
-                Tags.Get(tag)?.Increment();
+                foreach (var tag in src.Tags)
+                {
+                    Tags.Create(tag).Increment();
+                    page.Tags.Add(tag);
+                }
+                Tags.Nothing.Decrement();
             }
         });
 
@@ -235,9 +244,9 @@ namespace Cube.Note
             {
                 if (!IoEx.File.Exists(ToPath(page))) continue;
                 Add(page);
-                Tags.Everyone?.Increment();
-                if (page.Tags.Count == 0) Tags.Nothing?.Increment();
-                else foreach (var tag in page.Tags) Tags.Create(tag)?.Increment();
+                Tags.Everyone.Increment();
+                if (page.Tags.Count == 0) Tags.Nothing.Increment();
+                else foreach (var tag in page.Tags) Tags.Create(tag).Increment();
             }
 
             OnLoaded(EventArgs.Empty);
@@ -296,8 +305,8 @@ namespace Cube.Note
                 var page = Items[index];
                 if (page == null) return;
 
-                Tags.Everyone?.Decrement();
-                if (page.Tags.Count == 0) Tags.Nothing?.Decrement();
+                Tags.Everyone.Decrement();
+                if (page.Tags.Count == 0) Tags.Nothing.Decrement();
                 else Tags.Decrement(page.Tags);
                 Clean(page);
             }
