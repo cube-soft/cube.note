@@ -88,7 +88,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.LayoutPanel.Size = new System.Drawing.Size(448, 448);
+            this.LayoutPanel.Size = new System.Drawing.Size(448, 268);
             this.LayoutPanel.TabIndex = 0;
             // 
             // TitleControl
@@ -122,7 +122,8 @@
             // 
             this.ContentsPanel.Panel2.Controls.Add(this.ResultPanel);
             this.ContentsPanel.Panel2.Controls.Add(this.Separator);
-            this.ContentsPanel.Size = new System.Drawing.Size(448, 396);
+            this.ContentsPanel.Panel2Collapsed = true;
+            this.ContentsPanel.Size = new System.Drawing.Size(448, 216);
             this.ContentsPanel.SplitterDistance = 217;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 1;
@@ -136,7 +137,7 @@
             this.TabControl.Margin = new System.Windows.Forms.Padding(0);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(442, 211);
+            this.TabControl.Size = new System.Drawing.Size(442, 210);
             this.TabControl.TabIndex = 0;
             // 
             // SearchTabPage
@@ -145,7 +146,7 @@
             this.SearchTabPage.Location = new System.Drawing.Point(4, 24);
             this.SearchTabPage.Name = "SearchTabPage";
             this.SearchTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.SearchTabPage.Size = new System.Drawing.Size(434, 183);
+            this.SearchTabPage.Size = new System.Drawing.Size(434, 182);
             this.SearchTabPage.TabIndex = 0;
             this.SearchTabPage.Text = "検 索";
             this.SearchTabPage.UseVisualStyleBackColor = true;
@@ -160,7 +161,7 @@
             this.SearchPanel.Margin = new System.Windows.Forms.Padding(0);
             this.SearchPanel.Name = "SearchPanel";
             this.SearchPanel.Padding = new System.Windows.Forms.Padding(12);
-            this.SearchPanel.Size = new System.Drawing.Size(428, 177);
+            this.SearchPanel.Size = new System.Drawing.Size(428, 176);
             this.SearchPanel.TabIndex = 3;
             // 
             // ConditionPanel
@@ -404,7 +405,7 @@
             this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.FooterStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MessageLabel});
-            this.FooterStatusStrip.Location = new System.Drawing.Point(0, 426);
+            this.FooterStatusStrip.Location = new System.Drawing.Point(0, 246);
             this.FooterStatusStrip.Name = "FooterStatusStrip";
             this.FooterStatusStrip.Size = new System.Drawing.Size(448, 22);
             this.FooterStatusStrip.TabIndex = 2;
@@ -420,7 +421,7 @@
             // 
             // SearchForm
             // 
-            this.ClientSize = new System.Drawing.Size(450, 450);
+            this.ClientSize = new System.Drawing.Size(450, 270);
             this.Controls.Add(this.LayoutPanel);
             this.KeyPreview = true;
             this.MaximizeBox = true;
