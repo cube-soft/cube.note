@@ -50,6 +50,7 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
+            Events.Google.Handle += Google_Handle;
             Events.Settings.Handle += (s, e) => ShowSettings(0);
             Events.TagSettings.Handle += (s, e) => ShowTagSettings();
 
@@ -64,6 +65,30 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Event handlers
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Google_Handle
+        /// 
+        /// <summary>
+        /// インターネットで検索がクリックされた時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Google_Handle(object sender, ValueEventArgs<string> e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(e.Value)) return;
+                var query = Settings.User.SearchQuery + e.Value;
+                System.Diagnostics.Process.Start(query);
+            }
+            catch (Exception err) { Logger.Error(err); }
+        }
+
+        #endregion
 
         #region View
 

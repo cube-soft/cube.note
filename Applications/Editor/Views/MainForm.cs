@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Drawing;
 using System.Windows.Forms;
@@ -169,7 +170,21 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
+        [Browsable(false)]
         public ILog Logger { get; }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// SelectedText
+        /// 
+        /// <summary>
+        /// 選択中のテキストを取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(false)]
+        public string SelectedText
+            => TextControl.Enabled ? TextControl.GetSelectedText() : string.Empty;
 
         #endregion
 
@@ -258,6 +273,10 @@ namespace Cube.Note.App.Editor
                 var result = true;
                 switch (e.KeyCode)
                 {
+                    case Keys.C:
+                        if (e.Shift) Aggregator.Duplicate.Raise(EventAggregator.SelectedPage);
+                        else result = false;
+                        break;
                     case Keys.D:
                         Aggregator.Remove.Raise(EventAggregator.SelectedPage);
                         break;
@@ -266,6 +285,9 @@ namespace Cube.Note.App.Editor
                         break;
                     case Keys.F:
                         RaiseSearch();
+                        break;
+                    case Keys.G:
+                        Aggregator.Google.Raise(new ValueEventArgs<string>(SelectedText));
                         break;
                     case Keys.H:
                         SwitchMenu();
@@ -430,8 +452,7 @@ namespace Cube.Note.App.Editor
         private void RaiseSearch()
         {
             var index   = TextControlIsActive() ? 0 : 1;
-            var keyword = TextControl.Enabled ? TextControl.GetSelectedText() : "";
-            Aggregator.Search.Raise(new KeyValueEventArgs<int, string>(index, keyword));
+            Aggregator.Search.Raise(new KeyValueEventArgs<int, string>(index, SelectedText));
         }
 
         #endregion

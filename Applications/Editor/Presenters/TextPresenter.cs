@@ -161,30 +161,6 @@ namespace Cube.Note.App.Editor
             catch (Exception err) { Logger.Error(err); }
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Google
-        ///
-        /// <summary>
-        /// インターネットで検索ボタンが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_Google(object sender, EventArgs e)
-            => Sync(() =>
-        {
-            var keyword = View.GetSelectedText();
-            System.Diagnostics.Trace.WriteLine($"Google: {keyword}");
-            if (string.IsNullOrEmpty(keyword)) return;
-
-            try
-            {
-                var query = Settings.User.SearchQuery + keyword;
-                System.Diagnostics.Process.Start(query);
-            }
-            catch (Exception err) { Logger.Error(err); }
-        });
-
         #endregion
 
         #region Model
@@ -321,22 +297,29 @@ namespace Cube.Note.App.Editor
             Settings.Current.PropertyChanged += Settings_CurrentChanged;
 
             var enabled = View.GetSelectedTextLength() > 0;
-            menu.SearchMenu.Click += (s, e) => Events.Search.Raise(
-                new KeyValueEventArgs<int, string>(0, View.GetSelectedText())
-            );
+            menu.SearchMenu.Click += (s, e) => 
+                Events.Search.Raise(new KeyValueEventArgs<int, string>(0,
+                View.GetSelectedText()));
 
-            menu.GoogleMenu.Click += View_Google;
             menu.GoogleMenu.Enabled = enabled;
-            menu.UndoMenu.Click += (s, e) => Events.Undo.Raise();
+            menu.GoogleMenu.Click += (s, e)
+                => Events.Google.Raise(new ValueEventArgs<string>(View.GetSelectedText()));
+
             menu.UndoMenu.Enabled = View.CanUndo;
-            menu.RedoMenu.Click += (s, e) => Events.Redo.Raise();
+            menu.UndoMenu.Click += (s, e) => Events.Undo.Raise();
+
             menu.RedoMenu.Enabled = View.CanRedo;
-            menu.CutMenu.Click += (s, e) => { if (View.CanCut) View.Cut(); };
+            menu.RedoMenu.Click += (s, e) => Events.Redo.Raise();
+
             menu.CutMenu.Enabled = enabled;
-            menu.CopyMenu.Click += (s, e) => { if (View.CanCopy) View.Copy(); };
+            menu.CutMenu.Click += (s, e) => View.Cut();
+
             menu.CopyMenu.Enabled = enabled;
-            menu.PasteMenu.Click += (s, e) => { if (View.CanPaste) View.Paste(); };
+            menu.CopyMenu.Click += (s, e) => View.Copy();
+
             menu.PasteMenu.Enabled = View.CanPaste;
+            menu.PasteMenu.Click += (s, e) => View.Paste();
+
             menu.SelectAllMenu.Click += (s, e) => View.SelectAll();
         }
 
