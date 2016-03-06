@@ -292,9 +292,6 @@ namespace Cube.Note.App.Editor
                     case Keys.H:
                         SwitchMenu();
                         break;
-                    case Keys.I:
-                        Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
-                        break;
                     case Keys.J:
                     case Keys.Down:
                         Aggregator.Move.Raise(ValueEventArgs.Create(1));
@@ -308,6 +305,9 @@ namespace Cube.Note.App.Editor
                             EventAggregator.SelectedPage :
                             EventAggregator.TopPage
                         );
+                        break;
+                    case Keys.O:
+                        Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
                         break;
                     case Keys.R:
                         if (e.Shift) Aggregator.TagSettings.Raise();

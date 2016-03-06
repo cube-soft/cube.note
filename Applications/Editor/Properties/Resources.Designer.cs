@@ -208,7 +208,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルから作成 (I) に類似しているローカライズされた文字列を検索します。
+        ///   ファイルから作成 (O) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ImportMenu {
             get {
@@ -350,7 +350,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   タグを設定 (R) に類似しているローカライズされた文字列を検索します。
+        ///   ノートにタグを設定 (R) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PropertyMenu {
             get {
