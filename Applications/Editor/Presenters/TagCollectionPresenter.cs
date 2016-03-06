@@ -60,9 +60,36 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EditIndex
+        ///
+        /// <summary>
+        /// 編集用のインデックスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int EditIndex => View.Items.Count - 1;
+
+        #endregion
+
         #region Event handlers
 
         #region EventAggregator
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewTag_Handle
+        ///
+        /// <summary>
+        /// タグが追加された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void NewTag_Handle(object sender, ValueEventArgs<Tag> e)
+            => Model.Add(e.Value);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -185,6 +212,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_Loaded(object sender, EventArgs e)
         {
+            Events.NewTag.Handle += NewTag_Handle;
             Events.Property.Handle += Property_Handled;
             Settings.Current.TagChanged += Settings_TagChanged;
             ViewReset(Model.Get(Settings.User.Tag));
@@ -205,7 +233,7 @@ namespace Cube.Note.App.Editor
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    SyncWait(() => View.Items.Insert(View.Items.Count - 1, Model[e.NewStartingIndex]));
+                    SyncWait(() => InsertItem(e.NewStartingIndex, Model[e.NewStartingIndex]));
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:
@@ -311,7 +339,7 @@ namespace Cube.Note.App.Editor
             View.Items.Add(Properties.Resources.EditTag);
 
             View.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.SelectedIndex = Math.Max(Math.Min(index, View.Items.Count - 2), 0);
+            View.SelectedIndex = Math.Max(Math.Min(index, EditIndex - 1), 0);
             View.EndUpdate();
         });
 
@@ -332,6 +360,26 @@ namespace Cube.Note.App.Editor
             tag.PropertyChanged += Tag_PropertyChanged;
 
             View.Items.Add(tag);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertItem
+        ///
+        /// <summary>
+        /// タグを View.Items に挿入します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InsertItem(int modelIndex, Tag tag)
+        {
+            if (tag == null) return;
+
+            tag.PropertyChanged -= Tag_PropertyChanged;
+            tag.PropertyChanged += Tag_PropertyChanged;
+
+            var index = Math.Min(modelIndex + Model.SystemTagCount, EditIndex);
+            View.Items.Insert(index, tag);
         }
 
         #endregion
