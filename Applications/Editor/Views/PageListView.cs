@@ -392,7 +392,7 @@ namespace Cube.Note.App.Editor
             int dest = Items.IndexOf(GetItemAt(point.X, point.Y));
             if (dest == -1) dest = Items.Count - 1;
 
-            Aggregator?.Move.Raise(new ValueEventArgs<int>(dest - src));
+            Aggregator?.Move.Raise(ValueEventArgs.Create(dest - src));
         }
 
         /* ----------------------------------------------------------------- */

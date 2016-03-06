@@ -42,7 +42,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public static ValueEventArgs<int> SelectedPage { get; }
-            = new ValueEventArgs<int>(-1);
+            = ValueEventArgs.Create(-1);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -54,7 +54,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public static ValueEventArgs<int> TopPage { get; }
-            = new ValueEventArgs<int>(0);
+            = ValueEventArgs.Create(0);
 
         #endregion
 

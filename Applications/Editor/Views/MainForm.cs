@@ -287,21 +287,21 @@ namespace Cube.Note.App.Editor
                         RaiseSearch();
                         break;
                     case Keys.G:
-                        Aggregator.Google.Raise(new ValueEventArgs<string>(SelectedText));
+                        Aggregator.Google.Raise(ValueEventArgs.Create(SelectedText));
                         break;
                     case Keys.H:
                         SwitchMenu();
                         break;
                     case Keys.I:
-                        Aggregator.Import.Raise(new KeyValueEventArgs<int, string>(0, ""));
+                        Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
                         break;
                     case Keys.J:
                     case Keys.Down:
-                        Aggregator.Move.Raise(new ValueEventArgs<int>(1));
+                        Aggregator.Move.Raise(ValueEventArgs.Create(1));
                         break;
                     case Keys.K:
                     case Keys.Up:
-                        Aggregator.Move.Raise(new ValueEventArgs<int>(-1));
+                        Aggregator.Move.Raise(ValueEventArgs.Create(-1));
                         break;
                     case Keys.N:
                         Aggregator.NewPage.Raise(e.Shift ?
@@ -338,8 +338,7 @@ namespace Cube.Note.App.Editor
         {
             var prev = e.Effect;
             base.OnDragEnter(e);
-            if (e.Effect != prev) return;
-            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+            if (e.Effect != prev || !e.Data.GetDataPresent(DataFormats.FileDrop)) return;
 
             e.Effect = DragDropEffects.Copy;
         }
@@ -362,7 +361,7 @@ namespace Cube.Note.App.Editor
 
             foreach (var path in files)
             {
-                var args = new KeyValueEventArgs<int, string>(0, path);
+                var args = KeyValueEventArgs.Create(0, path);
                 Aggregator.Import.Raise(args);
             }
         }
@@ -451,8 +450,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RaiseSearch()
         {
-            var index   = TextControlIsActive() ? 0 : 1;
-            Aggregator.Search.Raise(new KeyValueEventArgs<int, string>(index, SelectedText));
+            var index = TextControlIsActive() ? 0 : 1;
+            Aggregator.Search.Raise(KeyValueEventArgs.Create(index, SelectedText));
         }
 
         #endregion

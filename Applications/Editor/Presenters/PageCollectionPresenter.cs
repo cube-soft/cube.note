@@ -310,7 +310,7 @@ namespace Cube.Note.App.Editor
                     Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    if (Model.Count <= 0) NewPage_Handled(sender, new ValueEventArgs<int>(0));
+                    if (Model.Count <= 0) NewPage_Handled(sender, ValueEventArgs.Create(0));
                     break;
             }
         }

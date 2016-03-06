@@ -298,12 +298,11 @@ namespace Cube.Note.App.Editor
 
             var enabled = View.GetSelectedTextLength() > 0;
             menu.SearchMenu.Click += (s, e) => 
-                Events.Search.Raise(new KeyValueEventArgs<int, string>(0,
-                View.GetSelectedText()));
+                Events.Search.Raise(KeyValueEventArgs.Create(0, View.GetSelectedText()));
 
             menu.GoogleMenu.Enabled = enabled;
             menu.GoogleMenu.Click += (s, e)
-                => Events.Google.Raise(new ValueEventArgs<string>(View.GetSelectedText()));
+                => Events.Google.Raise(ValueEventArgs.Create(View.GetSelectedText()));
 
             menu.UndoMenu.Enabled = View.CanUndo;
             menu.UndoMenu.Click += (s, e) => Events.Undo.Raise();

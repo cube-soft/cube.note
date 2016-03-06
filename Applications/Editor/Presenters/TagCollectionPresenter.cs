@@ -92,7 +92,7 @@ namespace Cube.Note.App.Editor
                 }
             });
 
-            Events.Edit.Raise(new ValueEventArgs<Page>(page));
+            Events.Edit.Raise(ValueEventArgs.Create(page));
         }
 
         #endregion

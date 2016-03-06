@@ -48,7 +48,7 @@ namespace Cube.Note.App.Editor
             InitializeComponent();
 
             NewPageButton.Click += (s, e)
-                => Aggregator?.NewPage.Raise(new ValueEventArgs<int>(0));
+                => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
 
             Pages.ContextMenuStrip = CreateContextMenu();
             Pages.AllowDrop = true;
@@ -150,14 +150,14 @@ namespace Cube.Note.App.Editor
             dest.Items.Add(Properties.Resources.DuplicateMenu, null,
                 (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage));
             dest.Items.Add(Properties.Resources.ImportMenu, null,
-                (s, e) => Aggregator?.Import.Raise(new KeyValueEventArgs<int, string>(-1, "")));
+                (s, e) => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, "")));
 
             dest.Items.Add("-");
 
             dest.Items.Add(Properties.Resources.UpMenu, null,
-                (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(-1)));
+                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1)));
             dest.Items.Add(Properties.Resources.DownMenu, null,
-                (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(1)));
+                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1)));
 
             dest.Items.Add("-");
 
