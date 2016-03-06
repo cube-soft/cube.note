@@ -146,10 +146,8 @@ namespace Cube.Note.Tests
         public void Duplicate()
         {
             Pages.Duplicate(Pages[0], 0);
-            Assert.That(
-                Pages[0].Abstract,
-                Is.EqualTo(Pages[1].Abstract)
-            );
+            Assert.That(Pages[0].Abstract, Is.EqualTo(Pages[1].Abstract));
+            Assert.That(Pages[0].Tags.Count, Is.EqualTo(Pages[1].Tags.Count));
         }
 
         /* ----------------------------------------------------------------- */
