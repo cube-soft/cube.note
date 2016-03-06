@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -299,10 +300,11 @@ namespace Cube.Note.App.Editor
             if (e.Button != MouseButtons.Left) return;
 
             var item = GetItemAt(e.Location.X, e.Location.Y);
-            var bounds = item?.Bounds ?? Rectangle.Empty;
+            if (item == null) return;
 
-            if (IsRemoveButton(e.Location, bounds)) Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
-            else if (IsPropertyButton(e.Location, bounds)) Aggregator?.Property.Raise(EventAggregator.SelectedPage);
+            if (IsRemoveButton(e.Location, item.Bounds)) Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
+            else if (IsPropertyButton(e.Location, item.Bounds)) Aggregator?.Property.Raise(EventAggregator.SelectedPage);
+            else DoDragDrop(item, DragDropEffects.Move);
         }
 
         /* ----------------------------------------------------------------- */
@@ -342,22 +344,6 @@ namespace Cube.Note.App.Editor
             Cursor = IsRemoveButton(e.Location, bounds) ||
                      IsPropertyButton(e.Location, bounds) ?
                      Cursors.Hand : Cursors.Default;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnItemDrag
-        /// 
-        /// <summary>
-        /// 項目がドラッグされた時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnItemDrag(ItemDragEventArgs e)
-        {
-            base.OnItemDrag(e);
-            if (Items.Count <= 1) return;
-            DoDragDrop(e.Item as ListViewItem, DragDropEffects.Move);
         }
 
         /* ----------------------------------------------------------------- */
