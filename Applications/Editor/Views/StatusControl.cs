@@ -62,7 +62,7 @@ namespace Cube.Note.App.Editor
             _messageLabel.LinkColor = Color.FromArgb(80, 80, 80);
             _messageLabel.Spring = true;
             _messageLabel.TextAlign = ContentAlignment.MiddleLeft;
-            _messageLabel.Click += MessageLabel_Click;
+            _messageLabel.Click += (s, e) => RaiseUriClick();
 
             Items.AddRange(new ToolStripItem[]
             {
@@ -190,6 +190,53 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UriClick
+        ///
+        /// <summary>
+        /// URL がクリックした時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<KeyValueEventArgs<Uri, string>> UriClick;
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnUriClick
+        ///
+        /// <summary>
+        /// UriClick を発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnUriClick(KeyValueEventArgs<Uri, string> e)
+            => UriClick?.Invoke(this, e);
+
+        #endregion
+
+        #region Non-virtual protected methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseUriClick
+        ///
+        /// <summary>
+        /// UriClick イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void RaiseUriClick()
+            => OnUriClick(KeyValueEventArgs.Create(Uri, Message));
+
+        #endregion
+
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -239,26 +286,6 @@ namespace Cube.Note.App.Editor
                 e.Result = Position.Client;
             }
             else base.OnNcHitTest(e);
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MessageLabel_Click
-        ///
-        /// <summary>
-        /// メッセージをクリックした時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void MessageLabel_Click(object sender, EventArgs e)
-        {
-            if (Uri == null) return;
-            try { System.Diagnostics.Process.Start(Uri.ToString()); }
-            catch (Exception err) { System.Diagnostics.Trace.WriteLine(err.ToString()); }
         }
 
         #endregion

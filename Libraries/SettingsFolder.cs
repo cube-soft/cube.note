@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using IoEx = System.IO;
 
@@ -76,6 +77,11 @@ namespace Cube.Note
             var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var tail = $@"{reader.Company}\{reader.Product}\{filename}";
             Path = IoEx.Path.Combine(head, tail);
+            UriQuery = new Dictionary<string, string>
+            {
+                { "utm_source", "cube" },
+                { "utm_medium", "note" },
+            };
         }
 
         #endregion
@@ -125,6 +131,17 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public int MaxAbstractLength => 100;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UriQuery
+        ///
+        /// <summary>
+        /// URL に付与するクエリーを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IDictionary<string, string> UriQuery { get; }
 
         /* ----------------------------------------------------------------- */
         ///

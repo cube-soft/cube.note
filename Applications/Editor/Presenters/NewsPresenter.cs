@@ -49,12 +49,25 @@ namespace Cube.Note.App.Editor
             : base(view, settings.User, settings, events)
         {
             Model.PropertyChanged += Model_PropertyChanged;
+            View.UriClick += View_UriClick;
             ForDebug();
         }
 
         #endregion
 
         #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_UriClick
+        ///
+        /// <summary>
+        /// URL のクリック時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_UriClick(object sender, KeyValueEventArgs<Uri, string> e)
+            => Events.Web.Raise(ValueEventArgs.Create(e.Key.ToString()));
 
         /* ----------------------------------------------------------------- */
         ///

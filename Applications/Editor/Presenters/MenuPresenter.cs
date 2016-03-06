@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Cube.Conversions;
 
 namespace Cube.Note.App.Editor
 {
@@ -83,7 +84,7 @@ namespace Cube.Note.App.Editor
             try
             {
                 if (string.IsNullOrEmpty(e.Value)) return;
-                var uri = new Uri(e.Value);
+                var uri = new Uri(e.Value).With(Settings.UriQuery);
                 System.Diagnostics.Process.Start(uri.ToString());
             }
             catch (Exception err) { Logger.Error(err); }

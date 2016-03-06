@@ -316,6 +316,9 @@ namespace Cube.Note.App.Editor
                     case Keys.T:
                         Aggregator.Settings.Raise();
                         break;
+                    case Keys.U:
+                        Aggregator.TagSettings.Raise();
+                        break;
                     default:
                         result = false;
                         break;
