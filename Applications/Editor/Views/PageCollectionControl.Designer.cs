@@ -33,8 +33,8 @@
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator1 = new System.Windows.Forms.PictureBox();
             this.ContentsPanel = new Cube.Forms.Panel();
-            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.Separator2 = new System.Windows.Forms.PictureBox();
+            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
             this.ContentsPanel.SuspendLayout();
@@ -89,9 +89,10 @@
             this.TagComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TagComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TagComboBox.FormattingEnabled = true;
+            this.TagComboBox.IntegralHeight = false;
             this.TagComboBox.Location = new System.Drawing.Point(4, 4);
             this.TagComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 0);
-            this.TagComboBox.MaxDropDownItems = 10;
+            this.TagComboBox.MaxDropDownItems = 20;
             this.TagComboBox.Name = "TagComboBox";
             this.TagComboBox.Size = new System.Drawing.Size(292, 23);
             this.TagComboBox.TabIndex = 3;
@@ -119,6 +120,17 @@
             this.ContentsPanel.Size = new System.Drawing.Size(300, 238);
             this.ContentsPanel.TabIndex = 2;
             // 
+            // Separator2
+            // 
+            this.Separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
+            this.Separator2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Separator2.Location = new System.Drawing.Point(0, 271);
+            this.Separator2.Margin = new System.Windows.Forms.Padding(0);
+            this.Separator2.Name = "Separator2";
+            this.Separator2.Size = new System.Drawing.Size(300, 1);
+            this.Separator2.TabIndex = 6;
+            this.Separator2.TabStop = false;
+            // 
             // PageListView
             // 
             this.PageListView.Aggregator = null;
@@ -139,17 +151,6 @@
             this.PageListView.TileSize = new System.Drawing.Size(296, 31);
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;
-            // 
-            // Separator2
-            // 
-            this.Separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
-            this.Separator2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Separator2.Location = new System.Drawing.Point(0, 271);
-            this.Separator2.Margin = new System.Windows.Forms.Padding(0);
-            this.Separator2.Name = "Separator2";
-            this.Separator2.Size = new System.Drawing.Size(300, 1);
-            this.Separator2.TabIndex = 6;
-            this.Separator2.TabStop = false;
             // 
             // PageCollectionControl
             // 
