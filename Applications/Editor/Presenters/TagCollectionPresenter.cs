@@ -260,36 +260,43 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ViewReset(Tag init = null) => SyncWait(() =>
         {
-            var index = init == null ? 0 :
-                        init == Model.Nothing  ? 0 :
-                        init == Model.Everyone ? 1 :
+            var index = init == null ? 1 :
+                        init == Model.Everyone ? 0 :
+                        init == Model.Nothing  ? 1 :
                         Model.IndexOf(init) + 2;
 
             View.BeginUpdate();
             View.SelectedIndexChanged -= View_SelectedIndexChanged;
 
             if (View.Items.Count > 0) View.Items.Clear();
-
-            Model.Nothing.PropertyChanged -= Tag_PropertyChanged;
-            Model.Nothing.PropertyChanged += Tag_PropertyChanged;
-            View.Items.Add(Model.Nothing);
-
-            Model.Everyone.PropertyChanged -= Tag_PropertyChanged;
-            Model.Everyone.PropertyChanged += Tag_PropertyChanged;
-            View.Items.Add(Model.Everyone);
-
-            foreach (var tag in Model)
-            {
-                tag.PropertyChanged -= Tag_PropertyChanged;
-                tag.PropertyChanged += Tag_PropertyChanged;
-                View.Items.Add(tag);
-            }
-
+            AddItem(Model.Everyone);
+            AddItem(Model.Nothing);
+            foreach (var tag in Model) AddItem(tag);
             View.Items.Add(Properties.Resources.EditTag);
+
             View.SelectedIndexChanged += View_SelectedIndexChanged;
             View.SelectedIndex = Math.Max(Math.Min(index, View.Items.Count - 2), 0);
             View.EndUpdate();
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddItem
+        ///
+        /// <summary>
+        /// タグを View.Items に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddItem(Tag tag)
+        {
+            if (tag == null) return;
+
+            tag.PropertyChanged -= Tag_PropertyChanged;
+            tag.PropertyChanged += Tag_PropertyChanged;
+
+            View.Items.Add(tag);
+        }
 
         #endregion
     }

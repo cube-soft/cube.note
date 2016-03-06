@@ -81,7 +81,8 @@ namespace Cube.Note
         public PageCollection(string directory)
         {
             Directory = directory;
-            Tags = new TagCollection(IoEx.Path.Combine(directory, TagCollection.DefaultFileName));
+            var file = IoEx.Path.Combine(directory, TagCollection.DefaultFileName);
+            Tags = new TagCollection(file);
         }
 
         #endregion
@@ -160,14 +161,16 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage(int index = 0) => NewPage(Tags.Everyone, index);
-        public void NewPage(Tag tag, int index = 0)
+        public void NewPage(int index = 0) => NewPage(Tags.Everyone, index, null);
+        public void NewPage(Tag tag, int index) => NewPage(tag, index, null);
+        public void NewPage(Tag tag, int index, Action<Page> initialize)
         {
             var page = new Page();
             Touch(page);
             Tags.Everyone?.Increment();
             if (tag != Tags.Everyone) tag?.Increment();
             if (tag != null && tag != Tags.Everyone && tag != Tags.Nothing) page.Tags.Add(tag.Name);
+            if (initialize != null) initialize(page);
             Insert(index, page);
         }
 
@@ -181,33 +184,17 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public void Duplicate(Page src, int index)
+            => NewPage(null, index, (page) =>
         {
-            var page = new Page { Abstract = src.Abstract };
+            page.Abstract = src.Abstract;
             CopyFile(src, page);
-            Tags.Everyone?.Increment();
             if (src.Tags.Count == 0) Tags.Nothing?.Increment();
             else foreach (var tag in src.Tags)
             {
                 page.Tags.Add(tag);
                 Tags.Get(tag)?.Increment();
             }
-            Insert(index, page);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Import
-        ///
-        /// <summary>
-        /// ファイルの内容を反映した新しいページを指定されたインデックスの位置に
-        /// 追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Import(string path, int index)
-        {
-            // TODO: implementation
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -319,7 +306,7 @@ namespace Cube.Note
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
@@ -351,7 +338,7 @@ namespace Cube.Note
             var sp = ToPath(src);
             var dp = ToPath(dest);
             CreateDirectory(IoEx.Path.GetDirectoryName(dp));
-            IoEx.File.Copy(sp, dp);
+            IoEx.File.Copy(sp, dp, true);
         }
 
         /* ----------------------------------------------------------------- */
@@ -363,38 +350,20 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Clean(Page page)
-        {
-            IoEx.File.Delete(ToPath(page));
-        }
+        private void Clean(Page page) => IoEx.File.Delete(ToPath(page));
 
         /* ----------------------------------------------------------------- */
         ///
         /// ToPath
         ///
         /// <summary>
-        /// 指定されたオブジェクトに対応するパスを取得します。
+        /// パスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string ToPath(Page item)
-        {
-            return ToPath(item.FileName);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToPath
-        ///
-        /// <summary>
-        /// 指定されたファイル名に対応するパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
+        private string ToPath(Page item) => ToPath(item.FileName);
         private string ToPath(string filename)
-        {
-            return IoEx.Path.Combine(Directory, filename);
-        }
+            => IoEx.Path.Combine(Directory, filename);
 
         /* ----------------------------------------------------------------- */
         ///

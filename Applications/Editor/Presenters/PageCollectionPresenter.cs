@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Text;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 using Cube.Collections;
@@ -105,6 +106,10 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// ページのエクスポート時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: 文字コードの扱いを要検討。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void Import_Handle(object sender, KeyValueEventArgs<int, string> e)
@@ -113,7 +118,12 @@ namespace Cube.Note.App.Editor
             if (string.IsNullOrEmpty(path)) return;
 
             var index = GetInsertIndex(e.Key);
-            Async(() => Model.Import(path, index));
+            Async(() => Model.NewPage(Settings.Current.Tag, index,
+                  (page) =>
+            {
+                page.Document = DocumentHandler.Create(path, Encoding.Default);
+                page.UpdateAbstract(Settings.MaxAbstractLength);
+            }));
         }
 
         /* ----------------------------------------------------------------- */
