@@ -141,6 +141,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Tag
+        ///
+        /// <summary>
+        /// 選択中のタグ名を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Tag
+        {
+            get { return _tag; }
+            set
+            {
+                if (_tag == value) return;
+                _tag = value;
+                RaisePropertyChanged(nameof(Tag));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// FontName
         ///
         /// <summary>
@@ -905,6 +926,7 @@ namespace Cube.Note
             Y                   = -1;
             Width               = -1;
             Height              = -1;
+            Tag                 = "NoTag";
 
             FontName            = "Meiryo";
             FontSize            = 11.25;
@@ -952,6 +974,7 @@ namespace Cube.Note
         private int _y;
         private int _width;
         private int _height;
+        private string _tag;
         private Color _backColor;
         private Color _foreColor;
         private Color _uriColor;

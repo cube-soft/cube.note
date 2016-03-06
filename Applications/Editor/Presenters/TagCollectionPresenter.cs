@@ -81,7 +81,7 @@ namespace Cube.Note.App.Editor
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
                 if (page.Tags.Count == 0) Model.Nothing?.Decrement();
-                else Model.Decrease(page.Tags);
+                else Model.Decrement(page.Tags);
                 page.Tags.Clear();
 
                 if (dialog.Tags.Count == 0) Model.Nothing?.Increment();
@@ -94,6 +94,22 @@ namespace Cube.Note.App.Editor
 
             Events.Edit.Raise(new ValueEventArgs<Page>(page));
         }
+
+        #endregion
+
+        #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_TagChanged
+        ///
+        /// <summary>
+        /// タグが変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
+            => Settings.User.Tag = e.NewValue?.Name ?? string.Empty;
 
         #endregion
 
@@ -134,7 +150,8 @@ namespace Cube.Note.App.Editor
         private void Model_Loaded(object sender, EventArgs e)
         {
             Events.Property.Handle += Property_Handled;
-            ViewReset();
+            Settings.Current.TagChanged += Settings_TagChanged;
+            ViewReset(Model.Get(Settings.User.Tag));
             Model.CollectionChanged += Model_CollectionChanged;
         }
 
@@ -164,16 +181,20 @@ namespace Cube.Note.App.Editor
             }
         }
 
+        #endregion
+
+        #region Tag
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_PropertyChanged
+        /// Tag_PropertyChanged
         ///
         /// <summary>
         /// プロパティが変化した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Tag_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var tag = sender as Tag;
             if (tag == null) return;
@@ -207,8 +228,8 @@ namespace Cube.Note.App.Editor
 
             foreach (Tag tag in tags)
             {
-                tag.PropertyChanged -= Model_PropertyChanged;
-                tag.PropertyChanged += Model_PropertyChanged;
+                tag.PropertyChanged -= Tag_PropertyChanged;
+                tag.PropertyChanged += Tag_PropertyChanged;
             }
         }
 
@@ -225,7 +246,7 @@ namespace Cube.Note.App.Editor
         {
             if (tags == null) return;
 
-            foreach (Tag tag in tags) tag.PropertyChanged -= Model_PropertyChanged;
+            foreach (Tag tag in tags) tag.PropertyChanged -= Tag_PropertyChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -237,31 +258,36 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ViewReset() => SyncWait(() =>
+        private void ViewReset(Tag init = null) => SyncWait(() =>
         {
+            var index = init == null ? 0 :
+                        init == Model.Nothing  ? 0 :
+                        init == Model.Everyone ? 1 :
+                        Model.IndexOf(init) + 2;
+
             View.BeginUpdate();
             View.SelectedIndexChanged -= View_SelectedIndexChanged;
 
             if (View.Items.Count > 0) View.Items.Clear();
 
-            Model.Nothing.PropertyChanged -= Model_PropertyChanged;
-            Model.Nothing.PropertyChanged += Model_PropertyChanged;
+            Model.Nothing.PropertyChanged -= Tag_PropertyChanged;
+            Model.Nothing.PropertyChanged += Tag_PropertyChanged;
             View.Items.Add(Model.Nothing);
 
-            Model.Everyone.PropertyChanged -= Model_PropertyChanged;
-            Model.Everyone.PropertyChanged += Model_PropertyChanged;
+            Model.Everyone.PropertyChanged -= Tag_PropertyChanged;
+            Model.Everyone.PropertyChanged += Tag_PropertyChanged;
             View.Items.Add(Model.Everyone);
 
             foreach (var tag in Model)
             {
-                tag.PropertyChanged -= Model_PropertyChanged;
-                tag.PropertyChanged += Model_PropertyChanged;
+                tag.PropertyChanged -= Tag_PropertyChanged;
+                tag.PropertyChanged += Tag_PropertyChanged;
                 View.Items.Add(tag);
             }
 
             View.Items.Add(Properties.Resources.EditTag);
             View.SelectedIndexChanged += View_SelectedIndexChanged;
-            View.SelectedIndex = 0;
+            View.SelectedIndex = Math.Max(Math.Min(index, View.Items.Count - 2), 0);
             View.EndUpdate();
         });
 

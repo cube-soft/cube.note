@@ -311,7 +311,7 @@ namespace Cube.Note
 
                 Tags.Everyone?.Decrement();
                 if (page.Tags.Count == 0) Tags.Nothing?.Decrement();
-                else Tags.Decrease(page.Tags);
+                else Tags.Decrement(page.Tags);
                 Clean(page);
             }
             finally { base.RemoveItem(index); }

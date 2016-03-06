@@ -190,6 +190,21 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IndexOf
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグのインデックスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int IndexOf(string name)
+        {
+            var dest = Get(name);
+            return dest != null ? IndexOf(dest) : -1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Get
         ///
         /// <summary>
@@ -197,7 +212,12 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Tag Get(string name) => Items.FirstOrDefault(x => x.Name == name);
+        public Tag Get(string name)
+        {
+            return Everyone.Name == name ? Everyone :
+                   Nothing.Name  == name ? Nothing  :
+                   Items.FirstOrDefault(x => x.Name == name);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -254,14 +274,14 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Decrease
+        /// Decrement
         ///
         /// <summary>
-        /// 指定されたタグの Count を減少させます。
+        /// 指定されたタグの Count を 1 減少させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Decrease(IEnumerable<string> tags)
+        public void Decrement(IEnumerable<string> tags)
         {
             foreach (var name in tags) Get(name)?.Decrement();
         }
