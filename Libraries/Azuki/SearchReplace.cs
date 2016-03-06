@@ -169,7 +169,7 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         public void Reset()
         {
-            foreach (var page in Results) UnHighlight(page);
+            SyncWait(() => { foreach (var page in Results) UnHighlight(page); });
             Results.Clear();
             Current = -1;
         }
@@ -192,7 +192,11 @@ namespace Cube.Note.Azuki
             var result = FindFirst(page, keyword, sensitive);
             if (result == null) return;
 
-            Highlight(page, keyword, sensitive);
+            SyncWait(() =>
+            {
+                Highlight(page, keyword, sensitive);
+                ResetCaret(page);
+            });
             Results.Add(page);
             Current = 0;
         }
@@ -217,11 +221,13 @@ namespace Cube.Note.Azuki
                 var result = FindFirst(page, keyword, sensitive);
                 if (result == null) continue;
 
-                Highlight(page, keyword, sensitive);
+                SyncWait(() => Highlight(page, keyword, sensitive));
                 Results.Add(page);
             }
 
-            if (Results.Count > 0) Current = 0;
+            if (Results.Count <= 0) return;
+            SyncWait(() => ResetCaret(Results[0]));
+            Current = 0;
         }
 
         /* ----------------------------------------------------------------- */
@@ -310,7 +316,7 @@ namespace Cube.Note.Azuki
                 var result = document.FindNext(Keyword, offset, CaseSensitive);
                 if (result != null)
                 {
-                    Replace(index, replaced, result.Begin, result.End);
+                    SyncWait(() => Replace(index, replaced, result.Begin, result.End));
                     ++dest;
                 }
                 else
@@ -357,6 +363,104 @@ namespace Cube.Note.Azuki
 
         #endregion
 
+        #region Sync care methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Forward
+        /// 
+        /// <summary>
+        /// 次の検索結果を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Forward(int index, int? offset)
+        {
+            var document = Results[index].Document as Document;
+            if (document == null) return;
+
+            var start = GetOffset(document, offset);
+            var result = document.FindNext(Keyword, start, CaseSensitive);
+
+            if (result != null)
+            {
+                Current = index;
+                SyncWait(() => document.SetSelection(result.Begin, result.End));
+            }
+            else
+            {
+                SyncWait(() => document.SetSelection(start, start));
+                if (index < Results.Count - 1) Forward(++index, 0);
+                else Current = -1;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Back
+        /// 
+        /// <summary>
+        /// 前の検索結果を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Back(int index, int? offset)
+        {
+            var document = Results[index].Document as Document;
+            if (document == null) return;
+
+            var start = GetOffset(document, offset);
+            var result = document.FindPrev(Keyword, start, CaseSensitive);
+
+            if (result != null)
+            {
+                Current = index;
+                SyncWait(() => document.SetSelection(result.End, result.Begin));
+            }
+            else
+            {
+                SyncWait(() => document.SetSelection(start, start));
+                if (index > 0) Back(--index, -1 /* LastIndex */);
+                else Current = -1;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceNext
+        /// 
+        /// <summary>
+        /// 次の検索結果を置換します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ReplaceNext(int index, int? offset, string replaced)
+        {
+            var document = Results[index].Document as Document;
+            if (document == null) return;
+
+            var start = GetOffset(document, offset);
+            var result = document.FindNext(Keyword, start, CaseSensitive);
+
+            if (result != null)
+            {
+                Current = index;
+                SyncWait(() =>
+                {
+                    Replace(index, replaced, result.Begin, result.End);
+                    document.SetSelection(result.Begin, result.Begin + replaced.Length);
+                });
+            }
+            else
+            {
+                SyncWait(() => document.SetSelection(start, start));
+                if (index < Results.Count - 1) ReplaceNext(++index, 0, replaced);
+                else Current = -1;
+            }
+        }
+
+        #endregion
+
         #region Others
 
         /* ----------------------------------------------------------------- */
@@ -396,95 +500,19 @@ namespace Cube.Note.Azuki
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Forward
+        /// ResetCaret
         /// 
         /// <summary>
-        /// 次の検索結果を取得します。
+        /// キャレット位置をリセットします。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Forward(int index, int? offset)
+        private void ResetCaret(Page page)
         {
-            var document = Results[index].Document as Document;
+            var document = page.Document as Document;
             if (document == null) return;
-
-            var start  = GetOffset(document, offset);
-            var result = document.FindNext(Keyword, start, CaseSensitive);
-
-            if (result != null)
-            {
-                Current = index;
-                document.SetSelection(result.Begin, result.End);
-            }
-            else
-            {
-                document.SetSelection(start, start);
-                if (index < Results.Count - 1) Forward(++index, 0);
-                else Current = -1;
-            }
+            document.SetCaretIndex(0, 0);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Back
-        /// 
-        /// <summary>
-        /// 前の検索結果を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Back(int index, int? offset)
-        {
-            var document = Results[index].Document as Document;
-            if (document == null) return;
-
-            var start  = GetOffset(document, offset);
-            var result = document.FindPrev(Keyword, start, CaseSensitive);
-
-            if (result != null)
-            {
-                Current = index;
-                document.SetSelection(result.End, result.Begin);
-            }
-            else
-            {
-                document.SetSelection(start, start);
-                if (index > 0) Back(--index, -1 /* LastIndex */);
-                else Current = -1;
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ReplaceNext
-        /// 
-        /// <summary>
-        /// 次の検索結果を置換します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ReplaceNext(int index, int? offset, string replaced)
-            => SyncWait(() =>
-        {
-            var document = Results[index].Document as Document;
-            if (document == null) return;
-
-            var start  = GetOffset(document, offset);
-            var result = document.FindNext(Keyword, start, CaseSensitive);
-
-            if (result != null)
-            {
-                Current = index;
-                Replace(index, replaced, result.Begin, result.End);
-                document.SetSelection(result.Begin, result.Begin + replaced.Length);
-            }
-            else
-            {
-                document.SetSelection(start, start);
-                if (index < Results.Count - 1) ReplaceNext(++index, 0, replaced);
-                else Current = -1;
-            }
-        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -496,7 +524,6 @@ namespace Cube.Note.Azuki
         ///
         /* ----------------------------------------------------------------- */
         private void Replace(int index, string replaced, int begin, int end)
-            => SyncWait(() =>
         {
             var document = Results[index].Document as Document;
             if (document == null) return;
@@ -509,7 +536,7 @@ namespace Cube.Note.Azuki
             if (line != 0) return;
 
             Results[index].UpdateAbstract(MaxAbstractLength);
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -521,7 +548,6 @@ namespace Cube.Note.Azuki
         ///
         /* ----------------------------------------------------------------- */
         private void Highlight(Page page, string keyword, bool sensitive)
-            => SyncWait(() =>
         {
             var src = page?.Document as Document;
             if (src == null) return;
@@ -529,7 +555,7 @@ namespace Cube.Note.Azuki
             var highlight = new KeywordHighlighter();
             highlight.AddRegex(Regex.Escape(keyword), !sensitive, CharClass.Keyword);
             src.Highlighter = highlight;
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -541,12 +567,11 @@ namespace Cube.Note.Azuki
         ///
         /* ----------------------------------------------------------------- */
         private void UnHighlight(Page page)
-            => SyncWait(() =>
         {
             var src = page?.Document as Document;
             if (src == null) return;
             src.Highlighter = null;
-        });
+        }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -562,33 +587,6 @@ namespace Cube.Note.Azuki
         {
             if (_ui != null) _ui.Send(_ => action(), null);
             else action();
-        }
-
-        #endregion
-
-        #region Classes
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Position
-        /// 
-        /// <summary>
-        /// 検索結果中の現在位置を表すクラスです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public class Position
-        {
-            public Position(int i, int b, int e)
-            {
-                Index = i;
-                Begin = b;
-                End   = e;
-            }
-
-            public int Index { get; }
-            public int Begin { get; }
-            public int End   { get; }
         }
 
         #endregion
