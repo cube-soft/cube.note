@@ -190,7 +190,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   インターネットで検索 に類似しているローカライズされた文字列を検索します。
+        ///   インターネットで検索 (G) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string GoogleMenu {
             get {

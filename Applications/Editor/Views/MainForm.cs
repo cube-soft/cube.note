@@ -313,6 +313,10 @@ namespace Cube.Note.App.Editor
                         if (e.Shift) Aggregator.TagSettings.Raise();
                         else RaiseProperty();
                         break;
+                    case Keys.S:
+                        if (e.Shift) Aggregator.Export.Raise(EventAggregator.SelectedPage);
+                        else result = false;
+                        break;
                     case Keys.T:
                         Aggregator.Settings.Raise();
                         break;

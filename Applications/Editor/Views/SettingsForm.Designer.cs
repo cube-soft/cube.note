@@ -265,7 +265,7 @@
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.GeneralTabPage.Name = "GeneralTabPage";
-            this.GeneralTabPage.Size = new System.Drawing.Size(466, 386);
+            this.GeneralTabPage.Size = new System.Drawing.Size(466, 396);
             this.GeneralTabPage.TabIndex = 3;
             this.GeneralTabPage.Text = "一 般";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -302,7 +302,7 @@
             this.GeneralSettingsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.GeneralSettingsPanel.Name = "GeneralSettingsPanel";
             this.GeneralSettingsPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.GeneralSettingsPanel.Size = new System.Drawing.Size(466, 386);
+            this.GeneralSettingsPanel.Size = new System.Drawing.Size(466, 396);
             this.GeneralSettingsPanel.TabIndex = 0;
             // 
             // FontTitleLabel
@@ -1085,9 +1085,9 @@
             this.BehaviorSettingsPanel.SetFlowBreak(this.ShowNewsCheckBox, true);
             this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 140);
             this.ShowNewsCheckBox.Name = "ShowNewsCheckBox";
-            this.ShowNewsCheckBox.Size = new System.Drawing.Size(212, 19);
+            this.ShowNewsCheckBox.Size = new System.Drawing.Size(283, 19);
             this.ShowNewsCheckBox.TabIndex = 4;
-            this.ShowNewsCheckBox.Text = "ステータスバーに新着ニュースを表示する";
+            this.ShowNewsCheckBox.Text = "ステータスバーに Cube ニュースの新着記事を表示する";
             this.ShowNewsCheckBox.UseVisualStyleBackColor = true;
             // 
             // VersionTabPage
@@ -1095,7 +1095,7 @@
             this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
             this.VersionTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VersionTabPage.Name = "VersionTabPage";
-            this.VersionTabPage.Size = new System.Drawing.Size(466, 386);
+            this.VersionTabPage.Size = new System.Drawing.Size(466, 396);
             this.VersionTabPage.TabIndex = 2;
             this.VersionTabPage.Text = "CubeNote について";
             this.VersionTabPage.UseVisualStyleBackColor = true;

@@ -104,7 +104,7 @@ namespace Cube.Note.App.Editor
         private void ForDebug()
         {
             View.Message = Model.ShowNews ?
-                           "ニュース：Cube ニュースのタイトルを表示します。" :
+                           "ニュース：Cube ニュース新着記事のタイトルを表示します。" :
                            string.Empty;
             View.Uri     = Model.ShowNews ?
                            new Uri("http://news.cube-soft.jp/") :
