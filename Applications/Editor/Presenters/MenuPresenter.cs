@@ -50,6 +50,7 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
+            Events.Web.Handle += Web_Handle;
             Events.Google.Handle += Google_Handle;
             Events.Settings.Handle += (s, e) => ShowSettings(0);
             Events.TagSettings.Handle += (s, e) => ShowTagSettings();
@@ -70,22 +71,37 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Web_Handle
+        /// 
+        /// <summary>
+        /// 既定のブラウザで URL を開く時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Web_Handle(object sender, ValueEventArgs<string> e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(e.Value)) return;
+                var uri = new Uri(e.Value);
+                System.Diagnostics.Process.Start(uri.ToString());
+            }
+            catch (Exception err) { Logger.Error(err); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Google_Handle
         /// 
         /// <summary>
-        /// インターネットで検索がクリックされた時に実行されるハンドラです。
+        /// インターネットで検索時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private void Google_Handle(object sender, ValueEventArgs<string> e)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(e.Value)) return;
-                var query = Settings.User.SearchQuery + e.Value;
-                System.Diagnostics.Process.Start(query);
-            }
-            catch (Exception err) { Logger.Error(err); }
+            if (string.IsNullOrEmpty(e.Value)) return;
+            Events.Web.Raise(ValueEventArgs.Create(Settings.User.SearchQuery + e.Value));
         }
 
         #endregion
@@ -102,10 +118,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_LogoMenu(object sender, EventArgs e)
-        {
-            try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            => Events.Web.Raise(ValueEventArgs.Create(Properties.Resources.WebUrl));
 
         #endregion
 
@@ -183,8 +196,8 @@ namespace Cube.Note.App.Editor
 
             Async(() =>
             {
-                foreach (var tag in add) Events.NewTag.Raise(new ValueEventArgs<Tag>(tag));
-                foreach (var tag in remove) Events.RemoveTag.Raise(new ValueEventArgs<Tag>(tag));
+                foreach (var tag in add) Events.NewTag.Raise(ValueEventArgs.Create(tag));
+                foreach (var tag in remove) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
             });
         });
 

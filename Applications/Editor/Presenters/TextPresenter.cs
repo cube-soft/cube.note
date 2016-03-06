@@ -155,7 +155,7 @@ namespace Cube.Note.App.Editor
                 var uri = doc.GetMarkedText(ev.Index, Marking.Uri);
                 if (string.IsNullOrEmpty(uri)) return;
 
-                System.Diagnostics.Process.Start(uri);
+                Events.Web.Raise(ValueEventArgs.Create(uri));
                 ev.Handled = true;
             }
             catch (Exception err) { Logger.Error(err); }
