@@ -350,7 +350,7 @@
             this.ReplaceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ReplaceTabPage.Name = "ReplaceTabPage";
             this.ReplaceTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ReplaceTabPage.Size = new System.Drawing.Size(434, 184);
+            this.ReplaceTabPage.Size = new System.Drawing.Size(434, 178);
             this.ReplaceTabPage.TabIndex = 1;
             this.ReplaceTabPage.Text = "置 換";
             this.ReplaceTabPage.UseVisualStyleBackColor = true;

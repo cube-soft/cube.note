@@ -63,6 +63,7 @@ namespace Cube.Note.App.Editor
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
+            View.ShowPages = false;
 
             Model.PropertyChanged += Model_PropertyChanged;
             Model.MaxAbstractLength = Settings.MaxAbstractLength;
