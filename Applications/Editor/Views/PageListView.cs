@@ -106,7 +106,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public double LineHeight => 1.3;
+        public double LineHeight => 1.35;
 
         /* ----------------------------------------------------------------- */
         ///
