@@ -18,7 +18,9 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Reflection;
+using System.Drawing;
 using System.Windows.Forms;
 using log4net;
 
@@ -52,12 +54,14 @@ namespace Cube.Note.App.Editor
 
             InitializeComponent();
             InitializeModels();
-            InitializeEvents();
-            InitializePresenters();
 
             Caption = TitleControl;
+            PageCollectionControl.Pages.ContextMenuStrip = PageMenuControl;
+            TextControl.ContextMenuStrip = TextMenuControl;
             TextControl.Status = FooterStatusControl;
-            MenuToolStrip.Renderer = new MenuRenderer(MenuToolStrip.BackColor);
+
+            InitializeEvents();
+            InitializePresenters();
         }
 
         #endregion
@@ -75,31 +79,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            VisibleMenuItem.Click += (s, e) => SwitchMenu();
-            UndoMenuItem.Click += (s, e) => Aggregator.Undo.Raise();
-            RedoMenuItem.Click += (s, e) => Aggregator.Redo.Raise();
-            SearchMenuItem.Click += (s, e) => RaiseSearch();
-            LogoMenuItem.Click += LogoMenuItem_Click;
-            SettingsMenuItem.Click += SettingsMenuItem_Click;
-
+            MenuControl.VisibleMenu.Click += (s, e) => SwitchMenu();
+            MenuControl.SearchMenu.Click += (s, e) => RaiseSearch();
             ContentsPanel.Panel2.ClientSizeChanged += ContentsPanel2_ClientSizeChanged;
-
-            // TODO: Presenter に移譲
-            Aggregator.TagSettings.Handle += SettingsMenuItem_Click;
-            Settings.Current.PropertyChanged += (s, e) =>
-            {
-                switch (e.PropertyName)
-                {
-                    case nameof(Settings.Current.CanUndo):
-                        UndoMenuItem.Enabled = Settings.Current.CanUndo;
-                        break;
-                    case nameof(Settings.Current.CanRedo):
-                        RedoMenuItem.Enabled = Settings.Current.CanRedo;
-                        break;
-                    default:
-                        break;
-                }
-            };
+            PageCollectionControl.Pages.DragEnter += (s, e) => OnDragEnter(e);
+            PageCollectionControl.Pages.DragOver += (s, e) => OnDragEnter(e);
+            PageCollectionControl.Pages.DragDrop += (s, e) => OnDragDrop(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -112,10 +97,23 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
-        {
+        {            
             var area = Screen.FromControl(this).WorkingArea.Size;
-            Width   = (int)(area.Width  * 0.7);
-            Height  = (int)(area.Height * 0.7);
+
+            var x = Settings.User.X >= 0 ?
+                    Math.Max(Math.Min(Settings.User.X, area.Width), 0) :
+                    (int)(area.Width * 0.05);
+            var y = Settings.User.Y >= 0 ?
+                    Math.Max(Math.Min(Settings.User.Y, area.Height), 0) :
+                    (int)(area.Height * 0.05);
+            Location = new Point(x, y);
+
+            Width  = Settings.User.Width >= 0 ?
+                     Settings.User.Width :
+                     (int)(area.Width * 0.7);
+            Height = Settings.User.Height >= 0 ?
+                     Settings.User.Height :
+                     (int)(area.Height * 0.7);
         }
 
         /* ----------------------------------------------------------------- */
@@ -133,7 +131,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeModels()
         {
-            Pages.Everyone = new Tag(Properties.Resources.EveryoneTag);
+            Pages.Tags.Everyone.Name = Properties.Resources.EveryoneTag;
+            Pages.Tags.Nothing.Name  = Properties.Resources.NothingTag;
             Settings.Load();
         }
 
@@ -149,12 +148,15 @@ namespace Cube.Note.App.Editor
         private void InitializePresenters()
         {
             PageCollectionControl.Aggregator = Aggregator;
+            PageMenuControl.Aggregator = Aggregator;
 
+            new MenuPresenter(MenuControl, Pages, Settings, Aggregator);
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
             new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
             new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
+            new NewsPresenter(FooterStatusControl, Settings, Aggregator);
         }
 
         #endregion
@@ -170,7 +172,37 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
+        [Browsable(false)]
         public ILog Logger { get; }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// SelectedText
+        /// 
+        /// <summary>
+        /// 選択中のテキストを取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(false)]
+        public string SelectedText
+            => TextControl.Enabled ? TextControl.GetSelectedText() : string.Empty;
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TextControlIsActive
+        ///
+        /// <summary>
+        /// テキスト部分がアクティブかどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool TextControlIsActive()
+            => FindActive(ActiveControl) == TextControl;
 
         #endregion
 
@@ -189,7 +221,6 @@ namespace Cube.Note.App.Editor
         {
             base.OnLoad(e);
             InitializeLayout();
-            Saver = new AutoSaver(Pages, Settings);
         }
 
         /* ----------------------------------------------------------------- */
@@ -205,6 +236,25 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
+            Saver = new AutoSaver(Pages, Settings);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnFormClosing
+        ///
+        /// <summary>
+        /// フォームが閉じると直前に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            Settings.User.X      = Location.X;
+            Settings.User.Y      = Location.Y;
+            Settings.User.Width  = Width;
+            Settings.User.Height = Height;
         }
 
         /* ----------------------------------------------------------------- */
@@ -220,36 +270,60 @@ namespace Cube.Note.App.Editor
         {
             try
             {
-                if (!e.Control) return;
+                if (!e.Control && !e.Alt) return;
 
                 var result = true;
                 switch (e.KeyCode)
                 {
+                    case Keys.C:
+                        if (e.Shift) Aggregator.Duplicate.Raise(EventAggregator.SelectedPage);
+                        else result = false;
+                        break;
                     case Keys.D:
-                        Aggregator.Remove.Raise();
+                        Aggregator.Remove.Raise(EventAggregator.SelectedPage);
                         break;
                     case Keys.E:
-                        Aggregator.Export.Raise();
+                        Aggregator.Export.Raise(EventAggregator.SelectedPage);
                         break;
                     case Keys.F:
                         RaiseSearch();
+                        break;
+                    case Keys.G:
+                        Aggregator.Google.Raise(ValueEventArgs.Create(SelectedText));
                         break;
                     case Keys.H:
                         SwitchMenu();
                         break;
                     case Keys.J:
                     case Keys.Down:
-                        Aggregator.Move.Raise(new ValueEventArgs<int>(1));
+                        Aggregator.Move.Raise(ValueEventArgs.Create(1));
                         break;
                     case Keys.K:
                     case Keys.Up:
-                        Aggregator.Move.Raise(new ValueEventArgs<int>(-1));
+                        Aggregator.Move.Raise(ValueEventArgs.Create(-1));
                         break;
                     case Keys.N:
-                        Aggregator.NewPage.Raise();
+                        Aggregator.NewPage.Raise(e.Shift ?
+                            EventAggregator.SelectedPage :
+                            EventAggregator.TopPage
+                        );
+                        break;
+                    case Keys.O:
+                        Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
+                        break;
+                    case Keys.R:
+                        if (e.Shift) Aggregator.TagSettings.Raise();
+                        else RaiseProperty();
+                        break;
+                    case Keys.S:
+                        if (e.Shift) Aggregator.Export.Raise(EventAggregator.SelectedPage);
+                        else result = false;
                         break;
                     case Keys.T:
-                        RaiseProperty();
+                        Aggregator.Settings.Raise();
+                        break;
+                    case Keys.U:
+                        Aggregator.TagSettings.Raise();
                         break;
                     default:
                         result = false;
@@ -260,43 +334,50 @@ namespace Cube.Note.App.Editor
             finally { base.OnKeyDown(e); }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragEnter
+        ///
+        /// <summary>
+        /// ファイルがドラッグされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            var prev = e.Effect;
+            base.OnDragEnter(e);
+            if (e.Effect != prev || !e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragDrop
+        ///
+        /// <summary>
+        /// ファイルがドロップされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+
+            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+            if (files == null) return;
+
+            foreach (var path in files)
+            {
+                var args = KeyValueEventArgs.Create(0, path);
+                Aggregator.Import.Raise(args);
+            }
+        }
+
         #endregion
 
         #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LogoMenuItem_Click
-        ///
-        /// <summary>
-        /// ロゴが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void LogoMenuItem_Click(object sender, EventArgs e)
-        {
-            try { System.Diagnostics.Process.Start(Properties.Resources.WebUrl); }
-            catch (Exception err) { Logger.Error(err); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingsMenuItem_Click
-        ///
-        /// <summary>
-        /// 設定メニューが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SettingsMenuItem_Click(object sender, EventArgs e)
-        {
-            var view = new SettingsForm(Settings.User);
-            using (var presenter = new SettingsPresenter(view, /* User, */ Settings, Aggregator))
-            {
-                view.ShowDialog(this);
-                TextControl.ResetViewWidth(); // refresh
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -317,11 +398,11 @@ namespace Cube.Note.App.Editor
             // see remarks
             var hidden = ContentsPanel.Panel1Collapsed;
             var text   = hidden ?
-                         Properties.Resources.VisibleMenu :
-                         Properties.Resources.HideMenu;
+                         Properties.Resources.ToolMenuVisible :
+                         Properties.Resources.ToolMenuHide;
 
-            VisibleMenuItem.Text = text;
-            VisibleMenuItem.ToolTipText = text;
+            MenuControl.VisibleMenu.Text = text;
+            MenuControl.VisibleMenu.ToolTipText = text;
         }
 
         #endregion
@@ -337,7 +418,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Control FindActive(Control control)
+        private Control FindActive(Control control)
         {
             var cast = control as IContainerControl;
             return cast != null ? FindActive(cast.ActiveControl) : control;
@@ -364,7 +445,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseProperty() => Aggregator.Property.Raise();
+        private void RaiseProperty()
+            => Aggregator.Property.Raise(EventAggregator.SelectedPage);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -377,9 +459,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void RaiseSearch()
         {
-            var control = FindActive(ActiveControl);
-            var index = (control == TextControl) ? 0 : 1;
-            Aggregator.SearchMode.Raise(new ValueEventArgs<int>(index));
+            var index = TextControlIsActive() ? 0 : 1;
+            Aggregator.Search.Raise(KeyValueEventArgs.Create(index, SelectedText));
         }
 
         #endregion
@@ -393,6 +474,8 @@ namespace Cube.Note.App.Editor
 
         #region Views
         private SearchForm SearchControl = new SearchForm();
+        private PageMenuControl PageMenuControl = new PageMenuControl();
+        private TextMenuControl TextMenuControl = new TextMenuControl();
         #endregion
     }
 }

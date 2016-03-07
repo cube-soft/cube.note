@@ -141,6 +141,46 @@ namespace Cube.Note
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanCopy
+        ///
+        /// <summary>
+        /// 切り取り、コピー等の操作が可能かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanCopy
+        {
+            get { return _canCopy; }
+            set
+            {
+                if (_canCopy == value) return;
+                _canCopy = value;
+                RaisePropertyChanged(nameof(CanCopy));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanPaste
+        ///
+        /// <summary>
+        /// Paste が可能かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanPaste
+        {
+            get { return _canPaste; }
+            set
+            {
+                if (_canPaste == value) return;
+                _canPaste = value;
+                RaisePropertyChanged(nameof(CanPaste));
+            }
+        }
+
         #endregion
 
         #region Events
@@ -239,6 +279,8 @@ namespace Cube.Note
         #region Fields
         private Page _page;
         private Tag _tag;
+        private bool _canCopy;
+        private bool _canPaste;
         private bool _canUndo;
         private bool _canRedo;
         #endregion

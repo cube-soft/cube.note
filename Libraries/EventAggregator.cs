@@ -30,73 +30,48 @@ namespace Cube.Note
     /* --------------------------------------------------------------------- */
     public class EventAggregator
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NewPage
-        ///
-        /// <summary>
-        /// 新しいページを追加するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent NewPage { get; } = new RelayEvent();
+        #region EventArgs
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Export
+        /// SelectedPage
         ///
         /// <summary>
-        /// ページをエクスポートするイベントです。
+        /// 選択ページを表す EventArgs オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Export { get; } = new RelayEvent();
+        public static ValueEventArgs<int> SelectedPage { get; }
+            = ValueEventArgs.Create(-1);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Property
+        /// TopPage
         ///
         /// <summary>
-        /// ページのプロパティ画面を表示するイベントです。
+        /// 最初のページを表す EventArgs オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Property { get; } = new RelayEvent();
+        public static ValueEventArgs<int> TopPage { get; }
+            = ValueEventArgs.Create(0);
+
+        #endregion
+
+        #region Events
+
+        #region TextControl and document events
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Edit
+        /// Refresh
         ///
         /// <summary>
-        /// ページ情報を編集した時に発生するイベントです。
+        /// 再描画するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<Page>> Edit { get; }
-            = new RelayEvent<ValueEventArgs<Page>>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Move
-        ///
-        /// <summary>
-        /// ページを移動するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> Move { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        ///
-        /// <summary>
-        /// 選択ページを削除するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Remove { get; } = new RelayEvent();
+        public RelayEvent Refresh { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -120,16 +95,141 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public RelayEvent Redo { get; } = new RelayEvent();
 
+        #endregion
+
+        #region Page events
+
         /* ----------------------------------------------------------------- */
         ///
-        /// SearchMode
+        /// NewPage
         ///
         /// <summary>
-        /// 検索用の画面を表示します。
+        /// 新しいページを追加するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> SearchMode { get; }
+        public RelayEvent<ValueEventArgs<int>> NewPage { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Duplicate
+        ///
+        /// <summary>
+        /// ページを複製するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Duplicate { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Import
+        ///
+        /// <summary>
+        /// ファイルをインポートするイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<KeyValueEventArgs<int, string>> Import { get; }
+            = new RelayEvent<KeyValueEventArgs<int, string>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Export
+        ///
+        /// <summary>
+        /// ページをエクスポートするイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Export { get; }
+           = new RelayEvent<ValueEventArgs<int>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Edit
+        ///
+        /// <summary>
+        /// ページ情報を編集した時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<Page>> Edit { get; }
+            = new RelayEvent<ValueEventArgs<Page>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// ページを削除するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Remove { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// ページを移動するイベントです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Move イベントの Value に設定される値はインデックスではなく移動量に
+        /// なります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Move { get; }
+            = new RelayEvent<ValueEventArgs<int>>();
+
+        #endregion
+
+        #region Tag events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewTag
+        ///
+        /// <summary>
+        /// 新しいタグを追加するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<Tag>> NewTag { get; }
+            = new RelayEvent<ValueEventArgs<Tag>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveTag
+        ///
+        /// <summary>
+        /// タグを削除するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<Tag>> RemoveTag { get; }
+            = new RelayEvent<ValueEventArgs<Tag>>();
+
+        #endregion
+
+        #region Additional dialog events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Property
+        ///
+        /// <summary>
+        /// ページのプロパティ画面を表示するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<int>> Property { get; }
             = new RelayEvent<ValueEventArgs<int>>();
 
         /* ----------------------------------------------------------------- */
@@ -137,11 +237,35 @@ namespace Cube.Note
         /// Search
         ///
         /// <summary>
-        /// 指定されたキーワードで検索するイベントです。
+        /// 検索フォームを開くイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<string>> Search { get; }
+        public RelayEvent<KeyValueEventArgs<int, string>> Search { get; }
+            = new RelayEvent<KeyValueEventArgs<int, string>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Google
+        ///
+        /// <summary>
+        /// インターネットで検索するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<string>> Google { get; }
+            = new RelayEvent<ValueEventArgs<string>>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Web
+        ///
+        /// <summary>
+        /// 既定のブラウザで URL を開くイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<ValueEventArgs<string>> Web { get; }
             = new RelayEvent<ValueEventArgs<string>>();
 
         /* ----------------------------------------------------------------- */
@@ -165,5 +289,9 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent TagSettings { get; } = new RelayEvent();
+
+        #endregion
+
+        #endregion
     }
 }

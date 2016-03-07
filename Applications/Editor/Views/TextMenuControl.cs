@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// SettingsFolder.cs
+/// TextMenuControl.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,71 +17,45 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using IoEx = System.IO;
+using System.Windows.Forms;
 
-namespace Cube.Note
+namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsFolder
+    /// TextMenuControl
     /// 
     /// <summary>
-    /// 各種設定を保持するためのクラスです。
+    /// テキストエディタ上で表示されるコンテキストメニューを表すクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class SettingsFolder
+    public class TextMenuControl : ContextMenuStrip
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
-        ///
+        /// TextMenuControl
+        /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(string path)
+        public TextMenuControl() : base()
         {
-            Path = path;
-        }
+            CutMenu       = new ToolStripMenuItem(Properties.Resources.MenuCut);
+            CopyMenu      = new ToolStripMenuItem(Properties.Resources.MenuCopy);
+            PasteMenu     = new ToolStripMenuItem(Properties.Resources.MenuPaste);
+            SearchMenu    = new ToolStripMenuItem(Properties.Resources.MenuSearch);
+            GoogleMenu    = new ToolStripMenuItem(Properties.Resources.MenuGoogle);
+            UndoMenu      = new ToolStripMenuItem(Properties.Resources.MenuUndo);
+            RedoMenu      = new ToolStripMenuItem(Properties.Resources.MenuRedo);
+            SelectAllMenu = new ToolStripMenuItem(Properties.Resources.MenuSelectAll);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingsFolder
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly) : this(assembly, DefaultFileName) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingsFolder
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly, string filename)
-        {
-            var reader = new AssemblyReader(assembly);
-            var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var tail = $@"{reader.Company}\{reader.Product}\{filename}";
-            Path = IoEx.Path.Combine(head, tail);
-            UriQuery = new Dictionary<string, string>
-            {
-                { "utm_source", "cube" },
-                { "utm_medium", "note" },
-            };
+            InitializeShortCutKeys();
+            InitializeMenu();
         }
 
         #endregion
@@ -90,121 +64,155 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DefaultFileName
-        ///
+        /// CutMenu
+        /// 
         /// <summary>
-        /// 設定ファイルのデフォルト名を取得します。
+        /// 切り取りメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static string DefaultFileName => "Settings.json";
+        public ToolStripItem CutMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileType
-        ///
+        /// CopyMenu
+        /// 
         /// <summary>
-        /// 設定ファイルのファイル形式を取得します。
+        /// コピーメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Settings.FileType FileType => Settings.FileType.Json;
+        public ToolStripItem CopyMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
-        ///
+        /// PasteMenu
+        /// 
         /// <summary>
-        /// 設定ファイルの保存先を取得または設定します。
+        /// 貼り付けメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; }
+        public ToolStripItem PasteMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MaxAbstractLength
-        ///
+        /// SearchMenu
+        /// 
         /// <summary>
-        /// 概要を表す文字列の最大長を取得します。
+        /// 検索メニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int MaxAbstractLength => 100;
+        public ToolStripItem SearchMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UriQuery
-        ///
+        /// GoogleMenu
+        /// 
         /// <summary>
-        /// URL に付与するクエリーを取得します。
+        /// インターネットで検索メニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IDictionary<string, string> UriQuery { get; }
+        public ToolStripItem GoogleMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// User
-        ///
+        /// UndoMenu
+        /// 
         /// <summary>
-        /// アプリケーション終了後も内容を保持する設定を取得します。
+        /// 元に戻すメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue User { get; private set; } = null;
+        public ToolStripItem UndoMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Current
-        ///
+        /// RedoMenu
+        /// 
         /// <summary>
-        /// アプリケーション実行中のみ内容を保持する設定を取得します。
+        /// やり直しメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ConditionsValue Current { get; } = new ConditionsValue();
+        public ToolStripItem RedoMenu { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectAllMenu
+        /// 
+        /// <summary>
+        /// すべて選択メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripItem SelectAllMenu { get; }
 
         #endregion
 
-        #region Methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Load
-        ///
+        /// InitializeShortCutKeys
+        /// 
         /// <summary>
-        /// 設定をロードします。
+        /// ショートカットキーを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Load()
+        private void InitializeShortCutKeys()
         {
-            User = !string.IsNullOrEmpty(Path) && IoEx.File.Exists(Path) ?
-                   Settings.Load<SettingsValue>(Path, Settings.FileType.Json) :
-                   new SettingsValue();
+            Menu(SearchMenu).ShortcutKeys    = Keys.Control | Keys.F;
+            Menu(GoogleMenu).ShortcutKeys    = Keys.Control | Keys.G;
+            Menu(UndoMenu).ShortcutKeys      = Keys.Control | Keys.Z;
+            Menu(RedoMenu).ShortcutKeys      = Keys.Control | Keys.Y;
+            Menu(CutMenu).ShortcutKeys       = Keys.Control | Keys.X;
+            Menu(CopyMenu).ShortcutKeys      = Keys.Control | Keys.C;
+            Menu(PasteMenu).ShortcutKeys     = Keys.Control | Keys.V;
+            Menu(SelectAllMenu).ShortcutKeys = Keys.Control | Keys.A;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Save
-        ///
+        /// InitializeMenu
+        /// 
         /// <summary>
-        /// 設定を保存します。
+        /// メニューを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Save(Path);
-        public void Save(string path)
+        private void InitializeMenu()
         {
-            if (string.IsNullOrEmpty(path)) return;
-
-            var directory = IoEx.Path.GetDirectoryName(path);
-            if (string.IsNullOrEmpty(directory)) return;
-            if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
-
-            Settings.Save(User, path, FileType);
+            Items.AddRange(new ToolStripItem[]
+            {
+                SearchMenu,
+                GoogleMenu,
+                new ToolStripSeparator(),
+                UndoMenu,
+                RedoMenu,
+                new ToolStripSeparator(),
+                CutMenu,
+                CopyMenu,
+                PasteMenu,
+                new ToolStripSeparator(),
+                SelectAllMenu,
+            });
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Menu
+        /// 
+        /// <summary>
+        /// ToolStripMenuItem にキャストします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ToolStripMenuItem Menu(ToolStripItem src)
+            => src as ToolStripMenuItem;
 
         #endregion
     }

@@ -119,6 +119,7 @@ namespace Cube.Note.App.Editor
             var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
             NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
 
+            TagsPanel.SuspendLayout();
             foreach (var tag in tags)
             {
                 var button = new TagButton(tag);
@@ -126,6 +127,7 @@ namespace Cube.Note.App.Editor
                 if (src.Tags.Contains(tag.Name)) button.Checked = true;
                 TagsPanel.Controls.Add(button);
             }
+            TagsPanel.ResumeLayout();
         }
 
         #endregion

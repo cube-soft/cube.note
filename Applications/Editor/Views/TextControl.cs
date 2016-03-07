@@ -67,7 +67,9 @@ namespace Cube.Note.App.Editor
             ColorScheme.DirtyLineBar       = SystemColors.Highlight;
             ColorScheme.RightEdgeColor     = BackColor;
 
-            ColorScheme.SetColor(CharClass.Keyword, Color.White, Color.OrangeRed);
+            ColorScheme.SetColor(CharClass.Keyword, Color.Black, Color.Orange);
+            ColorScheme.SetMarkingDecoration(Marking.Uri,
+                new BgColorTextDecoration(Color.Navy, BackColor));
 
             CaretMoved += (s, e) => Report();
         }

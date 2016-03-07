@@ -81,7 +81,8 @@ namespace Cube.Note
         public PageCollection(string directory)
         {
             Directory = directory;
-            Tags = new TagCollection(IoEx.Path.Combine(directory, TagCollection.DefaultFileName));
+            var file = IoEx.Path.Combine(directory, TagCollection.DefaultFileName);
+            Tags = new TagCollection(file);
         }
 
         #endregion
@@ -132,26 +133,6 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public TagCollection Tags { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Everyone
-        ///
-        /// <summary>
-        /// すべてのノートを表示する事に該当するタグを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Tag Everyone
-        {
-            get { return _everyone; }
-            set
-            {
-                if (_everyone == value) return;
-                _everyone = value;
-                if (_everyone != null) _everyone.Count = Count;
-            }
-        }
-
         #endregion
 
         #region Events
@@ -176,20 +157,53 @@ namespace Cube.Note
         /// NewPage
         ///
         /// <summary>
-        /// 新しいページを先頭に追加します。
+        /// 新しいページを指定されたインデックスの位置に追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void NewPage() => NewPage(Everyone);
-        public void NewPage(Tag tag)
+        public void NewPage(int index = 0) => NewPage(Tags.Everyone, index, null);
+        public void NewPage(Tag tag, int index) => NewPage(tag, index, null);
+        public void NewPage(Tag tag, int index, Action<Page> initialize)
         {
             var page = new Page();
-            if (tag != null && tag != Everyone) page.Tags.Add(tag.Name);
             Touch(page);
-            Insert(0, page);
-            if (Everyone != null) Everyone.Count++;
-            if (tag != null && tag != Everyone) tag.Count++;
+
+            Tags.Everyone.Increment();
+            if (tag != null && tag != Tags.Everyone && tag != Tags.Nothing)
+            {
+                tag.Increment();
+                page.Tags.Add(tag.Name);
+            }
+            else Tags.Nothing.Increment();
+
+            if (initialize != null) initialize(page);
+            Insert(index, page);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Duplicate
+        ///
+        /// <summary>
+        /// 新しいページを指定されたインデックスの位置に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Duplicate(Page src, int index)
+            => NewPage(null, index, (page) =>
+        {
+            page.Abstract = src.Abstract;
+            CopyFile(src, page);
+            if (src.Tags.Count > 0)
+            {
+                foreach (var tag in src.Tags)
+                {
+                    Tags.Create(tag).Increment();
+                    page.Tags.Add(tag);
+                }
+                Tags.Nothing.Decrement();
+            }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -203,8 +217,9 @@ namespace Cube.Note
         public IEnumerable<Page> Search(Tag tag)
         {
             return Items.Where(item
-                => item.Tags.Contains(tag.Name) ||
-                   tag == Everyone
+                => tag == Tags.Everyone ||
+                   tag == Tags.Nothing && item.Tags.Count == 0 ||
+                   item.Tags.Contains(tag.Name)
             );
         }
 
@@ -229,8 +244,9 @@ namespace Cube.Note
             {
                 if (!IoEx.File.Exists(ToPath(page))) continue;
                 Add(page);
-                if (Everyone != null) Everyone.Count++;
-                foreach (var tag in page.Tags) Tags.Create(tag).Count++;
+                Tags.Everyone.Increment();
+                if (page.Tags.Count == 0) Tags.Nothing.Increment();
+                else foreach (var tag in page.Tags) Tags.Create(tag).Increment();
             }
 
             OnLoaded(EventArgs.Empty);
@@ -289,8 +305,9 @@ namespace Cube.Note
                 var page = Items[index];
                 if (page == null) return;
 
-                Tags.Decrease(page.Tags);
-                if (Everyone != null) Everyone.Count--;
+                Tags.Everyone.Decrement();
+                if (page.Tags.Count == 0) Tags.Nothing.Decrement();
+                else Tags.Decrement(page.Tags);
                 Clean(page);
             }
             finally { base.RemoveItem(index); }
@@ -298,7 +315,7 @@ namespace Cube.Note
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
@@ -318,6 +335,23 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CopyFile
+        ///
+        /// <summary>
+        /// ファイルをコピーします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void CopyFile(Page src, Page dest)
+        {
+            var sp = ToPath(src);
+            var dp = ToPath(dest);
+            CreateDirectory(IoEx.Path.GetDirectoryName(dp));
+            IoEx.File.Copy(sp, dp, true);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Clean
         ///
         /// <summary>
@@ -325,38 +359,20 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Clean(Page page)
-        {
-            IoEx.File.Delete(ToPath(page));
-        }
+        private void Clean(Page page) => IoEx.File.Delete(ToPath(page));
 
         /* ----------------------------------------------------------------- */
         ///
         /// ToPath
         ///
         /// <summary>
-        /// 指定されたオブジェクトに対応するパスを取得します。
+        /// パスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string ToPath(Page item)
-        {
-            return ToPath(item.FileName);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToPath
-        ///
-        /// <summary>
-        /// 指定されたファイル名に対応するパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
+        private string ToPath(Page item) => ToPath(item.FileName);
         private string ToPath(string filename)
-        {
-            return IoEx.Path.Combine(Directory, filename);
-        }
+            => IoEx.Path.Combine(Directory, filename);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -373,10 +389,6 @@ namespace Cube.Note
             IoEx.Directory.CreateDirectory(path);
         }
 
-        #endregion
-
-        #region Fields
-        private Tag _everyone;
         #endregion
     }
 }

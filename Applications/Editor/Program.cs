@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -54,12 +55,32 @@ namespace Cube.Note.App.Editor
                     return;
                 }
 
+                InitLog();
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 var form = new MainForm();
                 form.Bootstrap = bootstrap;
                 Application.Run(form);
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitLog
+        /// 
+        /// <summary>
+        /// ログを出力します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static void InitLog()
+        {
+            var logger = log4net.LogManager.GetLogger(typeof(Program));
+            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
+            logger.Info($"{reader.Product} {reader.Version}");
+            logger.Info($"{Environment.OSVersion}");
+            logger.Info($"{Environment.Version}");
         }
     }
 }

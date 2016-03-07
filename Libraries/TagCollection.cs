@@ -118,6 +118,57 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public string Path { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SystemTagCount
+        ///
+        /// <summary>
+        /// システムタグの個数を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int SystemTagCount => 2;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Everyone
+        ///
+        /// <summary>
+        /// すべてのノートを表示する事に該当するタグを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Everyone
+        {
+            get { return _everyone; }
+            set
+            {
+                if (_everyone == value) return;
+                _everyone = value;
+                if (_everyone != null) _everyone.Count = Count;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Nothing
+        ///
+        /// <summary>
+        /// 一つもタグが設定されていない事を示すタグを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Tag Nothing
+        {
+            get { return _nothing; }
+            set
+            {
+                if (_nothing == value) return;
+                _nothing = value;
+                if (_nothing != null) _nothing.Count = Count;
+            }
+        }
+
         #endregion
 
         #region Events
@@ -150,6 +201,21 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IndexOf
+        ///
+        /// <summary>
+        /// 指定された名前を持つタグのインデックスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int IndexOf(string name)
+        {
+            var dest = Get(name);
+            return dest != null ? IndexOf(dest) : -1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Get
         ///
         /// <summary>
@@ -157,7 +223,12 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Tag Get(string name) => Items.FirstOrDefault(x => x.Name == name);
+        public Tag Get(string name)
+        {
+            return Everyone.Name == name ? Everyone :
+                   Nothing.Name  == name ? Nothing  :
+                   Items.FirstOrDefault(x => x.Name == name);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -200,39 +271,30 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Increase
+        /// Increment
         ///
         /// <summary>
-        /// 指定されたタグの Count を増加させます。
+        /// 指定されたタグの Count を 1 増加させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Increase(IEnumerable<string> tags)
+        public void Increment(IEnumerable<string> tags)
         {
-            foreach (var name in tags)
-            {
-                var tag = Create(name);
-                tag.Count++;
-            }
+            foreach (var name in tags) Create(name)?.Increment();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Decrease
+        /// Decrement
         ///
         /// <summary>
-        /// 指定されたタグの Count を減少させます。
+        /// 指定されたタグの Count を 1 減少させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Decrease(IEnumerable<string> tags)
+        public void Decrement(IEnumerable<string> tags)
         {
-            foreach (var name in tags)
-            {
-                var tag = Get(name);
-                if (tag == null) continue;
-                tag.Count = Math.Max(tag.Count - 1, 0);
-            }
+            foreach (var name in tags) Get(name)?.Decrement();
         }
 
         /* ----------------------------------------------------------------- */
@@ -307,6 +369,11 @@ namespace Cube.Note
             IoEx.Directory.CreateDirectory(directory);
         }
 
+        #endregion
+
+        #region Fields
+        private Tag _everyone = new Tag("Everyone");
+        private Tag _nothing  = new Tag("Nothing");
         #endregion
     }
 }

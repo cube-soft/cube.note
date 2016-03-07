@@ -133,11 +133,8 @@
   <data name="CurrentNote" xml:space="preserve">
     <value>現在のノート</value>
   </data>
-  <data name="DownMenu" xml:space="preserve">
-    <value>下へ</value>
-  </data>
   <data name="EditTag" xml:space="preserve">
-    <value>タグを編集...</value>
+    <value>タグの追加と削除 ...</value>
   </data>
   <data name="EmptyPage" xml:space="preserve">
     <value>無題のページ</value>
@@ -145,17 +142,11 @@
   <data name="EveryoneTag" xml:space="preserve">
     <value>すべてのノート</value>
   </data>
-  <data name="ExportFilter" xml:space="preserve">
-    <value>テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.*</value>
-  </data>
-  <data name="ExportMenu" xml:space="preserve">
-    <value>ファイルに保存</value>
-  </data>
   <data name="Font" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Font.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="HideMenu" xml:space="preserve">
-    <value>ノート一覧を非表示</value>
+  <data name="ImportTitle" xml:space="preserve">
+    <value>CubeNote に取り込むファイルを選択</value>
   </data>
   <data name="LastUpdateFormat" xml:space="preserve">
     <value>yyyy/MM/dd HH:mm 更新</value>
@@ -172,11 +163,62 @@
   <data name="Maximize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Maximize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MenuCopy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="MenuCut" xml:space="preserve">
+    <value>切り取り</value>
+  </data>
+  <data name="MenuDown" xml:space="preserve">
+    <value>下へ</value>
+  </data>
+  <data name="MenuDuplicate" xml:space="preserve">
+    <value>ノートを複製</value>
+  </data>
+  <data name="MenuExport" xml:space="preserve">
+    <value>ファイルに保存</value>
+  </data>
+  <data name="MenuGoogle" xml:space="preserve">
+    <value>インターネットで検索</value>
+  </data>
+  <data name="MenuImport" xml:space="preserve">
+    <value>ファイルからノートを作成</value>
+  </data>
+  <data name="MenuNewPage" xml:space="preserve">
+    <value>新しいノートを作成</value>
+  </data>
+  <data name="MenuPaste" xml:space="preserve">
+    <value>貼り付け</value>
+  </data>
+  <data name="MenuProperty" xml:space="preserve">
+    <value>ノートにタグを設定</value>
+  </data>
+  <data name="MenuRedo" xml:space="preserve">
+    <value>やり直し</value>
+  </data>
+  <data name="MenuRemove" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="MenuSearch" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="MenuSelectAll" xml:space="preserve">
+    <value>すべて選択</value>
+  </data>
+  <data name="MenuUndo" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="MenuUp" xml:space="preserve">
+    <value>上へ</value>
+  </data>
   <data name="Minimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Minimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Normalize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Normalize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NothingTag" xml:space="preserve">
+    <value>未整理</value>
   </data>
   <data name="PositionFormat" xml:space="preserve">
     <value>カーソル {0:#,0} 行 {1:#,0} 列</value>
@@ -190,8 +232,14 @@
   <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RemoveMenu" xml:space="preserve">
-    <value>削除</value>
+  <data name="ReplaceAll" xml:space="preserve">
+    <value>すべてを置換</value>
+  </data>
+  <data name="ReplaceAllSuccess" xml:space="preserve">
+    <value>{0} 件を置換しました。</value>
+  </data>
+  <data name="ReplaceNext" xml:space="preserve">
+    <value>次を置換</value>
   </data>
   <data name="Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,8 +247,23 @@
   <data name="SearchEnd" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SearchEnd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SearchNext" xml:space="preserve">
+    <value>次を検索</value>
+  </data>
+  <data name="SearchNotFound" xml:space="preserve">
+    <value>「{0}」 は見つかりませんでした。</value>
+  </data>
+  <data name="SearchOver" xml:space="preserve">
+    <value>最後の検索結果まで到達しました。</value>
+  </data>
   <data name="SearchPale" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SearchPale.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SearchPrev" xml:space="preserve">
+    <value>前を検索</value>
+  </data>
+  <data name="SearchSuccess" xml:space="preserve">
+    <value>{0} 個のノートが見つかりました。</value>
   </data>
   <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -208,17 +271,35 @@
   <data name="ShowProperty" xml:space="preserve">
     <value>タグを設定</value>
   </data>
+  <data name="TextFilter" xml:space="preserve">
+    <value>テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.*</value>
+  </data>
   <data name="Title" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ToolMenuHide" xml:space="preserve">
+    <value>ノート一覧を非表示 (H)</value>
+  </data>
+  <data name="ToolMenuLogo" xml:space="preserve">
+    <value>Web ページへ移動</value>
+  </data>
+  <data name="ToolMenuRedo" xml:space="preserve">
+    <value>やり直し (Y)</value>
+  </data>
+  <data name="ToolMenuSearch" xml:space="preserve">
+    <value>検索 (F)</value>
+  </data>
+  <data name="ToolMenuSettings" xml:space="preserve">
+    <value>設定 (T)</value>
+  </data>
+  <data name="ToolMenuUndo" xml:space="preserve">
+    <value>元に戻す (Z)</value>
+  </data>
+  <data name="ToolMenuVisible" xml:space="preserve">
+    <value>ノート一覧を表示 (H)</value>
+  </data>
   <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UpMenu" xml:space="preserve">
-    <value>上へ</value>
-  </data>
-  <data name="VisibleMenu" xml:space="preserve">
-    <value>ノート一覧を表示</value>
   </data>
   <data name="WarnRemove" xml:space="preserve">
     <value>このノートを削除しますか？</value>

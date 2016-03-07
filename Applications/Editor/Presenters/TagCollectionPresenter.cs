@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -52,7 +53,8 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, pages.Tags, settings, events)
         {
-            Everyone = pages.Everyone;
+            View.DrawMode = DrawMode.OwnerDrawFixed;
+            View.DrawItem += View_DrawItem;
             Model.Loaded += Model_Loaded;
         }
 
@@ -62,20 +64,44 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Everyone
+        /// EditIndex
         ///
         /// <summary>
-        /// すべてのノートを表示する事を表すタグを取得します。
+        /// 編集用のインデックスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Tag Everyone { get; }
+        public int EditIndex => View.Items.Count - 1;
 
         #endregion
 
         #region Event handlers
 
         #region EventAggregator
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewTag_Handle
+        ///
+        /// <summary>
+        /// タグが追加された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void NewTag_Handle(object sender, ValueEventArgs<Tag> e)
+            => Model.Add(e.Value);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveTag_Handle
+        ///
+        /// <summary>
+        /// タグが削除された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveTag_Handle(object sender, ValueEventArgs<Tag> e)
+            => Model.Remove(e.Value);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -96,17 +122,36 @@ namespace Cube.Note.App.Editor
                 var dialog = new PropertyForm(page, Model);
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-                Model.Decrease(page.Tags);
+                if (page.Tags.Count == 0) Model.Nothing?.Decrement();
+                else Model.Decrement(page.Tags);
                 page.Tags.Clear();
-                foreach (var name in dialog.Tags)
+
+                if (dialog.Tags.Count == 0) Model.Nothing?.Increment();
+                else foreach (var name in dialog.Tags)
                 {
                     Model.Create(name).Count++;
                     page.Tags.Add(name);
                 }
             });
 
-            Events.Edit.Raise(new ValueEventArgs<Page>(page));
+            Events.Edit.Raise(ValueEventArgs.Create(page));
         }
+
+        #endregion
+
+        #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_TagChanged
+        ///
+        /// <summary>
+        /// タグが変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
+            => Settings.User.Tag = e.NewValue?.Name ?? string.Empty;
 
         #endregion
 
@@ -131,6 +176,39 @@ namespace Cube.Note.App.Editor
             else Settings.Current.Tag = View.SelectedItem as Tag;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_DrawItem
+        ///
+        /// <summary>
+        /// 項目を描画します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var control = sender as ComboBox;
+            if (control == null || e.Index < 0) return;
+
+            var text = control.Items[e.Index].ToString();
+
+            if ((e.State & DrawItemState.ComboBoxEdit) != 0)
+            {
+                e.Graphics.FillRectangle(Brushes.Transparent, e.Bounds);
+                e.Graphics.DrawString(text, control.Font, Brushes.Black, e.Bounds.X, e.Bounds.Y);
+                return;
+            }
+
+            var system = (e.Index == 0 || e.Index == 1 || e.Index == View.Items.Count - 1);
+            var style  = system ? FontStyle.Bold : FontStyle.Regular;
+            using (var font = new Font(control.Font, style))
+            using (var brush = new SolidBrush(e.ForeColor))
+            {
+                e.DrawBackground();
+                e.Graphics.DrawString(text, font, brush, e.Bounds.X, e.Bounds.Y);
+            }
+        }
+
         #endregion
 
         #region Model
@@ -146,8 +224,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_Loaded(object sender, EventArgs e)
         {
+            Events.NewTag.Handle += NewTag_Handle;
+            Events.RemoveTag.Handle += RemoveTag_Handle;
             Events.Property.Handle += Property_Handled;
-            ViewReset();
+            Settings.Current.TagChanged += Settings_TagChanged;
+            ViewReset(Model.Get(Settings.User.Tag));
             Model.CollectionChanged += Model_CollectionChanged;
         }
 
@@ -165,28 +246,32 @@ namespace Cube.Note.App.Editor
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    SyncWait(() => View.Items.Insert(View.Items.Count - 1, Model[e.NewStartingIndex]));
+                    SyncWait(() => InsertItem(e.NewStartingIndex));
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
-                    SyncWait(() => View.Items.RemoveAt(e.OldStartingIndex));
+                    SyncWait(() => RemoveItem(e.OldStartingIndex));
                     break;
                 default:
                     break;
             }
         }
 
+        #endregion
+
+        #region Tag
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_PropertyChanged
+        /// Tag_PropertyChanged
         ///
         /// <summary>
         /// プロパティが変化した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Tag_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var tag = sender as Tag;
             if (tag == null) return;
@@ -214,15 +299,41 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        private void Attach(Tag tag)
+        {
+            if (tag == null) return;
+            tag.PropertyChanged -= Tag_PropertyChanged;
+            tag.PropertyChanged += Tag_PropertyChanged;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// イベントハンドラを関連付けます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private void Attach(IList tags)
         {
             if (tags == null) return;
+            foreach (Tag tag in tags) Attach(tag);
+        }
 
-            foreach (Tag tag in tags)
-            {
-                tag.PropertyChanged -= Model_PropertyChanged;
-                tag.PropertyChanged += Model_PropertyChanged;
-            }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// 関連付けられているイベントハンドラを解除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Detach(Tag tag)
+        {
+            if (tag == null) return;
+            tag.PropertyChanged -= Tag_PropertyChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -237,8 +348,62 @@ namespace Cube.Note.App.Editor
         private void Detach(IList tags)
         {
             if (tags == null) return;
+            foreach (Tag tag in tags) Detach(tag);
+        }
 
-            foreach (Tag tag in tags) tag.PropertyChanged -= Model_PropertyChanged;
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddItem
+        ///
+        /// <summary>
+        /// タグを View.Items に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddItem(Tag tag)
+        {
+            if (tag == null) return;
+            Attach(tag);
+            View.Items.Add(tag);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertItem
+        ///
+        /// <summary>
+        /// タグを View.Items に挿入します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InsertItem(int modelIndex)
+        {
+            if (modelIndex < 0 || modelIndex >= Model.Count) return;
+
+            var tag = Model[modelIndex];
+            if (tag == null) return;
+
+            Attach(tag);
+
+            var index = Math.Min(modelIndex + Model.SystemTagCount, EditIndex);
+            View.Items.Insert(index, tag);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveItem
+        ///
+        /// <summary>
+        /// タグを View.Items から削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveItem(int modelIndex)
+        {
+            if (modelIndex < 0) return;
+            var index = Math.Min(modelIndex + Model.SystemTagCount, EditIndex - 1);
+            if (View.SelectedIndex == index) View.SelectedIndex = 0;
+            View.Items.RemoveAt(index);
         }
 
         /* ----------------------------------------------------------------- */
@@ -250,30 +415,26 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ViewReset()
+        private void ViewReset(Tag init = null) => SyncWait(() =>
         {
-            SyncWait(() =>
-            {
-                View.SelectedIndexChanged -= View_SelectedIndexChanged;
+            var index = init == null ? 1 :
+                        init == Model.Everyone ? 0 :
+                        init == Model.Nothing  ? 1 :
+                        Model.IndexOf(init) + Model.SystemTagCount;
 
-                if (View.Items.Count > 0) View.Items.Clear();
+            View.BeginUpdate();
+            View.SelectedIndexChanged -= View_SelectedIndexChanged;
 
-                Everyone.PropertyChanged -= Model_PropertyChanged;
-                Everyone.PropertyChanged += Model_PropertyChanged;
-                View.Items.Add(Everyone);
+            if (View.Items.Count > 0) View.Items.Clear();
+            AddItem(Model.Everyone);
+            AddItem(Model.Nothing);
+            foreach (var tag in Model) AddItem(tag);
+            View.Items.Add(Properties.Resources.EditTag);
 
-                foreach (var tag in Model)
-                {
-                    tag.PropertyChanged -= Model_PropertyChanged;
-                    tag.PropertyChanged += Model_PropertyChanged;
-                    View.Items.Add(tag);
-                }
-
-                View.Items.Add(Properties.Resources.EditTag);
-                View.SelectedIndexChanged += View_SelectedIndexChanged;
-                View.SelectedIndex = 0;
-            });
-        }
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.SelectedIndex = Math.Max(Math.Min(index, EditIndex - 1), 0);
+            View.EndUpdate();
+        });
 
         #endregion
     }

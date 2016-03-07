@@ -19,12 +19,8 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Cube.Note.Azuki;
-using Cube.Collections;
-using Sgry.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -38,7 +34,7 @@ namespace Cube.Note.App.Editor
     /// 
     /* --------------------------------------------------------------------- */
     public class SearchPresenter : 
-        PresenterBase<SearchForm, PageCollection>
+        PresenterBase<SearchForm, SearchReplace>
     {
         #region Constructors
 
@@ -51,17 +47,26 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SearchPresenter(SearchForm view, PageCollection model,
+        public SearchPresenter(SearchForm view, PageCollection parent,
             SettingsFolder settings, EventAggregator events)
-            : base(view, model, settings, events)
+            : base(view, new SearchReplace(parent), settings, events)
         {
-            Events.SearchMode.Handle += SearchMode_Handle;
-            Events.Search.Handle += Search_Handled;
+            Events.Search.Handle += Search_Handle;
+            Settings.Current.PageChanged += Settings_PageChanged;
 
-            View.Showing += View_Showing;
             View.Hiding += View_Hiding;
+            View.Search += View_Search;
+            View.SearchNext += (s, e) => Model.Forward();
+            View.SearchPrev += (s, e) => Model.Back();
+            View.ReplaceNext += (s, e) => Model.Replace(View.Replace);
+            View.ReplaceAll += View_ReplaceAll;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
+            View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
+            View.ShowPages = false;
+
+            Model.PropertyChanged += Model_PropertyChanged;
+            Model.MaxAbstractLength = Settings.MaxAbstractLength;
         }
 
         #endregion
@@ -72,53 +77,48 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SearchMode_Handle
+        /// Search_Handle
         /// 
         /// <summary>
         /// 検索画面を表示します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SearchMode_Handle(object sender, ValueEventArgs<int> e)
+        private void Search_Handle(object sender, KeyValueEventArgs<int, string> e)
         {
             Sync(() =>
             {
+                ResetRange();
                 View.Show();
 
                 var count = View.SearchRange.Items.Count;
                 if (count <= 0) return;
 
-                var index = Math.Max(Math.Min(e.Value, count - 1), 0);
+                var index = Math.Max(Math.Min(e.Key, count - 1), 0);
                 View.SearchRange.SelectedIndex = index;
+
+                if (!string.IsNullOrEmpty(e.Value)) View.Keyword = e.Value;
+                View.SelectKeyword();
             });
         }
 
+        #endregion
+
+        #region Settings
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Search_Handled
+        /// Settings_PageChanged
         /// 
         /// <summary>
-        /// 検索を実行します。
+        /// 現在のページが変化した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Search_Handled(object sender, ValueEventArgs<string> e)
+        private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
-            if (string.IsNullOrEmpty(e.Value)) return;
-
-            var one = false;
-            var sensitive = true;
-            SyncWait(() =>
-            {
-                one = View.SearchRange.SelectedIndex == 0;
-                sensitive = View.CaseSensitive;
-            });
-
-            await Async(() =>
-            {
-                if (one) Search(Settings.Current.Page, e.Value, sensitive);
-                else Search(Model.Search(Model.Everyone), e.Value, sensitive);
-            });
+            if (e.NewValue == null) return;
+            Model.Current = Model.Results.IndexOf(e.NewValue);
         }
 
         #endregion
@@ -127,15 +127,49 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View_Showing
+        /// View_Search
         /// 
         /// <summary>
-        /// 表示時に実行されるハンドラです。
+        /// 検索を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Showing(object sender, CancelEventArgs e)
-           => SyncWait(() => ResetSearchRange());
+        private async void View_Search(object sender, EventArgs e)
+        {
+            View.Message = string.Empty;
+
+            var keyword   = View.Keyword;
+            var sensitive = View.CaseSensitive;
+            var tag       = View.SearchRange.SelectedItem as Tag;
+
+            if (string.IsNullOrEmpty(keyword)) return;
+
+            await Async(() =>
+            {
+                if (tag == null) Model.Search(keyword, sensitive, Settings.Current.Page);
+                else Model.Search(keyword, sensitive, tag);
+            });
+
+            View.ShowPages = Model.Results.Count > 0 && tag != null;
+            View.Message   = GetMessage(Model.Results.Count, tag);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_ReplaceAll
+        /// 
+        /// <summary>
+        /// すべてを置換時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private async void View_ReplaceAll(object sender, EventArgs e)
+        {
+            var replaced = View.Replace;
+            var count = 0;
+            await Async(() => count = Model.ReplaceAll(replaced));
+            if (count > 0) View.Message = string.Format(Properties.Resources.ReplaceAllSuccess, count);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,14 +182,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void View_Hiding(object sender, CancelEventArgs e)
         {
-            var source = View.Pages.DataSource;
-
-            View.Pages.DataSource = null;
-            View.Found = -1;
+            View.Message = string.Empty;
             View.ShowPages = false;
 
-            await Async(() => Cleanup(source));
-            Refresh();
+            await Async(() =>
+            {
+                Model.Reset();
+                Events.Refresh.Raise();
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -168,7 +202,37 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
-            => Highlight(SelectedPage());
+            => Sync(() =>
+        {
+            if (!View.Pages.AnyItemsSelected) return;
+            Model.Current = View.Pages.SelectedIndices[0];
+        });
+
+        #endregion
+
+        #region Model
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_PropertyChanged
+        /// 
+        /// <summary>
+        /// プロパティの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(Model.Current)) return;
+
+            var index   = Model.Current;
+            var message = index >= 0 && index < Model.Results.Count ?
+                          string.Empty :
+                          Properties.Resources.SearchOver;
+
+            Sync(() => View.Message = message);
+            SetPage(index);
+        }
 
         #endregion
 
@@ -178,147 +242,60 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Search
-        /// 
-        /// <summary>
-        /// 現在のページから検索を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Search(Page page, string keyword, bool sensitive)
-        {
-            var result = page.CreateDocument(Model.Directory)?
-                             .FindNext(keyword, 0, sensitive);
-            if (result == null) return;
-
-            var source = new ObservableCollection<Page>();
-            source.Add(page);
-            Sync(() =>
-            {
-                View.Found = source.Count;
-                View.ShowPages = false;
-                View.Pages.DataSource = source;
-                Highlight(page);
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Search
-        /// 
-        /// <summary>
-        /// 指定されたページ一覧から検索を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Search(IEnumerable<Page> pages, string keyword, bool sensitive)
-        {
-            var results = pages.Search(keyword, sensitive, 0, Model.Directory);
-            if (!results.Any()) return;
-
-            var source = results.ToObservable();
-            Sync(() =>
-            {
-                View.Found = source.Count;
-                View.ShowPages = true;
-                View.Pages.DataSource = source;
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Refresh
-        /// 
-        /// <summary>
-        /// TextControl を再描画します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Refresh()
-        {
-            var current = Settings.Current.Page;
-            Settings.Current.Page = null;
-            Settings.Current.Page = current;
-            var doc = current.Document as Sgry.Azuki.Document;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Highlight
-        /// 
-        /// <summary>
-        /// 強調表示します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Highlight(Page page)
-        {
-            if (page == null) return;
-
-            page.Highlight(View.Keyword, View.CaseSensitive);
-
-            if (Settings.Current.Page == page) Refresh();
-            else Settings.Current.Page = page;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Cleanup
-        /// 
-        /// <summary>
-        /// 終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Cleanup(IList<Page> pages)
-        {
-            if (pages == null) return;
-
-            foreach (var page in pages)
-            {
-                var document = page.Document as Document;
-                if (document == null || document.Highlighter == null) continue;
-                document.Highlighter = null;
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ResetSearchRange
+        /// ResetRange
         /// 
         /// <summary>
         /// 検索範囲用の項目を設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResetSearchRange()
+        private void ResetRange()
         {
+            View.SearchRange.BeginUpdate();
             View.SearchRange.Items.Clear();
             View.SearchRange.Items.Add(Properties.Resources.CurrentNote);
-            View.SearchRange.Items.Add(Model.Everyone);
+            View.SearchRange.Items.Add(Model.Pages.Tags.Everyone);
+            View.SearchRange.Items.AddRange(Model.Pages.Tags.ToArray());
+            View.SearchRange.EndUpdate();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectedPage
+        /// SetPage
         /// 
         /// <summary>
-        /// 選択ページを取得します。
+        /// 指定されたインデックスに対応するページを設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Page SelectedPage()
+        private void SetPage(int index)
         {
-            if (!View.Pages.AnyItemsSelected) return null;
+            if (index < 0 || index >= Model.Results.Count) return;
 
-            var pages = View.Pages.DataSource;
-            if (pages == null) return null;
+            var page = Model.Results[index];
+            if (page != Settings.Current.Page) Settings.Current.Page = page;
+            else Events.Refresh.Raise();
 
-            var index = View.Pages.SelectedIndices[0];
-            if (index < 0 || index >= pages.Count) return null;
-
-            return pages[index];
+            Sync(() =>
+            {
+                View.Pages.Select(index);
+                View.Pages.EnsureVisible(index);
+            });
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetMessage
+        /// 
+        /// <summary>
+        /// メッセージを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetMessage(int count, Tag tag) =>
+            count <= 0  ? string.Format(Properties.Resources.SearchNotFound, View.Keyword) :
+            tag == null ? string.Empty :
+                          string.Format(Properties.Resources.SearchSuccess, count);
 
         #endregion
     }

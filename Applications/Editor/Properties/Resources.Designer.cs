@@ -108,16 +108,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   下へ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string DownMenu {
-            get {
-                return ResourceManager.GetString("DownMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   タグを編集... に類似しているローカライズされた文字列を検索します。
+        ///   タグの追加と削除 ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string EditTag {
             get {
@@ -144,24 +135,6 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ExportFilter {
-            get {
-                return ResourceManager.GetString("ExportFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ファイルに保存 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ExportMenu {
-            get {
-                return ResourceManager.GetString("ExportMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Font {
@@ -172,11 +145,11 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ノート一覧を非表示 に類似しているローカライズされた文字列を検索します。
+        ///   CubeNote に取り込むファイルを選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string HideMenu {
+        internal static string ImportTitle {
             get {
-                return ResourceManager.GetString("HideMenu", resourceCulture);
+                return ResourceManager.GetString("ImportTitle", resourceCulture);
             }
         }
         
@@ -230,6 +203,150 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   コピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuCopy {
+            get {
+                return ResourceManager.GetString("MenuCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   切り取り に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuCut {
+            get {
+                return ResourceManager.GetString("MenuCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   下へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuDown {
+            get {
+                return ResourceManager.GetString("MenuDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノートを複製 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuDuplicate {
+            get {
+                return ResourceManager.GetString("MenuDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルに保存 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuExport {
+            get {
+                return ResourceManager.GetString("MenuExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インターネットで検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuGoogle {
+            get {
+                return ResourceManager.GetString("MenuGoogle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルからノートを作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuImport {
+            get {
+                return ResourceManager.GetString("MenuImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいノートを作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuNewPage {
+            get {
+                return ResourceManager.GetString("MenuNewPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付け に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPaste {
+            get {
+                return ResourceManager.GetString("MenuPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノートにタグを設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuProperty {
+            get {
+                return ResourceManager.GetString("MenuProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   やり直し に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRedo {
+            get {
+                return ResourceManager.GetString("MenuRedo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRemove {
+            get {
+                return ResourceManager.GetString("MenuRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSearch {
+            get {
+                return ResourceManager.GetString("MenuSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   すべて選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSelectAll {
+            get {
+                return ResourceManager.GetString("MenuSelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   元に戻す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuUndo {
+            get {
+                return ResourceManager.GetString("MenuUndo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuUp {
+            get {
+                return ResourceManager.GetString("MenuUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Minimize {
@@ -246,6 +363,15 @@ namespace Cube.Note.App.Editor.Properties {
             get {
                 object obj = ResourceManager.GetObject("Normalize", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   未整理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NothingTag {
+            get {
+                return ResourceManager.GetString("NothingTag", resourceCulture);
             }
         }
         
@@ -289,11 +415,29 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   削除 に類似しているローカライズされた文字列を検索します。
+        ///   すべてを置換 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string RemoveMenu {
+        internal static string ReplaceAll {
             get {
-                return ResourceManager.GetString("RemoveMenu", resourceCulture);
+                return ResourceManager.GetString("ReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} 件を置換しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ReplaceAllSuccess {
+            get {
+                return ResourceManager.GetString("ReplaceAllSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   次を置換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ReplaceNext {
+            get {
+                return ResourceManager.GetString("ReplaceNext", resourceCulture);
             }
         }
         
@@ -318,12 +462,57 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   次を検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchNext {
+            get {
+                return ResourceManager.GetString("SearchNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   「{0}」 は見つかりませんでした。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchNotFound {
+            get {
+                return ResourceManager.GetString("SearchNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最後の検索結果まで到達しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchOver {
+            get {
+                return ResourceManager.GetString("SearchOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap SearchPale {
             get {
                 object obj = ResourceManager.GetObject("SearchPale", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   前を検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchPrev {
+            get {
+                return ResourceManager.GetString("SearchPrev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} 個のノートが見つかりました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SearchSuccess {
+            get {
+                return ResourceManager.GetString("SearchSuccess", resourceCulture);
             }
         }
         
@@ -347,6 +536,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   テキストファイル (*.txt)|*.txt;*.TXT|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextFilter {
+            get {
+                return ResourceManager.GetString("TextFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Title {
@@ -357,30 +555,75 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   ノート一覧を非表示 (H) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuHide {
+            get {
+                return ResourceManager.GetString("ToolMenuHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Web ページへ移動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuLogo {
+            get {
+                return ResourceManager.GetString("ToolMenuLogo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   やり直し (Y) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuRedo {
+            get {
+                return ResourceManager.GetString("ToolMenuRedo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   検索 (F) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuSearch {
+            get {
+                return ResourceManager.GetString("ToolMenuSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   設定 (T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuSettings {
+            get {
+                return ResourceManager.GetString("ToolMenuSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   元に戻す (Z) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuUndo {
+            get {
+                return ResourceManager.GetString("ToolMenuUndo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート一覧を表示 (H) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuVisible {
+            get {
+                return ResourceManager.GetString("ToolMenuVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Undo {
             get {
                 object obj = ResourceManager.GetObject("Undo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   上へ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string UpMenu {
-            get {
-                return ResourceManager.GetString("UpMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ノート一覧を表示 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string VisibleMenu {
-            get {
-                return ResourceManager.GetString("VisibleMenu", resourceCulture);
             }
         }
         

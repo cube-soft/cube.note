@@ -236,7 +236,7 @@ namespace Cube.Note
             {
                 if (Pages == null) return;
                 Pages.Load();
-                if (Pages.Count <= 0) Pages.NewPage();
+                if (Pages.Count <= 0) Pages.NewPage(0);
             }
             finally { _timer.Start(); }
         }

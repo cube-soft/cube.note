@@ -18,11 +18,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.ComponentModel;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Drawing;
-using IoEx = System.IO;
 
 namespace Cube.Note
 {
@@ -57,6 +54,111 @@ namespace Cube.Note
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// X
+        ///
+        /// <summary>
+        /// メイン画面の x 座標を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int X
+        {
+            get { return _x; }
+            set
+            {
+                if (_x == value) return;
+                _x = value;
+                RaisePropertyChanged(nameof(X));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Y
+        ///
+        /// <summary>
+        /// メイン画面の y 座標を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Y
+        {
+            get { return _y; }
+            set
+            {
+                if (_y == value) return;
+                _y = value;
+                RaisePropertyChanged(nameof(Y));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Width
+        ///
+        /// <summary>
+        /// メイン画面の幅を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Width
+        {
+            get { return _width; }
+            set
+            {
+                if (_width == value) return;
+                _width = value;
+                RaisePropertyChanged(nameof(Width));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Height
+        ///
+        /// <summary>
+        /// メイン画面の高さを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Height
+        {
+            get { return _height; }
+            set
+            {
+                if (_height == value) return;
+                _height = value;
+                RaisePropertyChanged(nameof(Height));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Tag
+        ///
+        /// <summary>
+        /// 選択中のタグ名を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Tag
+        {
+            get { return _tag; }
+            set
+            {
+                if (_tag == value) return;
+                _tag = value;
+                RaisePropertyChanged(nameof(Tag));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -174,6 +276,27 @@ namespace Cube.Note
                 if (_foreColor == value) return;
                 _foreColor = value;
                 RaisePropertyChanged(nameof(ForeColor));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UriColor
+        ///
+        /// <summary>
+        /// URL 色を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Color UriColor
+        {
+            get { return _uriColor; }
+            set
+            {
+                if (_uriColor == value) return;
+                _uriColor = value;
+                RaisePropertyChanged(nameof(UriColor));
             }
         }
 
@@ -363,6 +486,27 @@ namespace Cube.Note
                 if (_autoSaveTime == value) return;
                 _autoSaveTime = value;
                 RaisePropertyChanged(nameof(AutoSaveTime));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchQuery
+        ///
+        /// <summary>
+        /// 検索クエリーを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string SearchQuery
+        {
+            get { return _searchQuery; }
+            set
+            {
+                if (_searchQuery == value) return;
+                _searchQuery = value;
+                RaisePropertyChanged(nameof(SearchQuery));
             }
         }
 
@@ -707,6 +851,50 @@ namespace Cube.Note
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenUri
+        ///
+        /// <summary>
+        /// URL ダブルクリック時に既定ブラウザで開くかどうかを示す値を取得または
+        /// 設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool OpenUri
+        {
+            get { return _openUri; }
+            set
+            {
+                if (_openUri == value) return;
+                _openUri = value;
+                RaisePropertyChanged(nameof(OpenUri));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowNews
+        ///
+        /// <summary>
+        /// ステータスバーに新着ニュースを表示するかどうかを示す値を取得または
+        /// 設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool ShowNews
+        {
+            get { return _showNews; }
+            set
+            {
+                if (_showNews == value) return;
+                _showNews = value;
+                RaisePropertyChanged(nameof(ShowNews));
+            }
+        }
+
         #endregion
 
         #region Others
@@ -734,22 +922,30 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private void InitializeValues()
         {
+            X                   = -1;
+            Y                   = -1;
+            Width               = -1;
+            Height              = -1;
+            Tag                 = "NoTag";
+
             FontName            = "Meiryo";
             FontSize            = 11.25;
             FontStyle           = FontStyle.Regular;
 
             BackColor           = SystemColors.Window;
             ForeColor           = SystemColors.WindowText;
+            UriColor            = Color.Navy;
             HighlightBackColor  = SystemColors.Highlight;
             HighlightForeColor  = SystemColors.HighlightText;
-            SearchBackColor     = Color.OrangeRed;
-            SearchForeColor     = Color.White;
+            SearchBackColor     = Color.Orange;
+            SearchForeColor     = Color.Black;
             LineNumberBackColor = SystemColors.Control;
             LineNumberForeColor = SystemColors.ControlDark;
             SpecialCharsColor   = SystemColors.ControlDark;
             CurrentLineColor    = SystemColors.ControlDark;
 
             AutoSaveTime        = TimeSpan.FromSeconds(30);
+            SearchQuery         = "http://s.cube-soft.jp/search/?q=";
             TabWidth            = 8;
             WordWrapCount       = 80;
 
@@ -767,13 +963,21 @@ namespace Cube.Note
             ModifiedLineVisible = false;
             BracketVisible      = false;
             RemoveWarning       = true;
+            OpenUri             = true;
+            ShowNews            = true;
         }
 
         #endregion
 
         #region Fields
+        private int _x;
+        private int _y;
+        private int _width;
+        private int _height;
+        private string _tag;
         private Color _backColor;
         private Color _foreColor;
+        private Color _uriColor;
         private Color _highlightBackColor;
         private Color _highlightForeColor;
         private Color _searchBackColor;
@@ -783,6 +987,7 @@ namespace Cube.Note
         private Color _specialCharsColor;
         private Color _currentLineColor;
         private TimeSpan _autoSaveTime;
+        private string _searchQuery;
         private string _fontName;
         private double _fontSize;
         private FontStyle _fontStyle;
@@ -802,6 +1007,8 @@ namespace Cube.Note
         private bool _modifiedLineVisible;
         private bool _bracketVisible;
         private bool _removeWarning;
+        private bool _openUri;
+        private bool _showNews;
         #endregion
     }
 }

@@ -47,9 +47,11 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            NewPageButton.Click += (s, e) => Aggregator?.NewPage.Raise();
+            NewPageButton.Click += (s, e)
+                => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
 
-            Pages.ContextMenuStrip = CreateContextMenu();
+            Pages.AllowDrop = true;
+            Pages.KeyDown += (s, e) => OnKeyDown(e);
         }
 
         #endregion
@@ -95,35 +97,34 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Others
+        #region Override methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateContextMenu
-        /// 
+        /// OnKeyDown
+        ///
         /// <summary>
-        /// コンテキストメニューを生成します。
+        /// キーが押下された時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ContextMenuStrip CreateContextMenu()
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            var dest = new ContextMenuStrip();
-
-            dest.Items.Add(Properties.Resources.ExportMenu, null,
-                (s, e) => Aggregator?.Export.Raise());
-            dest.Items.Add("-");
-            dest.Items.Add(Properties.Resources.UpMenu, null,
-                (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(-1)));
-            dest.Items.Add(Properties.Resources.DownMenu, null,
-                (s, e) => Aggregator?.Move.Raise(new ValueEventArgs<int>(1)));
-            dest.Items.Add(Properties.Resources.RemoveMenu, null,
-                (s, e) => Aggregator?.Remove.Raise());
-            dest.Items.Add("-");
-            dest.Items.Add(Properties.Resources.ShowProperty, null,
-                (s, e) => Aggregator?.Property.Raise());
-
-            return dest;
+            try
+            {
+                var result = true;
+                switch (e.KeyCode)
+                {
+                    case Keys.Delete:
+                        Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+                e.Handled = result;
+            }
+            finally { base.OnKeyDown(e); }
         }
 
         #endregion

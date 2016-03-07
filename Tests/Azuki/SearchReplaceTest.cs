@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageConverter.cs
+/// SearchReplaceTest.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,73 +17,77 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Text;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Linq;
+using NUnit.Framework;
+using Cube.Note.Azuki;
 
-namespace Cube.Note.App.Editor
+namespace Cube.Note.Tests.Azuki
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageConverter
+    /// SearchReplaceTest
     /// 
     /// <summary>
-    /// Page オブジェクトを ListViewItem オブジェクトに変換するための
-    /// クラスです。
+    /// SearchReplace のテスト用クラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class PageConverter : Cube.Forms.IListViewItemConverter
+    [Parallelizable]
+    [TestFixture]
+    class SearchReplaceTest : PageCollectionResource
     {
-        #region Methods
+        #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// Search_Count
         ///
         /// <summary>
-        /// ListViewItem オブジェクトに変換します。
+        /// 検索のテストを行います。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ListViewItem Convert<T>(T src)
+        [TestCase("Hello", true,  1)]
+        [TestCase("Hello", false, 2)]
+        public void Search_Count(string keyword, bool sensitive, int expected)
         {
-            var page = src as Page;
-            if (page == null) return new ListViewItem(src.ToString());
-            
-            var items = new List<string>();
-            items.Add(page.GetAbstract());
-            items.Add(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
-            items.Add(GetTagString(page.Tags));
-            
-            var dest = new ListViewItem(items.ToArray());
-            return dest;
+            var src = Create();
+            src.Search(keyword, sensitive, Pages.Tags.Everyone);
+            Assert.That(src.Results.Count(), Is.EqualTo(expected));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// リセットのテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Hello", false)]
+        public void Reset(string keyword, bool sensitive)
+        {
+            var src = Create();
+            src.Search(keyword, sensitive, Pages.Tags.Everyone);
+            src.Reset();
+            Assert.That(src.Results.Count(), Is.EqualTo(0));
         }
 
         #endregion
 
-        #region Others
+        #region Helper methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetTagString
+        /// Create
         ///
         /// <summary>
-        /// タグを表す文字列を取得します。
+        /// SearchReplace オブエジェクトを生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetTagString(IList<string> tags)
-        {
-            var dest = new StringBuilder();
-            foreach (var tag in tags)
-            {
-                if (dest.Length > 0) dest.Append(", ");
-                dest.Append($"#{tag}");
-            }
-            return dest.ToString();
-        }
+        public SearchReplace Create() => new SearchReplace(Pages);
 
         #endregion
     }

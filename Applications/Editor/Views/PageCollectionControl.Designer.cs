@@ -33,8 +33,8 @@
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator1 = new System.Windows.Forms.PictureBox();
             this.ContentsPanel = new Cube.Forms.Panel();
-            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.Separator2 = new System.Windows.Forms.PictureBox();
+            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
             this.ContentsPanel.SuspendLayout();
@@ -72,14 +72,14 @@
             this.NewPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewPageButton.ForeColor = System.Drawing.SystemColors.GrayText;
             this.NewPageButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
-            this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.NewPageButton.Location = new System.Drawing.Point(0, 272);
             this.NewPageButton.Margin = new System.Windows.Forms.Padding(0);
             this.NewPageButton.Name = "NewPageButton";
-            this.NewPageButton.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.NewPageButton.Padding = new System.Windows.Forms.Padding(4, 0, 0, 2);
             this.NewPageButton.Size = new System.Drawing.Size(300, 28);
             this.NewPageButton.TabIndex = 5;
-            this.NewPageButton.Text = "ノートを追加";
+            this.NewPageButton.Text = " 新しいノート";
             this.NewPageButton.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.NewPageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewPageButton.UseVisualStyleBackColor = false;
@@ -89,11 +89,12 @@
             this.TagComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TagComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TagComboBox.FormattingEnabled = true;
-            this.TagComboBox.Location = new System.Drawing.Point(4, 3);
-            this.TagComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 0);
-            this.TagComboBox.MaxDropDownItems = 10;
+            this.TagComboBox.IntegralHeight = false;
+            this.TagComboBox.Location = new System.Drawing.Point(4, 4);
+            this.TagComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 0);
+            this.TagComboBox.MaxDropDownItems = 20;
             this.TagComboBox.Name = "TagComboBox";
-            this.TagComboBox.Size = new System.Drawing.Size(292, 26);
+            this.TagComboBox.Size = new System.Drawing.Size(292, 23);
             this.TagComboBox.TabIndex = 3;
             // 
             // Separator1
@@ -119,6 +120,17 @@
             this.ContentsPanel.Size = new System.Drawing.Size(300, 238);
             this.ContentsPanel.TabIndex = 2;
             // 
+            // Separator2
+            // 
+            this.Separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
+            this.Separator2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Separator2.Location = new System.Drawing.Point(0, 271);
+            this.Separator2.Margin = new System.Windows.Forms.Padding(0);
+            this.Separator2.Name = "Separator2";
+            this.Separator2.Size = new System.Drawing.Size(300, 1);
+            this.Separator2.TabIndex = 6;
+            this.Separator2.TabStop = false;
+            // 
             // PageListView
             // 
             this.PageListView.Aggregator = null;
@@ -136,25 +148,14 @@
             this.PageListView.Size = new System.Drawing.Size(296, 234);
             this.PageListView.TabIndex = 0;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(296, 77);
+            this.PageListView.TileSize = new System.Drawing.Size(296, 31);
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;
-            // 
-            // Separator2
-            // 
-            this.Separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
-            this.Separator2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Separator2.Location = new System.Drawing.Point(0, 271);
-            this.Separator2.Margin = new System.Windows.Forms.Padding(0);
-            this.Separator2.Name = "Separator2";
-            this.Separator2.Size = new System.Drawing.Size(300, 1);
-            this.Separator2.TabIndex = 6;
-            this.Separator2.TabStop = false;
             // 
             // PageCollectionControl
             // 
             this.Controls.Add(this.LayoutPanel);
-            this.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(128)));
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PageCollectionControl";
             this.Size = new System.Drawing.Size(300, 300);
