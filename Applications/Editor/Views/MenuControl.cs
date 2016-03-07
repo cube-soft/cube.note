@@ -46,12 +46,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MenuControl() : base()
         {
-            VisibleMenu  = CreateMenu(Properties.Resources.Left, Properties.Resources.ToolMenuHide);
-            SearchMenu   = CreateMenu(Properties.Resources.Search, Properties.Resources.ToolMenuSearch);
-            UndoMenu     = CreateMenu(Properties.Resources.Undo, Properties.Resources.ToolMenuUndo);
-            RedoMenu     = CreateMenu(Properties.Resources.Redo, Properties.Resources.ToolMenuRedo);
-            SettingsMenu = CreateMenu(Properties.Resources.Settings, Properties.Resources.ToolMenuSettings, false);
-            LogoMenu     = CreateMenu(Properties.Resources.Logo, Properties.Resources.ToolMenuLogo, false);
+            VisibleMenu  = CreateMenuButton(Properties.Resources.Left, Properties.Resources.ToolMenuHide);
+            SearchMenu   = CreateMenuButton(Properties.Resources.Search, Properties.Resources.ToolMenuSearch);
+            UndoMenu     = CreateMenuButton(Properties.Resources.Undo, Properties.Resources.ToolMenuUndo);
+            RedoMenu     = CreateMenuButton(Properties.Resources.Redo, Properties.Resources.ToolMenuRedo);
+            SettingsMenu = CreateMenuButton(Properties.Resources.Settings, Properties.Resources.ToolMenuSettings, false);
+            LogoMenu     = CreateMenuButton(Properties.Resources.Logo, Properties.Resources.ToolMenuLogo, false);
+
+            InitializeMenu();
         }
 
         #endregion
@@ -67,7 +69,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripButton VisibleMenu { get; }
+        public ToolStripItem VisibleMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -78,7 +80,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripButton SearchMenu { get; }
+        public ToolStripItem SearchMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,7 +91,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripButton UndoMenu { get; }
+        public ToolStripItem UndoMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -100,7 +102,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripButton RedoMenu { get; }
+        public ToolStripItem RedoMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -111,7 +113,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripButton SettingsMenu { get; }
+        public ToolStripItem SettingsMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -122,7 +124,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripButton LogoMenu { get; }
+        public ToolStripItem LogoMenu { get; }
 
         #endregion
 
@@ -148,7 +150,23 @@ namespace Cube.Note.App.Editor
 
             UndoMenu.Enabled = false;
             RedoMenu.Enabled = false;
+        }
 
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeMenu
+        /// 
+        /// <summary>
+        /// メニューを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeMenu()
+        {
             Items.AddRange(new ToolStripItem[]
             {
                 VisibleMenu,
@@ -163,20 +181,16 @@ namespace Cube.Note.App.Editor
             });
         }
 
-        #endregion
-
-        #region Others
-
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateMenu
+        /// CreateMenuButton
         /// 
         /// <summary>
         /// メニューボタンを生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ToolStripButton CreateMenu(Image image, string text, bool left = true)
+        private ToolStripButton CreateMenuButton(Image image, string text, bool left = true)
         {
             var dest  = new ToolStripButton();
             var align = left ? ToolStripItemAlignment.Left : ToolStripItemAlignment.Right;

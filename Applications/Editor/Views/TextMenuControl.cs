@@ -71,7 +71,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem CutMenu { get; }
+        public ToolStripItem CutMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,7 +82,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem CopyMenu { get; }
+        public ToolStripItem CopyMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,7 +93,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem PasteMenu { get; }
+        public ToolStripItem PasteMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -104,7 +104,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem SearchMenu { get; }
+        public ToolStripItem SearchMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -115,7 +115,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem GoogleMenu { get; }
+        public ToolStripItem GoogleMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -126,7 +126,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem UndoMenu { get; }
+        public ToolStripItem UndoMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -137,7 +137,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem RedoMenu { get; }
+        public ToolStripItem RedoMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,7 +148,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem SelectAllMenu { get; }
+        public ToolStripItem SelectAllMenu { get; }
 
         #endregion
 
@@ -165,14 +165,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeShortCutKeys()
         {
-            SearchMenu.ShortcutKeys    = Keys.Control | Keys.F;
-            GoogleMenu.ShortcutKeys    = Keys.Control | Keys.G;
-            UndoMenu.ShortcutKeys      = Keys.Control | Keys.Z;
-            RedoMenu.ShortcutKeys      = Keys.Control | Keys.Y;
-            CutMenu.ShortcutKeys       = Keys.Control | Keys.X;
-            CopyMenu.ShortcutKeys      = Keys.Control | Keys.C;
-            PasteMenu.ShortcutKeys     = Keys.Control | Keys.V;
-            SelectAllMenu.ShortcutKeys = Keys.Control | Keys.A;
+            Menu(SearchMenu).ShortcutKeys    = Keys.Control | Keys.F;
+            Menu(GoogleMenu).ShortcutKeys    = Keys.Control | Keys.G;
+            Menu(UndoMenu).ShortcutKeys      = Keys.Control | Keys.Z;
+            Menu(RedoMenu).ShortcutKeys      = Keys.Control | Keys.Y;
+            Menu(CutMenu).ShortcutKeys       = Keys.Control | Keys.X;
+            Menu(CopyMenu).ShortcutKeys      = Keys.Control | Keys.C;
+            Menu(PasteMenu).ShortcutKeys     = Keys.Control | Keys.V;
+            Menu(SelectAllMenu).ShortcutKeys = Keys.Control | Keys.A;
         }
 
         /* ----------------------------------------------------------------- */
@@ -201,6 +201,18 @@ namespace Cube.Note.App.Editor
                 SelectAllMenu,
             });
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Menu
+        /// 
+        /// <summary>
+        /// ToolStripMenuItem にキャストします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ToolStripMenuItem Menu(ToolStripItem src)
+            => src as ToolStripMenuItem;
 
         #endregion
     }

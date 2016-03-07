@@ -194,17 +194,19 @@ namespace Cube.Note.App.Editor
             // End of menu settings
 
             var dest = new ContextMenuStrip();
-            dest.Items.Add(newpage);
-            dest.Items.Add(import);
-            dest.Items.Add(duplicate);
-            dest.Items.Add("-");
-            dest.Items.Add(up);
-            dest.Items.Add(down);
-            dest.Items.Add("-");
-            dest.Items.Add(export);
-            dest.Items.Add(remove);
-            dest.Items.Add("-");
-            dest.Items.Add(property);
+            dest.Items.AddRange(new ToolStripItem[]
+            {
+                newpage,
+                import,
+                new ToolStripSeparator(),
+                up,
+                down,
+                new ToolStripSeparator(),
+                export,
+                remove,
+                new ToolStripSeparator(),
+                property,
+            });
             return dest;
         }
 
