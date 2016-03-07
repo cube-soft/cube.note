@@ -145,47 +145,49 @@ namespace Cube.Note.App.Editor
         {
             // Menu settings
             var newpage = new ToolStripMenuItem(
-                Properties.Resources.NewPageMenu, null,
+                Properties.Resources.MenuNewPage, null,
                 (s, e) => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage),
                 Keys.Control | Keys.N
             );
 
             var import = new ToolStripMenuItem(
-                Properties.Resources.ImportMenu, null,
+                Properties.Resources.MenuImport, null,
                 (s, e) => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, "")),
                 Keys.Control | Keys.O
             );
 
             var export = new ToolStripMenuItem(
-                Properties.Resources.ExportMenu, null,
+                Properties.Resources.MenuExport, null,
                 (s, e) => Aggregator?.Export.Raise(EventAggregator.SelectedPage),
                 Keys.Control | Keys.E
             );
 
             var duplicate = new ToolStripMenuItem(
-                Properties.Resources.DuplicateMenu, null,
+                Properties.Resources.MenuDuplicate, null,
                 (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage),
                 Keys.Control | Keys.Shift | Keys.C
             );
 
             var remove = new ToolStripMenuItem(
-                Properties.Resources.RemoveMenu, null,
+                Properties.Resources.MenuRemove, null,
                 (s, e) => Aggregator?.Remove.Raise(EventAggregator.SelectedPage),
                 Keys.Control | Keys.D
             );
 
             var up = new ToolStripMenuItem(
-                Properties.Resources.UpMenu, null,
-                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1))
+                Properties.Resources.MenuUp, null,
+                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1)),
+                Keys.Control | Keys.Up
             );
 
             var down = new ToolStripMenuItem(
-                Properties.Resources.DownMenu, null,
-                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1))
+                Properties.Resources.MenuDown, null,
+                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1)),
+                Keys.Control | Keys.Down
             );
 
             var property = new ToolStripMenuItem(
-                Properties.Resources.PropertyMenu, null,
+                Properties.Resources.MenuProperty, null,
                 (s, e) => Aggregator?.Property.Raise(EventAggregator.SelectedPage),
                 Keys.Control | Keys.R
             );

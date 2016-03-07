@@ -46,12 +46,12 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MenuControl() : base()
         {
-            VisibleMenu  = CreateMenu(Properties.Resources.Left, Properties.Resources.HideMenu);
-            SearchMenu   = CreateMenu(Properties.Resources.Search, Properties.Resources.SearchMenu);
-            UndoMenu     = CreateMenu(Properties.Resources.Undo, Properties.Resources.UndoMenu);
-            RedoMenu     = CreateMenu(Properties.Resources.Redo, Properties.Resources.RedoMenu);
-            SettingsMenu = CreateMenu(Properties.Resources.Settings, Properties.Resources.SettingsMenu, false);
-            LogoMenu     = CreateMenu(Properties.Resources.Logo, Properties.Resources.LogoMenu, false);
+            VisibleMenu  = CreateMenu(Properties.Resources.Left, Properties.Resources.ToolMenuHide);
+            SearchMenu   = CreateMenu(Properties.Resources.Search, Properties.Resources.ToolMenuSearch);
+            UndoMenu     = CreateMenu(Properties.Resources.Undo, Properties.Resources.ToolMenuUndo);
+            RedoMenu     = CreateMenu(Properties.Resources.Redo, Properties.Resources.ToolMenuRedo);
+            SettingsMenu = CreateMenu(Properties.Resources.Settings, Properties.Resources.ToolMenuSettings, false);
+            LogoMenu     = CreateMenu(Properties.Resources.Logo, Properties.Resources.ToolMenuLogo, false);
         }
 
         #endregion

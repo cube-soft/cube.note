@@ -396,8 +396,8 @@ namespace Cube.Note.App.Editor
             // see remarks
             var hidden = ContentsPanel.Panel1Collapsed;
             var text   = hidden ?
-                         Properties.Resources.VisibleMenu :
-                         Properties.Resources.HideMenu;
+                         Properties.Resources.ToolMenuVisible :
+                         Properties.Resources.ToolMenuHide;
 
             MenuControl.VisibleMenu.Text = text;
             MenuControl.VisibleMenu.ToolTipText = text;

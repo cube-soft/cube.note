@@ -45,14 +45,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public TextMenuControl() : base()
         {
-            CutMenu       = new ToolStripMenuItem(Properties.Resources.CutMenu);
-            CopyMenu      = new ToolStripMenuItem(Properties.Resources.CopyMenu);
-            PasteMenu     = new ToolStripMenuItem(Properties.Resources.PasteMenu);
-            SearchMenu    = new ToolStripMenuItem(Properties.Resources.SearchMenu);
-            GoogleMenu    = new ToolStripMenuItem(Properties.Resources.GoogleMenu);
-            UndoMenu      = new ToolStripMenuItem(Properties.Resources.UndoMenu);
-            RedoMenu      = new ToolStripMenuItem(Properties.Resources.RedoMenu);
-            SelectAllMenu = new ToolStripMenuItem(Properties.Resources.SelectAllMenu);
+            CutMenu       = new ToolStripMenuItem(Properties.Resources.MenuCut);
+            CopyMenu      = new ToolStripMenuItem(Properties.Resources.MenuCopy);
+            PasteMenu     = new ToolStripMenuItem(Properties.Resources.MenuPaste);
+            SearchMenu    = new ToolStripMenuItem(Properties.Resources.MenuSearch);
+            GoogleMenu    = new ToolStripMenuItem(Properties.Resources.MenuGoogle);
+            UndoMenu      = new ToolStripMenuItem(Properties.Resources.MenuUndo);
+            RedoMenu      = new ToolStripMenuItem(Properties.Resources.MenuRedo);
+            SelectAllMenu = new ToolStripMenuItem(Properties.Resources.MenuSelectAll);
 
             InitializeShortCutKeys();
             InitializeMenu();
