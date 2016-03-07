@@ -143,34 +143,66 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private ContextMenuStrip CreateContextMenu()
         {
+            // Menu settings
+            var newpage = new ToolStripMenuItem(
+                Properties.Resources.NewPageMenu, null,
+                (s, e) => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage),
+                Keys.Control | Keys.N
+            );
+
+            var import = new ToolStripMenuItem(
+                Properties.Resources.ImportMenu, null,
+                (s, e) => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, "")),
+                Keys.Control | Keys.O
+            );
+
+            var export = new ToolStripMenuItem(
+                Properties.Resources.ExportMenu, null,
+                (s, e) => Aggregator?.Export.Raise(EventAggregator.SelectedPage),
+                Keys.Control | Keys.E
+            );
+
+            var duplicate = new ToolStripMenuItem(
+                Properties.Resources.DuplicateMenu, null,
+                (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage),
+                Keys.Control | Keys.Shift | Keys.C
+            );
+
+            var remove = new ToolStripMenuItem(
+                Properties.Resources.RemoveMenu, null,
+                (s, e) => Aggregator?.Remove.Raise(EventAggregator.SelectedPage),
+                Keys.Control | Keys.D
+            );
+
+            var up = new ToolStripMenuItem(
+                Properties.Resources.UpMenu, null,
+                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1))
+            );
+
+            var down = new ToolStripMenuItem(
+                Properties.Resources.DownMenu, null,
+                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1))
+            );
+
+            var property = new ToolStripMenuItem(
+                Properties.Resources.PropertyMenu, null,
+                (s, e) => Aggregator?.Property.Raise(EventAggregator.SelectedPage),
+                Keys.Control | Keys.R
+            );
+            // End of menu settings
+
             var dest = new ContextMenuStrip();
-
-            dest.Items.Add(Properties.Resources.NewPageMenu, null,
-                (s, e) => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage));
-            dest.Items.Add(Properties.Resources.ImportMenu, null,
-                (s, e) => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, "")));
-            dest.Items.Add(Properties.Resources.DuplicateMenu, null,
-                (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage));
-
+            dest.Items.Add(newpage);
+            dest.Items.Add(import);
+            dest.Items.Add(duplicate);
             dest.Items.Add("-");
-
-            dest.Items.Add(Properties.Resources.UpMenu, null,
-                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1)));
-            dest.Items.Add(Properties.Resources.DownMenu, null,
-                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1)));
-
+            dest.Items.Add(up);
+            dest.Items.Add(down);
             dest.Items.Add("-");
-
-            dest.Items.Add(Properties.Resources.ExportMenu, null,
-                (s, e) => Aggregator?.Export.Raise(EventAggregator.SelectedPage));
-            dest.Items.Add(Properties.Resources.RemoveMenu, null,
-                (s, e) => Aggregator?.Remove.Raise(EventAggregator.SelectedPage));
-
+            dest.Items.Add(export);
+            dest.Items.Add(remove);
             dest.Items.Add("-");
-
-            dest.Items.Add(Properties.Resources.PropertyMenu, null,
-                (s, e) => Aggregator?.Property.Raise(EventAggregator.SelectedPage));
-
+            dest.Items.Add(property);
             return dest;
         }
 

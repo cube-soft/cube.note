@@ -81,7 +81,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   コピー (C) に類似しているローカライズされた文字列を検索します。
+        ///   コピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CopyMenu {
             get {
@@ -117,7 +117,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   切り取り (X) に類似しているローカライズされた文字列を検索します。
+        ///   切り取り に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CutMenu {
             get {
@@ -171,7 +171,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルに保存 (E) に類似しているローカライズされた文字列を検索します。
+        ///   ファイルに保存 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ExportMenu {
             get {
@@ -190,7 +190,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   インターネットで検索 (G) に類似しているローカライズされた文字列を検索します。
+        ///   インターネットで検索 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string GoogleMenu {
             get {
@@ -199,7 +199,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ノート一覧を非表示 (H) に類似しているローカライズされた文字列を検索します。
+        ///   ノート一覧を非表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HideMenu {
             get {
@@ -208,7 +208,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルからノートを作成 (O) に類似しているローカライズされた文字列を検索します。
+        ///   ファイルからノートを作成 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ImportMenu {
             get {
@@ -294,7 +294,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   新しいノートを作成 (N) に類似しているローカライズされた文字列を検索します。
+        ///   新しいノートを作成 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NewPageMenu {
             get {
@@ -322,7 +322,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   貼り付け (V) に類似しているローカライズされた文字列を検索します。
+        ///   貼り付け に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PasteMenu {
             get {
@@ -350,7 +350,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ノートにタグを設定 (R) に類似しているローカライズされた文字列を検索します。
+        ///   ノートにタグを設定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PropertyMenu {
             get {
@@ -369,7 +369,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   やり直し (Y) に類似しているローカライズされた文字列を検索します。
+        ///   やり直し に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RedoMenu {
             get {
@@ -388,7 +388,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   削除 (D) に類似しているローカライズされた文字列を検索します。
+        ///   削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RemoveMenu {
             get {
@@ -444,7 +444,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   検索 (F) に類似しているローカライズされた文字列を検索します。
+        ///   検索 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SearchMenu {
             get {
@@ -508,7 +508,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   すべて選択 (A) に類似しているローカライズされた文字列を検索します。
+        ///   すべて選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SelectAllMenu {
             get {
@@ -574,7 +574,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   元に戻す (Z) に類似しているローカライズされた文字列を検索します。
+        ///   元に戻す に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string UndoMenu {
             get {
