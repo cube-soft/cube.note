@@ -135,7 +135,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   コピーを作成 に類似しているローカライズされた文字列を検索します。
+        ///   ノートを複製 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DuplicateMenu {
             get {
@@ -208,7 +208,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルから作成 (O) に類似しているローカライズされた文字列を検索します。
+        ///   ファイルからノートを作成 (O) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ImportMenu {
             get {

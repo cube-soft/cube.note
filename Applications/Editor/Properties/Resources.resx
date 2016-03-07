@@ -143,7 +143,7 @@
     <value>下へ</value>
   </data>
   <data name="DuplicateMenu" xml:space="preserve">
-    <value>コピーを作成</value>
+    <value>ノートを複製</value>
   </data>
   <data name="EditTag" xml:space="preserve">
     <value>タグの追加と削除 ...</value>
@@ -167,7 +167,7 @@
     <value>ノート一覧を非表示 (H)</value>
   </data>
   <data name="ImportMenu" xml:space="preserve">
-    <value>ファイルから作成 (O)</value>
+    <value>ファイルからノートを作成 (O)</value>
   </data>
   <data name="ImportTitle" xml:space="preserve">
     <value>CubeNote に取り込むファイルを選択</value>

@@ -147,10 +147,10 @@ namespace Cube.Note.App.Editor
 
             dest.Items.Add(Properties.Resources.NewPageMenu, null,
                 (s, e) => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage));
-            dest.Items.Add(Properties.Resources.DuplicateMenu, null,
-                (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage));
             dest.Items.Add(Properties.Resources.ImportMenu, null,
                 (s, e) => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, "")));
+            dest.Items.Add(Properties.Resources.DuplicateMenu, null,
+                (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage));
 
             dest.Items.Add("-");
 
