@@ -386,6 +386,7 @@ namespace Cube.Note.App.Editor
             if (changed == -1 || changed == current) return;
 
             View.Select(changed);
+            View.EnsureVisible(changed);
         });
 
         /* ----------------------------------------------------------------- */
