@@ -43,9 +43,24 @@ namespace Cube.Note.Azuki
         /// <summary>
         /// ファイルから内容を読み込だ Document オブジェクトを生成します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// ファイルの文字コードは Sgry.EncodingAnalyzer を用いて判別します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static Document Create(string path) => Create(path, Encoding.UTF8);
+        public static Document Create(string path)
+            => Create(path, Sgry.EncodingAnalyzer.Analyze(path));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        /// 
+        /// <summary>
+        /// ファイルから内容を読み込だ Document オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public static Document Create(string path, Encoding encoding)
         {
             var dest = new Document { MarksUri = true };

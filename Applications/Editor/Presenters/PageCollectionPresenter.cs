@@ -107,10 +107,6 @@ namespace Cube.Note.App.Editor
         /// ページのエクスポート時に実行されるハンドラです。
         /// </summary>
         /// 
-        /// <remarks>
-        /// TODO: 文字コードの扱いを要検討。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         private void Import_Handle(object sender, KeyValueEventArgs<int, string> e)
         {
@@ -118,12 +114,12 @@ namespace Cube.Note.App.Editor
             if (string.IsNullOrEmpty(path)) return;
 
             var index = GetInsertIndex(e.Key);
-            Async(() => Model.NewPage(Settings.Current.Tag, index,
-                  (page) =>
-            {
-                page.Document = DocumentHandler.Create(path, Encoding.Default);
-                page.UpdateAbstract(Settings.MaxAbstractLength);
-            }));
+            Async(() => Model.Import(
+                Settings.Current.Tag,
+                index,
+                path,
+                Settings.MaxAbstractLength
+            ));
         }
 
         /* ----------------------------------------------------------------- */

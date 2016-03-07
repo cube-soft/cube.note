@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="AutoSaver.cs" />
     <Compile Include="Azuki\DocumentHandler.cs" />
+    <Compile Include="Azuki\EncodingAnalyzer.cs" />
+    <Compile Include="Azuki\PageCollectionHandler.cs" />
     <Compile Include="Azuki\PageHandler.cs" />
     <Compile Include="Azuki\SearchReplace.cs" />
     <Compile Include="ConditionsValue.cs" />
