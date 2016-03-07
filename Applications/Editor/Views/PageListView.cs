@@ -303,7 +303,6 @@ namespace Cube.Note.App.Editor
 
             if (IsRemoveButton(e.Location, item.Bounds)) Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
             else if (IsPropertyButton(e.Location, item.Bounds)) Aggregator?.Property.Raise(EventAggregator.SelectedPage);
-            else DoDragDrop(item, DragDropEffects.Move);
         }
 
         /* ----------------------------------------------------------------- */
@@ -335,7 +334,11 @@ namespace Cube.Note.App.Editor
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (e.Button != MouseButtons.None) return;
+            if (e.Button != MouseButtons.None)
+            {
+                if (e.Button == MouseButtons.Left) DoDragMove(e.Location);
+                return;
+            }
 
             var item = GetItemAt(e.Location.X, e.Location.Y);
             var bounds = item?.Bounds ?? Rectangle.Empty;
@@ -770,6 +773,22 @@ namespace Cube.Note.App.Editor
             if (width == TileSize.Width && height == TileSize.Height) return;
 
             TileSize = new Size(width, height);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DoDragMove
+        /// 
+        /// <summary>
+        /// ドラッグ移動を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void DoDragMove(Point location)
+        {
+            var item = GetItemAt(location.X, location.Y);
+            if (item == null) return;
+            DoDragDrop(item, DragDropEffects.Move);
         }
 
         /* ----------------------------------------------------------------- */
