@@ -54,6 +54,7 @@ namespace Cube.Note.App.Editor
             RedoMenu      = new ToolStripMenuItem(Properties.Resources.RedoMenu);
             SelectAllMenu = new ToolStripMenuItem(Properties.Resources.SelectAllMenu);
 
+            InitializeShortCutKeys();
             InitializeMenu();
         }
 
@@ -70,7 +71,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem CutMenu { get; }
+        public ToolStripMenuItem CutMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -81,7 +82,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem CopyMenu { get; }
+        public ToolStripMenuItem CopyMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -92,7 +93,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem PasteMenu { get; }
+        public ToolStripMenuItem PasteMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -103,7 +104,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem SearchMenu { get; }
+        public ToolStripMenuItem SearchMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,7 +115,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem GoogleMenu { get; }
+        public ToolStripMenuItem GoogleMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -125,7 +126,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem UndoMenu { get; }
+        public ToolStripMenuItem UndoMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -136,7 +137,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem RedoMenu { get; }
+        public ToolStripMenuItem RedoMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -147,11 +148,32 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem SelectAllMenu { get; }
+        public ToolStripMenuItem SelectAllMenu { get; }
 
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeShortCutKeys
+        /// 
+        /// <summary>
+        /// ショートカットキーを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeShortCutKeys()
+        {
+            SearchMenu.ShortcutKeys    = Keys.Control | Keys.F;
+            GoogleMenu.ShortcutKeys    = Keys.Control | Keys.G;
+            UndoMenu.ShortcutKeys      = Keys.Control | Keys.Z;
+            RedoMenu.ShortcutKeys      = Keys.Control | Keys.Y;
+            CutMenu.ShortcutKeys       = Keys.Control | Keys.X;
+            CopyMenu.ShortcutKeys      = Keys.Control | Keys.C;
+            PasteMenu.ShortcutKeys     = Keys.Control | Keys.V;
+            SelectAllMenu.ShortcutKeys = Keys.Control | Keys.A;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
