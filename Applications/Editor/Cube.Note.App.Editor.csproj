@@ -64,6 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\PageMenuControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Presenters\NewsPresenter.cs" />
     <Compile Include="Views\TagForm.cs">
       <SubType>Form</SubType>

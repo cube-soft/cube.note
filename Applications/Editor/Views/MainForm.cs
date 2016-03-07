@@ -56,6 +56,7 @@ namespace Cube.Note.App.Editor
             InitializeModels();
 
             Caption = TitleControl;
+            PageCollectionControl.Pages.ContextMenuStrip = PageMenuControl;
             TextControl.ContextMenuStrip = TextMenuControl;
             TextControl.Status = FooterStatusControl;
 
@@ -147,6 +148,7 @@ namespace Cube.Note.App.Editor
         private void InitializePresenters()
         {
             PageCollectionControl.Aggregator = Aggregator;
+            PageMenuControl.Aggregator = Aggregator;
 
             new MenuPresenter(MenuControl, Pages, Settings, Aggregator);
             new TextPresenter(TextControl, Pages, Settings, Aggregator);
@@ -472,6 +474,7 @@ namespace Cube.Note.App.Editor
 
         #region Views
         private SearchForm SearchControl = new SearchForm();
+        private PageMenuControl PageMenuControl = new PageMenuControl();
         private TextMenuControl TextMenuControl = new TextMenuControl();
         #endregion
     }

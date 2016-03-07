@@ -50,7 +50,6 @@ namespace Cube.Note.App.Editor
             NewPageButton.Click += (s, e)
                 => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
 
-            Pages.ContextMenuStrip = CreateContextMenu();
             Pages.AllowDrop = true;
             Pages.KeyDown += (s, e) => OnKeyDown(e);
         }
@@ -126,88 +125,6 @@ namespace Cube.Note.App.Editor
                 e.Handled = result;
             }
             finally { base.OnKeyDown(e); }
-        }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateContextMenu
-        /// 
-        /// <summary>
-        /// コンテキストメニューを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ContextMenuStrip CreateContextMenu()
-        {
-            // Menu settings
-            var newpage = new ToolStripMenuItem(
-                Properties.Resources.MenuNewPage, null,
-                (s, e) => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage),
-                Keys.Control | Keys.N
-            );
-
-            var import = new ToolStripMenuItem(
-                Properties.Resources.MenuImport, null,
-                (s, e) => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, "")),
-                Keys.Control | Keys.O
-            );
-
-            var export = new ToolStripMenuItem(
-                Properties.Resources.MenuExport, null,
-                (s, e) => Aggregator?.Export.Raise(EventAggregator.SelectedPage),
-                Keys.Control | Keys.E
-            );
-
-            var duplicate = new ToolStripMenuItem(
-                Properties.Resources.MenuDuplicate, null,
-                (s, e) => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage),
-                Keys.Control | Keys.Shift | Keys.C
-            );
-
-            var remove = new ToolStripMenuItem(
-                Properties.Resources.MenuRemove, null,
-                (s, e) => Aggregator?.Remove.Raise(EventAggregator.SelectedPage),
-                Keys.Control | Keys.D
-            );
-
-            var up = new ToolStripMenuItem(
-                Properties.Resources.MenuUp, null,
-                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1)),
-                Keys.Control | Keys.Up
-            );
-
-            var down = new ToolStripMenuItem(
-                Properties.Resources.MenuDown, null,
-                (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1)),
-                Keys.Control | Keys.Down
-            );
-
-            var property = new ToolStripMenuItem(
-                Properties.Resources.MenuProperty, null,
-                (s, e) => Aggregator?.Property.Raise(EventAggregator.SelectedPage),
-                Keys.Control | Keys.R
-            );
-            // End of menu settings
-
-            var dest = new ContextMenuStrip();
-            dest.Items.AddRange(new ToolStripItem[]
-            {
-                newpage,
-                import,
-                new ToolStripSeparator(),
-                up,
-                down,
-                new ToolStripSeparator(),
-                export,
-                remove,
-                new ToolStripSeparator(),
-                property,
-            });
-            return dest;
         }
 
         #endregion
