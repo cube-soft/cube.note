@@ -239,7 +239,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルに保存 に類似しているローカライズされた文字列を検索します。
+        ///   エクスポート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuExport {
             get {
@@ -257,7 +257,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルからノートを作成 に類似しているローカライズされた文字列を検索します。
+        ///   インポート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuImport {
             get {
@@ -266,7 +266,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   新しいノートを作成 に類似しているローカライズされた文字列を検索します。
+        ///   新しいノート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuNewPage {
             get {

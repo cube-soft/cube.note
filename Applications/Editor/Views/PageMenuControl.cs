@@ -230,16 +230,17 @@ namespace Cube.Note.App.Editor
             Items.AddRange(new ToolStripItem[]
             {
                 NewPageMenu,
-                ImportMenu,
                 DuplicateMenu,
+                new ToolStripSeparator(),
+                PropertyMenu,
                 new ToolStripSeparator(),
                 UpMenu,
                 DownMenu,
                 new ToolStripSeparator(),
+                ImportMenu,
                 ExportMenu,
-                RemoveMenu,
                 new ToolStripSeparator(),
-                PropertyMenu,
+                RemoveMenu,
             });
         }
 

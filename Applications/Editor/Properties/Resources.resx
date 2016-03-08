@@ -176,16 +176,16 @@
     <value>ノートを複製</value>
   </data>
   <data name="MenuExport" xml:space="preserve">
-    <value>ファイルに保存</value>
+    <value>エクスポート</value>
   </data>
   <data name="MenuGoogle" xml:space="preserve">
     <value>インターネットで検索</value>
   </data>
   <data name="MenuImport" xml:space="preserve">
-    <value>ファイルからノートを作成</value>
+    <value>インポート</value>
   </data>
   <data name="MenuNewPage" xml:space="preserve">
-    <value>新しいノートを作成</value>
+    <value>新しいノート</value>
   </data>
   <data name="MenuPaste" xml:space="preserve">
     <value>貼り付け</value>
