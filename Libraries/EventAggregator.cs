@@ -188,6 +188,22 @@ namespace Cube.Note
         public RelayEvent<ValueEventArgs<int>> Move { get; }
             = new RelayEvent<ValueEventArgs<int>>();
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// 保存処理を実行するイベントです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// CubeNote では AutoSaver によって自動保存を行っていますが、
+        /// Save イベントが発生した時には即座に保存処理を実行します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Save { get; } = new RelayEvent();
+
         #endregion
 
         #region Tag events

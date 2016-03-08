@@ -237,7 +237,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             new Cube.Forms.SizeHacker(ContentsPanel.Panel1, SizeGrip);
-            Saver = new AutoSaver(Pages, Settings);
+            Saver = new AutoSaver(Pages, Settings, Aggregator);
         }
 
         /* ----------------------------------------------------------------- */
@@ -318,7 +318,7 @@ namespace Cube.Note.App.Editor
                         break;
                     case Keys.S:
                         if (e.Shift) Aggregator.Export.Raise(EventAggregator.SelectedPage);
-                        else result = false;
+                        else Aggregator.Save.Raise();
                         break;
                     case Keys.T:
                         Aggregator.Settings.Raise();

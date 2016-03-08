@@ -51,14 +51,16 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public AutoSaver(PageCollection pages, SettingsFolder settings)
+        public AutoSaver(PageCollection pages, SettingsFolder settings, EventAggregator events)
         {
             Pages    = pages;
             Settings = settings;
+            Events   = events;
             Interval = Settings.User.AutoSaveTime;
 
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.User.PropertyChanged += Settings_PropertyChanged;
+            Events.Save.Handle += Save_Handle;
             _timer.Elapsed += Timer_Elapsed;
 
             Task.Run(() => InitializePages());
@@ -84,7 +86,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Target
+        /// Pages
         /// 
         /// <summary>
         /// 自動保存の対象となるオブジェクトを取得します。
@@ -103,6 +105,17 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder Settings { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Events
+        /// 
+        /// <summary>
+        /// イベント情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventAggregator Events { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -162,7 +175,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Target_ActiveChanged
+        /// Settings_PageChanged
         /// 
         /// <summary>
         /// アクティブな Page オブジェクトが変更された時に実行される
@@ -173,6 +186,22 @@ namespace Cube.Note
         private async void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
             await Task.Run(() => SaveDocument(e.OldValue));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save_Handle
+        /// 
+        /// <summary>
+        /// Save イベントが発生した時に実行されるハンドラです。
+        /// ハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private async void Save_Handle(object sender, EventArgs e)
+        {
+            if (Settings.Current.Page == null) return;
+            await Task.Run(() => SaveDocument(Settings.Current.Page));
         }
 
         /* ----------------------------------------------------------------- */
