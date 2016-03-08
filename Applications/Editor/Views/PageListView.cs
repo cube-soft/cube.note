@@ -474,7 +474,7 @@ namespace Cube.Note.App.Editor
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Move:
-                    Update(() => MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex));
+                    Update(() => MoveItem(e.OldStartingIndex, e.NewStartingIndex));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
@@ -727,6 +727,26 @@ namespace Cube.Note.App.Editor
                 action();
             }
             finally { EndUpdate(); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MoveItem
+        /// 
+        /// <summary>
+        /// 項目を移動します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: 無条件で Selected と Focused を設定しても良いか要検討。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void MoveItem(int src, int dest)
+        {
+            MoveItems(new int[] { src }, dest - src);
+            Items[dest].Selected = true;
+            Items[dest].Focused  = true;
         }
 
         /* ----------------------------------------------------------------- */
