@@ -236,7 +236,7 @@ namespace Cube.Note.App.Editor
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            new Cube.Forms.SizeHacker(ContentsPanel, SizeGrip);
+            new Cube.Forms.SizeHacker(ContentsPanel.Panel1, SizeGrip);
             Saver = new AutoSaver(Pages, Settings);
         }
 
