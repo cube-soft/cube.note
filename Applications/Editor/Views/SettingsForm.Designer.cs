@@ -95,6 +95,7 @@
             this.SpecialCharsColorTitleLabel = new System.Windows.Forms.Label();
             this.SpecialCharsColorColorButton = new Cube.Forms.ColorButton();
             this.SpecialCharsColorLabel = new System.Windows.Forms.Label();
+            this.IncludeLineCodeCheckBox = new System.Windows.Forms.CheckBox();
             this.BehaviorTabPage = new System.Windows.Forms.TabPage();
             this.BehaviorSettingsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.AutoSaveTimeTitleLabel = new System.Windows.Forms.Label();
@@ -107,7 +108,6 @@
             this.ShowNewsCheckBox = new System.Windows.Forms.CheckBox();
             this.VersionTabPage = new System.Windows.Forms.TabPage();
             this.TextColorColorButton = new Cube.Forms.ColorButton();
-            this.IncludeLineCodeCheckBox = new System.Windows.Forms.CheckBox();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
@@ -266,7 +266,7 @@
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.GeneralTabPage.Name = "GeneralTabPage";
-            this.GeneralTabPage.Size = new System.Drawing.Size(466, 396);
+            this.GeneralTabPage.Size = new System.Drawing.Size(466, 406);
             this.GeneralTabPage.TabIndex = 3;
             this.GeneralTabPage.Text = "一 般";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -303,7 +303,7 @@
             this.GeneralSettingsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.GeneralSettingsPanel.Name = "GeneralSettingsPanel";
             this.GeneralSettingsPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.GeneralSettingsPanel.Size = new System.Drawing.Size(466, 396);
+            this.GeneralSettingsPanel.Size = new System.Drawing.Size(466, 406);
             this.GeneralSettingsPanel.TabIndex = 0;
             // 
             // FontTitleLabel
@@ -356,11 +356,11 @@
             // 
             // BackColorColorButton
             // 
-            this.BackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColorColorButton.BackColor = System.Drawing.Color.White;
             this.BackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.BackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.BackColorColorButton.ForeColor = System.Drawing.Color.White;
             this.BackColorColorButton.Location = new System.Drawing.Point(121, 52);
             this.BackColorColorButton.Name = "BackColorColorButton";
             this.BackColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -390,11 +390,11 @@
             // 
             // ForeColorColorButton
             // 
-            this.ForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.ForeColorColorButton.BackColor = System.Drawing.Color.White;
             this.ForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.ForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.ForeColorColorButton.ForeColor = System.Drawing.Color.White;
             this.ForeColorColorButton.Location = new System.Drawing.Point(121, 81);
             this.ForeColorColorButton.Name = "ForeColorColorButton";
             this.ForeColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -424,11 +424,11 @@
             // 
             // UriColorColorButton
             // 
-            this.UriColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.UriColorColorButton.BackColor = System.Drawing.Color.White;
             this.UriColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.UriColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.UriColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UriColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.UriColorColorButton.ForeColor = System.Drawing.Color.White;
             this.UriColorColorButton.Location = new System.Drawing.Point(121, 110);
             this.UriColorColorButton.Name = "UriColorColorButton";
             this.UriColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -458,11 +458,11 @@
             // 
             // HighlightBackColorColorButton
             // 
-            this.HighlightBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.HighlightBackColorColorButton.BackColor = System.Drawing.Color.White;
             this.HighlightBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HighlightBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.HighlightBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HighlightBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.HighlightBackColorColorButton.ForeColor = System.Drawing.Color.White;
             this.HighlightBackColorColorButton.Location = new System.Drawing.Point(121, 139);
             this.HighlightBackColorColorButton.Name = "HighlightBackColorColorButton";
             this.HighlightBackColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -492,11 +492,11 @@
             // 
             // HighlightForeColorColorButton
             // 
-            this.HighlightForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.HighlightForeColorColorButton.BackColor = System.Drawing.Color.White;
             this.HighlightForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HighlightForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.HighlightForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HighlightForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.HighlightForeColorColorButton.ForeColor = System.Drawing.Color.White;
             this.HighlightForeColorColorButton.Location = new System.Drawing.Point(121, 168);
             this.HighlightForeColorColorButton.Name = "HighlightForeColorColorButton";
             this.HighlightForeColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -526,11 +526,11 @@
             // 
             // SearchBackColorColorButton
             // 
-            this.SearchBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SearchBackColorColorButton.BackColor = System.Drawing.Color.White;
             this.SearchBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SearchBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.SearchBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.SearchBackColorColorButton.ForeColor = System.Drawing.Color.White;
             this.SearchBackColorColorButton.Location = new System.Drawing.Point(121, 197);
             this.SearchBackColorColorButton.Name = "SearchBackColorColorButton";
             this.SearchBackColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -560,11 +560,11 @@
             // 
             // SearchForeColorColorButton
             // 
-            this.SearchForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SearchForeColorColorButton.BackColor = System.Drawing.Color.White;
             this.SearchForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SearchForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.SearchForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.SearchForeColorColorButton.ForeColor = System.Drawing.Color.White;
             this.SearchForeColorColorButton.Location = new System.Drawing.Point(121, 226);
             this.SearchForeColorColorButton.Name = "SearchForeColorColorButton";
             this.SearchForeColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -760,11 +760,11 @@
             // 
             // LineNumberBackColorColorButton
             // 
-            this.LineNumberBackColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.LineNumberBackColorColorButton.BackColor = System.Drawing.Color.White;
             this.LineNumberBackColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LineNumberBackColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.LineNumberBackColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LineNumberBackColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.LineNumberBackColorColorButton.ForeColor = System.Drawing.Color.White;
             this.LineNumberBackColorColorButton.Location = new System.Drawing.Point(121, 128);
             this.LineNumberBackColorColorButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.LineNumberBackColorColorButton.Name = "LineNumberBackColorColorButton";
@@ -795,11 +795,11 @@
             // 
             // LineNumberForeColorColorButton
             // 
-            this.LineNumberForeColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.LineNumberForeColorColorButton.BackColor = System.Drawing.Color.White;
             this.LineNumberForeColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LineNumberForeColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.LineNumberForeColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LineNumberForeColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.LineNumberForeColorColorButton.ForeColor = System.Drawing.Color.White;
             this.LineNumberForeColorColorButton.Location = new System.Drawing.Point(121, 157);
             this.LineNumberForeColorColorButton.Name = "LineNumberForeColorColorButton";
             this.LineNumberForeColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -862,11 +862,11 @@
             // 
             // CurrentLineColorColorButton
             // 
-            this.CurrentLineColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.CurrentLineColorColorButton.BackColor = System.Drawing.Color.White;
             this.CurrentLineColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CurrentLineColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.CurrentLineColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CurrentLineColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.CurrentLineColorColorButton.ForeColor = System.Drawing.Color.White;
             this.CurrentLineColorColorButton.Location = new System.Drawing.Point(121, 259);
             this.CurrentLineColorColorButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.CurrentLineColorColorButton.Name = "CurrentLineColorColorButton";
@@ -950,11 +950,11 @@
             // 
             // SpecialCharsColorColorButton
             // 
-            this.SpecialCharsColorColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.SpecialCharsColorColorButton.BackColor = System.Drawing.Color.White;
             this.SpecialCharsColorColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SpecialCharsColorColorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.SpecialCharsColorColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SpecialCharsColorColorButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.SpecialCharsColorColorButton.ForeColor = System.Drawing.Color.White;
             this.SpecialCharsColorColorButton.Location = new System.Drawing.Point(121, 338);
             this.SpecialCharsColorColorButton.Name = "SpecialCharsColorColorButton";
             this.SpecialCharsColorColorButton.Size = new System.Drawing.Size(50, 23);
@@ -972,13 +972,24 @@
             this.SpecialCharsColorLabel.Text = "(255, 255, 255)";
             this.SpecialCharsColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // IncludeLineCodeCheckBox
+            // 
+            this.IncludeLineCodeCheckBox.AutoSize = true;
+            this.VisibleSettinsPanel.SetFlowBreak(this.IncludeLineCodeCheckBox, true);
+            this.IncludeLineCodeCheckBox.Location = new System.Drawing.Point(15, 367);
+            this.IncludeLineCodeCheckBox.Name = "IncludeLineCodeCheckBox";
+            this.IncludeLineCodeCheckBox.Size = new System.Drawing.Size(161, 19);
+            this.IncludeLineCodeCheckBox.TabIndex = 23;
+            this.IncludeLineCodeCheckBox.Text = "改行コードを文字数に含める";
+            this.IncludeLineCodeCheckBox.UseVisualStyleBackColor = true;
+            // 
             // BehaviorTabPage
             // 
             this.BehaviorTabPage.Controls.Add(this.BehaviorSettingsPanel);
             this.BehaviorTabPage.Location = new System.Drawing.Point(4, 24);
             this.BehaviorTabPage.Name = "BehaviorTabPage";
             this.BehaviorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.BehaviorTabPage.Size = new System.Drawing.Size(466, 396);
+            this.BehaviorTabPage.Size = new System.Drawing.Size(466, 406);
             this.BehaviorTabPage.TabIndex = 4;
             this.BehaviorTabPage.Text = "動作オプション";
             this.BehaviorTabPage.UseVisualStyleBackColor = true;
@@ -998,7 +1009,7 @@
             this.BehaviorSettingsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.BehaviorSettingsPanel.Name = "BehaviorSettingsPanel";
             this.BehaviorSettingsPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.BehaviorSettingsPanel.Size = new System.Drawing.Size(460, 390);
+            this.BehaviorSettingsPanel.Size = new System.Drawing.Size(460, 400);
             this.BehaviorSettingsPanel.TabIndex = 0;
             // 
             // AutoSaveTimeTitleLabel
@@ -1097,7 +1108,7 @@
             this.VersionTabPage.Location = new System.Drawing.Point(4, 24);
             this.VersionTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VersionTabPage.Name = "VersionTabPage";
-            this.VersionTabPage.Size = new System.Drawing.Size(466, 396);
+            this.VersionTabPage.Size = new System.Drawing.Size(466, 406);
             this.VersionTabPage.TabIndex = 2;
             this.VersionTabPage.Text = "CubeNote について";
             this.VersionTabPage.UseVisualStyleBackColor = true;
@@ -1114,17 +1125,6 @@
             this.TextColorColorButton.TabIndex = 30;
             this.TextColorColorButton.Text = "colorButton1";
             this.TextColorColorButton.UseVisualStyleBackColor = false;
-            // 
-            // IncludeLineCodeCheckBox
-            // 
-            this.IncludeLineCodeCheckBox.AutoSize = true;
-            this.VisibleSettinsPanel.SetFlowBreak(this.IncludeLineCodeCheckBox, true);
-            this.IncludeLineCodeCheckBox.Location = new System.Drawing.Point(15, 367);
-            this.IncludeLineCodeCheckBox.Name = "IncludeLineCodeCheckBox";
-            this.IncludeLineCodeCheckBox.Size = new System.Drawing.Size(161, 19);
-            this.IncludeLineCodeCheckBox.TabIndex = 23;
-            this.IncludeLineCodeCheckBox.Text = "改行コードを文字数に含める";
-            this.IncludeLineCodeCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
