@@ -738,7 +738,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         /// 
         /// <remarks>
-        /// TODO: 無条件で Selected と Focused を設定しても良いか要検討。
+        /// TODO: 無条件で Selected, Focused の設定、EnsureVisible(int) を
+        /// 実行しても良いか要検討。
         /// </remarks>
         /// 
         /* ----------------------------------------------------------------- */
@@ -746,7 +747,8 @@ namespace Cube.Note.App.Editor
         {
             MoveItems(new int[] { src }, dest - src);
             Items[dest].Selected = true;
-            Items[dest].Focused  = true;
+            Items[dest].Focused = true;
+            EnsureVisible(dest);
         }
 
         /* ----------------------------------------------------------------- */
