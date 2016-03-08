@@ -18,8 +18,9 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using NUnit.Framework;
+using Sgry.Azuki;
 using Cube.Note.Azuki;
+using NUnit.Framework;
 using IoEx = System.IO;
 
 namespace Cube.Note.Tests
@@ -136,7 +137,7 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Import
+        /// Import_Abstract
         ///
         /// <summary>
         /// Import (Extend) のテストを行います。
@@ -150,11 +151,33 @@ namespace Cube.Note.Tests
         [TestCase("Kana-UTF8-BOM.txt",  "あいうえお")]
         [TestCase("Kana-UTF16BE.txt",   "あいうえお")]
         [TestCase("Kana-UTF16LE.txt",   "あいうえお")]
-        public void Import(string filename, string expected)
+        public void Import_Abstract(string filename, string expected)
         {
             Pages.Import(null, 0, IoEx.Path.Combine(Examples, filename), 100);
             Assert.That(
                 Pages[0].Abstract,
+                Is.EqualTo(expected)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Import_Length
+        ///
+        /// <summary>
+        /// Import (Extend) のテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("LineCode-CR.txt",   20)]
+        [TestCase("LineCode-CRLF.txt", 20)]
+        [TestCase("LineCode-LF.txt",   20)]
+        public void Import_Length(string filename, int expected)
+        {
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, filename), 100);
+            var document = Pages[0].Document as Document;
+            Assert.That(
+                document.Text.Length,
                 Is.EqualTo(expected)
             );
         }

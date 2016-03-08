@@ -51,7 +51,7 @@ namespace Cube.Note.Azuki
             if (done != null) return done;
 
             var path = IoEx.Path.Combine(directory, page.FileName);
-            var dest = DocumentHandler.Create(path, Encoding.UTF8);
+            var dest = DocumentHandler.Create(path, Encoding.UTF8, false);
             page.Document = dest;
             return dest;
         }
