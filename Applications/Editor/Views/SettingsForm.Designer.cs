@@ -142,7 +142,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.LayoutPanel.Size = new System.Drawing.Size(498, 548);
+            this.LayoutPanel.Size = new System.Drawing.Size(498, 558);
             this.LayoutPanel.TabIndex = 0;
             // 
             // ResetButton
@@ -153,7 +153,7 @@
             this.ResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetButton.Font = new System.Drawing.Font("Meiryo UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.ResetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.ResetButton.Location = new System.Drawing.Point(12, 467);
+            this.ResetButton.Location = new System.Drawing.Point(12, 477);
             this.ResetButton.Margin = new System.Windows.Forms.Padding(12, 1, 0, 1);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(120, 25);
@@ -179,7 +179,7 @@
             this.ButtonsPanel.Controls.Add(this.ApplyButtonShadow);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 493);
+            this.ButtonsPanel.Location = new System.Drawing.Point(0, 503);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
@@ -243,7 +243,7 @@
             this.SettingsControl.Location = new System.Drawing.Point(12, 42);
             this.SettingsControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 0);
             this.SettingsControl.Name = "SettingsControl";
-            this.SettingsControl.Size = new System.Drawing.Size(474, 424);
+            this.SettingsControl.Size = new System.Drawing.Size(474, 434);
             this.SettingsControl.TabIndex = 5;
             // 
             // TabControl
@@ -257,7 +257,7 @@
             this.TabControl.Margin = new System.Windows.Forms.Padding(0);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(474, 424);
+            this.TabControl.Size = new System.Drawing.Size(474, 434);
             this.TabControl.TabIndex = 2;
             // 
             // GeneralTabPage
@@ -588,7 +588,7 @@
             this.VisibleTabPage.Location = new System.Drawing.Point(4, 24);
             this.VisibleTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleTabPage.Name = "VisibleTabPage";
-            this.VisibleTabPage.Size = new System.Drawing.Size(466, 396);
+            this.VisibleTabPage.Size = new System.Drawing.Size(466, 406);
             this.VisibleTabPage.TabIndex = 0;
             this.VisibleTabPage.Text = "表示オプション";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
@@ -625,12 +625,13 @@
             this.VisibleSettinsPanel.Controls.Add(this.SpecialCharsColorTitleLabel);
             this.VisibleSettinsPanel.Controls.Add(this.SpecialCharsColorColorButton);
             this.VisibleSettinsPanel.Controls.Add(this.SpecialCharsColorLabel);
+            this.VisibleSettinsPanel.Controls.Add(this.IncludeLineCodeCheckBox);
             this.VisibleSettinsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VisibleSettinsPanel.Location = new System.Drawing.Point(0, 0);
             this.VisibleSettinsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.VisibleSettinsPanel.Name = "VisibleSettinsPanel";
             this.VisibleSettinsPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 396);
+            this.VisibleSettinsPanel.Size = new System.Drawing.Size(466, 406);
             this.VisibleSettinsPanel.TabIndex = 0;
             // 
             // TabWidthTitleLabel
@@ -991,7 +992,6 @@
             this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTextBox);
             this.BehaviorSettingsPanel.Controls.Add(this.RemoveWarningCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.OpenUriCheckBox);
-            this.BehaviorSettingsPanel.Controls.Add(this.IncludeLineCodeCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.ShowNewsCheckBox);
             this.BehaviorSettingsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BehaviorSettingsPanel.Location = new System.Drawing.Point(3, 3);
@@ -1085,10 +1085,10 @@
             // 
             this.ShowNewsCheckBox.AutoSize = true;
             this.BehaviorSettingsPanel.SetFlowBreak(this.ShowNewsCheckBox, true);
-            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 165);
+            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 140);
             this.ShowNewsCheckBox.Name = "ShowNewsCheckBox";
             this.ShowNewsCheckBox.Size = new System.Drawing.Size(283, 19);
-            this.ShowNewsCheckBox.TabIndex = 5;
+            this.ShowNewsCheckBox.TabIndex = 4;
             this.ShowNewsCheckBox.Text = "ステータスバーに Cube ニュースの新着記事を表示する";
             this.ShowNewsCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -1118,18 +1118,18 @@
             // IncludeLineCodeCheckBox
             // 
             this.IncludeLineCodeCheckBox.AutoSize = true;
-            this.BehaviorSettingsPanel.SetFlowBreak(this.IncludeLineCodeCheckBox, true);
-            this.IncludeLineCodeCheckBox.Location = new System.Drawing.Point(15, 140);
+            this.VisibleSettinsPanel.SetFlowBreak(this.IncludeLineCodeCheckBox, true);
+            this.IncludeLineCodeCheckBox.Location = new System.Drawing.Point(15, 367);
             this.IncludeLineCodeCheckBox.Name = "IncludeLineCodeCheckBox";
             this.IncludeLineCodeCheckBox.Size = new System.Drawing.Size(161, 19);
-            this.IncludeLineCodeCheckBox.TabIndex = 4;
+            this.IncludeLineCodeCheckBox.TabIndex = 23;
             this.IncludeLineCodeCheckBox.Text = "改行コードを文字数に含める";
             this.IncludeLineCodeCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
-            this.ClientSize = new System.Drawing.Size(500, 550);
+            this.ClientSize = new System.Drawing.Size(500, 560);
             this.Controls.Add(this.LayoutPanel);
             this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(480, 320);
