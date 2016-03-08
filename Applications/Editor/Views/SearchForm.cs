@@ -414,6 +414,9 @@ namespace Cube.Note.App.Editor
                     case Keys.Enter:
                         OnSearch(EventArgs.Empty);
                         break;
+                    case Keys.Escape:
+                        Close();
+                        break;
                     case Keys.F3:
                         if (Pages.Items.Count <= 0) OnSearch(EventArgs.Empty);
                         else if (e.Shift) OnSearchPrev(EventArgs.Empty);
