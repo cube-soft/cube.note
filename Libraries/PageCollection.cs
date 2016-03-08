@@ -189,7 +189,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Duplicate(Page src, int index)
+        public void Duplicate(int index, Page src)
             => NewPage(null, index, (page) =>
         {
             page.Abstract = src.Abstract;

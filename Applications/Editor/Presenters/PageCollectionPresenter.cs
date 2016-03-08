@@ -95,7 +95,7 @@ namespace Cube.Note.App.Editor
             if (src < 0 || src >= View.DataSource.Count) return;
 
             var dest = GetInsertIndex(e.Value);
-            Model.Duplicate(View.DataSource[src], dest);
+            Model.Duplicate(dest, View.DataSource[src]);
             View.Select(dest);
         });
 
