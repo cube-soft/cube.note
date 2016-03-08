@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using NUnit.Framework;
+using Cube.Note.Azuki;
 using IoEx = System.IO;
 
 namespace Cube.Note.Tests
@@ -130,6 +131,31 @@ namespace Cube.Note.Tests
             Assert.That(
                 IoEx.File.Exists(IoEx.Path.Combine(Pages.Directory, Pages[0].FileName)),
                 Is.True
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Import
+        ///
+        /// <summary>
+        /// Import (Extend) のテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Kana-EUC.txt",       "あいうえお")]
+        [TestCase("Kana-JIS.txt",       "あいうえお")]
+        [TestCase("Kana-Shift-JIS.txt", "あいうえお")]
+        [TestCase("Kana-UTF8.txt",      "あいうえお")]
+        [TestCase("Kana-UTF8-BOM.txt",  "あいうえお")]
+        [TestCase("Kana-UTF16BE.txt",   "あいうえお")]
+        [TestCase("Kana-UTF16LE.txt",   "あいうえお")]
+        public void Import(string filename, string expected)
+        {
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, filename), 100);
+            Assert.That(
+                Pages[0].Abstract,
+                Is.EqualTo(expected)
             );
         }
 
