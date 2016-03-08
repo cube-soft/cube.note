@@ -76,6 +76,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         static void InitLog()
         {
+            log4net.Config.XmlConfigurator.Configure();
+
             var logger = log4net.LogManager.GetLogger(typeof(Program));
             var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
             logger.Info($"{reader.Product} {reader.Version}");
