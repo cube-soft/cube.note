@@ -51,11 +51,11 @@ namespace Cube.Note.Tests
         #region Properties
 
         [Test]
-        public void Directory_IsResults()
+        public void Directory_IsResultsInbox()
         {
             Assert.That(
                 Pages.Directory,
-                Is.EqualTo(Results)
+                Is.EqualTo(IoEx.Path.Combine(Results, PageCollection.DefaultInbox))
             );
         }
 

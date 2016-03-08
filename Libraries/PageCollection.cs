@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using System.Linq;
 using IoEx = System.IO;
 
@@ -48,7 +47,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollection() : this(Assembly.GetExecutingAssembly()) { }
+        public PageCollection(string root) : this(root, DefaultInbox) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -59,35 +58,26 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollection(Assembly assembly) : base()
+        public PageCollection(string root, string inbox)
         {
-            var reader = new AssemblyReader(assembly);
-            var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var folder = $@"{reader.Company}\{reader.Product}\Inbox";
-
-            Directory = IoEx.Path.Combine(appdata, folder);
-            Tags = new TagCollection(assembly);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageCollection
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PageCollection(string directory)
-        {
-            Directory = directory;
-            var file = IoEx.Path.Combine(directory, TagCollection.DefaultFileName);
-            Tags = new TagCollection(file);
+            Directory = IoEx.Path.Combine(root, inbox);
+            Tags = new TagCollection(root);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DefaultInbox
+        ///
+        /// <summary>
+        /// データを格納するフォルダのデフォルト名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string DefaultInbox => "Inbox";
 
         /* ----------------------------------------------------------------- */
         ///

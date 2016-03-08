@@ -63,6 +63,7 @@
     <Compile Include="Page.cs" />
     <Compile Include="PageCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistryValue.cs" />
     <Compile Include="SettingsFolder.cs" />
     <Compile Include="SettingsValue.cs" />
     <Compile Include="Tag.cs" />

@@ -131,6 +131,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeModels()
         {
+            Pages = new PageCollection(Settings.Root);
             Pages.Tags.Everyone.Name = Properties.Resources.EveryoneTag;
             Pages.Tags.Nothing.Name  = Properties.Resources.NothingTag;
             Settings.Load();
@@ -466,9 +467,9 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Models
-        private PageCollection Pages = new PageCollection(Assembly.GetEntryAssembly());
-        private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
         private EventAggregator Aggregator = new EventAggregator();
+        private SettingsFolder Settings = new SettingsFolder(Assembly.GetEntryAssembly());
+        private PageCollection Pages = null;
         private AutoSaver Saver = null;
         #endregion
 

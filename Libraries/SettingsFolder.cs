@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Win32;
 using IoEx = System.IO;
 
 namespace Cube.Note
@@ -46,9 +47,21 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(string path)
+        public SettingsFolder(string root) : this(root, DefaultFileName) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsFolder
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsFolder(string root, string filename)
         {
-            Path = path;
+            Root = root;
+            FileName = filename;
         }
 
         /* ----------------------------------------------------------------- */
@@ -73,15 +86,13 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Assembly assembly, string filename)
         {
-            var reader = new AssemblyReader(assembly);
-            var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var tail = $@"{reader.Company}\{reader.Product}\{filename}";
-            Path = IoEx.Path.Combine(head, tail);
+            FileName = filename;
             UriQuery = new Dictionary<string, string>
             {
                 { "utm_source", "cube" },
                 { "utm_medium", "note" },
             };
+            InitializeValues(assembly);
         }
 
         #endregion
@@ -112,14 +123,36 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
+        /// Root
         ///
         /// <summary>
-        /// 設定ファイルの保存先を取得または設定します。
+        /// 各種データを格納するフォルダのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; }
+        public string Root { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileName
+        ///
+        /// <summary>
+        /// 設定ファイルのファイル名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string FileName { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Path
+        ///
+        /// <summary>
+        /// 設定ファイルの保存先を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Path => IoEx.Path.Combine(Root, FileName);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -204,6 +237,60 @@ namespace Cube.Note
             if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
 
             Settings.Save(User, path, FileType);
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeValues
+        ///
+        /// <summary>
+        /// 設定値を初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeValues(Assembly assembly)
+        {
+            var reader = new AssemblyReader(assembly);
+            var name = $@"Software\{reader.Company}\{reader.Product}";
+            var root = string.Empty;
+
+            try
+            {
+                using (var subkey = Registry.CurrentUser.OpenSubKey(name, false))
+                {
+                    if (subkey != null)
+                    {
+                        var values = Settings.Load<RegistryValue>(subkey);
+                        root = values?.Data;
+                    }
+                }
+            }
+            catch (Exception /* err */) { /* ignore errors */ }
+            finally { SetRoot(root, reader); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetRoot
+        ///
+        /// <summary>
+        /// Root プロパティを設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetRoot(string value, AssemblyReader reader)
+        {
+            if (!string.IsNullOrEmpty(value)) Root = value;
+            else
+            {
+                var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                var tail = $@"{reader.Company}\{reader.Product}";
+                Root = IoEx.Path.Combine(head, tail);
+            }
         }
 
         #endregion
