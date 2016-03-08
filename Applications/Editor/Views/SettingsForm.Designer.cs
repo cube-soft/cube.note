@@ -107,6 +107,7 @@
             this.ShowNewsCheckBox = new System.Windows.Forms.CheckBox();
             this.VersionTabPage = new System.Windows.Forms.TabPage();
             this.TextColorColorButton = new Cube.Forms.ColorButton();
+            this.IncludeLineCodeCheckBox = new System.Windows.Forms.CheckBox();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
@@ -990,6 +991,7 @@
             this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTextBox);
             this.BehaviorSettingsPanel.Controls.Add(this.RemoveWarningCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.OpenUriCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.IncludeLineCodeCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.ShowNewsCheckBox);
             this.BehaviorSettingsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BehaviorSettingsPanel.Location = new System.Drawing.Point(3, 3);
@@ -1083,10 +1085,10 @@
             // 
             this.ShowNewsCheckBox.AutoSize = true;
             this.BehaviorSettingsPanel.SetFlowBreak(this.ShowNewsCheckBox, true);
-            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 140);
+            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 165);
             this.ShowNewsCheckBox.Name = "ShowNewsCheckBox";
             this.ShowNewsCheckBox.Size = new System.Drawing.Size(283, 19);
-            this.ShowNewsCheckBox.TabIndex = 4;
+            this.ShowNewsCheckBox.TabIndex = 5;
             this.ShowNewsCheckBox.Text = "ステータスバーに Cube ニュースの新着記事を表示する";
             this.ShowNewsCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -1112,6 +1114,17 @@
             this.TextColorColorButton.TabIndex = 30;
             this.TextColorColorButton.Text = "colorButton1";
             this.TextColorColorButton.UseVisualStyleBackColor = false;
+            // 
+            // IncludeLineCodeCheckBox
+            // 
+            this.IncludeLineCodeCheckBox.AutoSize = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.IncludeLineCodeCheckBox, true);
+            this.IncludeLineCodeCheckBox.Location = new System.Drawing.Point(15, 140);
+            this.IncludeLineCodeCheckBox.Name = "IncludeLineCodeCheckBox";
+            this.IncludeLineCodeCheckBox.Size = new System.Drawing.Size(161, 19);
+            this.IncludeLineCodeCheckBox.TabIndex = 4;
+            this.IncludeLineCodeCheckBox.Text = "改行コードを文字数に含める";
+            this.IncludeLineCodeCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -1226,5 +1239,6 @@
         private System.Windows.Forms.CheckBox ShowNewsCheckBox;
         private System.Windows.Forms.Label SearchQueryTitleLabel;
         private System.Windows.Forms.TextBox SearchQueryTextBox;
+        private System.Windows.Forms.CheckBox IncludeLineCodeCheckBox;
     }
 }

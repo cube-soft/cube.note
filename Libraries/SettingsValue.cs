@@ -875,6 +875,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IncludeLineCode
+        ///
+        /// <summary>
+        /// 改行コードも文字数に含めるかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool IncludeLineCode
+        {
+            get { return _includeLineCode; }
+            set
+            {
+                if (_includeLineCode == value) return;
+                _includeLineCode = value;
+                RaisePropertyChanged(nameof(IncludeLineCode));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ShowNews
         ///
         /// <summary>
@@ -964,6 +985,7 @@ namespace Cube.Note
             BracketVisible      = false;
             RemoveWarning       = true;
             OpenUri             = true;
+            IncludeLineCode     = false;
             ShowNews            = true;
         }
 
@@ -1008,6 +1030,7 @@ namespace Cube.Note
         private bool _bracketVisible;
         private bool _removeWarning;
         private bool _openUri;
+        private bool _includeLineCode;
         private bool _showNews;
         #endregion
     }

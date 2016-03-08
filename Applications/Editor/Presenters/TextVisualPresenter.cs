@@ -215,6 +215,9 @@ namespace Cube.Note.App.Editor
                 case nameof(Model.BracketVisible):
                     View.HighlightsMatchedBracket = Model.BracketVisible;
                     break;
+                case nameof(Model.IncludeLineCode):
+                    View.IncludeLineCount = Model.IncludeLineCode;
+                    break;
                 default:
                     Logger.Debug($"Skip:{name}");
                     break;

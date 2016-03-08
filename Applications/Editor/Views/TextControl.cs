@@ -91,6 +91,17 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IncludeLineCode
+        ///
+        /// <summary>
+        /// 改行コードも文字数に含めるかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IncludeLineCount { get; set; } = false;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Status
         ///
         /// <summary>
@@ -158,11 +169,12 @@ namespace Cube.Note.App.Editor
 
             var count     = (Document != null) ? Document.Length : 0;
             var lineCount = (Document != null) ? Document.LineCount : 0;
+            var adjust    = IncludeLineCount ? 1 : 2;
             var line      = 0;
             var column    = 0;
             if (Document != null) Document.GetCaretIndex(out line, out column);
 
-            Status.Count        = count - lineCount + 1;
+            Status.Count        = count - (lineCount - 1) * adjust;
             Status.LineCount    = lineCount;
             Status.LineNumber   = line + 1;
             Status.ColumnNumber = column + 1;
