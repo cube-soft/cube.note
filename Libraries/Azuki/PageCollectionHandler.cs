@@ -17,6 +17,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using IoEx = System.IO;
+
 namespace Cube.Note.Azuki
 {
     /* --------------------------------------------------------------------- */
@@ -44,7 +46,9 @@ namespace Cube.Note.Azuki
             Tag tag, int index, string path, int maxLength)
             => pages.NewPage(tag, index, (page) =>
         {
-            page.Document = DocumentHandler.Create(path);
+            var document = DocumentHandler.Create(path);
+            document.Save(IoEx.Path.Combine(pages.Directory, page.FileName));
+            page.Document = document;
             page.UpdateAbstract(maxLength);
         });
     }
