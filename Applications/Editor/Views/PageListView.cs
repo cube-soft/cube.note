@@ -529,18 +529,21 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawBackground(ListViewItem item, Graphics gs, Rectangle bounds)
         {
+            bounds.X     += _left;
+            bounds.Width -= _left;
+
             if (!item.Selected)
             {
                 gs.FillRectangle(new SolidBrush(BackColor), bounds);
                 return;
             }
 
-            var area = bounds;
-            --area.Width;
-            --area.Height;
+            var frame = bounds;
+            --frame.Width;
+            --frame.Height;
 
             gs.FillRectangle(new SolidBrush(SelectedBackColor), bounds);
-            gs.DrawRectangle(new Pen(SelectedBorderColor), area);
+            gs.DrawRectangle(new Pen(SelectedBorderColor), frame);
         }
 
         /* ----------------------------------------------------------------- */
@@ -557,9 +560,9 @@ namespace Cube.Note.App.Editor
             var format = new StringFormat(StringFormatFlags.NoWrap);
             format.Trimming = StringTrimming.EllipsisCharacter;
 
-            bounds.Width -= _space;
+            bounds.Width -= (_left + _space);
             bounds.Height = (int)(Font.Size * LineHeight);
-            bounds.X += _space;
+            bounds.X += (_left + _space);
             bounds.Y += ShowRemoveButton ? bounds.Height : _space;
 
             for (var i = 0; i < item.SubItems.Count; ++i)
@@ -604,7 +607,7 @@ namespace Cube.Note.App.Editor
             var height = size.Height;
             var image = Properties.Resources.Property;
 
-            var x0 = bounds.Left + _space;
+            var x0 = bounds.Left + _left + _space;
             var y0 = bounds.Bottom - (height + _space) + (height - image.Height) / 2.0 - 1.0;
             gs.DrawImage(image, x0, (float)y0);
 
@@ -857,6 +860,7 @@ namespace Cube.Note.App.Editor
         #region Fields
         private ObservableCollection<Page> _source;
         private SizeF _cacheProperty = SizeF.Empty;
+        private static readonly int _left = 4;
         private static readonly int _space = 3;
         #endregion
     }
