@@ -178,6 +178,26 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Duplicate_Imported
+        ///
+        /// <summary>
+        /// インポートしたページを複製するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Kana-UTF8-BOM.txt")]
+        public void Duplicate_Imported(string filename)
+        {
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, filename), 100);
+            Pages.Duplicate(0, Pages[0]);
+            Assert.That(
+                Pages[0].CreateDocument(Pages.Directory).Length,
+                Is.AtLeast(1)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Remove
         ///
         /// <summary>
