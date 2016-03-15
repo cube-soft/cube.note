@@ -219,7 +219,6 @@ namespace Cube.Note.App.Editor
                     View.IncludeLineCount = Model.IncludeLineCode;
                     break;
                 default:
-                    Logger.Debug($"Skip:{name}");
                     break;
             }
         }
