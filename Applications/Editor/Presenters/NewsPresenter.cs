@@ -57,7 +57,7 @@ namespace Cube.Note.App.Editor
             Remover.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
             Remover.Elapsed += (s, e) =>
             {
-                if (Model.Result.Count <= 0) return;
+                if (Model.Result.Count <= 1) return;
                 Model.Result.RemoveAt(0);
             };
 
