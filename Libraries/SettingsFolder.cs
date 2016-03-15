@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Net;
 using Microsoft.Win32;
 using IoEx = System.IO;
 
@@ -45,6 +46,25 @@ namespace Cube.Note
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 共通の初期化処理を記述します。尚、このコンストラクタは非公開です。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private SettingsFolder()
+        {
+            InitializeNetworkOptions();
+            InitialzieUriQuery();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsFolder
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder(string root) : this(root, DefaultFileName) { }
@@ -58,7 +78,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(string root, string filename)
+        public SettingsFolder(string root, string filename) : this()
         {
             Root = root;
             FileName = filename;
@@ -84,14 +104,9 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly, string filename)
+        public SettingsFolder(Assembly assembly, string filename) : this()
         {
             FileName = filename;
-            UriQuery = new Dictionary<string, string>
-            {
-                { "utm_source", "cube" },
-                { "utm_medium", "note" },
-            };
             InitializeValues(assembly);
         }
 
@@ -175,6 +190,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public IDictionary<string, string> UriQuery { get; }
+            = new Dictionary<string, string>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,6 +258,37 @@ namespace Cube.Note
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeNetworkOptions
+        /// 
+        /// <summary>
+        /// ネットワークオプションを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeNetworkOptions()
+        {
+            ServicePointManager.Expect100Continue = false;
+            ServicePointManager.UseNagleAlgorithm = false;
+            WebRequest.DefaultWebProxy = null;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitialzieUriQuery
+        /// 
+        /// <summary>
+        /// UriQuery を初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitialzieUriQuery()
+        {
+            UriQuery.Add("utm_source", "cube");
+            UriQuery.Add("utm_medium", "note");
+        }
 
         /* ----------------------------------------------------------------- */
         ///
