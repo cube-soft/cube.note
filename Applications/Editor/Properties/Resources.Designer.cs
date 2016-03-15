@@ -367,6 +367,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   ニュース：{0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NewsFormat {
+            get {
+                return ResourceManager.GetString("NewsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Normalize {
