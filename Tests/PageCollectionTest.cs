@@ -18,6 +18,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using Sgry.Azuki;
+using Cube.Note.Azuki;
 using NUnit.Framework;
 using IoEx = System.IO;
 
@@ -50,11 +52,11 @@ namespace Cube.Note.Tests
         #region Properties
 
         [Test]
-        public void Directory_IsResults()
+        public void Directory_IsResultsInbox()
         {
             Assert.That(
                 Pages.Directory,
-                Is.EqualTo(Results)
+                Is.EqualTo(IoEx.Path.Combine(Results, PageCollection.DefaultInbox))
             );
         }
 
@@ -135,6 +137,53 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Import_Abstract
+        ///
+        /// <summary>
+        /// Import (Extend) のテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Kana-EUC.txt",       "あいうえお")]
+        [TestCase("Kana-JIS.txt",       "あいうえお")]
+        [TestCase("Kana-Shift-JIS.txt", "あいうえお")]
+        [TestCase("Kana-UTF8.txt",      "あいうえお")]
+        [TestCase("Kana-UTF8-BOM.txt",  "あいうえお")]
+        [TestCase("Kana-UTF16BE.txt",   "あいうえお")]
+        [TestCase("Kana-UTF16LE.txt",   "あいうえお")]
+        public void Import_Abstract(string filename, string expected)
+        {
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, filename), 100);
+            Assert.That(
+                Pages[0].Abstract,
+                Is.EqualTo(expected)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Import_Length
+        ///
+        /// <summary>
+        /// Import (Extend) のテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("LineCode-CR.txt",   20)]
+        [TestCase("LineCode-CRLF.txt", 20)]
+        [TestCase("LineCode-LF.txt",   20)]
+        public void Import_Length(string filename, int expected)
+        {
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, filename), 100);
+            var document = Pages[0].Document as Document;
+            Assert.That(
+                document.Text.Length,
+                Is.EqualTo(expected)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Duplicate
         ///
         /// <summary>
@@ -145,9 +194,29 @@ namespace Cube.Note.Tests
         [Test]
         public void Duplicate()
         {
-            Pages.Duplicate(Pages[0], 0);
+            Pages.Duplicate(0, Pages[0]);
             Assert.That(Pages[0].Abstract, Is.EqualTo(Pages[1].Abstract));
             Assert.That(Pages[0].Tags.Count, Is.EqualTo(Pages[1].Tags.Count));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Duplicate_Imported
+        ///
+        /// <summary>
+        /// インポートしたページを複製するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Kana-UTF8-BOM.txt")]
+        public void Duplicate_Imported(string filename)
+        {
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, filename), 100);
+            Pages.Duplicate(0, Pages[0]);
+            Assert.That(
+                Pages[0].CreateDocument(Pages.Directory).Length,
+                Is.AtLeast(1)
+            );
         }
 
         /* ----------------------------------------------------------------- */

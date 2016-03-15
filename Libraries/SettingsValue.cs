@@ -141,6 +141,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Page
+        ///
+        /// <summary>
+        /// 選択ページのファイル名を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Page
+        {
+            get { return _page; }
+            set
+            {
+                if (_page == value) return;
+                _page = value;
+                RaisePropertyChanged(nameof(Page));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Tag
         ///
         /// <summary>
@@ -875,6 +896,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IncludeLineCode
+        ///
+        /// <summary>
+        /// 改行コードも文字数に含めるかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool IncludeLineCode
+        {
+            get { return _includeLineCode; }
+            set
+            {
+                if (_includeLineCode == value) return;
+                _includeLineCode = value;
+                RaisePropertyChanged(nameof(IncludeLineCode));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ShowNews
         ///
         /// <summary>
@@ -926,6 +968,7 @@ namespace Cube.Note
             Y                   = -1;
             Width               = -1;
             Height              = -1;
+            Page                = string.Empty;
             Tag                 = "NoTag";
 
             FontName            = "Meiryo";
@@ -964,6 +1007,7 @@ namespace Cube.Note
             BracketVisible      = false;
             RemoveWarning       = true;
             OpenUri             = true;
+            IncludeLineCode     = false;
             ShowNews            = true;
         }
 
@@ -974,6 +1018,7 @@ namespace Cube.Note
         private int _y;
         private int _width;
         private int _height;
+        private string _page;
         private string _tag;
         private Color _backColor;
         private Color _foreColor;
@@ -1008,6 +1053,7 @@ namespace Cube.Note
         private bool _bracketVisible;
         private bool _removeWarning;
         private bool _openUri;
+        private bool _includeLineCode;
         private bool _showNews;
         #endregion
     }

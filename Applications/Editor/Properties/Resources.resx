@@ -142,6 +142,9 @@
   <data name="EveryoneTag" xml:space="preserve">
     <value>すべてのノート</value>
   </data>
+  <data name="Export" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Font" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Font.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -176,16 +179,16 @@
     <value>ノートを複製</value>
   </data>
   <data name="MenuExport" xml:space="preserve">
-    <value>ファイルに保存</value>
+    <value>エクスポート</value>
   </data>
   <data name="MenuGoogle" xml:space="preserve">
     <value>インターネットで検索</value>
   </data>
   <data name="MenuImport" xml:space="preserve">
-    <value>ファイルからノートを作成</value>
+    <value>インポート</value>
   </data>
   <data name="MenuNewPage" xml:space="preserve">
-    <value>新しいノートを作成</value>
+    <value>新しいノート</value>
   </data>
   <data name="MenuPaste" xml:space="preserve">
     <value>貼り付け</value>
@@ -222,6 +225,9 @@
   </data>
   <data name="PositionFormat" xml:space="preserve">
     <value>カーソル {0:#,0} 行 {1:#,0} 列</value>
+  </data>
+  <data name="Print" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Print.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Property" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -277,11 +283,17 @@
   <data name="Title" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ToolMenuExport" xml:space="preserve">
+    <value>エクスポート (E)</value>
+  </data>
   <data name="ToolMenuHide" xml:space="preserve">
     <value>ノート一覧を非表示 (H)</value>
   </data>
   <data name="ToolMenuLogo" xml:space="preserve">
     <value>Web ページへ移動</value>
+  </data>
+  <data name="ToolMenuPrint" xml:space="preserve">
+    <value>印刷 (P)</value>
   </data>
   <data name="ToolMenuRedo" xml:space="preserve">
     <value>やり直し (Y)</value>

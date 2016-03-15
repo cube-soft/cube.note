@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using System.Linq;
 using IoEx = System.IO;
 
@@ -48,10 +47,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagCollection(string path) : base()
-        {
-            Path = path;
-        }
+        public TagCollection(string directory) : this(directory, DefaultFileName) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -62,23 +58,9 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagCollection(Assembly assembly) : this(assembly, DefaultFileName) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TagCollection
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public TagCollection(Assembly assembly, string filename) : base()
+        public TagCollection(string directory, string filename) : base()
         {
-            var reader = new AssemblyReader(assembly);
-            var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var tail = $@"{reader.Company}\{reader.Product}\{filename}";
-            Path = IoEx.Path.Combine(head, tail);
+            Path = IoEx.Path.Combine(directory, filename);
         }
 
         #endregion

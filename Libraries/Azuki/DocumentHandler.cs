@@ -17,6 +17,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Text.RegularExpressions;
 using System.Text;
 using Sgry.Azuki;
 using IoEx = System.IO;
@@ -43,10 +45,25 @@ namespace Cube.Note.Azuki
         /// <summary>
         /// ファイルから内容を読み込だ Document オブジェクトを生成します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// ファイルの文字コードは Sgry.EncodingAnalyzer を用いて判別します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static Document Create(string path) => Create(path, Encoding.UTF8);
-        public static Document Create(string path, Encoding encoding)
+        public static Document Create(string path)
+            => Create(path, Sgry.EncodingAnalyzer.Analyze(path), true);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        /// 
+        /// <summary>
+        /// ファイルから内容を読み込だ Document オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Document Create(string path, Encoding encoding, bool careLine)
         {
             var dest = new Document { MarksUri = true };
             if (!IoEx.File.Exists(path)) return dest;
@@ -64,7 +81,8 @@ namespace Cube.Note.Azuki
                 while (!reader.EndOfStream)
                 {
                     var count = reader.Read(buffer, 0, buffer.Length);
-                    dest.Replace(new string(buffer, 0, count), dest.Length, dest.Length);
+                    var text  = CreateText(buffer, count, careLine);
+                    dest.Replace(text, dest.Length, dest.Length);
                 }
 
                 dest.SetCaretIndex(0, 0);
@@ -122,6 +140,27 @@ namespace Cube.Note.Azuki
                        content;
             }
             return string.Empty;
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateText
+        ///
+        /// <summary>
+        /// string オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string CreateText(char[] src, int length, bool careLine)
+        {
+            var dest = new string(src, 0, length);
+            return careLine ?
+                   new Regex("\r\n|\r|\n").Replace(dest, Environment.NewLine) :
+                   dest;
         }
 
         #endregion

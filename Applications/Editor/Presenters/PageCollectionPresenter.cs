@@ -95,7 +95,7 @@ namespace Cube.Note.App.Editor
             if (src < 0 || src >= View.DataSource.Count) return;
 
             var dest = GetInsertIndex(e.Value);
-            Model.Duplicate(View.DataSource[src], dest);
+            Model.Duplicate(dest, View.DataSource[src]);
             View.Select(dest);
         });
 
@@ -107,10 +107,6 @@ namespace Cube.Note.App.Editor
         /// ページのエクスポート時に実行されるハンドラです。
         /// </summary>
         /// 
-        /// <remarks>
-        /// TODO: 文字コードの扱いを要検討。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         private void Import_Handle(object sender, KeyValueEventArgs<int, string> e)
         {
@@ -118,12 +114,12 @@ namespace Cube.Note.App.Editor
             if (string.IsNullOrEmpty(path)) return;
 
             var index = GetInsertIndex(e.Key);
-            Async(() => Model.NewPage(Settings.Current.Tag, index,
-                  (page) =>
-            {
-                page.Document = DocumentHandler.Create(path, Encoding.Default);
-                page.UpdateAbstract(Settings.MaxAbstractLength);
-            }));
+            Async(() => Model.Import(
+                Settings.Current.Tag,
+                index,
+                path,
+                Settings.MaxAbstractLength
+            ));
         }
 
         /* ----------------------------------------------------------------- */
@@ -547,7 +543,11 @@ namespace Cube.Note.App.Editor
             Sync(() =>
             {
                 View.DataSource = result;
-                if (View.DataSource?.Count > 0) View.Select(0);
+                if (View.DataSource?.Count > 0)
+                {
+                    var index = result.IndexOf(Settings.Current.Page);
+                    View.Select(Math.Max(index, 0));
+                }
                 else Settings.Current.Page = null;
             });
         }

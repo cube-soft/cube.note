@@ -43,13 +43,20 @@
       <HintPath>..\..\..\packages\AsyncBridge.Net35.0.2.0\lib\net35-Client\AsyncBridge.Net35.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="log4net">
       <HintPath>..\..\..\packages\log4net.2.0.5\lib\net35-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Rackspace.Threading">
+      <HintPath>..\..\..\packages\Rackspace.Threading.2.0.0-alpha001\lib\net35-client\Rackspace.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\..\..\lib\net35\System.Net.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Azuki">
@@ -58,9 +65,11 @@
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Cube.Forms, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Cube.Forms">
       <HintPath>..\..\..\lib\net35\Cube.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Net">
+      <HintPath>..\..\..\lib\net35\Cube.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -211,6 +220,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Print.png" />
+    <None Include="Resources\Export.png" />
     <None Include="Resources\Undo.png" />
     <None Include="Resources\Redo.png" />
     <None Include="Resources\Property.png" />

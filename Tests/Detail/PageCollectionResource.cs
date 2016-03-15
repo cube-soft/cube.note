@@ -84,9 +84,11 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         private void Copy(string filename)
         {
+            var inbox = IoEx.Path.Combine(Results, PageCollection.DefaultInbox);
+            IoEx.Directory.CreateDirectory(inbox);
             IoEx.File.Copy(
                 IoEx.Path.Combine(Examples, filename),
-                IoEx.Path.Combine(Results, filename),
+                IoEx.Path.Combine(inbox, filename),
                 true
             );
         }

@@ -137,6 +137,16 @@ namespace Cube.Note.App.Editor.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Export {
+            get {
+                object obj = ResourceManager.GetObject("Export", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Font {
             get {
                 object obj = ResourceManager.GetObject("Font", resourceCulture);
@@ -239,7 +249,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルに保存 に類似しているローカライズされた文字列を検索します。
+        ///   エクスポート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuExport {
             get {
@@ -257,7 +267,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ファイルからノートを作成 に類似しているローカライズされた文字列を検索します。
+        ///   インポート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuImport {
             get {
@@ -266,7 +276,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   新しいノートを作成 に類似しているローカライズされた文字列を検索します。
+        ///   新しいノート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuNewPage {
             get {
@@ -381,6 +391,16 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string PositionFormat {
             get {
                 return ResourceManager.GetString("PositionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Print {
+            get {
+                object obj = ResourceManager.GetObject("Print", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -555,6 +575,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   エクスポート (E) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuExport {
+            get {
+                return ResourceManager.GetString("ToolMenuExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ノート一覧を非表示 (H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ToolMenuHide {
@@ -569,6 +598,15 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string ToolMenuLogo {
             get {
                 return ResourceManager.GetString("ToolMenuLogo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   印刷 (P) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolMenuPrint {
+            get {
+                return ResourceManager.GetString("ToolMenuPrint", resourceCulture);
             }
         }
         

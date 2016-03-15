@@ -18,6 +18,9 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Timers;
 
 namespace Cube.Note.App.Editor
 {
@@ -31,7 +34,7 @@ namespace Cube.Note.App.Editor
     /// 
     /* --------------------------------------------------------------------- */
     public class NewsPresenter
-        : PresenterBase<StatusControl, SettingsValue>
+        : PresenterBase<StatusControl, Cube.Net.News.Monitor>
     {
         #region Constructors
 
@@ -46,16 +49,79 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public NewsPresenter(StatusControl view,
             SettingsFolder settings, EventAggregator events)
-            : base(view, settings.User, settings, events)
+            : base(view, new Cube.Net.News.Monitor(), settings, events)
         {
-            Model.PropertyChanged += Model_PropertyChanged;
+            Settings.User.PropertyChanged += Settings_UserChanged;
+            Settings.Current.PageChanged += Settings_PageChanged;
+
+            Remover.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
+            Remover.Elapsed += (s, e) =>
+            {
+                if (Model.Result.Count <= 0) return;
+                Model.Result.RemoveAt(0);
+            };
+
             View.UriClick += View_UriClick;
-            ForDebug();
+
+            Model.ResultChanged += Model_ResultChanged;
+            Model.Interval = TimeSpan.FromMinutes(5);
+            Model.InitialDelay = TimeSpan.FromSeconds(0);
+            Model.Start();
         }
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remover
+        ///
+        /// <summary>
+        /// 記事の更新タイミングを管理するオブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Timer Remover { get; } = new Timer();
+
+        #endregion
+
         #region Event handlers
+
+        #region Settings
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_PropertyChanged
+        ///
+        /// <summary>
+        /// User プロパティの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_UserChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(Settings.User.ShowNews)) return;
+            UpdateNews();
+            if (Settings.User.ShowNews) Model.Start();
+            else Model.Stop();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_CurrentChanged
+        ///
+        /// <summary>
+        /// Current プロパティの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
+            => UpdateNews();
+
+        #endregion
+
+        #region View
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,20 +135,27 @@ namespace Cube.Note.App.Editor
         private void View_UriClick(object sender, KeyValueEventArgs<Uri, string> e)
             => Events.Web.Raise(ValueEventArgs.Create(e.Key.ToString()));
 
+        #endregion
+
+        #region Model
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_PropertyChanged
+        /// Model_ResultChanged
         ///
         /// <summary>
-        /// プロパティの内容が変化した時に実行されるハンドラです。
+        /// 新着記事が更新された時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Model_ResultChanged(object sender, ValueEventArgs<IList<Cube.Net.News.Article>> e)
         {
-            if (e.PropertyName != nameof(Model.ShowNews)) return;
-            ForDebug();
+            Logger.Debug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
+            Remover.Stop();
+            Remover.Start();
         }
+
+        #endregion
 
         #endregion
 
@@ -90,26 +163,23 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ForDebug
+        /// UpdateNews
         ///
         /// <summary>
-        /// デバッグ用の処理です。
+        /// ニュース記事を更新します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// 将来的に除去されます。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void ForDebug()
+        private void UpdateNews() => SyncWait(() =>
         {
-            View.Message = Model.ShowNews ?
-                           "ニュース：Cube ニュース新着記事のタイトルを表示します。" :
+            var visible = Settings.User.ShowNews && Model.Result.Count > 0;
+            View.Message = visible ?
+                           Model.Result[0].Title :
                            string.Empty;
-            View.Uri     = Model.ShowNews ?
-                           new Uri("http://news.cube-soft.jp/") :
+            View.Uri       = visible ?
+                           new Uri(Model.Result[0].Url) :
                            null;
-        }
+        });
 
         #endregion
     }

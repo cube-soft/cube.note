@@ -52,8 +52,7 @@ namespace Cube.Note.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            var src = IoEx.Path.Combine(Examples, SettingsFolder.DefaultFileName);
-            Settings = new SettingsFolder(src);
+            Settings = new SettingsFolder(Examples);
             Settings.Load();
         }
 

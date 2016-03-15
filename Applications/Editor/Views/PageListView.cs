@@ -106,7 +106,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public double LineHeight => 1.3;
+        public double LineHeight => 1.35;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -303,7 +303,6 @@ namespace Cube.Note.App.Editor
 
             if (IsRemoveButton(e.Location, item.Bounds)) Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
             else if (IsPropertyButton(e.Location, item.Bounds)) Aggregator?.Property.Raise(EventAggregator.SelectedPage);
-            else DoDragDrop(item, DragDropEffects.Move);
         }
 
         /* ----------------------------------------------------------------- */
@@ -335,7 +334,11 @@ namespace Cube.Note.App.Editor
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (e.Button != MouseButtons.None) return;
+            if (e.Button != MouseButtons.None)
+            {
+                if (e.Button == MouseButtons.Left) DoDragMove(e.Location);
+                return;
+            }
 
             var item = GetItemAt(e.Location.X, e.Location.Y);
             var bounds = item?.Bounds ?? Rectangle.Empty;
@@ -471,7 +474,7 @@ namespace Cube.Note.App.Editor
                     Attach(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Move:
-                    Update(() => MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex));
+                    Update(() => MoveItem(e.OldStartingIndex, e.NewStartingIndex));
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Detach(e.OldItems);
@@ -526,18 +529,21 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawBackground(ListViewItem item, Graphics gs, Rectangle bounds)
         {
+            bounds.X     += _left;
+            bounds.Width -= _left;
+
             if (!item.Selected)
             {
                 gs.FillRectangle(new SolidBrush(BackColor), bounds);
                 return;
             }
 
-            var area = bounds;
-            --area.Width;
-            --area.Height;
+            var frame = bounds;
+            --frame.Width;
+            --frame.Height;
 
             gs.FillRectangle(new SolidBrush(SelectedBackColor), bounds);
-            gs.DrawRectangle(new Pen(SelectedBorderColor), area);
+            gs.DrawRectangle(new Pen(SelectedBorderColor), frame);
         }
 
         /* ----------------------------------------------------------------- */
@@ -554,9 +560,9 @@ namespace Cube.Note.App.Editor
             var format = new StringFormat(StringFormatFlags.NoWrap);
             format.Trimming = StringTrimming.EllipsisCharacter;
 
-            bounds.Width -= _space;
+            bounds.Width -= (_left + _space);
             bounds.Height = (int)(Font.Size * LineHeight);
-            bounds.X += _space;
+            bounds.X += (_left + _space);
             bounds.Y += ShowRemoveButton ? bounds.Height : _space;
 
             for (var i = 0; i < item.SubItems.Count; ++i)
@@ -601,7 +607,7 @@ namespace Cube.Note.App.Editor
             var height = size.Height;
             var image = Properties.Resources.Property;
 
-            var x0 = bounds.Left + _space;
+            var x0 = bounds.Left + _left + _space;
             var y0 = bounds.Bottom - (height + _space) + (height - image.Height) / 2.0 - 1.0;
             gs.DrawImage(image, x0, (float)y0);
 
@@ -728,6 +734,28 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// MoveItem
+        /// 
+        /// <summary>
+        /// 項目を移動します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: 無条件で Selected, Focused の設定、EnsureVisible(int) を
+        /// 実行しても良いか要検討。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void MoveItem(int src, int dest)
+        {
+            MoveItems(new int[] { src }, dest - src);
+            Items[dest].Selected = true;
+            Items[dest].Focused = true;
+            EnsureVisible(dest);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SetColumns
         /// 
         /// <summary>
@@ -774,6 +802,22 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// DoDragMove
+        /// 
+        /// <summary>
+        /// ドラッグ移動を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void DoDragMove(Point location)
+        {
+            var item = GetItemAt(location.X, location.Y);
+            if (item == null) return;
+            DoDragDrop(item, DragDropEffects.Move);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Attach
         /// 
         /// <summary>
@@ -816,6 +860,7 @@ namespace Cube.Note.App.Editor
         #region Fields
         private ObservableCollection<Page> _source;
         private SizeF _cacheProperty = SizeF.Empty;
+        private static readonly int _left = 4;
         private static readonly int _space = 3;
         #endregion
     }

@@ -32,12 +32,10 @@
             this.NewPageButton = new System.Windows.Forms.Button();
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator1 = new System.Windows.Forms.PictureBox();
-            this.ContentsPanel = new Cube.Forms.Panel();
             this.Separator2 = new System.Windows.Forms.PictureBox();
             this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
-            this.ContentsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,10 +44,10 @@
             this.LayoutPanel.BackColor = System.Drawing.SystemColors.Control;
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.LayoutPanel.Controls.Add(this.PageListView, 0, 1);
             this.LayoutPanel.Controls.Add(this.NewPageButton, 0, 4);
             this.LayoutPanel.Controls.Add(this.TagComboBox, 0, 0);
             this.LayoutPanel.Controls.Add(this.Separator1, 0, 1);
-            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 2);
             this.LayoutPanel.Controls.Add(this.Separator2, 0, 3);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
@@ -60,6 +58,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.LayoutPanel.Size = new System.Drawing.Size(300, 300);
             this.LayoutPanel.TabIndex = 0;
             // 
@@ -108,18 +107,6 @@
             this.Separator1.TabIndex = 1;
             this.Separator1.TabStop = false;
             // 
-            // ContentsPanel
-            // 
-            this.ContentsPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.ContentsPanel.Controls.Add(this.PageListView);
-            this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 33);
-            this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.ContentsPanel.Name = "ContentsPanel";
-            this.ContentsPanel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 4);
-            this.ContentsPanel.Size = new System.Drawing.Size(300, 238);
-            this.ContentsPanel.TabIndex = 2;
-            // 
             // Separator2
             // 
             this.Separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
@@ -141,14 +128,14 @@
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.PageListView.LabelWrap = false;
-            this.PageListView.Location = new System.Drawing.Point(4, 0);
+            this.PageListView.Location = new System.Drawing.Point(0, 33);
             this.PageListView.Margin = new System.Windows.Forms.Padding(0);
             this.PageListView.MultiSelect = false;
             this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(296, 234);
-            this.PageListView.TabIndex = 0;
+            this.PageListView.Size = new System.Drawing.Size(300, 238);
+            this.PageListView.TabIndex = 7;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(296, 31);
+            this.PageListView.TileSize = new System.Drawing.Size(300, 40);
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;
             // 
@@ -161,7 +148,6 @@
             this.Size = new System.Drawing.Size(300, 300);
             this.LayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).EndInit();
-            this.ContentsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Separator2)).EndInit();
             this.ResumeLayout(false);
 
@@ -171,10 +157,9 @@
 
         private Cube.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.PictureBox Separator1;
-        private Cube.Forms.Panel ContentsPanel;
-        private PageListView PageListView;
         private System.Windows.Forms.ComboBox TagComboBox;
         private System.Windows.Forms.Button NewPageButton;
         private System.Windows.Forms.PictureBox Separator2;
+        private PageListView PageListView;
     }
 }

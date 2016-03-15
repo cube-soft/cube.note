@@ -188,15 +188,15 @@ namespace Cube.Note.App.Editor
         {
             Items.AddRange(new ToolStripItem[]
             {
-                SearchMenu,
-                GoogleMenu,
+                CutMenu,
+                CopyMenu,
+                PasteMenu,
                 new ToolStripSeparator(),
                 UndoMenu,
                 RedoMenu,
                 new ToolStripSeparator(),
-                CutMenu,
-                CopyMenu,
-                PasteMenu,
+                SearchMenu,
+                GoogleMenu,
                 new ToolStripSeparator(),
                 SelectAllMenu,
             });
