@@ -172,11 +172,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateNews() => SyncWait(() =>
         {
-            var visible = Settings.User.ShowNews && Model.Result.Count > 0;
+            var visible  = Settings.User.ShowNews && Model.Result.Count > 0;
             View.Message = visible ?
-                           Model.Result[0].Title :
+                           string.Format(Properties.Resources.NewsFormat, Model.Result[0].Title) :
                            string.Empty;
-            View.Uri       = visible ?
+            View.Uri     = visible ?
                            new Uri(Model.Result[0].Url) :
                            null;
         });
