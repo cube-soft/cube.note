@@ -269,8 +269,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent SearchNext { get; }
-            = new RelayEvent();
+        public RelayEvent SearchNext { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -281,8 +280,18 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent SearchPrev { get; }
-            = new RelayEvent();
+        public RelayEvent SearchPrev { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Print
+        ///
+        /// <summary>
+        /// 印刷するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Print { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///

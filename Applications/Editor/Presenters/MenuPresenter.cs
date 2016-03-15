@@ -51,6 +51,7 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
+            Events.Print.Handle += Print_Handle;
             Events.Web.Handle += Web_Handle;
             Events.Google.Handle += Google_Handle;
             Events.Settings.Handle += (s, e) => ShowSettings(0);
@@ -58,6 +59,8 @@ namespace Cube.Note.App.Editor
 
             View.UndoMenu.Click += (s, e) => Events.Undo.Raise();
             View.RedoMenu.Click += (s, e) => Events.Redo.Raise();
+            View.ExportMenu.Click += (s, e) => Events.Export.Raise(EventAggregator.SelectedPage);
+            View.PrintMenu.Click += (s, e) => Events.Print.Raise();
             View.SettingsMenu.Click += (s, e) => Events.Settings.Raise();
             View.LogoMenu.Click += View_LogoMenu;
 
@@ -68,7 +71,21 @@ namespace Cube.Note.App.Editor
 
         #region Event handlers
 
-        #region Events
+        #region EventAggregator
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Print_Handle
+        /// 
+        /// <summary>
+        /// 印刷時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Print_Handle(object sender, EventArgs e)
+        {
+            // TODO: implementations
+        }
 
         /* ----------------------------------------------------------------- */
         ///

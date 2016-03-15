@@ -50,6 +50,8 @@ namespace Cube.Note.App.Editor
             SearchMenu   = CreateMenuButton(Properties.Resources.Search, Properties.Resources.ToolMenuSearch);
             UndoMenu     = CreateMenuButton(Properties.Resources.Undo, Properties.Resources.ToolMenuUndo);
             RedoMenu     = CreateMenuButton(Properties.Resources.Redo, Properties.Resources.ToolMenuRedo);
+            ExportMenu   = CreateMenuButton(Properties.Resources.Export, Properties.Resources.ToolMenuExport);
+            PrintMenu    = CreateMenuButton(Properties.Resources.Print, Properties.Resources.ToolMenuPrint);
             SettingsMenu = CreateMenuButton(Properties.Resources.Settings, Properties.Resources.ToolMenuSettings, false);
             LogoMenu     = CreateMenuButton(Properties.Resources.Logo, Properties.Resources.ToolMenuLogo, false);
 
@@ -103,6 +105,28 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ToolStripItem RedoMenu { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExportMenu
+        /// 
+        /// <summary>
+        /// エクスポートメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripItem ExportMenu { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PrintMenu
+        /// 
+        /// <summary>
+        /// 印刷メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripItem PrintMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -175,6 +199,9 @@ namespace Cube.Note.App.Editor
                 CreateSeparator(),
                 UndoMenu,
                 RedoMenu,
+                CreateSeparator(),
+                ExportMenu,
+                PrintMenu,
                 CreateSeparator(),
                 SettingsMenu,
                 LogoMenu,

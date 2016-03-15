@@ -201,6 +201,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Print.png" />
+    <None Include="Resources\Export.png" />
     <None Include="Resources\Undo.png" />
     <None Include="Resources\Redo.png" />
     <None Include="Resources\Property.png" />
