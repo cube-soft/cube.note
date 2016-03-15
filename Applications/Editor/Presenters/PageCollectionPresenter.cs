@@ -543,7 +543,11 @@ namespace Cube.Note.App.Editor
             Sync(() =>
             {
                 View.DataSource = result;
-                if (View.DataSource?.Count > 0) View.Select(0);
+                if (View.DataSource?.Count > 0)
+                {
+                    var index = result.IndexOf(Settings.Current.Page);
+                    View.Select(Math.Max(index, 0));
+                }
                 else Settings.Current.Page = null;
             });
         }

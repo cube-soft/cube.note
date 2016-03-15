@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using Cube.Note.Azuki;
@@ -185,7 +186,11 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private async void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
-            await Task.Run(() => SaveDocument(e.OldValue));
+            await Task.Run(() =>
+            {
+                Settings.User.Page = e.NewValue?.FileName ?? string.Empty;
+                SaveDocument(e.OldValue);
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -248,7 +253,7 @@ namespace Cube.Note
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
@@ -265,6 +270,13 @@ namespace Cube.Note
             {
                 if (Pages == null) return;
                 Pages.Load();
+                if (!string.IsNullOrEmpty(Settings.User.Page))
+                {
+                    var page = Pages.FirstOrDefault(x =>
+                        x.FileName == Settings.User.Page
+                    );
+                    if (page != null) Settings.Current.Page = page;
+                }
                 if (Pages.Count <= 0) Pages.NewPage(0);
             }
             finally { _timer.Start(); }

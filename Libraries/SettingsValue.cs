@@ -141,6 +141,27 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Page
+        ///
+        /// <summary>
+        /// 選択ページのファイル名を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Page
+        {
+            get { return _page; }
+            set
+            {
+                if (_page == value) return;
+                _page = value;
+                RaisePropertyChanged(nameof(Page));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Tag
         ///
         /// <summary>
@@ -947,6 +968,7 @@ namespace Cube.Note
             Y                   = -1;
             Width               = -1;
             Height              = -1;
+            Page                = string.Empty;
             Tag                 = "NoTag";
 
             FontName            = "Meiryo";
@@ -996,6 +1018,7 @@ namespace Cube.Note
         private int _y;
         private int _width;
         private int _height;
+        private string _page;
         private string _tag;
         private Color _backColor;
         private Color _foreColor;
