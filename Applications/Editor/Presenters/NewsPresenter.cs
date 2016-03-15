@@ -53,7 +53,6 @@ namespace Cube.Note.App.Editor
         {
             Settings.User.PropertyChanged += Settings_UserChanged;
             Settings.Current.PageChanged += Settings_PageChanged;
-            View.UriClick += View_UriClick;
 
             Remover.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
             Remover.Elapsed += (s, e) =>
@@ -61,6 +60,8 @@ namespace Cube.Note.App.Editor
                 if (Model.Result.Count <= 0) return;
                 Model.Result.RemoveAt(0);
             };
+
+            View.UriClick += View_UriClick;
 
             Model.ResultChanged += Model_ResultChanged;
             Model.Interval = TimeSpan.FromMinutes(5);
@@ -104,7 +105,6 @@ namespace Cube.Note.App.Editor
             UpdateNews();
             if (Settings.User.ShowNews) Model.Start();
             else Model.Stop();
-            Logger.Debug($"State:{Model.State}");
         }
 
         /* ----------------------------------------------------------------- */
@@ -150,6 +150,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_ResultChanged(object sender, ValueEventArgs<IList<Cube.Net.News.Article>> e)
         {
+            Logger.Debug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
             Remover.Stop();
             Remover.Start();
         }
