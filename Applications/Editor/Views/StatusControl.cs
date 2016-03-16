@@ -59,7 +59,7 @@ namespace Cube.Note.App.Editor
 
             _messageLabel.IsLink = true;
             _messageLabel.LinkBehavior = LinkBehavior.HoverUnderline;
-            _messageLabel.LinkColor = Color.FromArgb(80, 80, 80);
+            _messageLabel.LinkColor = Color.FromArgb(64, 64, 64);
             _messageLabel.Spring = true;
             _messageLabel.TextAlign = ContentAlignment.MiddleLeft;
             _messageLabel.Click += (s, e) => RaiseUriClick();
