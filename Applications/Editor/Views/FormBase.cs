@@ -55,43 +55,6 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Maximize
-        ///
-        /// <summary>
-        /// 最大化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Maximize()
-        {
-            if (!Sizable || !MaximizeBox) return;
-
-            WindowState = WindowState == FormWindowState.Normal ?
-                          FormWindowState.Maximized :
-                          FormWindowState.Normal;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Minimize
-        ///
-        /// <summary>
-        /// 最小化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Minimize()
-        {
-            if (WindowState == FormWindowState.Minimized) return;
-            WindowState = FormWindowState.Minimized;
-        }
-
-        #endregion
-
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -116,8 +79,6 @@ namespace Cube.Note.App.Editor
 
             control.MaximizeBox = MaximizeBox && Sizable;
             control.MinimizeBox = MinimizeBox;
-
-            UpdateMaximumSize();
         }
 
         /* ----------------------------------------------------------------- */
@@ -135,22 +96,6 @@ namespace Cube.Note.App.Editor
             if (Caption == null) return;
             Caption.BackColor = BackColor;
         }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateMaximumSize
-        ///
-        /// <summary>
-        /// フォームの最大サイズを更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void UpdateMaximumSize()
-            => MaximumSize = Screen.FromControl(this).WorkingArea.Size;
 
         #endregion
     }
