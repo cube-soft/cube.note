@@ -96,24 +96,6 @@ namespace Cube.Note.App.Editor
             Caption.BackColor = BackColor;
         }
 
-        protected override void WndProc(ref System.Windows.Forms.Message m)
-        {
-            if (m.Msg == 0xa5)
-            {
-                ShowSystemMenu(CreatePoint(m.LParam));
-                System.Diagnostics.Trace.WriteLine("WM_NCRBUTTONDOWN");
-            }
-            base.WndProc(ref m);
-        }
-
-        private Point CreatePoint(IntPtr lparam)
-        {
-            var x = (int)lparam & 0xffff;
-            var y = (int)lparam >> 16 & 0xffff;
-            var dest = new Point(x, y);
-            return PointToClient(dest);
-        }
-
         #endregion
     }
 }

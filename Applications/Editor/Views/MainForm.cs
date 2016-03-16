@@ -328,9 +328,6 @@ namespace Cube.Note.App.Editor
                     case Keys.U:
                         Aggregator.TagSettings.Raise();
                         break;
-                    case Keys.Space:
-                        if (e.Alt) ShowSystemMenu(new Point(10, 10));
-                        break;
                     default:
                         result = false;
                         break;
