@@ -401,7 +401,7 @@
             // 
             this.MessageLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(433, 17);
+            this.MessageLabel.Size = new System.Drawing.Size(402, 17);
             this.MessageLabel.Spring = true;
             this.MessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -409,8 +409,8 @@
             // 
             this.ClientSize = new System.Drawing.Size(450, 450);
             this.Controls.Add(this.LayoutPanel);
-            this.KeyPreview = true;
             this.MaximizeBox = true;
+            this.MaximumSize = new System.Drawing.Size(1920, 1160);
             this.MinimumSize = new System.Drawing.Size(370, 270);
             this.Name = "SearchForm";
             this.ShowInTaskbar = false;
