@@ -272,66 +272,9 @@ namespace Cube.Note.App.Editor
         {
             try
             {
-                if (!e.Control && !e.Alt) return;
-
-                var result = true;
-                switch (e.KeyCode)
-                {
-                    case Keys.C:
-                        if (e.Shift) Aggregator.Duplicate.Raise(EventAggregator.SelectedPage);
-                        else result = false;
-                        break;
-                    case Keys.D:
-                        Aggregator.Remove.Raise(EventAggregator.SelectedPage);
-                        break;
-                    case Keys.E:
-                        Aggregator.Export.Raise(EventAggregator.SelectedPage);
-                        break;
-                    case Keys.F:
-                        RaiseSearch();
-                        break;
-                    case Keys.G:
-                        Aggregator.Google.Raise(ValueEventArgs.Create(SelectedText));
-                        break;
-                    case Keys.H:
-                        SwitchMenu();
-                        break;
-                    case Keys.J:
-                    case Keys.Down:
-                        Aggregator.Move.Raise(ValueEventArgs.Create(1));
-                        break;
-                    case Keys.K:
-                    case Keys.Up:
-                        Aggregator.Move.Raise(ValueEventArgs.Create(-1));
-                        break;
-                    case Keys.N:
-                        Aggregator.NewPage.Raise(e.Shift ?
-                            EventAggregator.SelectedPage :
-                            EventAggregator.TopPage
-                        );
-                        break;
-                    case Keys.O:
-                        Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
-                        break;
-                    case Keys.R:
-                        if (e.Shift) Aggregator.TagSettings.Raise();
-                        else RaiseProperty();
-                        break;
-                    case Keys.S:
-                        if (e.Shift) Aggregator.Export.Raise(EventAggregator.SelectedPage);
-                        else Aggregator.Save.Raise();
-                        break;
-                    case Keys.T:
-                        Aggregator.Settings.Raise();
-                        break;
-                    case Keys.U:
-                        Aggregator.TagSettings.Raise();
-                        break;
-                    default:
-                        result = false;
-                        break;
-                }
-                e.Handled = result;
+                if (e.Control) ShortcutKeysWithCtrl(e);
+                else if (e.Alt) return;
+                else ShortcutKeys(e);
             }
             finally { base.OnKeyDown(e); }
         }
@@ -405,6 +348,106 @@ namespace Cube.Note.App.Editor
 
             MenuControl.VisibleMenu.Text = text;
             MenuControl.VisibleMenu.ToolTipText = text;
+        }
+
+        #endregion
+
+        #region Shortcut keys
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShortcutKeys
+        ///
+        /// <summary>
+        /// ショートカットキーを処理します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ShortcutKeys(KeyEventArgs e)
+        {
+            var result = true;
+            switch (e.KeyCode)
+            {
+                case Keys.F3:
+                    if (e.Shift) Aggregator.SearchPrev.Raise();
+                    else Aggregator.SearchNext.Raise();
+                    break;
+                default:
+                    result = false;
+                    break;
+            }
+            e.Handled = result;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShortcutKeysWithCtrl
+        ///
+        /// <summary>
+        /// Ctrl+Keys のショートカットキーを処理します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ShortcutKeysWithCtrl(KeyEventArgs e)
+        {
+            var result = true;
+            switch (e.KeyCode)
+            {
+                case Keys.C:
+                    if (e.Shift) Aggregator.Duplicate.Raise(EventAggregator.SelectedPage);
+                    else result = false;
+                    break;
+                case Keys.D:
+                    Aggregator.Remove.Raise(EventAggregator.SelectedPage);
+                    break;
+                case Keys.E:
+                    Aggregator.Export.Raise(EventAggregator.SelectedPage);
+                    break;
+                case Keys.F:
+                    RaiseSearch();
+                    break;
+                case Keys.G:
+                    Aggregator.Google.Raise(ValueEventArgs.Create(SelectedText));
+                    break;
+                case Keys.H:
+                    SwitchMenu();
+                    break;
+                case Keys.J:
+                case Keys.Down:
+                    Aggregator.Move.Raise(ValueEventArgs.Create(1));
+                    break;
+                case Keys.K:
+                case Keys.Up:
+                    Aggregator.Move.Raise(ValueEventArgs.Create(-1));
+                    break;
+                case Keys.N:
+                    Aggregator.NewPage.Raise(e.Shift ?
+                        EventAggregator.SelectedPage :
+                        EventAggregator.TopPage
+                    );
+                    break;
+                case Keys.O:
+                    Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
+                    break;
+                case Keys.R:
+                    if (e.Shift) Aggregator.TagSettings.Raise();
+                    else RaiseProperty();
+                    break;
+                case Keys.S:
+                    if (e.Shift) Aggregator.Export.Raise(EventAggregator.SelectedPage);
+                    else Aggregator.Save.Raise();
+                    break;
+                case Keys.T:
+                    Aggregator.Settings.Raise();
+                    break;
+                case Keys.U:
+                    Aggregator.TagSettings.Raise();
+                    break;
+                default:
+                    result = false;
+                    break;
+            }
+            e.Handled = result;
         }
 
         #endregion

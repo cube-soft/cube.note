@@ -52,12 +52,14 @@ namespace Cube.Note.App.Editor
             : base(view, new SearchReplace(parent), settings, events)
         {
             Events.Search.Handle += Search_Handle;
+            Events.SearchNext.Handle += SearchNext_Handle;
+            Events.SearchPrev.Handle += SearchPrev_Handle;
             Settings.Current.PageChanged += Settings_PageChanged;
 
             View.Hiding += View_Hiding;
             View.Search += View_Search;
-            View.SearchNext += (s, e) => Model.Forward();
-            View.SearchPrev += (s, e) => Model.Back();
+            View.SearchNext += SearchNext_Handle;
+            View.SearchPrev += SearchPrev_Handle;
             View.ReplaceNext += (s, e) => Model.Replace(View.Replace);
             View.ReplaceAll += View_ReplaceAll;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
@@ -85,21 +87,49 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Search_Handle(object sender, KeyValueEventArgs<int, string> e)
+            => Sync(() =>
         {
-            Sync(() =>
-            {
-                ResetRange();
-                View.Show();
+            ResetRange();
+            View.Show();
 
-                var count = View.SearchRange.Items.Count;
-                if (count <= 0) return;
+            var count = View.SearchRange.Items.Count;
+            if (count <= 0) return;
 
-                var index = Math.Max(Math.Min(e.Key, count - 1), 0);
-                View.SearchRange.SelectedIndex = index;
+            var index = Math.Max(Math.Min(e.Key, count - 1), 0);
+            View.SearchRange.SelectedIndex = index;
 
-                if (!string.IsNullOrEmpty(e.Value)) View.Keyword = e.Value;
-                View.SelectKeyword();
-            });
+            if (!string.IsNullOrEmpty(e.Value)) View.Keyword = e.Value;
+            View.SelectKeyword();
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchNext_Handle
+        /// 
+        /// <summary>
+        /// 次を検索します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SearchNext_Handle(object sender, EventArgs e)
+        {
+            if (Model.Results.Count <= 0) return;
+            Model.Forward();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SearchPrev_Handle
+        /// 
+        /// <summary>
+        /// 前を検索します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SearchPrev_Handle(object sender, EventArgs e)
+        {
+            if (Model.Results.Count <= 0) return;
+            Model.Back();
         }
 
         #endregion
