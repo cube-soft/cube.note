@@ -252,6 +252,8 @@ namespace Cube.Note.App.Editor
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
+
+            if (WindowState != FormWindowState.Normal) return;
             Settings.User.X      = Location.X;
             Settings.User.Y      = Location.Y;
             Settings.User.Width  = Width;
@@ -325,6 +327,9 @@ namespace Cube.Note.App.Editor
                         break;
                     case Keys.U:
                         Aggregator.TagSettings.Raise();
+                        break;
+                    case Keys.Space:
+                        if (e.Alt) ShowSystemMenu(new Point(10, 10));
                         break;
                     default:
                         result = false;
