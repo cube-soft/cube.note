@@ -367,7 +367,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ニュース：{0} に類似しているローカライズされた文字列を検索します。
+        ///   ニュース： {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NewsFormat {
             get {
