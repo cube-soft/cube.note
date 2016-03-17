@@ -280,7 +280,7 @@
             this.CancelButton = this.ExitButton;
             this.ClientSize = new System.Drawing.Size(450, 330);
             this.Controls.Add(this.LayoutPanel);
-            this.MaximizeBox = true;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 270);
             this.Name = "PropertyForm";
             this.ShowInTaskbar = false;
