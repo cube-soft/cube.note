@@ -55,11 +55,7 @@ namespace Cube.Note.App.Editor
             Settings.Current.PageChanged += Settings_PageChanged;
 
             Remover.Interval = TimeSpan.FromMinutes(1).TotalMilliseconds;
-            Remover.Elapsed += (s, e) =>
-            {
-                if (Model.Result.Count <= 1) return;
-                Model.Result.RemoveAt(0);
-            };
+            Remover.Elapsed += Remover_Elapsed;
 
             View.UriClick += View_UriClick;
 
@@ -165,6 +161,29 @@ namespace Cube.Note.App.Editor
                 UpdateNewsIfEmpty();
                 Remover.Stop();
                 Remover.Start();
+            }
+            catch (Exception err) { Logger.Error(err); }
+        }
+
+        #endregion
+
+        #region Remover
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remover_Elapsed
+        ///
+        /// <summary>
+        /// 一定間隔で実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Remover_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                if (Model.Result.Count <= 1) return;
+                Model.Result.RemoveAt(0);
             }
             catch (Exception err) { Logger.Error(err); }
         }
