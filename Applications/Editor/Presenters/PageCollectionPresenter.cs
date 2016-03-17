@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Text;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 using Cube.Collections;
