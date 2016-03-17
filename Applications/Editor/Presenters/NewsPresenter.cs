@@ -54,7 +54,7 @@ namespace Cube.Note.App.Editor
             Settings.User.PropertyChanged += Settings_UserChanged;
             Settings.Current.PageChanged += Settings_PageChanged;
 
-            Remover.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
+            Remover.Interval = TimeSpan.FromMinutes(1).TotalMilliseconds;
             Remover.Elapsed += (s, e) =>
             {
                 if (Model.Result.Count <= 1) return;
@@ -65,7 +65,7 @@ namespace Cube.Note.App.Editor
 
             Model.ResultChanged += Model_ResultChanged;
             Model.Interval = TimeSpan.FromMinutes(5);
-            Model.InitialDelay = TimeSpan.FromSeconds(0);
+            Model.InitialDelay = TimeSpan.FromSeconds(5);
             Model.Start();
         }
 
@@ -101,10 +101,15 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Settings_UserChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(Settings.User.ShowNews)) return;
-            UpdateNews();
-            if (Settings.User.ShowNews) Model.Start();
-            else Model.Stop();
+            try
+            {
+                if (e.PropertyName != nameof(Settings.User.ShowNews)) return;
+
+                UpdateNews();
+                if (Settings.User.ShowNews) Model.Start();
+                else Model.Stop();
+            }
+            catch (Exception err) { Logger.Error(err); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -117,7 +122,10 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
-            => UpdateNews();
+        {
+            try { UpdateNews(); }
+            catch (Exception err) { Logger.Error(err); }
+        }
 
         #endregion
 
@@ -150,9 +158,15 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_ResultChanged(object sender, ValueEventArgs<IList<Cube.Net.News.Article>> e)
         {
-            Logger.Debug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
-            Remover.Stop();
-            Remover.Start();
+            try
+            {
+                Logger.Debug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
+
+                UpdateNewsIfEmpty();
+                Remover.Stop();
+                Remover.Start();
+            }
+            catch (Exception err) { Logger.Error(err); }
         }
 
         #endregion
@@ -179,6 +193,22 @@ namespace Cube.Note.App.Editor
             View.Uri     = visible ?
                            new Uri(Model.Result[0].Url) :
                            null;
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateNewsIfEmpty
+        ///
+        /// <summary>
+        /// ニュース記事を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateNewsIfEmpty() => SyncWait(() =>
+        {
+            if (!Settings.User.ShowNews ||
+                !string.IsNullOrEmpty(View.Message)) return;
+            UpdateNews();
         });
 
         #endregion
