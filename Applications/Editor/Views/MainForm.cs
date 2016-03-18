@@ -429,9 +429,12 @@ namespace Cube.Note.App.Editor
                 case Keys.O:
                     Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
                     break;
+                case Keys.P:
+                    Aggregator.Print.Raise();
+                    break;
                 case Keys.R:
                     if (e.Shift) Aggregator.TagSettings.Raise();
-                    else RaiseProperty();
+                    else Aggregator.Property.Raise(EventAggregator.SelectedPage);
                     break;
                 case Keys.S:
                     if (e.Shift) Aggregator.Export.Raise(EventAggregator.SelectedPage);
@@ -480,18 +483,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void SwitchMenu()
             => ContentsPanel.Panel1Collapsed = !ContentsPanel.Panel1Collapsed;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RaiseProperty
-        ///
-        /// <summary>
-        /// プロパティ表示のためのイベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RaiseProperty()
-            => Aggregator.Property.Raise(EventAggregator.SelectedPage);
 
         /* ----------------------------------------------------------------- */
         ///
