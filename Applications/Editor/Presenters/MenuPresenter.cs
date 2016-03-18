@@ -20,7 +20,10 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Drawing.Printing;
 using Cube.Conversions;
+using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -83,9 +86,34 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Print_Handle(object sender, EventArgs e)
+            => SyncWait(() =>
         {
-            // TODO: implementations
-        }
+            var dialog = CreatePrintDialog();
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            var text = GetText(dialog.PrinterSettings.PrintRange == PrintRange.Selection);
+            if (text == null) return;
+
+            var document = new PrintDocument();
+            document.DocumentName = Settings.Current.Page.Abstract;
+            document.PrinterSettings = dialog.PrinterSettings;
+            document.PrintPage += (s, ev) =>
+            {
+                var font   = Settings.User.Font;
+                var bounds = ev.MarginBounds;
+                var format = StringFormat.GenericTypographic;
+                var brush  = Brushes.Black;
+                var offset = 0;
+                var lines  = 0;
+
+                ev.Graphics.MeasureString(text, font, bounds.Size, format, out offset, out lines);
+                ev.Graphics.DrawString(text, font, brush, bounds, format);
+
+                text = text.Substring(offset);
+                ev.HasMorePages = (text.Length > 0);
+            };
+            document.Print();
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -172,6 +200,42 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetText
+        /// 
+        /// <summary>
+        /// テキストを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetText(bool selection)
+        {
+            var page = Settings.Current.Page;
+            if (page == null) return null;
+
+            var document = page.Document as Sgry.Azuki.Document;
+            if (document == null) return null;
+
+            return selection ? document.GetSelectedText() : document.Text;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreatePrintDialog
+        /// 
+        /// <summary>
+        /// PrintDialog オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PrintDialog CreatePrintDialog() => new PrintDialog
+        {
+            AllowPrintToFile = false,
+            AllowSelection   = true,
+            UseEXDialog      = true
+        };
 
         /* ----------------------------------------------------------------- */
         ///
