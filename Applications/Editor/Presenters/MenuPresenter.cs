@@ -97,6 +97,7 @@ namespace Cube.Note.App.Editor
             var document = new PrintDocument();
             document.DocumentName = Settings.Current.Page.Abstract;
             document.PrinterSettings = dialog.PrinterSettings;
+            document.DefaultPageSettings.Margins = CreateMargins(Settings.User.PrintMargin);
             document.PrintPage += (s, ev) =>
             {
                 var font   = Settings.User.Font;
@@ -235,6 +236,29 @@ namespace Cube.Note.App.Editor
             AllowPrintToFile = false,
             AllowSelection   = true,
             UseEXDialog      = true
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMargins
+        /// 
+        /// <summary>
+        /// Margins オブジェクトを生成します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// GUI 等の都合で Settings.User.PrintMargin は mm 単位で値を保持して
+        /// います。そこで、実際に値を適用する時に 1/100 インチ単位に変換します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Margins CreateMargins(Margins src) => new Margins
+        {
+            // mm -> 1/100 inch (1 inch = 25.4 mm)
+            Left   = (int)(src.Left   / 0.254f),
+            Right  = (int)(src.Right  / 0.254f),
+            Top    = (int)(src.Top    / 0.254f),
+            Bottom = (int)(src.Bottom / 0.254f)
         };
 
         /* ----------------------------------------------------------------- */

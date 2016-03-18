@@ -20,6 +20,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Drawing;
+using System.Drawing.Printing;
 
 namespace Cube.Note
 {
@@ -512,6 +513,32 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// PrintMargin
+        ///
+        /// <summary>
+        /// 印刷時の余白を mm 単位で取得または設定します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Margins オブジェクトの各種プロパティは 1/100 インチ単位である事が
+        /// 想定されています。したがって、印刷時には変換された値が使用されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Margins PrintMargin
+        {
+            get { return _printMargin; }
+            set
+            {
+                if (_printMargin == value) return;
+                _printMargin = value;
+                RaisePropertyChanged(nameof(PrintMargin));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SearchQuery
         ///
         /// <summary>
@@ -988,6 +1015,7 @@ namespace Cube.Note
             CurrentLineColor    = SystemColors.ControlDark;
 
             AutoSaveTime        = TimeSpan.FromSeconds(30);
+            PrintMargin         = new Margins(25, 25, 25, 25);
             SearchQuery         = "http://s.cube-soft.jp/search/?q=";
             TabWidth            = 8;
             WordWrapCount       = 80;
@@ -1032,6 +1060,7 @@ namespace Cube.Note
         private Color _specialCharsColor;
         private Color _currentLineColor;
         private TimeSpan _autoSaveTime;
+        private Margins _printMargin;
         private string _searchQuery;
         private string _fontName;
         private double _fontSize;

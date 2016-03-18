@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Windows.Forms;
+using System.Drawing.Printing;
 
 namespace Cube.Note.App.Editor
 {
@@ -122,11 +123,44 @@ namespace Cube.Note.App.Editor
                     control.Value = (int)value.Value.TotalSeconds;
                     e.Cancel = true;
                     break;
+                case "PrintMargin":
+                    UpdatePrintMargin(e.Key, e.Value);
+                    break;
                 default:
                     break;
             }
 
             base.OnUpdateControl(e);
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdatePrintMargin
+        ///
+        /// <summary>
+        /// PrintMargin に関するコントロールを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdatePrintMargin(Control control, object value)
+        {
+            var margin = value as Margins;
+            if (margin == null) return;
+
+            var left   = control as NumericUpDown;
+            var right  = left?.Parent?.GetNextControl(left, true) as NumericUpDown;
+            var top    = right?.Parent?.GetNextControl(right, true) as NumericUpDown;
+            var bottom = top?.Parent?.GetNextControl(top, true) as NumericUpDown;
+            if (bottom == null) return;
+
+            left.Value   = margin.Left;
+            right.Value  = margin.Right;
+            top.Value    = margin.Top;
+            bottom.Value = margin.Bottom;
         }
 
         #endregion

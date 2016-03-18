@@ -157,6 +157,19 @@ namespace Cube.Note.App.Editor
                     case nameof(Model.AutoSaveTime):
                         Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
                         break;
+                    case nameof(Model.PrintMargin):
+                    case "PrintLeftMargin":
+                        Model.PrintMargin.Left = (int)((decimal)e.Value);
+                        break;
+                    case "PrintRightMargin":
+                        Model.PrintMargin.Right = (int)((decimal)e.Value);
+                        break;
+                    case "PrintTopMargin":
+                        Model.PrintMargin.Top = (int)((decimal)e.Value);
+                        break;
+                    case "PrintBottomMargin":
+                        Model.PrintMargin.Bottom = (int)((decimal)e.Value);
+                        break;
                     default:
                         SetValue(e.Key, e.Value);
                         break;
