@@ -23,6 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using Cube.Note.Azuki;
+using log4net;
 
 namespace Cube.Note
 {
@@ -58,6 +59,7 @@ namespace Cube.Note
             Settings = settings;
             Events   = events;
             Interval = Settings.User.AutoSaveTime;
+            Logger   = LogManager.GetLogger(GetType());
 
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.User.PropertyChanged += Settings_PropertyChanged;
@@ -134,6 +136,17 @@ namespace Cube.Note
             set { _timer.Interval = value.TotalMilliseconds; }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Logger
+        /// 
+        /// <summary>
+        /// ログ出力用オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ILog Logger { get; }
+
         #endregion
 
         #region Methods
@@ -167,13 +180,15 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+            => await Task.Run(() =>
         {
-            await Task.Run(() =>
+            try
             {
                 SaveDocument(Settings.Current.Page);
                 SaveOrderFile();
-            });
-        }
+            }
+            catch (Exception err) { Logger.Error(err); }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -186,13 +201,15 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         private async void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
+            => await Task.Run(() =>
         {
-            await Task.Run(() =>
+            try
             {
                 Settings.User.Page = e.NewValue?.FileName ?? string.Empty;
                 SaveDocument(e.OldValue);
-            });
-        }
+            }
+            catch (Exception err) { Logger.Error(err); }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -206,7 +223,11 @@ namespace Cube.Note
         private async void Save_Handle(object sender, EventArgs e)
         {
             if (Settings.Current.Page == null) return;
-            await Task.Run(() => SaveDocument(Settings.Current.Page));
+            await Task.Run(() =>
+            {
+                try { SaveDocument(Settings.Current.Page); }
+                catch (Exception err) { Logger.Error(err); }
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -224,9 +245,14 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private void SaveAll_Handle(object sender, EventArgs e)
         {
-            SaveAllDocuments();
-            SaveOrderFile();
-            SaveSettingsFile();
+            try
+            {
+                SaveAllDocuments();
+                SaveOrderFile();
+                SaveSettingsFile();
+                Logger.Debug("SaveAll:Success");
+            }
+            catch (Exception err) { Logger.Error(err); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -262,13 +288,18 @@ namespace Cube.Note
             if (_disposed) return;
             _disposed = true;
 
-            _timer.Stop();
-            Settings.Current.PageChanged -= Settings_PageChanged;
-            SaveAllDocuments();
-            SaveOrderFile();
-            SaveSettingsFile();
-            
-            if (disposing) _timer.Dispose();
+            try {
+                _timer.Stop();
+                Settings.Current.PageChanged -= Settings_PageChanged;
+
+                SaveAllDocuments();
+                SaveOrderFile();
+                SaveSettingsFile();
+                Logger.Debug("SaveOnDispose:Success");
+
+                if (disposing) _timer.Dispose();
+            }
+            catch (Exception err) { Logger.Error(err); }
         }
 
         #endregion
@@ -299,6 +330,7 @@ namespace Cube.Note
                 }
                 if (Pages.Count <= 0) Pages.NewPage(0);
             }
+            catch (Exception err) { Logger.Error(err); }
             finally { _timer.Start(); }
         }
 
