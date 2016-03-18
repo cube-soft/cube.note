@@ -590,7 +590,7 @@
             this.VisibleTabPage.Name = "VisibleTabPage";
             this.VisibleTabPage.Size = new System.Drawing.Size(466, 406);
             this.VisibleTabPage.TabIndex = 0;
-            this.VisibleTabPage.Text = "表示オプション";
+            this.VisibleTabPage.Text = "表 示";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
             // 
             // VisibleSettinsPanel
@@ -991,7 +991,7 @@
             this.BehaviorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.BehaviorTabPage.Size = new System.Drawing.Size(466, 406);
             this.BehaviorTabPage.TabIndex = 4;
-            this.BehaviorTabPage.Text = "動作オプション";
+            this.BehaviorTabPage.Text = "その他";
             this.BehaviorTabPage.UseVisualStyleBackColor = true;
             // 
             // BehaviorSettingsPanel
@@ -1131,11 +1131,11 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(500, 560);
             this.Controls.Add(this.LayoutPanel);
+            this.MaximumSize = new System.Drawing.Size(1920, 1160);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(480, 320);
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
-            this.Sizable = true;
             this.Text = "CubeNote 設定";
             this.LayoutPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
