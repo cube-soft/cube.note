@@ -252,6 +252,7 @@ namespace Cube.Note.App.Editor
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
+            Saver?.Dispose();
 
             if (WindowState != FormWindowState.Normal) return;
             Settings.User.X      = Location.X;
