@@ -54,6 +54,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private SettingsFolder()
         {
+            Assembly = null;
             InitializeNetworkOptions();
             InitialzieUriQuery();
         }
@@ -106,8 +107,9 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Assembly assembly, string filename) : this()
         {
+            Assembly = assembly;
             FileName = filename;
-            InitializeValues(assembly);
+            InitializeValues();
         }
 
         #endregion
@@ -135,6 +137,17 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public static Settings.FileType FileType => Settings.FileType.Json;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Assembly
+        ///
+        /// <summary>
+        /// アセンブリ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Assembly Assembly { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -255,6 +268,29 @@ namespace Cube.Note
             Settings.Save(User, path, FileType);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SaveRoot
+        ///
+        /// <summary>
+        /// データフォルダに関する設定を保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void SaveRoot(string path)
+        {
+            try
+            {
+                using (var subkey = CreateSubKey())
+                {
+                    if (subkey == null) return;
+                    var value = new RegistryValue { Data = path };
+                    Cube.Settings.Save(value, subkey);
+                }
+            }
+            catch (Exception /* err */) { /* ignore errors */ }
+        }
+
         #endregion
 
         #region Others
@@ -295,19 +331,17 @@ namespace Cube.Note
         /// InitializeValues
         ///
         /// <summary>
-        /// 設定値を初期化します。
+        /// レジストリから値を初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitializeValues(Assembly assembly)
+        private void InitializeValues()
         {
-            var reader = new AssemblyReader(assembly);
-            var name = $@"Software\{reader.Company}\{reader.Product}";
             var root = string.Empty;
 
             try
             {
-                using (var subkey = Registry.CurrentUser.OpenSubKey(name, false))
+                using (var subkey = CreateSubKey())
                 {
                     if (subkey != null)
                     {
@@ -317,7 +351,24 @@ namespace Cube.Note
                 }
             }
             catch (Exception /* err */) { /* ignore errors */ }
-            finally { SetRoot(root, reader); }
+            finally { SetRoot(root); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateSubKey
+        ///
+        /// <summary>
+        /// レジストリのサブキーを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private RegistryKey CreateSubKey()
+        {
+            if (Assembly == null) return null;
+            var reader = new AssemblyReader(Assembly);
+            var name = $@"Software\{reader.Company}\{reader.Product}";
+            return Registry.CurrentUser.CreateSubKey(name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -329,11 +380,12 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetRoot(string value, AssemblyReader reader)
+        private void SetRoot(string value)
         {
             if (!string.IsNullOrEmpty(value)) Root = value;
             else
             {
+                var reader = new Cube.AssemblyReader(Assembly);
                 var head = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 var tail = $@"{reader.Company}\{reader.Product}";
                 Root = IoEx.Path.Combine(head, tail);
