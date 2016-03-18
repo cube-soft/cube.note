@@ -174,6 +174,7 @@ namespace Cube.Note.App.Editor
         ///
         /* --------------------------------------------------------------------- */
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ILog Logger { get; }
 
         /* --------------------------------------------------------------------- */
