@@ -108,6 +108,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   CubeNote のデータを保存するためのフォルダを選択して下さい。この変更は、アプリケーションの次回起動時から適用されます。また、現在のフォルダに存在するデータは新しいフォルダにはコピーされません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DataFolderDescription {
+            get {
+                return ResourceManager.GetString("DataFolderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   タグの追加と削除 ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string EditTag {

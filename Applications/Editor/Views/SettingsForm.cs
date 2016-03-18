@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms; 
 
@@ -67,6 +68,51 @@ namespace Cube.Note.App.Editor
             SettingsControl.OKButton = ApplyButton;
             SettingsControl.CancelButton = ExitButton;
             TabControl.SelectTab(index);
+
+            DataFolderButton.Click += DataFolderButton_Click;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// DataFolder
+        /// 
+        /// <summary>
+        /// データフォルダを取得または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DataFolder
+        {
+            get { return DataFolderTextBox.Text; }
+            set
+            {
+                DataFolderTextBox.Text = value;
+                DataFolderTextBox.Select(DataFolderTextBox.TextLength, 0);
+            }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// RestartRequired
+        /// 
+        /// <summary>
+        /// データフォルダ変更後にアプリケーションを再起動するかどうかを示す値を取得
+        /// または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(true)]
+        [DefaultValue(true)]
+        public bool RestartRequired
+        {
+            get { return RestartCheckBox.Checked; }
+            set { RestartCheckBox.Checked = value; }
         }
 
         #endregion
@@ -237,6 +283,30 @@ namespace Cube.Note.App.Editor
             if (Height > area.Height) Height = area.Height;
 
             UpdateControls();
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DataFolderButton_Click
+        ///
+        /// <summary>
+        /// 各種コントロールの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void DataFolderButton_Click(object sender, EventArgs e)
+        {
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.DataFolderDescription;
+            dialog.ShowNewFolderButton = true;
+            dialog.SelectedPath = DataFolder;
+            if (dialog.ShowDialog() == DialogResult.Cancel ||
+                string.IsNullOrEmpty(dialog.SelectedPath)) return;
+            DataFolder = dialog.SelectedPath;
         }
 
         #endregion

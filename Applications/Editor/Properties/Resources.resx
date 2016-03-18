@@ -133,6 +133,9 @@
   <data name="CurrentNote" xml:space="preserve">
     <value>現在のノート</value>
   </data>
+  <data name="DataFolderDescription" xml:space="preserve">
+    <value>CubeNote のデータを保存するためのフォルダを選択して下さい。この変更は、アプリケーションの次回起動時から適用されます。また、現在のフォルダに存在するデータは新しいフォルダにはコピーされません。</value>
+  </data>
   <data name="EditTag" xml:space="preserve">
     <value>タグの追加と削除 ...</value>
   </data>

@@ -276,9 +276,18 @@ namespace Cube.Note.App.Editor
             var dialog = new SettingsForm(Settings.User, index);
             using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
             {
-                dialog.ShowDialog();
+                dialog.DataFolder = Settings.Root;
+                var result = dialog.ShowDialog();
                 Events.Refresh.Raise();
+                if (result == DialogResult.Cancel) return;
             }
+
+            if (dialog.DataFolder == Settings.Root) return;
+            Settings.SaveRoot(dialog.DataFolder);
+
+            if (!dialog.RestartRequired) return;
+            Events.SaveAll.Raise();
+            Application.Restart();
         });
 
         /* ----------------------------------------------------------------- */
