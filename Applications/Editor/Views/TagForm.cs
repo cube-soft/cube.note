@@ -66,6 +66,7 @@ namespace Cube.Note.App.Editor
 
             Caption = TitleControl;
             Count = 0;
+            ActiveControl = NewTagTextBox;
 
             NewTagButton.Click += NewTagButton_Click;
             RemoveTagButton.Click += RemoveTagButton_Click;
