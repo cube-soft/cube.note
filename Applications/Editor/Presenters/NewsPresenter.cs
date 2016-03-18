@@ -158,7 +158,7 @@ namespace Cube.Note.App.Editor
             {
                 Logger.Debug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
 
-                UpdateNewsIfEmpty();
+                UpdateNews(true);
                 Remover.Stop();
                 Remover.Start();
             }
@@ -201,10 +201,17 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// ニュース記事を更新します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 引数に true を設定した場合、ニュースが何も表示されていない時のみ
+        /// 更新します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateNews() => SyncWait(() =>
+        private void UpdateNews(bool onlyEmpty = false) => SyncWait(() =>
         {
+            if (onlyEmpty && View.Uri != null) return;
+
             var visible  = Settings.User.ShowNews && Model.Result.Count > 0;
             View.Message = visible ?
                            string.Format(Properties.Resources.NewsFormat, Model.Result[0].Title) :
@@ -212,22 +219,6 @@ namespace Cube.Note.App.Editor
             View.Uri     = visible ?
                            new Uri(Model.Result[0].Url) :
                            null;
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateNewsIfEmpty
-        ///
-        /// <summary>
-        /// ニュース記事を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void UpdateNewsIfEmpty() => SyncWait(() =>
-        {
-            if (!Settings.User.ShowNews ||
-                !string.IsNullOrEmpty(View.Message)) return;
-            UpdateNews();
         });
 
         #endregion
