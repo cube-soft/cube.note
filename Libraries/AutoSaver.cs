@@ -269,7 +269,7 @@ namespace Cube.Note
                 SaveAllDocuments();
                 SaveOrderFile();
                 SaveSettingsFile();
-                Logger.Debug("SaveOnDispose:Success");
+                Logger.Debug("SaveOnDispose");
 
                 if (disposing) _timer.Dispose();
             }
