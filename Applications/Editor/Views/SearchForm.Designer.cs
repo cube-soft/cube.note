@@ -270,7 +270,7 @@
             // 
             // OptionalShadow2
             // 
-            this.OptionalShadow2.BackColor = System.Drawing.Color.Gainsboro;
+            this.OptionalShadow2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             this.OptionalShadow2.Controls.Add(this.OptionalButton2);
             this.OptionalShadow2.Location = new System.Drawing.Point(301, 0);
             this.OptionalShadow2.Margin = new System.Windows.Forms.Padding(0);
@@ -295,7 +295,7 @@
             // 
             // OptionalShadow1
             // 
-            this.OptionalShadow1.BackColor = System.Drawing.Color.Gainsboro;
+            this.OptionalShadow1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             this.OptionalShadow1.Controls.Add(this.OptionalButton1);
             this.OptionalShadow1.Location = new System.Drawing.Point(197, 0);
             this.OptionalShadow1.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
@@ -320,7 +320,7 @@
             // 
             // SearchShadow
             // 
-            this.SearchShadow.BackColor = System.Drawing.Color.Gainsboro;
+            this.SearchShadow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             this.SearchShadow.Controls.Add(this.SearchButton);
             this.SearchShadow.Location = new System.Drawing.Point(93, 0);
             this.SearchShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
@@ -407,13 +407,15 @@
             // 
             // SearchForm
             // 
+            this.AcceptButton = this.SearchButton;
             this.ClientSize = new System.Drawing.Size(450, 450);
             this.Controls.Add(this.LayoutPanel);
+            this.KeyPreview = true;
+            this.MaximumSize = new System.Drawing.Size(1600, 860);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(370, 270);
             this.Name = "SearchForm";
             this.ShowInTaskbar = false;
-            this.Sizable = true;
             this.Text = "検索と置換";
             this.TopMost = true;
             this.LayoutPanel.ResumeLayout(false);
