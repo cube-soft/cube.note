@@ -51,6 +51,7 @@ namespace Cube.Note.App.Editor
             InitializeEvents();
 
             Caption = TitleControl;
+            ActiveControl = NewTagTextBox;
         }
 
         /* ----------------------------------------------------------------- */
