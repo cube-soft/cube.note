@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.NewTagButton = new Cube.Forms.Button();
             this.ExitButton = new Cube.Forms.Button();
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
+            this.NewTagButton = new Cube.Forms.Button();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.ButtonsPanel = new Cube.Forms.FlowLayoutPanel();
             this.ExitButtonShadow = new System.Windows.Forms.Panel();
@@ -41,7 +41,6 @@
             this.LastUpdateLabel = new System.Windows.Forms.Label();
             this.NewTagWrapper = new System.Windows.Forms.Panel();
             this.NewTagTextBox = new System.Windows.Forms.TextBox();
-            this.NewTagShadow = new System.Windows.Forms.Panel();
             this.TagsWrapper = new System.Windows.Forms.Panel();
             this.TagsPanel = new Cube.Forms.FlowLayoutPanel();
             this.LayoutPanel.SuspendLayout();
@@ -49,24 +48,8 @@
             this.ExitButtonShadow.SuspendLayout();
             this.ApplyButtonShadow.SuspendLayout();
             this.NewTagWrapper.SuspendLayout();
-            this.NewTagShadow.SuspendLayout();
             this.TagsWrapper.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // NewTagButton
-            // 
-            this.NewTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.NewTagButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NewTagButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
-            this.NewTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.NewTagButton.ForeColor = System.Drawing.Color.White;
-            this.NewTagButton.Location = new System.Drawing.Point(0, 0);
-            this.NewTagButton.Margin = new System.Windows.Forms.Padding(0);
-            this.NewTagButton.Name = "NewTagButton";
-            this.NewTagButton.Size = new System.Drawing.Size(121, 25);
-            this.NewTagButton.TabIndex = 4;
-            this.NewTagButton.Text = "新しいタグを追加";
-            this.NewTagButton.UseVisualStyleBackColor = false;
             // 
             // ExitButton
             // 
@@ -90,13 +73,13 @@
             this.LayoutPanel.ColumnCount = 2;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.LayoutPanel.Controls.Add(this.NewTagButton, 1, 5);
             this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
             this.LayoutPanel.Controls.Add(this.ButtonsPanel, 0, 6);
             this.LayoutPanel.Controls.Add(this.AbstractLabel, 0, 1);
             this.LayoutPanel.Controls.Add(this.CreationLabel, 0, 2);
             this.LayoutPanel.Controls.Add(this.LastUpdateLabel, 0, 3);
             this.LayoutPanel.Controls.Add(this.NewTagWrapper, 0, 5);
-            this.LayoutPanel.Controls.Add(this.NewTagShadow, 1, 5);
             this.LayoutPanel.Controls.Add(this.TagsWrapper, 0, 4);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
@@ -113,6 +96,21 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.LayoutPanel.Size = new System.Drawing.Size(448, 328);
             this.LayoutPanel.TabIndex = 0;
+            // 
+            // NewTagButton
+            // 
+            this.NewTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.NewTagButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.NewTagButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
+            this.NewTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NewTagButton.ForeColor = System.Drawing.Color.White;
+            this.NewTagButton.Location = new System.Drawing.Point(311, 236);
+            this.NewTagButton.Margin = new System.Windows.Forms.Padding(3, 8, 16, 3);
+            this.NewTagButton.Name = "NewTagButton";
+            this.NewTagButton.Size = new System.Drawing.Size(121, 25);
+            this.NewTagButton.TabIndex = 4;
+            this.NewTagButton.Text = "新しいタグを追加";
+            this.NewTagButton.UseVisualStyleBackColor = false;
             // 
             // TitleControl
             // 
@@ -239,17 +237,6 @@
             this.NewTagTextBox.Size = new System.Drawing.Size(287, 16);
             this.NewTagTextBox.TabIndex = 3;
             // 
-            // NewTagShadow
-            // 
-            this.NewTagShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.NewTagShadow.Controls.Add(this.NewTagButton);
-            this.NewTagShadow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NewTagShadow.Location = new System.Drawing.Point(311, 236);
-            this.NewTagShadow.Margin = new System.Windows.Forms.Padding(3, 8, 16, 3);
-            this.NewTagShadow.Name = "NewTagShadow";
-            this.NewTagShadow.Size = new System.Drawing.Size(121, 27);
-            this.NewTagShadow.TabIndex = 10;
-            // 
             // TagsWrapper
             // 
             this.TagsWrapper.AutoScroll = true;
@@ -275,16 +262,15 @@
             // 
             // PropertyForm
             // 
-            this.AcceptButton = this.NewTagButton;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.CancelButton = this.ExitButton;
             this.ClientSize = new System.Drawing.Size(450, 330);
             this.Controls.Add(this.LayoutPanel);
+            this.MaximumSize = new System.Drawing.Size(1600, 860);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 270);
             this.Name = "PropertyForm";
             this.ShowInTaskbar = false;
-            this.Sizable = true;
             this.Text = "ノートにタグを設定";
             this.LayoutPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
@@ -292,7 +278,6 @@
             this.ApplyButtonShadow.ResumeLayout(false);
             this.NewTagWrapper.ResumeLayout(false);
             this.NewTagWrapper.PerformLayout();
-            this.NewTagShadow.ResumeLayout(false);
             this.TagsWrapper.ResumeLayout(false);
             this.TagsWrapper.PerformLayout();
             this.ResumeLayout(false);
@@ -313,9 +298,8 @@
         private System.Windows.Forms.Label LastUpdateLabel;
         private System.Windows.Forms.Panel NewTagWrapper;
         private System.Windows.Forms.TextBox NewTagTextBox;
-        private System.Windows.Forms.Panel NewTagShadow;
-        private Forms.Button NewTagButton;
         private System.Windows.Forms.Panel TagsWrapper;
         private Forms.FlowLayoutPanel TagsPanel;
+        private Forms.Button NewTagButton;
     }
 }
