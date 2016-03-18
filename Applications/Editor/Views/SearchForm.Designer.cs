@@ -270,7 +270,7 @@
             // 
             // OptionalShadow2
             // 
-            this.OptionalShadow2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
+            this.OptionalShadow2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.OptionalShadow2.Controls.Add(this.OptionalButton2);
             this.OptionalShadow2.Location = new System.Drawing.Point(301, 0);
             this.OptionalShadow2.Margin = new System.Windows.Forms.Padding(0);
@@ -295,7 +295,7 @@
             // 
             // OptionalShadow1
             // 
-            this.OptionalShadow1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
+            this.OptionalShadow1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.OptionalShadow1.Controls.Add(this.OptionalButton1);
             this.OptionalShadow1.Location = new System.Drawing.Point(197, 0);
             this.OptionalShadow1.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
@@ -320,7 +320,7 @@
             // 
             // SearchShadow
             // 
-            this.SearchShadow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
+            this.SearchShadow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.SearchShadow.Controls.Add(this.SearchButton);
             this.SearchShadow.Location = new System.Drawing.Point(93, 0);
             this.SearchShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
