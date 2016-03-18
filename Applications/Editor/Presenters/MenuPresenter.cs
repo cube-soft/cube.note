@@ -284,10 +284,7 @@ namespace Cube.Note.App.Editor
 
             if (dialog.DataFolder == Settings.Root) return;
             Settings.SaveRoot(dialog.DataFolder);
-
-            if (!dialog.RestartRequired) return;
-            Events.SaveAll.Raise();
-            Application.Restart();
+            if (dialog.RestartRequired) Application.Restart();
         });
 
         /* ----------------------------------------------------------------- */

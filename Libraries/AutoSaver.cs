@@ -64,7 +64,6 @@ namespace Cube.Note
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.User.PropertyChanged += Settings_PropertyChanged;
             Events.Save.Handle += Save_Handle;
-            Events.SaveAll.Handle += SaveAll_Handle;
             _timer.Elapsed += Timer_Elapsed;
 
             Task.Run(() => InitializePages());
@@ -228,31 +227,6 @@ namespace Cube.Note
                 try { SaveDocument(Settings.Current.Page); }
                 catch (Exception err) { Logger.Error(err); }
             });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveAll_Handle
-        /// 
-        /// <summary>
-        /// SaveAll イベントが発生した時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// SaveAll は同期的に実行されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SaveAll_Handle(object sender, EventArgs e)
-        {
-            try
-            {
-                SaveAllDocuments();
-                SaveOrderFile();
-                SaveSettingsFile();
-                Logger.Debug("SaveAll:Success");
-            }
-            catch (Exception err) { Logger.Error(err); }
         }
 
         /* ----------------------------------------------------------------- */

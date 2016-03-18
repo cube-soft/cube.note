@@ -204,17 +204,6 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public RelayEvent Save { get; } = new RelayEvent();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveAll
-        ///
-        /// <summary>
-        /// CubeNote に関連する全てのデータを保存するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent SaveAll { get; } = new RelayEvent();
-
         #endregion
 
         #region Tag events
