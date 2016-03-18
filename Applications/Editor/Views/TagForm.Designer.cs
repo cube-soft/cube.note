@@ -81,7 +81,7 @@
             // 
             this.NewTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.NewTagButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NewTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(34)))), ((int)(((byte)(40)))));
+            this.NewTagButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
             this.NewTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewTagButton.ForeColor = System.Drawing.Color.White;
             this.NewTagButton.Location = new System.Drawing.Point(201, 206);
@@ -96,7 +96,7 @@
             // 
             this.RemoveTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.RemoveTagButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.RemoveTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.RemoveTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.RemoveTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RemoveTagButton.ForeColor = System.Drawing.Color.White;
             this.RemoveTagButton.Location = new System.Drawing.Point(331, 206);
