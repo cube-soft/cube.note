@@ -238,6 +238,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             Saver = new AutoSaver(Pages, Settings, Aggregator);
+            Logger.Debug("Shown");
         }
 
         /* ----------------------------------------------------------------- */

@@ -293,6 +293,8 @@ namespace Cube.Note
         {
             try
             {
+                Logger.Info($"DataFolder:\"{Settings.Root}\"");
+
                 if (Pages == null) return;
                 Pages.Load();
                 if (!string.IsNullOrEmpty(Settings.User.Page))
