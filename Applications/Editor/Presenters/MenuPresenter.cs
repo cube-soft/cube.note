@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Printing;
 using Cube.Conversions;
+using Cube.Log;
 using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
@@ -126,15 +127,12 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Web_Handle(object sender, ValueEventArgs<string> e)
+            => this.LogException(() =>
         {
-            try
-            {
-                if (string.IsNullOrEmpty(e.Value)) return;
-                var uri = new Uri(e.Value).With(Settings.UriQuery);
-                System.Diagnostics.Process.Start(uri.ToString());
-            }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            if (string.IsNullOrEmpty(e.Value)) return;
+            var uri = new Uri(e.Value).With(Settings.UriQuery);
+            System.Diagnostics.Process.Start(uri.ToString());
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -180,8 +178,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Settings_CurrentChanged(object sender,
-            PropertyChangedEventArgs e) => Sync(() =>
+        private void Settings_CurrentChanged(object sender, PropertyChangedEventArgs e)
+            => Sync(() =>
         {
             switch (e.PropertyName)
             {

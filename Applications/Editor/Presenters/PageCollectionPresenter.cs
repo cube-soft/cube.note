@@ -21,6 +21,7 @@ using System;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 using Cube.Collections;
+using Cube.Log;
 using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
@@ -309,6 +310,8 @@ namespace Cube.Note.App.Editor
 
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.Current.TagChanged += Settings_TagChanged;
+
+            this.LogDebug("Loaded");
         }
 
         /* ----------------------------------------------------------------- */

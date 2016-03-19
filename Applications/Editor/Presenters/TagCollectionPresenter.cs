@@ -23,6 +23,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Log;
 
 namespace Cube.Note.App.Editor
 {
@@ -89,7 +90,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void NewTag_Handle(object sender, ValueEventArgs<Tag> e)
-            => Model.Add(e.Value);
+            => this.LogException(() => Model.Add(e.Value));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,7 +102,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void RemoveTag_Handle(object sender, ValueEventArgs<Tag> e)
-            => Model.Remove(e.Value);
+            => this.LogException(() => Model.Remove(e.Value));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -122,16 +123,19 @@ namespace Cube.Note.App.Editor
                 var dialog = new PropertyForm(page, Model);
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-                if (page.Tags.Count == 0) Model.Nothing?.Decrement();
-                else Model.Decrement(page.Tags);
-                page.Tags.Clear();
-
-                if (dialog.Tags.Count == 0) Model.Nothing?.Increment();
-                else foreach (var name in dialog.Tags)
+                this.LogException(() =>
                 {
-                    Model.Create(name).Count++;
-                    page.Tags.Add(name);
-                }
+                    if (page.Tags.Count == 0) Model.Nothing?.Decrement();
+                    else Model.Decrement(page.Tags);
+                    page.Tags.Clear();
+
+                    if (dialog.Tags.Count == 0) Model.Nothing?.Increment();
+                    else foreach (var name in dialog.Tags)
+                    {
+                        Model.Create(name).Count++;
+                        page.Tags.Add(name);
+                    }
+                });
             });
 
             Events.Edit.Raise(ValueEventArgs.Create(page));
@@ -230,6 +234,8 @@ namespace Cube.Note.App.Editor
             Settings.Current.TagChanged += Settings_TagChanged;
             ViewReset(Model.Get(Settings.User.Tag));
             Model.CollectionChanged += Model_CollectionChanged;
+
+            this.LogDebug("Loaded");
         }
 
         /* ----------------------------------------------------------------- */

@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using Sgry.Azuki;
+using Cube.Log;
 using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
@@ -143,23 +144,20 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_DoubleClick(object sender, EventArgs e)
+            => this.LogException(() =>
         {
-            try
-            {
-                var ev = e as IMouseEventArgs;
-                if (ev == null || !Settings.User.OpenUri) return;
+            var ev = e as IMouseEventArgs;
+            if (ev == null || !Settings.User.OpenUri) return;
 
-                var doc = Settings.Current.Page?.Document as Document;
-                if (doc == null || ev.Index >= doc.Length || !doc.IsMarked(ev.Index, Marking.Uri)) return;
+            var doc = Settings.Current.Page?.Document as Document;
+            if (doc == null || ev.Index >= doc.Length || !doc.IsMarked(ev.Index, Marking.Uri)) return;
 
-                var uri = doc.GetMarkedText(ev.Index, Marking.Uri);
-                if (string.IsNullOrEmpty(uri)) return;
+            var uri = doc.GetMarkedText(ev.Index, Marking.Uri);
+            if (string.IsNullOrEmpty(uri)) return;
 
-                System.Diagnostics.Process.Start(uri);
-                ev.Handled = true;
-            }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            System.Diagnostics.Process.Start(uri);
+            ev.Handled = true;
+        });
 
         #endregion
 
@@ -235,6 +233,7 @@ namespace Cube.Note.App.Editor
                     Settings.Current.CanRedo = document.CanRedo;
                 });
             }
+            catch (Exception err) { this.LogError(err.Message, err); }
             finally { UpdateModel(e.NewValue, e.OldValue); }
         }
 

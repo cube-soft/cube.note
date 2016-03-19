@@ -22,7 +22,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Drawing;
 using System.Windows.Forms;
-using log4net;
+using Cube.Log;
 
 namespace Cube.Note.App.Editor
 {
@@ -50,8 +50,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MainForm()
         {
-            Logger = LogManager.GetLogger(GetType());
-
             InitializeComponent();
             InitializeModels();
 
@@ -166,19 +164,6 @@ namespace Cube.Note.App.Editor
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Logger
-        /// 
-        /// <summary>
-        /// ログ出力用オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ILog Logger { get; }
-
-        /* --------------------------------------------------------------------- */
-        ///
         /// SelectedText
         /// 
         /// <summary>
@@ -238,7 +223,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             Saver = new AutoSaver(Pages, Settings, Aggregator);
-            Logger.Debug("Shown");
+            this.LogDebug("Shown");
         }
 
         /* ----------------------------------------------------------------- */

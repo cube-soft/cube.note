@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Timers;
+using Cube.Log;
 
 namespace Cube.Note.App.Editor
 {
@@ -96,17 +97,14 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Settings_UserChanged(object sender, PropertyChangedEventArgs e)
+            => this.LogException(() =>
         {
-            try
-            {
-                if (e.PropertyName != nameof(Settings.User.ShowNews)) return;
+            if (e.PropertyName != nameof(Settings.User.ShowNews)) return;
 
-                UpdateNews();
-                if (Settings.User.ShowNews) Model.Start();
-                else Model.Stop();
-            }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            UpdateNews();
+            if (Settings.User.ShowNews) Model.Start();
+            else Model.Stop();
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -118,10 +116,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
-        {
-            try { UpdateNews(); }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            => this.LogException(() => UpdateNews());
 
         #endregion
 
@@ -152,18 +147,16 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_ResultChanged(object sender, ValueEventArgs<IList<Cube.Net.News.Article>> e)
+        private void Model_ResultChanged(object sender,
+            ValueEventArgs<IList<Cube.Net.News.Article>> e)
+            => this.LogException(() =>
         {
-            try
-            {
-                Logger.Debug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
+            this.LogDebug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
 
-                UpdateNews(true);
-                Remover.Stop();
-                Remover.Start();
-            }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            UpdateNews(true);
+            Remover.Stop();
+            Remover.Start();
+        });
 
         #endregion
 
@@ -179,14 +172,11 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Remover_Elapsed(object sender, ElapsedEventArgs e)
+            => this.LogException(() =>
         {
-            try
-            {
-                if (Model.Result.Count <= 1) return;
-                Model.Result.RemoveAt(0);
-            }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            if (Model.Result.Count <= 1) return;
+            Model.Result.RemoveAt(0);
+        });
 
         #endregion
 
