@@ -223,7 +223,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             Saver = new AutoSaver(Pages, Settings, Aggregator);
-            this.LogDebug("Shown");
+            this.LogDebug($"Shown\tLocation:{Location}\tSize:{Size}");
         }
 
         /* ----------------------------------------------------------------- */
@@ -237,14 +237,17 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnFormClosing(e);
-            Saver?.Dispose();
+            try
+            {
+                base.OnFormClosing(e);
 
-            if (WindowState != FormWindowState.Normal) return;
-            Settings.User.X      = Location.X;
-            Settings.User.Y      = Location.Y;
-            Settings.User.Width  = Width;
-            Settings.User.Height = Height;
+                if (WindowState != FormWindowState.Normal) return;
+                Settings.User.X      = Location.X;
+                Settings.User.Y      = Location.Y;
+                Settings.User.Width  = Width;
+                Settings.User.Height = Height;
+            }
+            finally { Saver?.Dispose(); }
         }
 
         /* ----------------------------------------------------------------- */
