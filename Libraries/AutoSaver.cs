@@ -224,7 +224,11 @@ namespace Cube.Note
             if (Settings.Current.Page == null) return;
             await Task.Run(() =>
             {
-                try { SaveDocument(Settings.Current.Page); }
+                try
+                {
+                    SaveDocument(Settings.Current.Page);
+                    SaveOrderFile();
+                }
                 catch (Exception err) { Logger.Error(err); }
             });
         }
