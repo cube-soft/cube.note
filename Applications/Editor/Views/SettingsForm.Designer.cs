@@ -662,7 +662,7 @@
             // 
             // DataFolderTextBox
             // 
-            this.DataFolderTextBox.BackColor = System.Drawing.Color.White;
+            this.DataFolderTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.DataFolderTextBox.Location = new System.Drawing.Point(121, 284);
             this.DataFolderTextBox.Name = "DataFolderTextBox";
             this.DataFolderTextBox.ReadOnly = true;
