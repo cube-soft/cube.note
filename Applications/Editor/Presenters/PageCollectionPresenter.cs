@@ -311,7 +311,7 @@ namespace Cube.Note.App.Editor
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.Current.TagChanged += Settings_TagChanged;
 
-            this.LogDebug("Loaded");
+            this.LogDebug($"Loaded\tCount:{Model.Count}");
         }
 
         /* ----------------------------------------------------------------- */

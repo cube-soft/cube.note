@@ -235,7 +235,7 @@ namespace Cube.Note.App.Editor
             ViewReset(Model.Get(Settings.User.Tag));
             Model.CollectionChanged += Model_CollectionChanged;
 
-            this.LogDebug("Loaded");
+            this.LogDebug($"Loaded\tCount:{Model.Count}");
         }
 
         /* ----------------------------------------------------------------- */
