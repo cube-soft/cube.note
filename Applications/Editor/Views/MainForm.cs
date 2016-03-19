@@ -223,7 +223,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             Saver = new AutoSaver(Pages, Settings, Aggregator);
-            this.LogDebug($"Shown\tLocation:{Location}\tSize:{Size}");
+            this.LogDebug($"Location:{Location}\tSize:{Size}");
         }
 
         /* ----------------------------------------------------------------- */
