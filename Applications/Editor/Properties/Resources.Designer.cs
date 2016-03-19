@@ -702,6 +702,26 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   タグを削除しますか？キャンセルする場合は、「いいえ」を選択した後に「キャンセル」ボタンを押して下さい。
+        ///
+        ///この操作によって、タグ付されているノートが削除される事はありません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnTagRemove {
+            get {
+                return ResourceManager.GetString("WarnTagRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグの削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnTagRemoveTitle {
+            get {
+                return ResourceManager.GetString("WarnTagRemoveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string WebUrl {

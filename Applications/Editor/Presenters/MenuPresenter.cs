@@ -298,6 +298,7 @@ namespace Cube.Note.App.Editor
             => Sync(() =>
         {
             var dialog = new TagForm(Model.Tags);
+            dialog.FormClosing += (s, e) => e.Cancel = IsRemoveCancel(s);
             dialog.ShowDialog();
             if (dialog.DialogResult == DialogResult.Cancel) return;
 
@@ -310,6 +311,34 @@ namespace Cube.Note.App.Editor
                 foreach (var tag in remove) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
             });
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsRemoveCancel
+        /// 
+        /// <summary>
+        /// キャンセルされたかどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsRemoveCancel(object sender)
+        {
+            var dialog = sender as TagForm;
+            if (dialog == null) return false;
+
+            if (dialog.DialogResult == DialogResult.Cancel ||
+                dialog.RemoveTags.Count <= 0 ||
+                !Settings.User.TagRemoveWarning) return false;
+
+            var result = MessageBox.Show(
+                Properties.Resources.WarnTagRemove,
+                Properties.Resources.WarnTagRemoveTitle,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button1
+            );
+            return result == DialogResult.No;
+        }
 
         #endregion
     }
