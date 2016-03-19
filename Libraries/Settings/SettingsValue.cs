@@ -901,6 +901,28 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// TagRemoveWarning
+        ///
+        /// <summary>
+        /// タグ削除時に警告メッセージを表示するかどうかを示す値を取得
+        /// または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool TagRemoveWarning
+        {
+            get { return _tagRemoveWarning; }
+            set
+            {
+                if (_tagRemoveWarning == value) return;
+                _tagRemoveWarning = value;
+                RaisePropertyChanged(nameof(TagRemoveWarning));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OpenUri
         ///
         /// <summary>
@@ -964,6 +986,48 @@ namespace Cube.Note
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CheckUpdate
+        ///
+        /// <summary>
+        /// アップデートを確認するかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool CheckUpdate
+        {
+            get { return _checkUpdate; }
+            set
+            {
+                if (_checkUpdate == value) return;
+                _checkUpdate = value;
+                RaisePropertyChanged(nameof(CheckUpdate));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LastUpdate
+        ///
+        /// <summary>
+        /// 最後にアップデートを確認した日時を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public DateTime LastUpdate
+        {
+            get { return _lastUpdate; }
+            set
+            {
+                if (_lastUpdate == value) return;
+                _lastUpdate = value;
+                RaisePropertyChanged(nameof(LastUpdate));
+            }
+        }
+
         #endregion
 
         #region Others
@@ -1015,6 +1079,7 @@ namespace Cube.Note
             CurrentLineColor    = SystemColors.ControlDark;
 
             AutoSaveTime        = TimeSpan.FromSeconds(30);
+            LastUpdate          = new DateTime(2016, 1, 1, 0, 0, 0, DateTimeKind.Local);
             PrintMargin         = new Margins(25, 25, 25, 25);
             SearchQuery         = "http://s.cube-soft.jp/search/?q=";
             TabWidth            = 8;
@@ -1034,9 +1099,11 @@ namespace Cube.Note
             ModifiedLineVisible = false;
             BracketVisible      = false;
             RemoveWarning       = true;
+            TagRemoveWarning    = true;
             OpenUri             = true;
             IncludeLineCode     = false;
             ShowNews            = true;
+            CheckUpdate         = true;
         }
 
         #endregion
@@ -1081,9 +1148,12 @@ namespace Cube.Note
         private bool _modifiedLineVisible;
         private bool _bracketVisible;
         private bool _removeWarning;
+        private bool _tagRemoveWarning;
         private bool _openUri;
         private bool _includeLineCode;
         private bool _showNews;
+        private bool _checkUpdate;
+        private DateTime _lastUpdate;
         #endregion
     }
 }
