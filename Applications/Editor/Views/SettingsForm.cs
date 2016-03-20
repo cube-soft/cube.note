@@ -20,7 +20,8 @@
 using System;
 using System.ComponentModel;
 using System.Reflection;
-using System.Windows.Forms; 
+using System.Windows.Forms;
+using IoEx = System.IO;
 
 namespace Cube.Note.App.Editor
 {
@@ -306,6 +307,18 @@ namespace Cube.Note.App.Editor
             dialog.SelectedPath = DataFolder;
             if (dialog.ShowDialog() == DialogResult.Cancel ||
                 string.IsNullOrEmpty(dialog.SelectedPath)) return;
+
+            if (!IsWritable(dialog.SelectedPath))
+            {
+                MessageBox.Show(
+                    Properties.Resources.WarnWritable,
+                    Properties.Resources.WarnWritableTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
             DataFolder = dialog.SelectedPath;
         }
 
@@ -408,6 +421,31 @@ namespace Cube.Note.App.Editor
             WordWrapTitleLabel.Enabled         = enable;
             WordWrapAsWindowCheckBox.Enabled   = enable;
             WordWrapCountNumericUpDown.Enabled = cmode;
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsWritable
+        ///
+        /// <summary>
+        /// フォルダが書き込み可能かどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsWritable(string dir)
+        {
+            try
+            {
+                var filename = Guid.NewGuid().ToString("N");
+                var path = IoEx.Path.Combine(dir, filename);
+                using (var dummy = IoEx.File.Create(path, 1, IoEx.FileOptions.DeleteOnClose)) { }
+                return true;
+            }
+            catch { return false; }
         }
 
         #endregion

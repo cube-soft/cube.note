@@ -722,6 +722,24 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   指定されたフォルダにファイルを書き込めませんでした。書き込み可能なフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnWritable {
+            get {
+                return ResourceManager.GetString("WarnWritable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubeNote エラー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnWritableTitle {
+            get {
+                return ResourceManager.GetString("WarnWritableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string WebUrl {

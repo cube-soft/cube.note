@@ -333,6 +333,12 @@
   <data name="WarnTagRemoveTitle" xml:space="preserve">
     <value>タグの削除</value>
   </data>
+  <data name="WarnWritable" xml:space="preserve">
+    <value>指定されたフォルダにファイルを書き込めませんでした。書き込み可能なフォルダを選択して下さい。</value>
+  </data>
+  <data name="WarnWritableTitle" xml:space="preserve">
+    <value>CubeNote エラー</value>
+  </data>
   <data name="WebUrl" xml:space="preserve">
     <value>http://www.cube-soft.jp/</value>
   </data>
