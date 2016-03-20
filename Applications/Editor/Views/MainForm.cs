@@ -132,7 +132,7 @@ namespace Cube.Note.App.Editor
             Pages = new PageCollection(Settings.Root);
             Pages.Tags.Everyone.Name = Properties.Resources.EveryoneTag;
             Pages.Tags.Nothing.Name  = Properties.Resources.NothingTag;
-            Settings.Load();
+            this.LogException(() => Settings.Load());
         }
 
         /* ----------------------------------------------------------------- */

@@ -54,6 +54,9 @@ namespace Cube.Note.App.Editor
             : base(view, new MessageMonitor(), settings, events)
         {
             Settings.User.PropertyChanged += Settings_UserChanged;
+            View.Click += View_Click;
+            View.BalloonTipClicked += View_Click;
+
             var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
             Model.Execute += Model_Execute;
             Model.Received += Model_Received;
@@ -87,6 +90,31 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region View
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Click
+        ///
+        /// <summary>
+        /// クリック時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var uri = View.Tag as Uri;
+                if (uri == null) return;
+                Events.Web.Raise(ValueEventArgs.Create(uri.ToString()));
+            }
+            catch (Exception err) { this.LogError(err.Message, err); }
+            finally { View.Visible = false; }
+        }
+
+        #endregion
+
         #region Model
 
         /* ----------------------------------------------------------------- */
@@ -114,10 +142,17 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Model_Received(object sender, ValueEventArgs<Cube.Net.Update.Message> e)
+            => Sync(() =>
         {
+            View.Visible = true;
+            View.BalloonTipTitle = View.Text;
+            View.BalloonTipText = e.Value.Text;
+            View.Tag = e.Value.Uri;
+            View.ShowBalloonTip(10000);
+
             this.LogDebug($"Message:{e.Value.Text}");
             this.LogDebug($"Url:{e.Value.Uri}");
-        }
+        });
 
         #endregion
 
