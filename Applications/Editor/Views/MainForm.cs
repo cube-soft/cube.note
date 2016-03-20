@@ -155,6 +155,25 @@ namespace Cube.Note.App.Editor
             new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
             new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
             new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeNetworkPresenters
+        ///
+        /// <summary>
+        /// ネットワーク通信が発生する Presenter を初期化します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 通信が発生する事によって起動時間が遅れる事を防ぐため、初期化を
+        /// 遅延させます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeNetworkPresenters()
+        {
+            new UpdatePresenter(NotifyIcon, /* Monitor, */ Settings, Aggregator);
             new NewsPresenter(FooterStatusControl, Settings, Aggregator);
         }
 
@@ -223,6 +242,7 @@ namespace Cube.Note.App.Editor
         {
             base.OnShown(e);
             Saver = new AutoSaver(Pages, Settings, Aggregator);
+            InitializeNetworkPresenters();
             this.LogDebug($"Location:{Location}\tSize:{Size}");
         }
 

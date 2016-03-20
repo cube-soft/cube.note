@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             Sgry.Azuki.FontInfo fontInfo1 = new Sgry.Azuki.FontInfo();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
@@ -39,6 +40,7 @@
             this.MenuControl = new Cube.Note.App.Editor.MenuControl();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.FooterStatusControl = new Cube.Note.App.Editor.StatusControl();
+            this.NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContentsPanel)).BeginInit();
             this.ContentsPanel.Panel1.SuspendLayout();
@@ -139,6 +141,7 @@
             fontInfo1.Style = System.Drawing.FontStyle.Regular;
             this.TextControl.FontInfo = fontInfo1;
             this.TextControl.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.TextControl.IncludeLineCount = false;
             this.TextControl.LeftMargin = 8;
             this.TextControl.Location = new System.Drawing.Point(0, 33);
             this.TextControl.Margin = new System.Windows.Forms.Padding(0);
@@ -201,6 +204,12 @@
             this.FooterStatusControl.TabIndex = 5;
             this.FooterStatusControl.Uri = null;
             // 
+            // NotifyIcon
+            // 
+            this.NotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIcon.Icon")));
+            this.NotifyIcon.Text = "CubeNote";
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -209,11 +218,9 @@
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MaximizeBox = true;
-            this.MinimizeBox = true;
+            this.MaximumSize = new System.Drawing.Size(1920, 1160);
             this.MinimumSize = new System.Drawing.Size(600, 210);
             this.Name = "MainForm";
-            this.Sizable = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
@@ -239,6 +246,7 @@
         private System.Windows.Forms.PictureBox VerticalSeparator;
         private StatusControl FooterStatusControl;
         private MenuControl MenuControl;
+        private System.Windows.Forms.NotifyIcon NotifyIcon;
     }
 }
 
