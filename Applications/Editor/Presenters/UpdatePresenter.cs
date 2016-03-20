@@ -190,7 +190,6 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private TimeSpan InitialDelay()
         {
-            this.LogDebug($"LastUpdate:{Settings.User.LastUpdate}");
             var minimum = TimeSpan.FromSeconds(30);
             var diff    = DateTime.Now - Settings.User.LastUpdate;
             var delay   = TimeSpan.FromDays(1) - diff;
