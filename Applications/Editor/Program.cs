@@ -76,14 +76,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         static void InitLog()
         {
-            log4net.Config.XmlConfigurator.Configure();
-
-            var logger  = log4net.LogManager.GetLogger(typeof(Program));
             var reader  = new AssemblyReader(Assembly.GetExecutingAssembly());
             var edition = (IntPtr.Size == 4) ? "x86" : "x64";
-            logger.Info($"{reader.Product} {reader.Version} ({edition})");
-            logger.Info($"{Environment.OSVersion}");
-            logger.Info($"{Environment.Version}");
+            var type = typeof(Program);
+
+            Cube.Log.Operations.Configure();
+            Cube.Log.Operations.Info(type, $"{reader.Product} {reader.Version} ({edition})");
+            Cube.Log.Operations.Info(type, $"{Environment.OSVersion}");
+            Cube.Log.Operations.Info(type, $"{Environment.Version}");
         }
     }
 }
