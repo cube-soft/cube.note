@@ -988,7 +988,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CheckUpdate
+        /// ShowUpdate
         ///
         /// <summary>
         /// アップデートを確認するかどうかを示す値を取得または設定します。
@@ -996,14 +996,14 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public bool CheckUpdate
+        public bool ShowUpdate
         {
-            get { return _checkUpdate; }
+            get { return _showUpdate; }
             set
             {
-                if (_checkUpdate == value) return;
-                _checkUpdate = value;
-                RaisePropertyChanged(nameof(CheckUpdate));
+                if (_showUpdate == value) return;
+                _showUpdate = value;
+                RaisePropertyChanged(nameof(ShowUpdate));
             }
         }
 
@@ -1103,7 +1103,7 @@ namespace Cube.Note
             OpenUri             = true;
             IncludeLineCode     = false;
             ShowNews            = true;
-            CheckUpdate         = true;
+            ShowUpdate          = true;
         }
 
         #endregion
@@ -1152,7 +1152,7 @@ namespace Cube.Note
         private bool _openUri;
         private bool _includeLineCode;
         private bool _showNews;
-        private bool _checkUpdate;
+        private bool _showUpdate;
         private DateTime _lastUpdate;
         #endregion
     }

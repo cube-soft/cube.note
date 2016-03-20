@@ -179,7 +179,7 @@ namespace Cube.Note.App.Editor
             control.VersionDigit = 3;
             control.Description  = string.Empty;
             control.Logo         = Properties.Resources.LogoLarge;
-            control.Url          = Properties.Resources.WebUrl;
+            control.Url          = Properties.Resources.UrlWeb;
             control.Dock         = DockStyle.Fill;
             control.Padding      = new Padding(40, 40, 0, 0);
 

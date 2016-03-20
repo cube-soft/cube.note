@@ -102,7 +102,7 @@
             this.TagRemoveWarningCheckBox = new System.Windows.Forms.CheckBox();
             this.OpenUriCheckBox = new System.Windows.Forms.CheckBox();
             this.ShowNewsCheckBox = new System.Windows.Forms.CheckBox();
-            this.CheckUpdateCheckBox = new System.Windows.Forms.CheckBox();
+            this.ShowUpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.PrintMarginTitleLabel = new System.Windows.Forms.Label();
             this.PrintLeftMarginTitleLabel = new System.Windows.Forms.Label();
             this.PrintMarginNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -1025,7 +1025,7 @@
             this.BehaviorSettingsPanel.Controls.Add(this.TagRemoveWarningCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.OpenUriCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.ShowNewsCheckBox);
-            this.BehaviorSettingsPanel.Controls.Add(this.CheckUpdateCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.ShowUpdateCheckBox);
             this.BehaviorSettingsPanel.Controls.Add(this.PrintMarginTitleLabel);
             this.BehaviorSettingsPanel.Controls.Add(this.PrintLeftMarginTitleLabel);
             this.BehaviorSettingsPanel.Controls.Add(this.PrintMarginNumericUpDown);
@@ -1104,14 +1104,14 @@
             // 
             // CheckUpdateCheckBox
             // 
-            this.CheckUpdateCheckBox.AutoSize = true;
-            this.BehaviorSettingsPanel.SetFlowBreak(this.CheckUpdateCheckBox, true);
-            this.CheckUpdateCheckBox.Location = new System.Drawing.Point(15, 123);
-            this.CheckUpdateCheckBox.Name = "CheckUpdateCheckBox";
-            this.CheckUpdateCheckBox.Size = new System.Drawing.Size(191, 19);
-            this.CheckUpdateCheckBox.TabIndex = 4;
-            this.CheckUpdateCheckBox.Text = "ソフトウェアのアップデートを確認する";
-            this.CheckUpdateCheckBox.UseVisualStyleBackColor = true;
+            this.ShowUpdateCheckBox.AutoSize = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.ShowUpdateCheckBox, true);
+            this.ShowUpdateCheckBox.Location = new System.Drawing.Point(15, 123);
+            this.ShowUpdateCheckBox.Name = "ShowUpdateCheckBox";
+            this.ShowUpdateCheckBox.Size = new System.Drawing.Size(191, 19);
+            this.ShowUpdateCheckBox.TabIndex = 4;
+            this.ShowUpdateCheckBox.Text = "ソフトウェアのアップデートを確認する";
+            this.ShowUpdateCheckBox.UseVisualStyleBackColor = true;
             // 
             // PrintMarginTitleLabel
             // 
@@ -1520,6 +1520,6 @@
         private System.Windows.Forms.Button DataFolderButton;
         private System.Windows.Forms.CheckBox RestartCheckBox;
         private System.Windows.Forms.CheckBox TagRemoveWarningCheckBox;
-        private System.Windows.Forms.CheckBox CheckUpdateCheckBox;
+        private System.Windows.Forms.CheckBox ShowUpdateCheckBox;
     }
 }
