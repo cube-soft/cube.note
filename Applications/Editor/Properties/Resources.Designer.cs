@@ -684,6 +684,24 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   http://www.cube-soft.jp/cubenote/update.php に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UrlUpdate {
+            get {
+                return ResourceManager.GetString("UrlUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UrlWeb {
+            get {
+                return ResourceManager.GetString("UrlWeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   このノートを削除しますか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string WarnRemove {
@@ -736,15 +754,6 @@ namespace Cube.Note.App.Editor.Properties {
         internal static string WarnWritableTitle {
             get {
                 return ResourceManager.GetString("WarnWritableTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string WebUrl {
-            get {
-                return ResourceManager.GetString("WebUrl", resourceCulture);
             }
         }
     }

@@ -163,7 +163,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_LogoMenu(object sender, EventArgs e)
-            => Events.Web.Raise(ValueEventArgs.Create(Properties.Resources.WebUrl));
+            => Events.Web.Raise(ValueEventArgs.Create(Properties.Resources.UrlWeb));
 
         #endregion
 

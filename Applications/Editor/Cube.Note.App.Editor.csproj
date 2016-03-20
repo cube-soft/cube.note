@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presenters\UpdatePresenter.cs" />
     <Compile Include="Views\PageMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>
