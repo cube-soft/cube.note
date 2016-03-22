@@ -57,16 +57,10 @@ namespace Cube.Note.App.Editor
             View.Click += View_Click;
             View.BalloonTipClicked += View_Click;
 
-            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
             Model.Execute += Model_Execute;
             Model.Received += Model_Received;
             Model.EndPoint = new Uri(Properties.Resources.UrlUpdate);
-            Model.Version = new SoftwareVersion
-            {
-                Number    = reader.Version,
-                Available = 3,
-                Postfix   = string.Empty
-            };
+            Model.Version = Settings.Version;
 
             Update(activator != null && activator.Required);
         }

@@ -275,6 +275,8 @@ namespace Cube.Note.App.Editor
             using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
             {
                 dialog.DataFolder = Settings.Root;
+                dialog.VersionDigit  = Settings.Version.Digit;
+                dialog.VersionSuffix = Settings.Version.Suffix;
                 dialog.StartPosition = FormStartPosition.CenterParent;
                 var result = dialog.ShowDialog();
                 Events.Refresh.Raise();
@@ -299,6 +301,7 @@ namespace Cube.Note.App.Editor
             => Sync(() =>
         {
             var dialog = new TagForm(Model.Tags);
+            dialog.StartPosition = FormStartPosition.CenterParent;
             dialog.FormClosing += (s, e) => e.Cancel = IsRemoveCancel(s);
             dialog.ShowDialog();
             if (dialog.DialogResult == DialogResult.Cancel) return;
