@@ -177,7 +177,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitialzieShortcutKeys()
         {
-            Menu(NewPageMenu).ShortcutKeys   = Keys.Control | Keys.N;
+            Menu(NewPageMenu).ShortcutKeys   = Keys.Control | Keys.Shift | Keys.N;
             Menu(ImportMenu).ShortcutKeys    = Keys.Control | Keys.O;
             Menu(ExportMenu).ShortcutKeys    = Keys.Control | Keys.E;
             Menu(DuplicateMenu).ShortcutKeys = Keys.Control | Keys.Shift | Keys.C;

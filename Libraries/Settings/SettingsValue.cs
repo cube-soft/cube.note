@@ -20,6 +20,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Drawing;
+using System.Drawing.Printing;
 
 namespace Cube.Note
 {
@@ -512,6 +513,32 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// PrintMargin
+        ///
+        /// <summary>
+        /// 印刷時の余白を mm 単位で取得または設定します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Margins オブジェクトの各種プロパティは 1/100 インチ単位である事が
+        /// 想定されています。したがって、印刷時には変換された値が使用されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Margins PrintMargin
+        {
+            get { return _printMargin; }
+            set
+            {
+                if (_printMargin == value) return;
+                _printMargin = value;
+                RaisePropertyChanged(nameof(PrintMargin));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SearchQuery
         ///
         /// <summary>
@@ -874,6 +901,28 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// TagRemoveWarning
+        ///
+        /// <summary>
+        /// タグ削除時に警告メッセージを表示するかどうかを示す値を取得
+        /// または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool TagRemoveWarning
+        {
+            get { return _tagRemoveWarning; }
+            set
+            {
+                if (_tagRemoveWarning == value) return;
+                _tagRemoveWarning = value;
+                RaisePropertyChanged(nameof(TagRemoveWarning));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OpenUri
         ///
         /// <summary>
@@ -937,6 +986,48 @@ namespace Cube.Note
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowUpdate
+        ///
+        /// <summary>
+        /// アップデートを確認するかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool ShowUpdate
+        {
+            get { return _showUpdate; }
+            set
+            {
+                if (_showUpdate == value) return;
+                _showUpdate = value;
+                RaisePropertyChanged(nameof(ShowUpdate));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LastUpdate
+        ///
+        /// <summary>
+        /// 最後にアップデートを確認した日時を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public DateTime LastUpdate
+        {
+            get { return _lastUpdate; }
+            set
+            {
+                if (_lastUpdate == value) return;
+                _lastUpdate = value;
+                RaisePropertyChanged(nameof(LastUpdate));
+            }
+        }
+
         #endregion
 
         #region Others
@@ -988,6 +1079,8 @@ namespace Cube.Note
             CurrentLineColor    = SystemColors.ControlDark;
 
             AutoSaveTime        = TimeSpan.FromSeconds(30);
+            LastUpdate          = new DateTime(2016, 1, 1, 0, 0, 0, DateTimeKind.Local);
+            PrintMargin         = new Margins(25, 25, 25, 25);
             SearchQuery         = "http://s.cube-soft.jp/search/?q=";
             TabWidth            = 8;
             WordWrapCount       = 80;
@@ -1006,9 +1099,11 @@ namespace Cube.Note
             ModifiedLineVisible = false;
             BracketVisible      = false;
             RemoveWarning       = true;
+            TagRemoveWarning    = true;
             OpenUri             = true;
             IncludeLineCode     = false;
             ShowNews            = true;
+            ShowUpdate          = true;
         }
 
         #endregion
@@ -1032,6 +1127,7 @@ namespace Cube.Note
         private Color _specialCharsColor;
         private Color _currentLineColor;
         private TimeSpan _autoSaveTime;
+        private Margins _printMargin;
         private string _searchQuery;
         private string _fontName;
         private double _fontSize;
@@ -1052,9 +1148,12 @@ namespace Cube.Note
         private bool _modifiedLineVisible;
         private bool _bracketVisible;
         private bool _removeWarning;
+        private bool _tagRemoveWarning;
         private bool _openUri;
         private bool _includeLineCode;
         private bool _showNews;
+        private bool _showUpdate;
+        private DateTime _lastUpdate;
         #endregion
     }
 }

@@ -18,8 +18,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Reflection;
-using System.Windows.Forms; 
+using System.Windows.Forms;
+using IoEx = System.IO;
 
 namespace Cube.Note.App.Editor
 {
@@ -67,6 +69,51 @@ namespace Cube.Note.App.Editor
             SettingsControl.OKButton = ApplyButton;
             SettingsControl.CancelButton = ExitButton;
             TabControl.SelectTab(index);
+
+            DataFolderButton.Click += DataFolderButton_Click;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// DataFolder
+        /// 
+        /// <summary>
+        /// データフォルダを取得または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DataFolder
+        {
+            get { return DataFolderTextBox.Text; }
+            set
+            {
+                DataFolderTextBox.Text = value;
+                DataFolderTextBox.Select(DataFolderTextBox.TextLength, 0);
+            }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// RestartRequired
+        /// 
+        /// <summary>
+        /// データフォルダ変更後にアプリケーションを再起動するかどうかを示す値を取得
+        /// または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(true)]
+        [DefaultValue(true)]
+        public bool RestartRequired
+        {
+            get { return RestartCheckBox.Checked; }
+            set { RestartCheckBox.Checked = value; }
         }
 
         #endregion
@@ -132,7 +179,7 @@ namespace Cube.Note.App.Editor
             control.VersionDigit = 3;
             control.Description  = string.Empty;
             control.Logo         = Properties.Resources.LogoLarge;
-            control.Url          = Properties.Resources.WebUrl;
+            control.Url          = Properties.Resources.UrlWeb;
             control.Dock         = DockStyle.Fill;
             control.Padding      = new Padding(40, 40, 0, 0);
 
@@ -241,6 +288,42 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DataFolderButton_Click
+        ///
+        /// <summary>
+        /// 各種コントロールの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void DataFolderButton_Click(object sender, EventArgs e)
+        {
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.DataFolderDescription;
+            dialog.ShowNewFolderButton = true;
+            dialog.SelectedPath = DataFolder;
+            if (dialog.ShowDialog() == DialogResult.Cancel ||
+                string.IsNullOrEmpty(dialog.SelectedPath)) return;
+
+            if (!IsWritable(dialog.SelectedPath))
+            {
+                MessageBox.Show(
+                    Properties.Resources.WarnWritable,
+                    Properties.Resources.WarnWritableTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
+            DataFolder = dialog.SelectedPath;
+        }
+
+        #endregion
+
         #region Update methods
 
         /* ----------------------------------------------------------------- */
@@ -338,6 +421,31 @@ namespace Cube.Note.App.Editor
             WordWrapTitleLabel.Enabled         = enable;
             WordWrapAsWindowCheckBox.Enabled   = enable;
             WordWrapCountNumericUpDown.Enabled = cmode;
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsWritable
+        ///
+        /// <summary>
+        /// フォルダが書き込み可能かどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsWritable(string dir)
+        {
+            try
+            {
+                var filename = Guid.NewGuid().ToString("N");
+                var path = IoEx.Path.Combine(dir, filename);
+                using (var dummy = IoEx.File.Create(path, 1, IoEx.FileOptions.DeleteOnClose)) { }
+                return true;
+            }
+            catch { return false; }
         }
 
         #endregion

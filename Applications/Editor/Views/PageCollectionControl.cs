@@ -101,6 +101,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnCreateControl
+        ///
+        /// <summary>
+        /// コントロール生成時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            ActiveControl = Pages;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnKeyDown
         ///
         /// <summary>

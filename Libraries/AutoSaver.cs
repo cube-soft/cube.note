@@ -23,6 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using Cube.Note.Azuki;
+using Cube.Log;
 
 namespace Cube.Note
 {
@@ -54,9 +55,9 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public AutoSaver(PageCollection pages, SettingsFolder settings, EventAggregator events)
         {
-            Pages    = pages;
+            Pages = pages;
             Settings = settings;
-            Events   = events;
+            Events = events;
             Interval = Settings.User.AutoSaveTime;
 
             Settings.Current.PageChanged += Settings_PageChanged;
@@ -166,13 +167,12 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+            => await Task35.Run(()
+            => this.LogException(() =>
         {
-            await Task35.Run(() =>
-            {
-                SaveDocument(Settings.Current.Page);
-                SaveOrderFile();
-            });
-        }
+            SaveDocument(Settings.Current.Page);
+            SaveOrderFile();
+        }));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -185,13 +185,12 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         private async void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
+            => await Task35.Run(()
+            => this.LogException(() =>
         {
-            await Task35.Run(() =>
-            {
-                Settings.User.Page = e.NewValue?.FileName ?? string.Empty;
-                SaveDocument(e.OldValue);
-            });
-        }
+            Settings.User.Page = e.NewValue?.FileName ?? string.Empty;
+            SaveDocument(e.OldValue);
+        }));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -199,14 +198,17 @@ namespace Cube.Note
         /// 
         /// <summary>
         /// Save イベントが発生した時に実行されるハンドラです。
-        /// ハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private async void Save_Handle(object sender, EventArgs e)
         {
             if (Settings.Current.Page == null) return;
-            await Task35.Run(() => SaveDocument(Settings.Current.Page));
+            await Task35.Run(() => this.LogException(() =>
+            {
+                SaveDocument(Settings.Current.Page);
+                SaveOrderFile();
+            }));
         }
 
         /* ----------------------------------------------------------------- */
@@ -238,18 +240,21 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
+            => this.LogException(() =>
         {
             if (_disposed) return;
             _disposed = true;
 
             _timer.Stop();
             Settings.Current.PageChanged -= Settings_PageChanged;
+
             SaveAllDocuments();
             SaveOrderFile();
             SaveSettingsFile();
+            this.LogDebug("SaveOnDispose");
 
             if (disposing) _timer.Dispose();
-        }
+        });
 
         #endregion
 
@@ -268,8 +273,11 @@ namespace Cube.Note
         {
             try
             {
+                this.LogInfo($"DataFolder:\"{Settings.Root}\"");
+
                 if (Pages == null) return;
                 Pages.Load();
+
                 if (!string.IsNullOrEmpty(Settings.User.Page))
                 {
                     var page = Pages.FirstOrDefault(x =>
@@ -279,6 +287,7 @@ namespace Cube.Note
                 }
                 if (Pages.Count <= 0) Pages.NewPage(0);
             }
+            catch (Exception err) { this.LogError(err.Message, err); }
             finally { _timer.Start(); }
         }
 

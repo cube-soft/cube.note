@@ -142,6 +142,23 @@ namespace Cube.Note.Azuki
             return string.Empty;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetSelectedText
+        ///
+        /// <summary>
+        /// 選択中のテキストを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetSelectedText(this Document src)
+        {
+            var begin = 0;
+            var end   = 0;
+            src.GetSelection(out begin, out end);
+            return (begin != end) ? src.GetTextInRange(begin, end) : string.Empty;
+        }
+
         #endregion
 
         #region Others

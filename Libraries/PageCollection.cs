@@ -225,21 +225,23 @@ namespace Cube.Note
         public void Load() => Load(DefaultFileName);
         public void Load(string filename)
         {
-            Tags.Load();
-
-            var order = ToPath(filename);
-            if (!IoEx.File.Exists(order)) return;
-
-            foreach (var page in Settings.Load<List<Page>>(order, FileType))
+            try
             {
-                if (!IoEx.File.Exists(ToPath(page))) continue;
-                Add(page);
-                Tags.Everyone.Increment();
-                if (page.Tags.Count == 0) Tags.Nothing.Increment();
-                else foreach (var tag in page.Tags) Tags.Create(tag).Increment();
-            }
+                Tags.Load();
 
-            OnLoaded(EventArgs.Empty);
+                var order = ToPath(filename);
+                if (!IoEx.File.Exists(order)) return;
+
+                foreach (var page in Settings.Load<List<Page>>(order, FileType))
+                {
+                    if (!IoEx.File.Exists(ToPath(page))) continue;
+                    Add(page);
+                    Tags.Everyone.Increment();
+                    if (page.Tags.Count == 0) Tags.Nothing.Increment();
+                    else foreach (var tag in page.Tags) Tags.Create(tag).Increment();
+                }
+            }
+            finally { OnLoaded(EventArgs.Empty); }
         }
 
         /* ----------------------------------------------------------------- */

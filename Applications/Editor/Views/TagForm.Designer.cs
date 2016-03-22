@@ -29,26 +29,24 @@
         private void InitializeComponent()
         {
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
+            this.NewTagButton = new Cube.Forms.Button();
+            this.RemoveTagButton = new Cube.Forms.Button();
             this.ButtonsPanel = new Cube.Forms.FlowLayoutPanel();
             this.ExitButtonShadow = new System.Windows.Forms.Panel();
             this.ExitButton = new Cube.Forms.Button();
             this.ApplyButtonShadow = new System.Windows.Forms.Panel();
             this.ApplyButton = new Cube.Forms.Button();
-            this.RemoveTagShadow = new System.Windows.Forms.Panel();
-            this.RemoveTagButton = new Cube.Forms.Button();
-            this.NewTagShadow = new System.Windows.Forms.Panel();
-            this.NewTagButton = new Cube.Forms.Button();
             this.NewTagWrapper = new System.Windows.Forms.Panel();
             this.NewTagTextBox = new System.Windows.Forms.TextBox();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.TagsWrapper = new System.Windows.Forms.Panel();
             this.TagsPanel = new Cube.Forms.FlowLayoutPanel();
+            this.SectionLabel = new System.Windows.Forms.Label();
+            this.Separator = new System.Windows.Forms.Panel();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.ExitButtonShadow.SuspendLayout();
             this.ApplyButtonShadow.SuspendLayout();
-            this.RemoveTagShadow.SuspendLayout();
-            this.NewTagShadow.SuspendLayout();
             this.NewTagWrapper.SuspendLayout();
             this.TagsWrapper.SuspendLayout();
             this.SuspendLayout();
@@ -60,23 +58,56 @@
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.LayoutPanel.Controls.Add(this.ButtonsPanel, 0, 3);
-            this.LayoutPanel.Controls.Add(this.RemoveTagShadow, 2, 2);
-            this.LayoutPanel.Controls.Add(this.NewTagShadow, 1, 2);
-            this.LayoutPanel.Controls.Add(this.NewTagWrapper, 0, 2);
+            this.LayoutPanel.Controls.Add(this.NewTagButton, 1, 4);
+            this.LayoutPanel.Controls.Add(this.RemoveTagButton, 2, 4);
+            this.LayoutPanel.Controls.Add(this.ButtonsPanel, 0, 5);
+            this.LayoutPanel.Controls.Add(this.NewTagWrapper, 0, 4);
             this.LayoutPanel.Controls.Add(this.TitleControl, 0, 0);
-            this.LayoutPanel.Controls.Add(this.TagsWrapper, 0, 1);
+            this.LayoutPanel.Controls.Add(this.TagsWrapper, 0, 3);
+            this.LayoutPanel.Controls.Add(this.SectionLabel, 0, 2);
+            this.LayoutPanel.Controls.Add(this.Separator, 0, 1);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(1, 1);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 4;
+            this.LayoutPanel.RowCount = 6;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.LayoutPanel.Size = new System.Drawing.Size(448, 298);
             this.LayoutPanel.TabIndex = 0;
+            // 
+            // NewTagButton
+            // 
+            this.NewTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.NewTagButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.NewTagButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
+            this.NewTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NewTagButton.ForeColor = System.Drawing.Color.White;
+            this.NewTagButton.Location = new System.Drawing.Point(201, 206);
+            this.NewTagButton.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.NewTagButton.Name = "NewTagButton";
+            this.NewTagButton.Size = new System.Drawing.Size(124, 25);
+            this.NewTagButton.TabIndex = 4;
+            this.NewTagButton.Text = "新しいタグを追加";
+            this.NewTagButton.UseVisualStyleBackColor = false;
+            // 
+            // RemoveTagButton
+            // 
+            this.RemoveTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.RemoveTagButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.RemoveTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.RemoveTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RemoveTagButton.ForeColor = System.Drawing.Color.White;
+            this.RemoveTagButton.Location = new System.Drawing.Point(331, 206);
+            this.RemoveTagButton.Margin = new System.Windows.Forms.Padding(3, 8, 16, 3);
+            this.RemoveTagButton.Name = "RemoveTagButton";
+            this.RemoveTagButton.Size = new System.Drawing.Size(101, 25);
+            this.RemoveTagButton.TabIndex = 5;
+            this.RemoveTagButton.Text = "タグを削除";
+            this.RemoveTagButton.UseVisualStyleBackColor = false;
             // 
             // ButtonsPanel
             // 
@@ -144,58 +175,6 @@
             this.ApplyButton.Text = "OK";
             this.ApplyButton.UseVisualStyleBackColor = false;
             // 
-            // RemoveTagShadow
-            // 
-            this.RemoveTagShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.RemoveTagShadow.Controls.Add(this.RemoveTagButton);
-            this.RemoveTagShadow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.RemoveTagShadow.Location = new System.Drawing.Point(331, 206);
-            this.RemoveTagShadow.Margin = new System.Windows.Forms.Padding(3, 8, 16, 3);
-            this.RemoveTagShadow.Name = "RemoveTagShadow";
-            this.RemoveTagShadow.Size = new System.Drawing.Size(101, 27);
-            this.RemoveTagShadow.TabIndex = 12;
-            // 
-            // RemoveTagButton
-            // 
-            this.RemoveTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.RemoveTagButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.RemoveTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.RemoveTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RemoveTagButton.ForeColor = System.Drawing.Color.White;
-            this.RemoveTagButton.Location = new System.Drawing.Point(0, 0);
-            this.RemoveTagButton.Margin = new System.Windows.Forms.Padding(0);
-            this.RemoveTagButton.Name = "RemoveTagButton";
-            this.RemoveTagButton.Size = new System.Drawing.Size(101, 25);
-            this.RemoveTagButton.TabIndex = 5;
-            this.RemoveTagButton.Text = "タグを削除";
-            this.RemoveTagButton.UseVisualStyleBackColor = false;
-            // 
-            // NewTagShadow
-            // 
-            this.NewTagShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.NewTagShadow.Controls.Add(this.NewTagButton);
-            this.NewTagShadow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NewTagShadow.Location = new System.Drawing.Point(201, 206);
-            this.NewTagShadow.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.NewTagShadow.Name = "NewTagShadow";
-            this.NewTagShadow.Size = new System.Drawing.Size(124, 27);
-            this.NewTagShadow.TabIndex = 11;
-            // 
-            // NewTagButton
-            // 
-            this.NewTagButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.NewTagButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NewTagButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.NewTagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.NewTagButton.ForeColor = System.Drawing.Color.White;
-            this.NewTagButton.Location = new System.Drawing.Point(0, 0);
-            this.NewTagButton.Margin = new System.Windows.Forms.Padding(0);
-            this.NewTagButton.Name = "NewTagButton";
-            this.NewTagButton.Size = new System.Drawing.Size(124, 25);
-            this.NewTagButton.TabIndex = 4;
-            this.NewTagButton.Text = "新しいタグを追加";
-            this.NewTagButton.UseVisualStyleBackColor = false;
-            // 
             // NewTagWrapper
             // 
             this.NewTagWrapper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -236,41 +215,64 @@
             this.LayoutPanel.SetColumnSpan(this.TagsWrapper, 3);
             this.TagsWrapper.Controls.Add(this.TagsPanel);
             this.TagsWrapper.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TagsWrapper.Location = new System.Drawing.Point(3, 33);
+            this.TagsWrapper.Location = new System.Drawing.Point(3, 70);
             this.TagsWrapper.Name = "TagsWrapper";
-            this.TagsWrapper.Padding = new System.Windows.Forms.Padding(12, 12, 12, 0);
-            this.TagsWrapper.Size = new System.Drawing.Size(442, 162);
+            this.TagsWrapper.Padding = new System.Windows.Forms.Padding(12, 4, 12, 0);
+            this.TagsWrapper.Size = new System.Drawing.Size(442, 125);
             this.TagsWrapper.TabIndex = 14;
             // 
             // TagsPanel
             // 
             this.TagsPanel.AutoSize = true;
             this.TagsPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TagsPanel.Location = new System.Drawing.Point(12, 12);
+            this.TagsPanel.Location = new System.Drawing.Point(12, 4);
             this.TagsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.TagsPanel.Name = "TagsPanel";
             this.TagsPanel.Size = new System.Drawing.Size(418, 0);
-            this.TagsPanel.TabIndex = 3;
+            this.TagsPanel.TabIndex = 6;
+            // 
+            // SectionLabel
+            // 
+            this.SectionLabel.AutoSize = true;
+            this.LayoutPanel.SetColumnSpan(this.SectionLabel, 3);
+            this.SectionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SectionLabel.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.SectionLabel.Location = new System.Drawing.Point(0, 42);
+            this.SectionLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.SectionLabel.Name = "SectionLabel";
+            this.SectionLabel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.SectionLabel.Size = new System.Drawing.Size(448, 25);
+            this.SectionLabel.TabIndex = 15;
+            this.SectionLabel.Text = "タグの追加と削除";
+            this.SectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Separator
+            // 
+            this.LayoutPanel.SetColumnSpan(this.Separator, 3);
+            this.Separator.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Separator.Location = new System.Drawing.Point(0, 30);
+            this.Separator.Margin = new System.Windows.Forms.Padding(0);
+            this.Separator.Name = "Separator";
+            this.Separator.Size = new System.Drawing.Size(448, 12);
+            this.Separator.TabIndex = 16;
             // 
             // TagForm
             // 
-            this.AcceptButton = this.NewTagButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(450, 300);
             this.Controls.Add(this.LayoutPanel);
-            this.MaximizeBox = true;
+            this.MaximumSize = new System.Drawing.Size(1600, 860);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(350, 180);
             this.Name = "TagForm";
             this.ShowInTaskbar = false;
-            this.Sizable = true;
-            this.Text = "タグの編集";
+            this.Text = "タグの追加と削除";
             this.LayoutPanel.ResumeLayout(false);
+            this.LayoutPanel.PerformLayout();
             this.ButtonsPanel.ResumeLayout(false);
             this.ExitButtonShadow.ResumeLayout(false);
             this.ApplyButtonShadow.ResumeLayout(false);
-            this.RemoveTagShadow.ResumeLayout(false);
-            this.NewTagShadow.ResumeLayout(false);
             this.NewTagWrapper.ResumeLayout(false);
             this.NewTagWrapper.PerformLayout();
             this.TagsWrapper.ResumeLayout(false);
@@ -285,10 +287,6 @@
         private TitleControl TitleControl;
         private System.Windows.Forms.Panel NewTagWrapper;
         private System.Windows.Forms.TextBox NewTagTextBox;
-        private System.Windows.Forms.Panel NewTagShadow;
-        private Forms.Button NewTagButton;
-        private System.Windows.Forms.Panel RemoveTagShadow;
-        private Forms.Button RemoveTagButton;
         private Forms.FlowLayoutPanel ButtonsPanel;
         private System.Windows.Forms.Panel ExitButtonShadow;
         private Forms.Button ExitButton;
@@ -296,5 +294,9 @@
         private Forms.Button ApplyButton;
         private System.Windows.Forms.Panel TagsWrapper;
         private Forms.FlowLayoutPanel TagsPanel;
+        private System.Windows.Forms.Label SectionLabel;
+        private Forms.Button RemoveTagButton;
+        private Forms.Button NewTagButton;
+        private System.Windows.Forms.Panel Separator;
     }
 }

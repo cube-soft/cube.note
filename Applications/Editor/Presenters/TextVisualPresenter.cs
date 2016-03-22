@@ -19,8 +19,8 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using Sgry.Azuki;
+using Cube.Log;
 
 namespace Cube.Note.App.Editor
 {
@@ -53,15 +53,11 @@ namespace Cube.Note.App.Editor
         {
             Model.PropertyChanged += Model_PropertyChanged;
 
-            Sync(() =>
+            Sync(() => this.LogException(() =>
             {
-                try
-                {
-                    Update();
-                    View.ResetViewWidth();
-                }
-                catch (Exception err) { Logger.Error(err); }
-            });
+                Update();
+                View.ResetViewWidth();
+            }));
         }
 
         #endregion
@@ -92,17 +88,12 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            => Sync(()
+            => this.LogException(() =>
         {
-            Sync(() =>
-            {
-                try
-                {
-                    Update(e.PropertyName);
-                    View.ResetViewWidth();
-                }
-                catch (Exception err) { Logger.Error(err); }
-            });
-        }
+            Update(e.PropertyName);
+            View.ResetViewWidth();
+        }));
 
         #endregion
 

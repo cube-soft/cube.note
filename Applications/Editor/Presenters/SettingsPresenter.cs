@@ -20,6 +20,7 @@
 using System;
 using System.Drawing;
 using Cube.Generics;
+using Cube.Log;
 
 namespace Cube.Note.App.Editor
 {
@@ -124,11 +125,18 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// リセットボタンが押下された時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// LastUpdate の項目のみリセット前の状態を受け継ぎます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private async void View_Reset(object sender, EventArgs e)
         {
-            await Async(() => Model.Assign(new SettingsValue()));
+            await Async(() => Model.Assign(new SettingsValue
+            {
+                LastUpdate = Model.LastUpdate
+            }));
             Sync(() => View.Update(Model));
         }
 
@@ -142,28 +150,38 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_PropertyChanged(object sender, KeyValueEventArgs<string, object> e)
+            => this.LogException(() =>
         {
-            try
+            switch (e.Key)
             {
-                switch (e.Key)
-                {
-                    case nameof(Model.Font):
-                        var font = e.Value as Font;
-                        if (font == null) break;
-                        Model.FontName  = font.Name;
-                        Model.FontSize  = font.Size;
-                        Model.FontStyle = font.Style;
-                        break;
-                    case nameof(Model.AutoSaveTime):
-                        Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
-                        break;
-                    default:
-                        SetValue(e.Key, e.Value);
-                        break;
-                }
+                case nameof(Model.Font):
+                    var font = e.Value as Font;
+                    if (font == null) break;
+                    Model.FontName = font.Name;
+                    Model.FontSize = font.Size;
+                    Model.FontStyle = font.Style;
+                    break;
+                case nameof(Model.AutoSaveTime):
+                    Model.AutoSaveTime = TimeSpan.FromSeconds((int)((decimal)e.Value));
+                    break;
+                case nameof(Model.PrintMargin):
+                case "PrintLeftMargin":
+                    Model.PrintMargin.Left = (int)((decimal)e.Value);
+                    break;
+                case "PrintRightMargin":
+                    Model.PrintMargin.Right = (int)((decimal)e.Value);
+                    break;
+                case "PrintTopMargin":
+                    Model.PrintMargin.Top = (int)((decimal)e.Value);
+                    break;
+                case "PrintBottomMargin":
+                    Model.PrintMargin.Bottom = (int)((decimal)e.Value);
+                    break;
+                default:
+                    SetValue(e.Key, e.Value);
+                    break;
             }
-            catch (Exception err) { Logger.Error(err); }
-        }
+        });
 
         #endregion
 

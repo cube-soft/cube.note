@@ -98,14 +98,34 @@
             this.IncludeLineCodeCheckBox = new System.Windows.Forms.CheckBox();
             this.BehaviorTabPage = new System.Windows.Forms.TabPage();
             this.BehaviorSettingsPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.RemoveWarningCheckBox = new System.Windows.Forms.CheckBox();
+            this.TagRemoveWarningCheckBox = new System.Windows.Forms.CheckBox();
+            this.OpenUriCheckBox = new System.Windows.Forms.CheckBox();
+            this.ShowNewsCheckBox = new System.Windows.Forms.CheckBox();
+            this.ShowUpdateCheckBox = new System.Windows.Forms.CheckBox();
+            this.PrintMarginTitleLabel = new System.Windows.Forms.Label();
+            this.PrintLeftMarginTitleLabel = new System.Windows.Forms.Label();
+            this.PrintMarginNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.PrintLeftMarginUnitLabel = new System.Windows.Forms.Label();
+            this.PrintRightMarginTitleLabel = new System.Windows.Forms.Label();
+            this.PrintRightMarginNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.PrintRightMarginUnitLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.PrintTopMarginTitleLabel = new System.Windows.Forms.Label();
+            this.PrintTopMarginNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.PrintTopMarginUnitLabel = new System.Windows.Forms.Label();
+            this.PrintBottomMarginTitleLabel = new System.Windows.Forms.Label();
+            this.PrintBottomMarginNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.PrintBottomMarginUnitLabel = new System.Windows.Forms.Label();
+            this.SearchQueryTitleLabel = new System.Windows.Forms.Label();
+            this.SearchQueryTextBox = new System.Windows.Forms.TextBox();
             this.AutoSaveTimeTitleLabel = new System.Windows.Forms.Label();
             this.AutoSaveTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.AutoSaveTimeUnitLabel = new System.Windows.Forms.Label();
-            this.SearchQueryTitleLabel = new System.Windows.Forms.Label();
-            this.SearchQueryTextBox = new System.Windows.Forms.TextBox();
-            this.RemoveWarningCheckBox = new System.Windows.Forms.CheckBox();
-            this.OpenUriCheckBox = new System.Windows.Forms.CheckBox();
-            this.ShowNewsCheckBox = new System.Windows.Forms.CheckBox();
+            this.DataFolderTitleLabel = new System.Windows.Forms.Label();
+            this.DataFolderTextBox = new System.Windows.Forms.TextBox();
+            this.DataFolderButton = new System.Windows.Forms.Button();
+            this.RestartCheckBox = new System.Windows.Forms.CheckBox();
             this.VersionTabPage = new System.Windows.Forms.TabPage();
             this.TextColorColorButton = new Cube.Forms.ColorButton();
             this.LayoutPanel.SuspendLayout();
@@ -122,6 +142,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.WordWrapCountNumericUpDown)).BeginInit();
             this.BehaviorTabPage.SuspendLayout();
             this.BehaviorSettingsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintMarginNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintRightMarginNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintTopMarginNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintBottomMarginNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoSaveTimeNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -224,6 +248,7 @@
             // ApplyButton
             // 
             this.ApplyButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ApplyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ApplyButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ApplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -590,7 +615,7 @@
             this.VisibleTabPage.Name = "VisibleTabPage";
             this.VisibleTabPage.Size = new System.Drawing.Size(466, 406);
             this.VisibleTabPage.TabIndex = 0;
-            this.VisibleTabPage.Text = "表示オプション";
+            this.VisibleTabPage.Text = "表 示";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
             // 
             // VisibleSettinsPanel
@@ -991,19 +1016,39 @@
             this.BehaviorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.BehaviorTabPage.Size = new System.Drawing.Size(466, 406);
             this.BehaviorTabPage.TabIndex = 4;
-            this.BehaviorTabPage.Text = "動作オプション";
+            this.BehaviorTabPage.Text = "その他";
             this.BehaviorTabPage.UseVisualStyleBackColor = true;
             // 
             // BehaviorSettingsPanel
             // 
+            this.BehaviorSettingsPanel.Controls.Add(this.RemoveWarningCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.TagRemoveWarningCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.OpenUriCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.ShowNewsCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.ShowUpdateCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintMarginTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintLeftMarginTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintMarginNumericUpDown);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintLeftMarginUnitLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintRightMarginTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintRightMarginNumericUpDown);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintRightMarginUnitLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.label5);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintTopMarginTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintTopMarginNumericUpDown);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintTopMarginUnitLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintBottomMarginTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintBottomMarginNumericUpDown);
+            this.BehaviorSettingsPanel.Controls.Add(this.PrintBottomMarginUnitLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTextBox);
             this.BehaviorSettingsPanel.Controls.Add(this.AutoSaveTimeTitleLabel);
             this.BehaviorSettingsPanel.Controls.Add(this.AutoSaveTimeNumericUpDown);
             this.BehaviorSettingsPanel.Controls.Add(this.AutoSaveTimeUnitLabel);
-            this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTitleLabel);
-            this.BehaviorSettingsPanel.Controls.Add(this.SearchQueryTextBox);
-            this.BehaviorSettingsPanel.Controls.Add(this.RemoveWarningCheckBox);
-            this.BehaviorSettingsPanel.Controls.Add(this.OpenUriCheckBox);
-            this.BehaviorSettingsPanel.Controls.Add(this.ShowNewsCheckBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.DataFolderTitleLabel);
+            this.BehaviorSettingsPanel.Controls.Add(this.DataFolderTextBox);
+            this.BehaviorSettingsPanel.Controls.Add(this.DataFolderButton);
+            this.BehaviorSettingsPanel.Controls.Add(this.RestartCheckBox);
             this.BehaviorSettingsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BehaviorSettingsPanel.Location = new System.Drawing.Point(3, 3);
             this.BehaviorSettingsPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -1012,48 +1057,214 @@
             this.BehaviorSettingsPanel.Size = new System.Drawing.Size(460, 400);
             this.BehaviorSettingsPanel.TabIndex = 0;
             // 
-            // AutoSaveTimeTitleLabel
+            // RemoveWarningCheckBox
             // 
-            this.AutoSaveTimeTitleLabel.Location = new System.Drawing.Point(15, 23);
-            this.AutoSaveTimeTitleLabel.Margin = new System.Windows.Forms.Padding(3, 23, 3, 3);
-            this.AutoSaveTimeTitleLabel.Name = "AutoSaveTimeTitleLabel";
-            this.AutoSaveTimeTitleLabel.Size = new System.Drawing.Size(100, 23);
-            this.AutoSaveTimeTitleLabel.TabIndex = 115;
-            this.AutoSaveTimeTitleLabel.Text = "自動保存間隔";
-            this.AutoSaveTimeTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RemoveWarningCheckBox.AutoSize = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.RemoveWarningCheckBox, true);
+            this.RemoveWarningCheckBox.Location = new System.Drawing.Point(15, 23);
+            this.RemoveWarningCheckBox.Margin = new System.Windows.Forms.Padding(3, 23, 3, 3);
+            this.RemoveWarningCheckBox.Name = "RemoveWarningCheckBox";
+            this.RemoveWarningCheckBox.Size = new System.Drawing.Size(218, 19);
+            this.RemoveWarningCheckBox.TabIndex = 0;
+            this.RemoveWarningCheckBox.Text = "ノート削除時に警告メッセージを表示する";
+            this.RemoveWarningCheckBox.UseVisualStyleBackColor = true;
             // 
-            // AutoSaveTimeNumericUpDown
+            // TagRemoveWarningCheckBox
             // 
-            this.AutoSaveTimeNumericUpDown.Location = new System.Drawing.Point(121, 23);
-            this.AutoSaveTimeNumericUpDown.Margin = new System.Windows.Forms.Padding(3, 23, 3, 3);
-            this.AutoSaveTimeNumericUpDown.Minimum = new decimal(new int[] {
+            this.TagRemoveWarningCheckBox.AutoSize = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.TagRemoveWarningCheckBox, true);
+            this.TagRemoveWarningCheckBox.Location = new System.Drawing.Point(15, 48);
+            this.TagRemoveWarningCheckBox.Name = "TagRemoveWarningCheckBox";
+            this.TagRemoveWarningCheckBox.Size = new System.Drawing.Size(209, 19);
+            this.TagRemoveWarningCheckBox.TabIndex = 1;
+            this.TagRemoveWarningCheckBox.Text = "タグ削除時に警告メッセージを表示する";
+            this.TagRemoveWarningCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // OpenUriCheckBox
+            // 
+            this.OpenUriCheckBox.AutoSize = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.OpenUriCheckBox, true);
+            this.OpenUriCheckBox.Location = new System.Drawing.Point(15, 73);
+            this.OpenUriCheckBox.Name = "OpenUriCheckBox";
+            this.OpenUriCheckBox.Size = new System.Drawing.Size(221, 19);
+            this.OpenUriCheckBox.TabIndex = 2;
+            this.OpenUriCheckBox.Text = "URL ダブルクリック時に既定ブラウザで開く";
+            this.OpenUriCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ShowNewsCheckBox
+            // 
+            this.ShowNewsCheckBox.AutoSize = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.ShowNewsCheckBox, true);
+            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 98);
+            this.ShowNewsCheckBox.Name = "ShowNewsCheckBox";
+            this.ShowNewsCheckBox.Size = new System.Drawing.Size(283, 19);
+            this.ShowNewsCheckBox.TabIndex = 3;
+            this.ShowNewsCheckBox.Text = "ステータスバーに Cube ニュースの新着記事を表示する";
+            this.ShowNewsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // CheckUpdateCheckBox
+            // 
+            this.ShowUpdateCheckBox.AutoSize = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.ShowUpdateCheckBox, true);
+            this.ShowUpdateCheckBox.Location = new System.Drawing.Point(15, 123);
+            this.ShowUpdateCheckBox.Name = "ShowUpdateCheckBox";
+            this.ShowUpdateCheckBox.Size = new System.Drawing.Size(191, 19);
+            this.ShowUpdateCheckBox.TabIndex = 4;
+            this.ShowUpdateCheckBox.Text = "ソフトウェアのアップデートを確認する";
+            this.ShowUpdateCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // PrintMarginTitleLabel
+            // 
+            this.PrintMarginTitleLabel.Location = new System.Drawing.Point(15, 152);
+            this.PrintMarginTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintMarginTitleLabel.Name = "PrintMarginTitleLabel";
+            this.PrintMarginTitleLabel.Size = new System.Drawing.Size(100, 23);
+            this.PrintMarginTitleLabel.TabIndex = 118;
+            this.PrintMarginTitleLabel.Text = "印刷時の余白";
+            this.PrintMarginTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintLeftMarginTitleLabel
+            // 
+            this.PrintLeftMarginTitleLabel.Location = new System.Drawing.Point(121, 152);
+            this.PrintLeftMarginTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintLeftMarginTitleLabel.Name = "PrintLeftMarginTitleLabel";
+            this.PrintLeftMarginTitleLabel.Size = new System.Drawing.Size(23, 23);
+            this.PrintLeftMarginTitleLabel.TabIndex = 119;
+            this.PrintLeftMarginTitleLabel.Text = "左";
+            this.PrintLeftMarginTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintMarginNumericUpDown
+            // 
+            this.PrintMarginNumericUpDown.Location = new System.Drawing.Point(150, 152);
+            this.PrintMarginNumericUpDown.Name = "PrintMarginNumericUpDown";
+            this.PrintMarginNumericUpDown.Size = new System.Drawing.Size(60, 23);
+            this.PrintMarginNumericUpDown.TabIndex = 5;
+            this.PrintMarginNumericUpDown.Value = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.AutoSaveTimeNumericUpDown.Name = "AutoSaveTimeNumericUpDown";
-            this.AutoSaveTimeNumericUpDown.Size = new System.Drawing.Size(80, 23);
-            this.AutoSaveTimeNumericUpDown.TabIndex = 0;
-            this.AutoSaveTimeNumericUpDown.Value = new decimal(new int[] {
-            30,
+            // 
+            // PrintLeftMarginUnitLabel
+            // 
+            this.PrintLeftMarginUnitLabel.Location = new System.Drawing.Point(216, 152);
+            this.PrintLeftMarginUnitLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintLeftMarginUnitLabel.Name = "PrintLeftMarginUnitLabel";
+            this.PrintLeftMarginUnitLabel.Size = new System.Drawing.Size(50, 23);
+            this.PrintLeftMarginUnitLabel.TabIndex = 128;
+            this.PrintLeftMarginUnitLabel.Text = "mm";
+            this.PrintLeftMarginUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintRightMarginTitleLabel
+            // 
+            this.PrintRightMarginTitleLabel.Location = new System.Drawing.Point(272, 152);
+            this.PrintRightMarginTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintRightMarginTitleLabel.Name = "PrintRightMarginTitleLabel";
+            this.PrintRightMarginTitleLabel.Size = new System.Drawing.Size(23, 23);
+            this.PrintRightMarginTitleLabel.TabIndex = 121;
+            this.PrintRightMarginTitleLabel.Text = "右";
+            this.PrintRightMarginTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintRightMarginNumericUpDown
+            // 
+            this.PrintRightMarginNumericUpDown.Location = new System.Drawing.Point(301, 152);
+            this.PrintRightMarginNumericUpDown.Name = "PrintRightMarginNumericUpDown";
+            this.PrintRightMarginNumericUpDown.Size = new System.Drawing.Size(60, 23);
+            this.PrintRightMarginNumericUpDown.TabIndex = 6;
+            this.PrintRightMarginNumericUpDown.Value = new decimal(new int[] {
+            10,
             0,
             0,
             0});
             // 
-            // AutoSaveTimeUnitLabel
+            // PrintRightMarginUnitLabel
             // 
-            this.BehaviorSettingsPanel.SetFlowBreak(this.AutoSaveTimeUnitLabel, true);
-            this.AutoSaveTimeUnitLabel.Location = new System.Drawing.Point(207, 23);
-            this.AutoSaveTimeUnitLabel.Margin = new System.Windows.Forms.Padding(3, 23, 3, 3);
-            this.AutoSaveTimeUnitLabel.Name = "AutoSaveTimeUnitLabel";
-            this.AutoSaveTimeUnitLabel.Size = new System.Drawing.Size(100, 23);
-            this.AutoSaveTimeUnitLabel.TabIndex = 116;
-            this.AutoSaveTimeUnitLabel.Text = "秒";
-            this.AutoSaveTimeUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.PrintRightMarginUnitLabel, true);
+            this.PrintRightMarginUnitLabel.Location = new System.Drawing.Point(367, 152);
+            this.PrintRightMarginUnitLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintRightMarginUnitLabel.Name = "PrintRightMarginUnitLabel";
+            this.PrintRightMarginUnitLabel.Size = new System.Drawing.Size(40, 23);
+            this.PrintRightMarginUnitLabel.TabIndex = 130;
+            this.PrintRightMarginUnitLabel.Text = "mm";
+            this.PrintRightMarginUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(15, 181);
+            this.label5.Margin = new System.Windows.Forms.Padding(3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 23);
+            this.label5.TabIndex = 127;
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintTopMarginTitleLabel
+            // 
+            this.PrintTopMarginTitleLabel.Location = new System.Drawing.Point(121, 181);
+            this.PrintTopMarginTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintTopMarginTitleLabel.Name = "PrintTopMarginTitleLabel";
+            this.PrintTopMarginTitleLabel.Size = new System.Drawing.Size(23, 23);
+            this.PrintTopMarginTitleLabel.TabIndex = 123;
+            this.PrintTopMarginTitleLabel.Text = "上";
+            this.PrintTopMarginTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintTopMarginNumericUpDown
+            // 
+            this.PrintTopMarginNumericUpDown.Location = new System.Drawing.Point(150, 181);
+            this.PrintTopMarginNumericUpDown.Name = "PrintTopMarginNumericUpDown";
+            this.PrintTopMarginNumericUpDown.Size = new System.Drawing.Size(60, 23);
+            this.PrintTopMarginNumericUpDown.TabIndex = 7;
+            this.PrintTopMarginNumericUpDown.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // PrintTopMarginUnitLabel
+            // 
+            this.PrintTopMarginUnitLabel.Location = new System.Drawing.Point(216, 181);
+            this.PrintTopMarginUnitLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintTopMarginUnitLabel.Name = "PrintTopMarginUnitLabel";
+            this.PrintTopMarginUnitLabel.Size = new System.Drawing.Size(50, 23);
+            this.PrintTopMarginUnitLabel.TabIndex = 129;
+            this.PrintTopMarginUnitLabel.Text = "mm";
+            this.PrintTopMarginUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintBottomMarginTitleLabel
+            // 
+            this.PrintBottomMarginTitleLabel.Location = new System.Drawing.Point(272, 181);
+            this.PrintBottomMarginTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintBottomMarginTitleLabel.Name = "PrintBottomMarginTitleLabel";
+            this.PrintBottomMarginTitleLabel.Size = new System.Drawing.Size(23, 23);
+            this.PrintBottomMarginTitleLabel.TabIndex = 125;
+            this.PrintBottomMarginTitleLabel.Text = "下";
+            this.PrintBottomMarginTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PrintBottomMarginNumericUpDown
+            // 
+            this.PrintBottomMarginNumericUpDown.Location = new System.Drawing.Point(301, 181);
+            this.PrintBottomMarginNumericUpDown.Name = "PrintBottomMarginNumericUpDown";
+            this.PrintBottomMarginNumericUpDown.Size = new System.Drawing.Size(60, 23);
+            this.PrintBottomMarginNumericUpDown.TabIndex = 8;
+            this.PrintBottomMarginNumericUpDown.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // PrintBottomMarginUnitLabel
+            // 
+            this.BehaviorSettingsPanel.SetFlowBreak(this.PrintBottomMarginUnitLabel, true);
+            this.PrintBottomMarginUnitLabel.Location = new System.Drawing.Point(367, 181);
+            this.PrintBottomMarginUnitLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PrintBottomMarginUnitLabel.Name = "PrintBottomMarginUnitLabel";
+            this.PrintBottomMarginUnitLabel.Size = new System.Drawing.Size(40, 23);
+            this.PrintBottomMarginUnitLabel.TabIndex = 131;
+            this.PrintBottomMarginUnitLabel.Text = "mm";
+            this.PrintBottomMarginUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SearchQueryTitleLabel
             // 
-            this.SearchQueryTitleLabel.Location = new System.Drawing.Point(15, 52);
+            this.SearchQueryTitleLabel.Location = new System.Drawing.Point(15, 210);
             this.SearchQueryTitleLabel.Margin = new System.Windows.Forms.Padding(3);
             this.SearchQueryTitleLabel.Name = "SearchQueryTitleLabel";
             this.SearchQueryTitleLabel.Size = new System.Drawing.Size(100, 23);
@@ -1064,44 +1275,90 @@
             // SearchQueryTextBox
             // 
             this.BehaviorSettingsPanel.SetFlowBreak(this.SearchQueryTextBox, true);
-            this.SearchQueryTextBox.Location = new System.Drawing.Point(121, 52);
+            this.SearchQueryTextBox.Location = new System.Drawing.Point(121, 210);
             this.SearchQueryTextBox.Name = "SearchQueryTextBox";
             this.SearchQueryTextBox.Size = new System.Drawing.Size(300, 23);
-            this.SearchQueryTextBox.TabIndex = 1;
+            this.SearchQueryTextBox.TabIndex = 9;
             // 
-            // RemoveWarningCheckBox
+            // AutoSaveTimeTitleLabel
             // 
-            this.RemoveWarningCheckBox.AutoSize = true;
-            this.BehaviorSettingsPanel.SetFlowBreak(this.RemoveWarningCheckBox, true);
-            this.RemoveWarningCheckBox.Location = new System.Drawing.Point(15, 90);
-            this.RemoveWarningCheckBox.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
-            this.RemoveWarningCheckBox.Name = "RemoveWarningCheckBox";
-            this.RemoveWarningCheckBox.Size = new System.Drawing.Size(218, 19);
-            this.RemoveWarningCheckBox.TabIndex = 2;
-            this.RemoveWarningCheckBox.Text = "ノート削除時に警告メッセージを表示する";
-            this.RemoveWarningCheckBox.UseVisualStyleBackColor = true;
+            this.AutoSaveTimeTitleLabel.Location = new System.Drawing.Point(15, 239);
+            this.AutoSaveTimeTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.AutoSaveTimeTitleLabel.Name = "AutoSaveTimeTitleLabel";
+            this.AutoSaveTimeTitleLabel.Size = new System.Drawing.Size(100, 23);
+            this.AutoSaveTimeTitleLabel.TabIndex = 154;
+            this.AutoSaveTimeTitleLabel.Text = "自動保存間隔";
+            this.AutoSaveTimeTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // OpenUriCheckBox
+            // AutoSaveTimeNumericUpDown
             // 
-            this.OpenUriCheckBox.AutoSize = true;
-            this.BehaviorSettingsPanel.SetFlowBreak(this.OpenUriCheckBox, true);
-            this.OpenUriCheckBox.Location = new System.Drawing.Point(15, 115);
-            this.OpenUriCheckBox.Name = "OpenUriCheckBox";
-            this.OpenUriCheckBox.Size = new System.Drawing.Size(221, 19);
-            this.OpenUriCheckBox.TabIndex = 3;
-            this.OpenUriCheckBox.Text = "URL ダブルクリック時に既定ブラウザで開く";
-            this.OpenUriCheckBox.UseVisualStyleBackColor = true;
+            this.AutoSaveTimeNumericUpDown.Location = new System.Drawing.Point(121, 239);
+            this.AutoSaveTimeNumericUpDown.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.AutoSaveTimeNumericUpDown.Name = "AutoSaveTimeNumericUpDown";
+            this.AutoSaveTimeNumericUpDown.Size = new System.Drawing.Size(90, 23);
+            this.AutoSaveTimeNumericUpDown.TabIndex = 10;
+            this.AutoSaveTimeNumericUpDown.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             // 
-            // ShowNewsCheckBox
+            // AutoSaveTimeUnitLabel
             // 
-            this.ShowNewsCheckBox.AutoSize = true;
-            this.BehaviorSettingsPanel.SetFlowBreak(this.ShowNewsCheckBox, true);
-            this.ShowNewsCheckBox.Location = new System.Drawing.Point(15, 140);
-            this.ShowNewsCheckBox.Name = "ShowNewsCheckBox";
-            this.ShowNewsCheckBox.Size = new System.Drawing.Size(283, 19);
-            this.ShowNewsCheckBox.TabIndex = 4;
-            this.ShowNewsCheckBox.Text = "ステータスバーに Cube ニュースの新着記事を表示する";
-            this.ShowNewsCheckBox.UseVisualStyleBackColor = true;
+            this.BehaviorSettingsPanel.SetFlowBreak(this.AutoSaveTimeUnitLabel, true);
+            this.AutoSaveTimeUnitLabel.Location = new System.Drawing.Point(217, 239);
+            this.AutoSaveTimeUnitLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.AutoSaveTimeUnitLabel.Name = "AutoSaveTimeUnitLabel";
+            this.AutoSaveTimeUnitLabel.Size = new System.Drawing.Size(100, 23);
+            this.AutoSaveTimeUnitLabel.TabIndex = 155;
+            this.AutoSaveTimeUnitLabel.Text = "秒";
+            this.AutoSaveTimeUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DataFolderTitleLabel
+            // 
+            this.DataFolderTitleLabel.Location = new System.Drawing.Point(15, 268);
+            this.DataFolderTitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.DataFolderTitleLabel.Name = "DataFolderTitleLabel";
+            this.DataFolderTitleLabel.Size = new System.Drawing.Size(100, 23);
+            this.DataFolderTitleLabel.TabIndex = 156;
+            this.DataFolderTitleLabel.Text = "データフォルダ";
+            this.DataFolderTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DataFolderTextBox
+            // 
+            this.DataFolderTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.DataFolderTextBox.Location = new System.Drawing.Point(121, 268);
+            this.DataFolderTextBox.Name = "DataFolderTextBox";
+            this.DataFolderTextBox.ReadOnly = true;
+            this.DataFolderTextBox.Size = new System.Drawing.Size(244, 23);
+            this.DataFolderTextBox.TabIndex = 11;
+            // 
+            // DataFolderButton
+            // 
+            this.DataFolderButton.Location = new System.Drawing.Point(371, 267);
+            this.DataFolderButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DataFolderButton.Name = "DataFolderButton";
+            this.DataFolderButton.Size = new System.Drawing.Size(50, 25);
+            this.DataFolderButton.TabIndex = 12;
+            this.DataFolderButton.Text = "...";
+            this.DataFolderButton.UseVisualStyleBackColor = true;
+            // 
+            // RestartCheckBox
+            // 
+            this.RestartCheckBox.AutoSize = true;
+            this.RestartCheckBox.Checked = true;
+            this.RestartCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.RestartCheckBox.Location = new System.Drawing.Point(121, 297);
+            this.RestartCheckBox.Margin = new System.Windows.Forms.Padding(109, 3, 3, 3);
+            this.RestartCheckBox.Name = "RestartCheckBox";
+            this.RestartCheckBox.Size = new System.Drawing.Size(293, 19);
+            this.RestartCheckBox.TabIndex = 13;
+            this.RestartCheckBox.Text = "フォルダの変更後、自動的にアプリケーションを再起動する";
+            this.RestartCheckBox.UseVisualStyleBackColor = true;
             // 
             // VersionTabPage
             // 
@@ -1131,11 +1388,11 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(500, 560);
             this.Controls.Add(this.LayoutPanel);
-            this.MaximizeBox = true;
+            this.MaximumSize = new System.Drawing.Size(1920, 1160);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(480, 320);
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
-            this.Sizable = true;
             this.Text = "CubeNote 設定";
             this.LayoutPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
@@ -1153,6 +1410,10 @@
             this.BehaviorTabPage.ResumeLayout(false);
             this.BehaviorSettingsPanel.ResumeLayout(false);
             this.BehaviorSettingsPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintMarginNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintRightMarginNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintTopMarginNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrintBottomMarginNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoSaveTimeNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
@@ -1231,14 +1492,34 @@
         private System.Windows.Forms.Label UriColorLabel;
         private System.Windows.Forms.TabPage BehaviorTabPage;
         private System.Windows.Forms.FlowLayoutPanel BehaviorSettingsPanel;
-        private System.Windows.Forms.Label AutoSaveTimeTitleLabel;
-        private System.Windows.Forms.NumericUpDown AutoSaveTimeNumericUpDown;
-        private System.Windows.Forms.Label AutoSaveTimeUnitLabel;
         private System.Windows.Forms.CheckBox RemoveWarningCheckBox;
         private System.Windows.Forms.CheckBox OpenUriCheckBox;
         private System.Windows.Forms.CheckBox ShowNewsCheckBox;
         private System.Windows.Forms.Label SearchQueryTitleLabel;
         private System.Windows.Forms.TextBox SearchQueryTextBox;
         private System.Windows.Forms.CheckBox IncludeLineCodeCheckBox;
+        private System.Windows.Forms.Label PrintMarginTitleLabel;
+        private System.Windows.Forms.Label PrintLeftMarginTitleLabel;
+        private System.Windows.Forms.NumericUpDown PrintMarginNumericUpDown;
+        private System.Windows.Forms.Label PrintLeftMarginUnitLabel;
+        private System.Windows.Forms.Label PrintRightMarginTitleLabel;
+        private System.Windows.Forms.NumericUpDown PrintRightMarginNumericUpDown;
+        private System.Windows.Forms.Label PrintRightMarginUnitLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label PrintTopMarginTitleLabel;
+        private System.Windows.Forms.NumericUpDown PrintTopMarginNumericUpDown;
+        private System.Windows.Forms.Label PrintTopMarginUnitLabel;
+        private System.Windows.Forms.Label PrintBottomMarginTitleLabel;
+        private System.Windows.Forms.NumericUpDown PrintBottomMarginNumericUpDown;
+        private System.Windows.Forms.Label PrintBottomMarginUnitLabel;
+        private System.Windows.Forms.Label AutoSaveTimeTitleLabel;
+        private System.Windows.Forms.NumericUpDown AutoSaveTimeNumericUpDown;
+        private System.Windows.Forms.Label AutoSaveTimeUnitLabel;
+        private System.Windows.Forms.Label DataFolderTitleLabel;
+        private System.Windows.Forms.TextBox DataFolderTextBox;
+        private System.Windows.Forms.Button DataFolderButton;
+        private System.Windows.Forms.CheckBox RestartCheckBox;
+        private System.Windows.Forms.CheckBox TagRemoveWarningCheckBox;
+        private System.Windows.Forms.CheckBox ShowUpdateCheckBox;
     }
 }

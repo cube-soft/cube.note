@@ -126,6 +126,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public void ResetViewWidth()
         {
+            if (_disposed) return;
             ViewWidth = WordWrapCount > 0 ?
                         WordWrapCount * View.HRulerUnitWidth :
                         ClientSize.Width;
@@ -150,6 +151,21 @@ namespace Cube.Note.App.Editor
             Report();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _disposed = true;
+        }
+
         #endregion
 
         #region Others
@@ -165,7 +181,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Report()
         {
-            if (Status == null) return;
+            if (Status == null || _disposed) return;
 
             var count     = (Document != null) ? Document.Length : 0;
             var lineCount = (Document != null) ? Document.LineCount : 0;
@@ -180,6 +196,10 @@ namespace Cube.Note.App.Editor
             Status.ColumnNumber = column + 1;
         }
 
+        #endregion
+
+        #region Fields
+        private bool _disposed = false;
         #endregion
     }
 }

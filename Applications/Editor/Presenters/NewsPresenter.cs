@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Timers;
+using Cube.Log;
 
 namespace Cube.Note.App.Editor
 {
@@ -54,18 +55,14 @@ namespace Cube.Note.App.Editor
             Settings.User.PropertyChanged += Settings_UserChanged;
             Settings.Current.PageChanged += Settings_PageChanged;
 
-            Remover.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
-            Remover.Elapsed += (s, e) =>
-            {
-                if (Model.Result.Count <= 1) return;
-                Model.Result.RemoveAt(0);
-            };
+            Remover.Interval = TimeSpan.FromMinutes(1).TotalMilliseconds;
+            Remover.Elapsed += Remover_Elapsed;
 
             View.UriClick += View_UriClick;
 
             Model.ResultChanged += Model_ResultChanged;
             Model.Interval = TimeSpan.FromMinutes(5);
-            Model.InitialDelay = TimeSpan.FromSeconds(0);
+            Model.InitialDelay = TimeSpan.FromSeconds(5);
             Model.Start();
         }
 
@@ -100,12 +97,14 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Settings_UserChanged(object sender, PropertyChangedEventArgs e)
+            => this.LogException(() =>
         {
             if (e.PropertyName != nameof(Settings.User.ShowNews)) return;
+
             UpdateNews();
             if (Settings.User.ShowNews) Model.Start();
             else Model.Stop();
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -117,7 +116,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
-            => UpdateNews();
+            => this.LogException(() => UpdateNews());
 
         #endregion
 
@@ -148,12 +147,36 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Model_ResultChanged(object sender, ValueEventArgs<IList<Cube.Net.News.Article>> e)
+        private void Model_ResultChanged(object sender,
+            ValueEventArgs<IList<Cube.Net.News.Article>> e)
+            => this.LogException(() =>
         {
-            Logger.Debug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
+            this.LogDebug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
+
+            UpdateNews(true);
             Remover.Stop();
             Remover.Start();
-        }
+        });
+
+        #endregion
+
+        #region Remover
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remover_Elapsed
+        ///
+        /// <summary>
+        /// 一定間隔で実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Remover_Elapsed(object sender, ElapsedEventArgs e)
+            => this.LogException(() =>
+        {
+            if (Model.Result.Count <= 1) return;
+            Model.Result.RemoveAt(0);
+        });
 
         #endregion
 
@@ -168,10 +191,17 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// ニュース記事を更新します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 引数に true を設定した場合、ニュースが何も表示されていない時のみ
+        /// 更新します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateNews() => SyncWait(() =>
+        private void UpdateNews(bool onlyEmpty = false) => SyncWait(() =>
         {
+            if (onlyEmpty && View.Uri != null) return;
+
             var visible  = Settings.User.ShowNews && Model.Result.Count > 0;
             View.Message = visible ?
                            string.Format(Properties.Resources.NewsFormat, Model.Result[0].Title) :

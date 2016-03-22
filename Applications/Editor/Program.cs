@@ -61,6 +61,7 @@ namespace Cube.Note.App.Editor
                 Application.SetCompatibleTextRenderingDefault(false);
                 var form = new MainForm();
                 form.Bootstrap = bootstrap;
+                form.Activator = new Cube.Net.Update.SoftwareActivator(args);
                 Application.Run(form);
             }
         }
@@ -76,13 +77,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         static void InitLog()
         {
-            log4net.Config.XmlConfigurator.Configure();
+            var reader  = new AssemblyReader(Assembly.GetExecutingAssembly());
+            var edition = (IntPtr.Size == 4) ? "x86" : "x64";
+            var type = typeof(Program);
 
-            var logger = log4net.LogManager.GetLogger(typeof(Program));
-            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
-            logger.Info($"{reader.Product} {reader.Version}");
-            logger.Info($"{Environment.OSVersion}");
-            logger.Info($"{Environment.Version}");
+            Cube.Log.Operations.Configure();
+            Cube.Log.Operations.Info(type, $"{reader.Product} {reader.Version} ({edition})");
+            Cube.Log.Operations.Info(type, $"{Environment.OSVersion}");
+            Cube.Log.Operations.Info(type, $"{Environment.Version}");
         }
     }
 }

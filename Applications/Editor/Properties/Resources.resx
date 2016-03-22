@@ -133,6 +133,9 @@
   <data name="CurrentNote" xml:space="preserve">
     <value>現在のノート</value>
   </data>
+  <data name="DataFolderDescription" xml:space="preserve">
+    <value>CubeNote のデータを保存するためのフォルダを選択して下さい。この変更は、アプリケーションの次回起動時から適用されます。また、現在のフォルダに存在するデータは新しいフォルダにはコピーされません。</value>
+  </data>
   <data name="EditTag" xml:space="preserve">
     <value>タグの追加と削除 ...</value>
   </data>
@@ -218,7 +221,7 @@
     <value>..\Resources\Minimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NewsFormat" xml:space="preserve">
-    <value>ニュース：{0}</value>
+    <value>ニュース： {0}</value>
   </data>
   <data name="Normalize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Normalize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -316,13 +319,30 @@
   <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UrlUpdate" xml:space="preserve">
+    <value>http://www.cube-soft.jp/cubenote/update.php</value>
+  </data>
+  <data name="UrlWeb" xml:space="preserve">
+    <value>http://www.cube-soft.jp/</value>
+  </data>
   <data name="WarnRemove" xml:space="preserve">
     <value>このノートを削除しますか？</value>
   </data>
   <data name="WarnRemoveTitle" xml:space="preserve">
     <value>ノートの削除</value>
   </data>
-  <data name="WebUrl" xml:space="preserve">
-    <value>http://www.cube-soft.jp/</value>
+  <data name="WarnTagRemove" xml:space="preserve">
+    <value>タグを削除しますか？キャンセルする場合は、「いいえ」を選択した後に「キャンセル」ボタンを押して下さい。
+
+この操作によって、タグ付されているノートが削除される事はありません。</value>
+  </data>
+  <data name="WarnTagRemoveTitle" xml:space="preserve">
+    <value>タグの削除</value>
+  </data>
+  <data name="WarnWritable" xml:space="preserve">
+    <value>指定されたフォルダにファイルを書き込めませんでした。書き込み可能なフォルダを選択して下さい。</value>
+  </data>
+  <data name="WarnWritableTitle" xml:space="preserve">
+    <value>CubeNote エラー</value>
   </data>
 </root>

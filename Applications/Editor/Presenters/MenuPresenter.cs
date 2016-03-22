@@ -20,7 +20,11 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Drawing.Printing;
 using Cube.Conversions;
+using Cube.Log;
+using Cube.Note.Azuki;
 
 namespace Cube.Note.App.Editor
 {
@@ -83,9 +87,35 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Print_Handle(object sender, EventArgs e)
+            => SyncWait(() =>
         {
-            // TODO: implementations
-        }
+            var dialog = CreatePrintDialog();
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            var text = GetText(dialog.PrinterSettings.PrintRange == PrintRange.Selection);
+            if (text == null) return;
+
+            var document = new PrintDocument();
+            document.DocumentName = Settings.Current.Page.Abstract;
+            document.PrinterSettings = dialog.PrinterSettings;
+            document.DefaultPageSettings.Margins = CreateMargins(Settings.User.PrintMargin);
+            document.PrintPage += (s, ev) =>
+            {
+                var font   = Settings.User.Font;
+                var bounds = ev.MarginBounds;
+                var format = StringFormat.GenericTypographic;
+                var brush  = Brushes.Black;
+                var offset = 0;
+                var lines  = 0;
+
+                ev.Graphics.MeasureString(text, font, bounds.Size, format, out offset, out lines);
+                ev.Graphics.DrawString(text, font, brush, bounds, format);
+
+                text = text.Substring(offset);
+                ev.HasMorePages = (text.Length > 0);
+            };
+            document.Print();
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,15 +127,12 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Web_Handle(object sender, ValueEventArgs<string> e)
+            => this.LogException(() =>
         {
-            try
-            {
-                if (string.IsNullOrEmpty(e.Value)) return;
-                var uri = new Uri(e.Value).With(Settings.UriQuery);
-                System.Diagnostics.Process.Start(uri.ToString());
-            }
-            catch (Exception err) { Logger.Error(err); }
-        }
+            if (string.IsNullOrEmpty(e.Value)) return;
+            var uri = new Uri(e.Value).With(Settings.UriQuery);
+            System.Diagnostics.Process.Start(uri.ToString());
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -136,7 +163,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_LogoMenu(object sender, EventArgs e)
-            => Events.Web.Raise(ValueEventArgs.Create(Properties.Resources.WebUrl));
+            => Events.Web.Raise(ValueEventArgs.Create(Properties.Resources.UrlWeb));
 
         #endregion
 
@@ -151,8 +178,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Settings_CurrentChanged(object sender,
-            PropertyChangedEventArgs e) => Sync(() =>
+        private void Settings_CurrentChanged(object sender, PropertyChangedEventArgs e)
+            => Sync(() =>
         {
             switch (e.PropertyName)
             {
@@ -175,6 +202,65 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetText
+        /// 
+        /// <summary>
+        /// テキストを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetText(bool selection)
+        {
+            var page = Settings.Current.Page;
+            if (page == null) return null;
+
+            var document = page.Document as Sgry.Azuki.Document;
+            if (document == null) return null;
+
+            return selection ? document.GetSelectedText() : document.Text;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreatePrintDialog
+        /// 
+        /// <summary>
+        /// PrintDialog オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PrintDialog CreatePrintDialog() => new PrintDialog
+        {
+            AllowPrintToFile = false,
+            AllowSelection   = true,
+            UseEXDialog      = true
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMargins
+        /// 
+        /// <summary>
+        /// Margins オブジェクトを生成します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// GUI 等の都合で Settings.User.PrintMargin は mm 単位で値を保持して
+        /// います。そこで、実際に値を適用する時に 1/100 インチ単位に変換します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Margins CreateMargins(Margins src) => new Margins
+        {
+            // mm -> 1/100 inch (1 inch = 25.4 mm)
+            Left   = (int)(src.Left   / 0.254f),
+            Right  = (int)(src.Right  / 0.254f),
+            Top    = (int)(src.Top    / 0.254f),
+            Bottom = (int)(src.Bottom / 0.254f)
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ShowSettings
         /// 
         /// <summary>
@@ -188,9 +274,15 @@ namespace Cube.Note.App.Editor
             var dialog = new SettingsForm(Settings.User, index);
             using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
             {
-                dialog.ShowDialog();
+                dialog.DataFolder = Settings.Root;
+                var result = dialog.ShowDialog();
                 Events.Refresh.Raise();
+                if (result == DialogResult.Cancel) return;
             }
+
+            if (dialog.DataFolder == Settings.Root) return;
+            Settings.SaveRoot(dialog.DataFolder);
+            if (dialog.RestartRequired) Application.Restart();
         });
 
         /* ----------------------------------------------------------------- */
@@ -206,6 +298,7 @@ namespace Cube.Note.App.Editor
             => Sync(() =>
         {
             var dialog = new TagForm(Model.Tags);
+            dialog.FormClosing += (s, e) => e.Cancel = IsRemoveCancel(s);
             dialog.ShowDialog();
             if (dialog.DialogResult == DialogResult.Cancel) return;
 
@@ -218,6 +311,34 @@ namespace Cube.Note.App.Editor
                 foreach (var tag in remove) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
             });
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsRemoveCancel
+        /// 
+        /// <summary>
+        /// キャンセルされたかどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsRemoveCancel(object sender)
+        {
+            var dialog = sender as TagForm;
+            if (dialog == null) return false;
+
+            if (dialog.DialogResult == DialogResult.Cancel ||
+                dialog.RemoveTags.Count <= 0 ||
+                !Settings.User.TagRemoveWarning) return false;
+
+            var result = MessageBox.Show(
+                Properties.Resources.WarnTagRemove,
+                Properties.Resources.WarnTagRemoveTitle,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button1
+            );
+            return result == DialogResult.No;
+        }
 
         #endregion
     }

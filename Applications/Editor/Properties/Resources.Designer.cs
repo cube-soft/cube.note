@@ -108,6 +108,15 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   CubeNote のデータを保存するためのフォルダを選択して下さい。この変更は、アプリケーションの次回起動時から適用されます。また、現在のフォルダに存在するデータは新しいフォルダにはコピーされません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DataFolderDescription {
+            get {
+                return ResourceManager.GetString("DataFolderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   タグの追加と削除 ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string EditTag {
@@ -367,7 +376,7 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   ニュース：{0} に類似しているローカライズされた文字列を検索します。
+        ///   ニュース： {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NewsFormat {
             get {
@@ -675,6 +684,24 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   http://www.cube-soft.jp/cubenote/update.php に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UrlUpdate {
+            get {
+                return ResourceManager.GetString("UrlUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UrlWeb {
+            get {
+                return ResourceManager.GetString("UrlWeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   このノートを削除しますか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string WarnRemove {
@@ -693,11 +720,40 @@ namespace Cube.Note.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
+        ///   タグを削除しますか？キャンセルする場合は、「いいえ」を選択した後に「キャンセル」ボタンを押して下さい。
+        ///
+        ///この操作によって、タグ付されているノートが削除される事はありません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string WebUrl {
+        internal static string WarnTagRemove {
             get {
-                return ResourceManager.GetString("WebUrl", resourceCulture);
+                return ResourceManager.GetString("WarnTagRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグの削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnTagRemoveTitle {
+            get {
+                return ResourceManager.GetString("WarnTagRemoveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定されたフォルダにファイルを書き込めませんでした。書き込み可能なフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnWritable {
+            get {
+                return ResourceManager.GetString("WarnWritable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubeNote エラー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WarnWritableTitle {
+            get {
+                return ResourceManager.GetString("WarnWritableTitle", resourceCulture);
             }
         }
     }

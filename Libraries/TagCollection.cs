@@ -290,9 +290,12 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public void Load()
         {
-            if (!IoEx.File.Exists(Path)) return;
-            foreach (var name in Settings.Load<List<string>>(Path, FileType)) Create(name);
-            OnLoaded(EventArgs.Empty);
+            try
+            {
+                if (!IoEx.File.Exists(Path)) return;
+                foreach (var name in Settings.Load<List<string>>(Path, FileType)) Create(name);
+            }
+            finally { OnLoaded(EventArgs.Empty); }
         }
 
         /* ----------------------------------------------------------------- */
