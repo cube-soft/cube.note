@@ -125,11 +125,18 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// リセットボタンが押下された時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// LastUpdate の項目のみリセット前の状態を受け継ぎます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private async void View_Reset(object sender, EventArgs e)
         {
-            await Async(() => Model.Assign(new SettingsValue()));
+            await Async(() => Model.Assign(new SettingsValue
+            {
+                LastUpdate = Model.LastUpdate
+            }));
             Sync(() => View.Update(Model));
         }
 
