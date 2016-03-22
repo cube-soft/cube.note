@@ -209,6 +209,9 @@ namespace Cube.Note.App.Editor
                 case nameof(Model.IncludeLineCode):
                     View.IncludeLineCount = Model.IncludeLineCode;
                     break;
+                case nameof(Model.OpenUri):
+                    UpdateLinkCursor();
+                    break;
                 default:
                     break;
             }
@@ -257,6 +260,21 @@ namespace Cube.Note.App.Editor
                 View.ViewType      = ViewType.Proportional;
                 View.WordWrapCount = -1;
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLinkCursor
+        ///
+        /// <summary>
+        /// リンク部分のマウスカーソルを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateLinkCursor()
+        {
+            var info = Marking.GetMarkingInfo(Marking.Uri);
+            info.MouseCursor = Model.OpenUri ? MouseCursor.Hand : MouseCursor.IBeam;
         }
 
         #endregion

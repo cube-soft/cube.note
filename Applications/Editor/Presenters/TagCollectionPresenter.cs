@@ -121,6 +121,7 @@ namespace Cube.Note.App.Editor
             SyncWait(() =>
             {
                 var dialog = new PropertyForm(page, Model);
+                dialog.StartPosition = FormStartPosition.CenterParent;
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
                 this.LogException(() =>
