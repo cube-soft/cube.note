@@ -275,6 +275,7 @@ namespace Cube.Note.App.Editor
             using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
             {
                 dialog.DataFolder = Settings.Root;
+                dialog.StartPosition = FormStartPosition.CenterParent;
                 var result = dialog.ShowDialog();
                 Events.Refresh.Raise();
                 if (result == DialogResult.Cancel) return;
