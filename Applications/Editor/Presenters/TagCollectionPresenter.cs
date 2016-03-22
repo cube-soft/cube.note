@@ -423,7 +423,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void ViewReset(Tag init = null) => SyncWait(() =>
         {
-            var index = init == null ? 1 :
+            var index = init == null ? 0 :
                         init == Model.Everyone ? 0 :
                         init == Model.Nothing  ? 1 :
                         Model.IndexOf(init) + Model.SystemTagCount;
