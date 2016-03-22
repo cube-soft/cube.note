@@ -49,9 +49,9 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public UpdatePresenter(NotifyIcon view, SettingsFolder settings,
-            EventAggregator events, bool activate = false)
-            : base(view, new MessageMonitor(), settings, events)
+        public UpdatePresenter(NotifyIcon view, SoftwareActivator activator,
+            SettingsFolder settings, EventAggregator events)
+            : base(view, new MessageMonitor(activator), settings, events)
         {
             Settings.User.PropertyChanged += Settings_UserChanged;
             View.Click += View_Click;
@@ -61,10 +61,14 @@ namespace Cube.Note.App.Editor
             Model.Execute += Model_Execute;
             Model.Received += Model_Received;
             Model.EndPoint = new Uri(Properties.Resources.UrlUpdate);
-            Model.Version = reader.Version;
-            Model.VersionDigit = 3;
-            Model.OneTimeActivation = activate;
-            Update();
+            Model.Version = new SoftwareVersion
+            {
+                Number    = reader.Version,
+                Available = 3,
+                Postfix   = string.Empty
+            };
+
+            Update(activator != null && activator.Required);
         }
 
         #endregion
@@ -169,11 +173,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Update() => this.LogException(() =>
+        private void Update(bool activate = false) => this.LogException(() =>
         {
             if (Settings.User.ShowUpdate)
             {
-                Model.InitialDelay = InitialDelay();
+                Model.InitialDelay = InitialDelay(activate);
                 Model.Start();
             }
             else Model.Stop();
@@ -188,12 +192,12 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private TimeSpan InitialDelay()
+        private TimeSpan InitialDelay(bool activate)
         {
             var minimum = TimeSpan.FromSeconds(30);
             var diff    = DateTime.Now - Settings.User.LastUpdate;
-            var delay   = TimeSpan.FromDays(1) - diff;
-            return delay > minimum ? delay : minimum;
+            var value   = TimeSpan.FromDays(1) - diff;
+            return (activate || value < minimum) ? minimum : value;
         }
 
         #endregion

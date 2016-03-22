@@ -173,13 +173,26 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeNetworkPresenters()
         {
-            new UpdatePresenter(NotifyIcon, /* Monitor, */ Settings, Aggregator);
+            new UpdatePresenter(NotifyIcon, Activator, Settings, Aggregator);
             new NewsPresenter(FooterStatusControl, Settings, Aggregator);
         }
 
         #endregion
 
         #region Properties
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Activator
+        /// 
+        /// <summary>
+        /// ソフトウェアのアクティブ化を行うためのオブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Cube.Net.Update.SoftwareActivator Activator { get; set; }
 
         /* --------------------------------------------------------------------- */
         ///

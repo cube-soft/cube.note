@@ -61,6 +61,7 @@ namespace Cube.Note.App.Editor
                 Application.SetCompatibleTextRenderingDefault(false);
                 var form = new MainForm();
                 form.Bootstrap = bootstrap;
+                form.Activator = new Cube.Net.Update.SoftwareActivator(args);
                 Application.Run(form);
             }
         }
