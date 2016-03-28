@@ -63,6 +63,8 @@ namespace Cube.Note.App.Editor
             Model.ResultChanged += Model_ResultChanged;
             Model.Interval = TimeSpan.FromMinutes(5);
             Model.InitialDelay = TimeSpan.FromSeconds(5);
+            Model.Timeout = TimeSpan.FromSeconds(5);
+            Model.RetryInterval = TimeSpan.FromSeconds(10);
             Model.Version = Settings.Version;
             Model.Start();
         }
