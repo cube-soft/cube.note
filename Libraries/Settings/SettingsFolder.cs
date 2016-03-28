@@ -151,6 +151,29 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Version
+        ///
+        /// <summary>
+        /// バージョン情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SoftwareVersion Version
+        {
+            get
+            {
+                var reader = new AssemblyReader(Assembly);
+                return new SoftwareVersion
+                {
+                    Number = reader?.Version ?? new System.Version(1, 0, 0, 0),
+                    Digit  = 3,
+                    Suffix = "β"
+                };
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Root
         ///
         /// <summary>

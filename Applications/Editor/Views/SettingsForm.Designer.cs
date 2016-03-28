@@ -293,7 +293,7 @@
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.Size = new System.Drawing.Size(466, 406);
             this.GeneralTabPage.TabIndex = 3;
-            this.GeneralTabPage.Text = "一 般";
+            this.GeneralTabPage.Text = " 一般 ";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
             // 
             // GeneralSettingsPanel
@@ -615,7 +615,7 @@
             this.VisibleTabPage.Name = "VisibleTabPage";
             this.VisibleTabPage.Size = new System.Drawing.Size(466, 406);
             this.VisibleTabPage.TabIndex = 0;
-            this.VisibleTabPage.Text = "表 示";
+            this.VisibleTabPage.Text = " 表示 ";
             this.VisibleTabPage.UseVisualStyleBackColor = true;
             // 
             // VisibleSettinsPanel
@@ -1102,7 +1102,7 @@
             this.ShowNewsCheckBox.Text = "ステータスバーに Cube ニュースの新着記事を表示する";
             this.ShowNewsCheckBox.UseVisualStyleBackColor = true;
             // 
-            // CheckUpdateCheckBox
+            // ShowUpdateCheckBox
             // 
             this.ShowUpdateCheckBox.AutoSize = true;
             this.BehaviorSettingsPanel.SetFlowBreak(this.ShowUpdateCheckBox, true);

@@ -277,7 +277,7 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Implementations
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

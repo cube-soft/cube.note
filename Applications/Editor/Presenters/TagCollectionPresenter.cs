@@ -78,6 +78,57 @@ namespace Cube.Note.App.Editor
 
         #region Event handlers
 
+        #region Model
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_Loaded
+        ///
+        /// <summary>
+        /// タグ情報の読み込みが完了した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_Loaded(object sender, EventArgs e)
+        {
+            Events.NewTag.Handle += NewTag_Handle;
+            Events.RemoveTag.Handle += RemoveTag_Handle;
+            Events.Property.Handle += Property_Handled;
+            Settings.Current.TagChanged += Settings_TagChanged;
+            ViewReset(Model.Get(Settings.User.Tag));
+            Model.CollectionChanged += Model_CollectionChanged;
+
+            this.LogDebug($"Count:{Model.Count}\tActive:{Settings.User.Tag}");
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_CollectionChanged
+        ///
+        /// <summary>
+        /// タグの内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    SyncWait(() => InsertItem(e.NewStartingIndex));
+                    Attach(e.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    Detach(e.OldItems);
+                    SyncWait(() => RemoveItem(e.OldStartingIndex));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+
         #region EventAggregator
 
         /* ----------------------------------------------------------------- */
@@ -121,6 +172,7 @@ namespace Cube.Note.App.Editor
             SyncWait(() =>
             {
                 var dialog = new PropertyForm(page, Model);
+                dialog.StartPosition = FormStartPosition.CenterParent;
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
                 this.LogException(() =>
@@ -210,57 +262,6 @@ namespace Cube.Note.App.Editor
             {
                 e.DrawBackground();
                 e.Graphics.DrawString(text, font, brush, e.Bounds.X, e.Bounds.Y);
-            }
-        }
-
-        #endregion
-
-        #region Model
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_Loaded
-        ///
-        /// <summary>
-        /// タグ情報の読み込みが完了した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_Loaded(object sender, EventArgs e)
-        {
-            Events.NewTag.Handle += NewTag_Handle;
-            Events.RemoveTag.Handle += RemoveTag_Handle;
-            Events.Property.Handle += Property_Handled;
-            Settings.Current.TagChanged += Settings_TagChanged;
-            ViewReset(Model.Get(Settings.User.Tag));
-            Model.CollectionChanged += Model_CollectionChanged;
-
-            this.LogDebug($"Count:{Model.Count}\tActive:{Settings.User.Tag}");
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_CollectionChanged
-        ///
-        /// <summary>
-        /// タグの内容が変化した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    SyncWait(() => InsertItem(e.NewStartingIndex));
-                    Attach(e.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    Detach(e.OldItems);
-                    SyncWait(() => RemoveItem(e.OldStartingIndex));
-                    break;
-                default:
-                    break;
             }
         }
 

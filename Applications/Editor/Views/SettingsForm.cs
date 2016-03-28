@@ -79,6 +79,38 @@ namespace Cube.Note.App.Editor
 
         /* --------------------------------------------------------------------- */
         ///
+        /// VersionDigit
+        /// 
+        /// <summary>
+        /// バージョン番号の有効桁数を取得または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(true)]
+        public int VersionDigit
+        {
+            get { return _version.VersionDigit; }
+            set { _version.VersionDigit = value; }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// VersionSuffix
+        /// 
+        /// <summary>
+        /// バージョン番号の末尾に付与する文字列を取得または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(true)]
+        public string VersionSuffix
+        {
+            get { return _version.VersionSuffix; }
+            set { _version.VersionSuffix = value; }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
         /// DataFolder
         /// 
         /// <summary>
@@ -173,17 +205,15 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeVersionControl()
         {
-            var control = new Cube.Forms.VersionControl();
+            _version.Assembly     = Assembly.GetExecutingAssembly();
+            _version.VersionDigit = 3;
+            _version.Description  = string.Empty;
+            _version.Logo         = Properties.Resources.LogoLarge;
+            _version.Url          = Properties.Resources.UrlWeb;
+            _version.Dock         = DockStyle.Fill;
+            _version.Padding      = new Padding(40, 40, 0, 0);
 
-            control.Assembly     = Assembly.GetEntryAssembly();
-            control.VersionDigit = 3;
-            control.Description  = string.Empty;
-            control.Logo         = Properties.Resources.LogoLarge;
-            control.Url          = Properties.Resources.UrlWeb;
-            control.Dock         = DockStyle.Fill;
-            control.Padding      = new Padding(40, 40, 0, 0);
-
-            VersionTabPage.Controls.Add(control);
+            VersionTabPage.Controls.Add(_version);
         }
 
         #endregion
@@ -448,6 +478,10 @@ namespace Cube.Note.App.Editor
             catch { return false; }
         }
 
+        #endregion
+
+        #region Fields
+        private Cube.Forms.VersionControl _version = new Forms.VersionControl();
         #endregion
     }
 }

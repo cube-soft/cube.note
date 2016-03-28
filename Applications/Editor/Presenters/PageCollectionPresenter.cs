@@ -60,6 +60,87 @@ namespace Cube.Note.App.Editor
 
         #region Event handlers
 
+        #region Model
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_Loaded
+        /// 
+        /// <summary>
+        /// ページ情報の読み込みが完了した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private async void Model_Loaded(object sender, EventArgs e)
+        {
+            Events.NewPage.Handle += NewPage_Handled;
+            Events.Duplicate.Handle += Duplicate_Handle;
+            Events.Import.Handle += Import_Handle;
+            Events.Export.Handle += Export_Handle;
+            Events.Edit.Handle += Edit_Handled;
+            Events.Move.Handle += Move_Handle;
+            Events.Remove.Handle += Remove_Handled;
+            Events.RemoveTag.Handle += RemoveTag_Handle;
+
+            SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
+            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Tags.Nothing));
+
+            Model.CollectionChanged += Model_CollectionChanged;
+
+            Settings.Current.PageChanged += Settings_PageChanged;
+            Settings.Current.TagChanged += Settings_TagChanged;
+
+            this.LogDebug($"Count:{Model.Count}");
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_CollectionChanged
+        /// 
+        /// <summary>
+        /// コレクションの内容に変更があった時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    Model_Added(sender, e);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (Model.Count <= 0) NewPage_Handled(sender, ValueEventArgs.Create(0));
+                    break;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model_Added
+        /// 
+        /// <summary>
+        /// コレクションに要素が追加された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var index = e.NewStartingIndex;
+            var page = Model[index];
+
+            SyncWait(() =>
+            {
+                var pages = View.DataSource;
+                if (pages == null || !ViewContains(page)) return;
+
+                var newindex = Math.Min(index, pages.Count);
+                pages.Insert(newindex, page);
+            });
+        }
+
+        #endregion
+
         #region EventAggregator
 
         /* ----------------------------------------------------------------- */
@@ -83,7 +164,7 @@ namespace Cube.Note.App.Editor
         /// Duplicate_Handle
         /// 
         /// <summary>
-        /// 新しいページの作成要求が発生した時に実行されるハンドラです。
+        /// ページの複製要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -104,7 +185,7 @@ namespace Cube.Note.App.Editor
         /// Import_Handle
         /// 
         /// <summary>
-        /// ページのエクスポート時に実行されるハンドラです。
+        /// ページのインポート時に実行されるハンドラです。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
@@ -155,11 +236,6 @@ namespace Cube.Note.App.Editor
         /// ページの情報が編集された時に実行されるハンドラです。
         /// </summary>
         /// 
-        /// <remarks>
-        /// 現状はタグの編集のみなので、Tags を指定して PropertyChanged
-        /// を実行しています。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         private void Edit_Handled(object sender, ValueEventArgs<Page> e)
             => Sync(() =>
@@ -281,92 +357,11 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Model
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_Loaded
-        /// 
-        /// <summary>
-        /// ページ情報の読み込みが完了した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private async void Model_Loaded(object sender, EventArgs e)
-        {
-            Events.NewPage.Handle += NewPage_Handled;
-            Events.Duplicate.Handle += Duplicate_Handle;
-            Events.Import.Handle += Import_Handle;
-            Events.Export.Handle += Export_Handle;
-            Events.Edit.Handle += Edit_Handled;
-            Events.Move.Handle += Move_Handle;
-            Events.Remove.Handle += Remove_Handled;
-            Events.RemoveTag.Handle += RemoveTag_Handle;
-
-            SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
-            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Tags.Nothing));
-
-            Model.CollectionChanged += Model_CollectionChanged;
-
-            Settings.Current.PageChanged += Settings_PageChanged;
-            Settings.Current.TagChanged += Settings_TagChanged;
-
-            this.LogDebug($"Count:{Model.Count}");
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_CollectionChanged
-        /// 
-        /// <summary>
-        /// コレクションの内容に変更があった時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    Model_Added(sender, e);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    if (Model.Count <= 0) NewPage_Handled(sender, ValueEventArgs.Create(0));
-                    break;
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model_Added
-        /// 
-        /// <summary>
-        /// コレクションに要素が追加された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Model_Added(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            var index = e.NewStartingIndex;
-            var page  = Model[index];
-
-            SyncWait(() =>
-            {
-                var pages = View.DataSource;
-                if (pages == null || !ViewContains(page)) return;
-
-                var newindex = Math.Min(index, pages.Count);
-                pages.Insert(newindex, page);
-            });
-        }
-
-        #endregion
-
         #region Settings
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model_ActiveChanged
+        /// Settings_PageChanged
         /// 
         /// <summary>
         /// アクティブな Page が変更された時に実行されるハンドラです。
