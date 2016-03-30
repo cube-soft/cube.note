@@ -188,7 +188,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private TimeSpan InitialDelay(bool activate)
         {
-            var minimum = TimeSpan.FromSeconds(30);
+            var minimum = TimeSpan.FromSeconds(10);
             var diff    = DateTime.Now - Settings.User.LastUpdate;
             var value   = TimeSpan.FromDays(1) - diff;
             return (activate || value < minimum) ? minimum : value;
