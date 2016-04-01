@@ -63,7 +63,7 @@ namespace Cube.Note.App.Editor
 
             View.UndoMenu.Click += (s, e) => Events.Undo.Raise();
             View.RedoMenu.Click += (s, e) => Events.Redo.Raise();
-            View.ExportMenu.Click += (s, e) => Events.Export.Raise(EventAggregator.SelectedPage);
+            View.ExportMenu.Click += (s, e) => Events.Export.Raise(EventAggregator.Selected);
             View.PrintMenu.Click += (s, e) => Events.Print.Raise();
             View.SettingsMenu.Click += (s, e) => Events.Settings.Raise();
             View.LogoMenu.Click += View_LogoMenu;
@@ -275,8 +275,9 @@ namespace Cube.Note.App.Editor
             using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
             {
                 dialog.DataFolder = Settings.Root;
-                dialog.VersionDigit  = Settings.Version.Digit;
-                dialog.VersionSuffix = Settings.Version.Suffix;
+                dialog.Assembly = Settings.Assembly;
+                dialog.Version.Digit = Settings.Version.Digit;
+                dialog.Version.Suffix = Settings.Version.Suffix;
                 dialog.StartPosition = FormStartPosition.CenterParent;
                 var result = dialog.ShowDialog();
                 Events.Refresh.Raise();

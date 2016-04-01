@@ -131,7 +131,7 @@ namespace Cube.Note.App.Editor
                 switch (e.KeyCode)
                 {
                     case Keys.Delete:
-                        Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
+                        Aggregator?.Remove.Raise(EventAggregator.Selected);
                         break;
                     default:
                         result = false;

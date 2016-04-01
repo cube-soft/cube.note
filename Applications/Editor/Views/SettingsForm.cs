@@ -61,7 +61,6 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings, int index = 0)
         {
             InitializeComponent();
-            InitializeVersionControl();
             Update(settings);
             InitializeEvents();
 
@@ -79,34 +78,34 @@ namespace Cube.Note.App.Editor
 
         /* --------------------------------------------------------------------- */
         ///
-        /// VersionDigit
+        /// Version
         /// 
         /// <summary>
-        /// バージョン番号の有効桁数を取得または設定します。
+        /// バージョン情報を取得または設定します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        [Browsable(true)]
-        public int VersionDigit
+        [Browsable(false)]
+        public SoftwareVersion Version
         {
-            get { return _version.VersionDigit; }
-            set { _version.VersionDigit = value; }
+            get { return _version.Version; }
         }
 
-        /* --------------------------------------------------------------------- */
+        /* ----------------------------------------------------------------- */
         ///
-        /// VersionSuffix
-        /// 
+        /// Assembly
+        ///
         /// <summary>
-        /// バージョン番号の末尾に付与する文字列を取得または設定します。
+        /// バージョン情報等を保持する Assembly オブジェクトを取得します。
         /// </summary>
         ///
-        /* --------------------------------------------------------------------- */
-        [Browsable(true)]
-        public string VersionSuffix
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Assembly Assembly
         {
-            get { return _version.VersionSuffix; }
-            set { _version.VersionSuffix = value; }
+            get { return _version.Assembly; }
+            set { _version.Assembly = value; }
         }
 
         /* --------------------------------------------------------------------- */
@@ -169,6 +168,31 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnShown
+        ///
+        /// <summary>
+        /// フォーム表示直後に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnShown(EventArgs e)
+        {
+            _version.Description = string.Empty;
+            _version.Logo        = Properties.Resources.LogoLarge;
+            _version.Url         = Properties.Resources.UrlWeb;
+            _version.Dock        = DockStyle.Fill;
+            _version.Padding     = new Padding(40, 40, 0, 0);
+
+            VersionTabPage.Controls.Add(_version);
+            base.OnShown(e);
+        }
+
+        #endregion
+
         #region Initialize methods
 
         /* ----------------------------------------------------------------- */
@@ -192,28 +216,6 @@ namespace Cube.Note.App.Editor
             CurrentLineVisibleCheckBox.CheckedChanged  += (s, e) => EnableCurrentLine();
             WordWrapCheckBox.CheckedChanged            += (s, e) => EnableWordWrap();
             WordWrapAsWindowCheckBox.CheckedChanged    += (s, e) => EnableWordWrap();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeVersionControl
-        ///
-        /// <summary>
-        /// バージョン情報を初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeVersionControl()
-        {
-            _version.Assembly     = Assembly.GetExecutingAssembly();
-            _version.VersionDigit = 3;
-            _version.Description  = string.Empty;
-            _version.Logo         = Properties.Resources.LogoLarge;
-            _version.Url          = Properties.Resources.UrlWeb;
-            _version.Dock         = DockStyle.Fill;
-            _version.Padding      = new Padding(40, 40, 0, 0);
-
-            VersionTabPage.Controls.Add(_version);
         }
 
         #endregion

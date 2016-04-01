@@ -199,21 +199,21 @@ namespace Cube.Note.App.Editor
         private void InitializeEvents()
         {
             NewPageMenu.Click += (s, e)
-                => Aggregator?.NewPage.Raise(EventAggregator.SelectedPage);
+                => Aggregator?.NewPage.Raise(EventAggregator.Selected);
             ImportMenu.Click += (s, e)
                 => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, ""));
             ExportMenu.Click += (s, e)
-                => Aggregator?.Export.Raise(EventAggregator.SelectedPage);
+                => Aggregator?.Export.Raise(EventAggregator.Selected);
             DuplicateMenu.Click += (s, e)
-                => Aggregator?.Duplicate.Raise(EventAggregator.SelectedPage);
+                => Aggregator?.Duplicate.Raise(EventAggregator.Selected);
             RemoveMenu.Click += (s, e)
-                => Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
+                => Aggregator?.Remove.Raise(EventAggregator.Selected);
             UpMenu.Click += (s, e)
                 => Aggregator?.Move.Raise(ValueEventArgs.Create(-1));
             DownMenu.Click += (s, e)
                 => Aggregator?.Move.Raise(ValueEventArgs.Create(1));
             PropertyMenu.Click += (s, e)
-                => Aggregator?.Property.Raise(EventAggregator.SelectedPage);
+                => Aggregator?.Property.Raise(EventAggregator.Selected);
         }
 
         /* ----------------------------------------------------------------- */
@@ -244,6 +244,15 @@ namespace Cube.Note.App.Editor
             });
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Menu
+        /// 
+        /// <summary>
+        /// ToolStripMenuItem にキャストします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private ToolStripMenuItem Menu(ToolStripItem src)
             => src as ToolStripMenuItem;
 

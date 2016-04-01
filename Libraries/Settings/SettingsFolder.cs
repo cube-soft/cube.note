@@ -54,7 +54,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private SettingsFolder()
         {
-            Assembly = null;
+            Assembly = Assembly.GetExecutingAssembly();
             InitializeNetworkOptions();
             InitialzieUriQuery();
         }
@@ -158,19 +158,11 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SoftwareVersion Version
+        public SoftwareVersion Version => new SoftwareVersion(Assembly)
         {
-            get
-            {
-                var reader = new AssemblyReader(Assembly);
-                return new SoftwareVersion
-                {
-                    Number = reader?.Version ?? new System.Version(1, 0, 0, 0),
-                    Digit  = 3,
-                    Suffix = "β"
-                };
-            }
-        }
+            Digit  = 3,
+            Suffix = "β"
+        };
 
         /* ----------------------------------------------------------------- */
         ///

@@ -142,6 +142,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public EventAggregator Aggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
@@ -154,6 +155,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ObservableCollection<Page> DataSource
         {
             get { return _source; }
@@ -301,8 +303,8 @@ namespace Cube.Note.App.Editor
             var item = GetItemAt(e.Location.X, e.Location.Y);
             if (item == null) return;
 
-            if (IsRemoveButton(e.Location, item.Bounds)) Aggregator?.Remove.Raise(EventAggregator.SelectedPage);
-            else if (IsPropertyButton(e.Location, item.Bounds)) Aggregator?.Property.Raise(EventAggregator.SelectedPage);
+            if (IsRemoveButton(e.Location, item.Bounds)) Aggregator?.Remove.Raise(EventAggregator.Selected);
+            else if (IsPropertyButton(e.Location, item.Bounds)) Aggregator?.Property.Raise(EventAggregator.Selected);
         }
 
         /* ----------------------------------------------------------------- */

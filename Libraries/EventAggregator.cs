@@ -34,26 +34,26 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectedPage
+        /// Selected
         ///
         /// <summary>
         /// 選択ページを表す EventArgs オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static ValueEventArgs<int> SelectedPage { get; }
+        public static ValueEventArgs<int> Selected { get; }
             = ValueEventArgs.Create(-1);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TopPage
+        /// Top
         ///
         /// <summary>
         /// 最初のページを表す EventArgs オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static ValueEventArgs<int> TopPage { get; }
+        public static ValueEventArgs<int> Top { get; }
             = ValueEventArgs.Create(0);
 
         #endregion
