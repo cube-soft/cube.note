@@ -23,6 +23,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
 using Cube.Log;
 
 namespace Cube.Note.App.Editor
@@ -95,7 +96,7 @@ namespace Cube.Note.App.Editor
             Events.RemoveTag.Handle += RemoveTag_Handle;
             Events.Property.Handle += Property_Handled;
             Settings.Current.TagChanged += Settings_TagChanged;
-            ViewReset(Model.Get(Settings.User.Tag));
+            ResetView(Model.Get(Settings.User.Tag));
             Model.CollectionChanged += Model_CollectionChanged;
 
             this.LogDebug($"Count:{Model.Count}\tActive:{Settings.User.Tag}");
@@ -165,33 +166,27 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Property_Handled(object sender, EventArgs e)
+            => this.LogException(() =>
         {
             var page = Settings.Current.Page;
             if (page == null) return;
 
-            SyncWait(() =>
+            var tags = GetTags(page);
+            if (tags == null) return;
+
+            if (page.Tags.Count == 0) Model.Nothing?.Decrement();
+            else Model.Decrement(page.Tags);
+            page.Tags.Clear();
+
+            if (tags.Length == 0) Model.Nothing?.Increment();
+            else foreach (var name in tags)
             {
-                var dialog = new PropertyForm(page, Model);
-                dialog.StartPosition = FormStartPosition.CenterParent;
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-                this.LogException(() =>
-                {
-                    if (page.Tags.Count == 0) Model.Nothing?.Decrement();
-                    else Model.Decrement(page.Tags);
-                    page.Tags.Clear();
-
-                    if (dialog.Tags.Count == 0) Model.Nothing?.Increment();
-                    else foreach (var name in dialog.Tags)
-                    {
-                        Model.Create(name).Count++;
-                        page.Tags.Add(name);
-                    }
-                });
-            });
+                Model.Create(name).Count++;
+                page.Tags.Add(name);
+            }
 
             Events.Edit.Raise(ValueEventArgs.Create(page));
-        }
+        });
 
         #endregion
 
@@ -296,6 +291,27 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTags
+        ///
+        /// <summary>
+        /// ページに設定されたタグ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string[] GetTags(Page page)
+        {
+            string[] dest = null;
+            SyncWait(() =>
+            {
+                var dialog = Dialogs.Property(page, Model);
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+                dest = dialog.Tags.ToArray();
+            });
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -415,14 +431,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewReset
+        /// ResetView
         ///
         /// <summary>
         /// View の状態をリセットします。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ViewReset(Tag init = null) => SyncWait(() =>
+        private void ResetView(Tag init = null) => SyncWait(() =>
         {
             var index = init == null ? 1 :
                         init == Model.Everyone ? 0 :

@@ -98,13 +98,11 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private async void View_Apply(object sender, EventArgs e)
+            => await Async(() =>
         {
-            await Async(() =>
-            {
-                _backup.Assign(Model);
-                Settings.Save();
-            });
-        }
+            _backup.Assign(Model);
+            Settings.Save();
+        });
 
         /* ----------------------------------------------------------------- */
         ///

@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using Cube.Conversions;
 using Cube.Log;
 using Cube.Note.Azuki;
@@ -56,10 +57,10 @@ namespace Cube.Note.App.Editor
             : base(view, model, settings, events)
         {
             Events.Print.Handle += Print_Handle;
+            Events.Settings.Handle += Settings_Handle;
+            Events.TagSettings.Handle += TagSettings_Handle;
             Events.Web.Handle += Web_Handle;
             Events.Google.Handle += Google_Handle;
-            Events.Settings.Handle += (s, e) => ShowSettings(0);
-            Events.TagSettings.Handle += (s, e) => ShowTagSettings();
 
             View.UndoMenu.Click += (s, e) => Events.Undo.Raise();
             View.RedoMenu.Click += (s, e) => Events.Redo.Raise();
@@ -89,7 +90,7 @@ namespace Cube.Note.App.Editor
         private void Print_Handle(object sender, EventArgs e)
             => SyncWait(() =>
         {
-            var dialog = CreatePrintDialog();
+            var dialog = Dialogs.Print();
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
             var text = GetText(dialog.PrinterSettings.PrintRange == PrintRange.Selection);
@@ -116,6 +117,62 @@ namespace Cube.Note.App.Editor
             };
             document.Print();
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings_Handle
+        /// 
+        /// <summary>
+        /// 設定画面を表示する時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Settings_Handle(object sender, EventArgs e)
+            => Sync(() =>
+        {
+            var dialog = Dialogs.Settings(Settings);
+            using (var ps = new SettingsPresenter(dialog, Settings, Events))
+            {
+                var result = dialog.ShowDialog();
+                Events.Refresh.Raise();
+                if (result == DialogResult.Cancel) return;
+            }
+
+            if (dialog.DataFolder == Settings.Root) return;
+            Settings.SaveRoot(dialog.DataFolder);
+            if (dialog.RestartRequired) Application.Restart();
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TagSettings_Handle
+        /// 
+        /// <summary>
+        /// タグ設定画面を表示する時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private async void TagSettings_Handle(object sender, EventArgs e)
+        {
+            Tag[] add = null;
+            Tag[] remove = null;
+
+            SyncWait(() =>
+            {
+                var dialog = Dialogs.TagSettings(Model.Tags, Settings.User);
+                dialog.ShowDialog();
+                if (dialog.DialogResult == DialogResult.Cancel) return;
+
+                add    = dialog.NewTags.ToArray();
+                remove = dialog.RemoveTags.ToArray();
+            });
+
+            await Async(() =>
+            {
+                foreach (var tag in add) Events.NewTag.Raise(ValueEventArgs.Create(tag));
+                foreach (var tag in remove) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
+            });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -222,22 +279,6 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreatePrintDialog
-        /// 
-        /// <summary>
-        /// PrintDialog オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private PrintDialog CreatePrintDialog() => new PrintDialog
-        {
-            AllowPrintToFile = false,
-            AllowSelection   = true,
-            UseEXDialog      = true
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CreateMargins
         /// 
         /// <summary>
@@ -258,92 +299,6 @@ namespace Cube.Note.App.Editor
             Top    = (int)(src.Top    / 0.254f),
             Bottom = (int)(src.Bottom / 0.254f)
         };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ShowSettings
-        /// 
-        /// <summary>
-        /// 設定フォームを開きます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ShowSettings(int index)
-            => Sync(() =>
-        {
-            var dialog = new SettingsForm(Settings.User, index);
-            using (var presenter = new SettingsPresenter(dialog, /* User, */ Settings, Events))
-            {
-                dialog.DataFolder = Settings.Root;
-                dialog.Assembly = Settings.Assembly;
-                dialog.Version.Digit = Settings.Version.Digit;
-                dialog.Version.Suffix = Settings.Version.Suffix;
-                dialog.StartPosition = FormStartPosition.CenterParent;
-                var result = dialog.ShowDialog();
-                Events.Refresh.Raise();
-                if (result == DialogResult.Cancel) return;
-            }
-
-            if (dialog.DataFolder == Settings.Root) return;
-            Settings.SaveRoot(dialog.DataFolder);
-            if (dialog.RestartRequired) Application.Restart();
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ShowTagSettings
-        /// 
-        /// <summary>
-        /// タグ設定フォームを開きます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ShowTagSettings()
-            => Sync(() =>
-        {
-            var dialog = new TagForm(Model.Tags);
-            dialog.StartPosition = FormStartPosition.CenterParent;
-            dialog.FormClosing += (s, e) => e.Cancel = IsRemoveCancel(s);
-            dialog.ShowDialog();
-            if (dialog.DialogResult == DialogResult.Cancel) return;
-
-            var add = dialog.NewTags;
-            var remove = dialog.RemoveTags;
-
-            Async(() =>
-            {
-                foreach (var tag in add) Events.NewTag.Raise(ValueEventArgs.Create(tag));
-                foreach (var tag in remove) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
-            });
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsRemoveCancel
-        /// 
-        /// <summary>
-        /// キャンセルされたかどうか判別します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsRemoveCancel(object sender)
-        {
-            var dialog = sender as TagForm;
-            if (dialog == null) return false;
-
-            if (dialog.DialogResult == DialogResult.Cancel ||
-                dialog.RemoveTags.Count <= 0 ||
-                !Settings.User.TagRemoveWarning) return false;
-
-            var result = MessageBox.Show(
-                Properties.Resources.WarnTagRemove,
-                Properties.Resources.WarnTagRemoveTitle,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button1
-            );
-            return result == DialogResult.No;
-        }
 
         #endregion
     }

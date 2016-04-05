@@ -51,17 +51,18 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, new SearchReplace(parent), settings, events)
         {
-            Events.Search.Handle += Search_Handle;
+            Events.Search.Handle     += Search_Handle;
             Events.SearchNext.Handle += SearchNext_Handle;
             Events.SearchPrev.Handle += SearchPrev_Handle;
+
             Settings.Current.PageChanged += Settings_PageChanged;
 
-            View.Hiding += View_Hiding;
-            View.Search += View_Search;
-            View.SearchNext += SearchNext_Handle;
-            View.SearchPrev += SearchPrev_Handle;
+            View.Hiding      += View_Hiding;
+            View.Search      += View_Search;
+            View.SearchNext  += SearchNext_Handle;
+            View.SearchPrev  += SearchPrev_Handle;
             View.ReplaceNext += (s, e) => Model.Replace(View.Replace);
-            View.ReplaceAll += View_ReplaceAll;
+            View.ReplaceAll  += View_ReplaceAll;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
             View.Pages.DataSource = Model.Results;
             View.Aggregator = Events;
@@ -89,7 +90,7 @@ namespace Cube.Note.App.Editor
         private void Search_Handle(object sender, KeyValueEventArgs<int, string> e)
             => Sync(() =>
         {
-            ResetRange();
+            ResetSearchRange();
             View.Show();
 
             var count = View.SearchRange.Items.Count;
@@ -232,11 +233,10 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_SelectedIndexChanged(object sender, EventArgs e)
-            => Sync(() =>
         {
             if (!View.Pages.AnyItemsSelected) return;
             Model.Current = View.Pages.SelectedIndices[0];
-        });
+        }
 
         #endregion
 
@@ -272,14 +272,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ResetRange
+        /// ResetSearchRange
         /// 
         /// <summary>
         /// 検索範囲用の項目を設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResetRange()
+        private void ResetSearchRange()
         {
             View.SearchRange.BeginUpdate();
             View.SearchRange.Items.Clear();

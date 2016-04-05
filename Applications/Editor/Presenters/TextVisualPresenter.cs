@@ -53,11 +53,11 @@ namespace Cube.Note.App.Editor
         {
             Model.PropertyChanged += Model_PropertyChanged;
 
-            Sync(() => this.LogException(() =>
+            this.LogException(() =>
             {
-                Update();
+                UpdateView();
                 View.ResetViewWidth();
-            }));
+            });
         }
 
         #endregion
@@ -74,9 +74,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_Resize(object sender, EventArgs e)
-        {
-            View.ResetViewWidth();
-        }
+            => View.ResetViewWidth();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,7 +89,7 @@ namespace Cube.Note.App.Editor
             => Sync(()
             => this.LogException(() =>
         {
-            Update(e.PropertyName);
+            UpdateView(e.PropertyName);
             View.ResetViewWidth();
         }));
 
@@ -101,28 +99,28 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// UpdateView
         ///
         /// <summary>
         /// Model の内容を View に反映させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Update()
+        private void UpdateView()
         {
-            foreach (var info in Model.GetType().GetProperties()) Update(info.Name);
+            foreach (var info in Model.GetType().GetProperties()) UpdateView(info.Name);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// UpdateView
         ///
         /// <summary>
         /// 指定された名前の Model の内容を View に更新します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Update(string name)
+        private void UpdateView(string name)
         {
             switch (name)
             {
