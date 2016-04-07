@@ -302,16 +302,13 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private string[] GetTags(Page page)
+            => SyncWait(() =>
         {
-            string[] dest = null;
-            SyncWait(() =>
-            {
-                var dialog = Dialogs.Property(page, Model);
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
-                dest = dialog.Tags.ToArray();
-            });
-            return dest;
-        }
+            var dialog = Dialogs.Property(page, Model);
+            return dialog.ShowDialog() != DialogResult.Cancel ?
+                   dialog.Tags.ToArray() :
+                   null;
+        });
 
         /* ----------------------------------------------------------------- */
         ///

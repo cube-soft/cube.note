@@ -47,7 +47,7 @@ namespace Cube.Note.App.Editor
         public FormBase()
         {
             InitializeComponent();
-
+            
             Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
             Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
         }

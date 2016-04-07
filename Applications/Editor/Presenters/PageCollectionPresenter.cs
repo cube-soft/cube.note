@@ -82,7 +82,7 @@ namespace Cube.Note.App.Editor
             Events.Remove.Handle    += Remove_Handle;
             Events.RemoveTag.Handle += RemoveTag_Handle;
 
-            SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
             ResetView(Settings.Current.Tag ?? Model.Tags.Nothing);
 
             Model.CollectionChanged += Model_CollectionChanged;
@@ -404,18 +404,9 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private int GetIndex(int index)
-        {
-            var dest = index;
-            if (dest == -1)
-            {
-                SyncWait(() =>
-                    dest = View.AnyItemsSelected ?
-                           View.SelectedIndices[0] :
-                           -1
-                );
-            }
-            return dest;
-        }
+            => index != -1 ?
+               index :
+               SyncWait(() => View.AnyItemsSelected ? View.SelectedIndices[0] : -1);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -427,18 +418,14 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private int GetInsertIndex(int index)
+            => SyncWait(() =>
         {
-            var dest = index;
-            if (dest == -1)
-            {
-                SyncWait(() =>
-                    dest = View.AnyItemsSelected ?
-                           View.SelectedIndices[0] + 1 :
-                           0
-                );
-            }
-            return Math.Max(Math.Min(dest, View.DataSource?.Count ?? 0), 0);
-        }
+            var dest  = index != -1 ? index :
+                        View.AnyItemsSelected ? View.SelectedIndices[0] + 1 :
+                        0;
+            var count = View.DataSource?.Count ?? 0;
+            return Math.Max(Math.Min(dest, count), 0);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -450,16 +437,13 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private string GetImportFile()
+            => SyncWait(() =>
         {
-            var dest = string.Empty;
-            SyncWait(() =>
-            {
-                var dialog = Dialogs.Import();
-                var result = dialog.ShowDialog();
-                if (result != DialogResult.Cancel) dest = dialog.FileName;
-            });
-            return dest;
-        }
+            var dialog = Dialogs.Import();
+            return dialog.ShowDialog() != DialogResult.Cancel ?
+                   dialog.FileName :
+                   string.Empty;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -471,17 +455,14 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private string GetExportFile(Page page)
+            => SyncWait(() =>
         {
-            var dest = string.Empty;
-            SyncWait(() =>
-            {
-                if (page == null) return;
-                var dialog = Dialogs.Export(page.GetAbstract(), 30);
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
-                dest = dialog.FileName;
-            });
-            return dest;
-        }
+            if (page == null) return string.Empty;
+            var dialog = Dialogs.Export(page.GetAbstract(), 30);
+            return dialog.ShowDialog() != DialogResult.Cancel ?
+                   dialog.FileName :
+                   string.Empty;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -496,10 +477,7 @@ namespace Cube.Note.App.Editor
         {
             if (page == null) return true;
             if (!Settings.User.RemoveWarning) return false;
-
-            var result = DialogResult.Yes;
-            SyncWait(() => result = Dialogs.Remove(page));
-            return result == DialogResult.No;
+            return SyncWait(() => Dialogs.Remove(page) == DialogResult.No);
         }
 
         /* ----------------------------------------------------------------- */

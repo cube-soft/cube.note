@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -154,23 +155,24 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void TagSettings_Handle(object sender, EventArgs e)
         {
-            Tag[] add = null;
-            Tag[] remove = null;
-
-            SyncWait(() =>
+            var tags = SyncWait(() =>
             {
                 var dialog = Dialogs.TagSettings(Model.Tags, Settings.User);
                 dialog.ShowDialog();
-                if (dialog.DialogResult == DialogResult.Cancel) return;
-
-                add    = dialog.NewTags.ToArray();
-                remove = dialog.RemoveTags.ToArray();
+                return dialog.DialogResult == DialogResult.Cancel ?
+                       new KeyValuePair<Tag[], Tag[]>(null, null) :
+                       new KeyValuePair<Tag[], Tag[]>(
+                           dialog.NewTags.ToArray(),
+                           dialog.RemoveTags.ToArray()
+                       );
             });
+
+            if (tags.Key == null || tags.Value == null) return;
 
             await Async(() =>
             {
-                foreach (var tag in add) Events.NewTag.Raise(ValueEventArgs.Create(tag));
-                foreach (var tag in remove) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
+                foreach (var tag in tags.Key) Events.NewTag.Raise(ValueEventArgs.Create(tag));
+                foreach (var tag in tags.Value) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
             });
         }
 
