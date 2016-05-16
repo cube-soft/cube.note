@@ -35,7 +35,7 @@ namespace Cube.Note.App.Editor
     /// 
     /* --------------------------------------------------------------------- */
     public class NewsPresenter
-        : PresenterBase<StatusControl, Cube.Net.News.Monitor>
+        : PresenterBase<StatusControl, Cube.News.ArticleMonitor>
     {
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public NewsPresenter(StatusControl view,
             SettingsFolder settings, EventAggregator events)
-            : base(view, new Cube.Net.News.Monitor(), settings, events)
+            : base(view, new Cube.News.ArticleMonitor(), settings, events)
         {
             Settings.User.PropertyChanged += Settings_UserChanged;
             Settings.Current.PageChanged  += Settings_PageChanged;
@@ -151,7 +151,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Model_ResultChanged(object sender,
-            ValueEventArgs<IList<Cube.Net.News.Article>> e)
+            ValueEventArgs<IList<Cube.News.Article>> e)
             => this.LogException(() =>
         {
             this.LogDebug($"Articles:{e.Value.Count}\tFailed:{Model.FailedCount}");
