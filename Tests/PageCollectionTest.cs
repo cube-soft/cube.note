@@ -258,6 +258,26 @@ namespace Cube.Note.Tests
             );
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Recover
+        ///
+        /// <summary>
+        /// Recover (Extend) のテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Recover()
+        {
+            Pages.Clear();
+            Pages.Recover(Examples, 100);
+            Assert.That(
+                Pages.Count,
+                Is.EqualTo(3)
+            );
+        }
+
         #endregion
     }
 }

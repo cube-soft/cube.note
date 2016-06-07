@@ -144,6 +144,19 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Contains
+        ///
+        /// <summary>
+        /// 指定されたファイル名に対応する Page オブジェクトが存在するかどうかを
+        /// 判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Contains(string filename)
+            => Items.Any(page => page.FileName == filename);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// NewPage
         ///
         /// <summary>
@@ -156,7 +169,9 @@ namespace Cube.Note
         public void NewPage(Tag tag, int index, Action<Page> initialize)
         {
             var page = new Page();
-            Touch(page);
+
+            if (initialize != null) initialize(page);
+            else Touch(page);
 
             Tags.Everyone.Increment();
             if (tag != null && tag != Tags.Everyone && tag != Tags.Nothing)
@@ -166,7 +181,6 @@ namespace Cube.Note
             }
             else Tags.Nothing.Increment();
 
-            if (initialize != null) initialize(page);
             Insert(index, page);
         }
 

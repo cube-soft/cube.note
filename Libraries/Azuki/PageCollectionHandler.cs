@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Text.RegularExpressions;
 using IoEx = System.IO;
 
 namespace Cube.Note.Azuki
@@ -61,6 +62,40 @@ namespace Cube.Note.Azuki
                 page.Document = document;
                 page.UpdateAbstract(maxLength);
             });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Recover
+        ///
+        /// <summary>
+        /// データが格納されているフォルダから PageCollection オブジェクトを
+        /// 再構築します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// NOTE: 現在の方法ではタグ情報を復旧することはできない。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Recover(this PageCollection pages,
+            string direcotry, int maxLength)
+        {
+            if (!IoEx.Directory.Exists(direcotry)) return;
+            foreach (var path in IoEx.Directory.GetFiles(direcotry))
+            {
+                var filename = IoEx.Path.GetFileName(path).ToLower();
+                var exp = new Regex("^[0-9a-z]{32}$");
+                if (!exp.IsMatch(filename) || pages.Contains(filename)) continue;
+
+                pages.NewPage(pages.Tags.Everyone, 0, (page) =>
+                {
+                    var document = DocumentHandler.Create(path);
+                    page.FileName = filename;
+                    page.Document = document;
+                    page.UpdateAbstract(maxLength);
+                });
+            }
         }
     }
 }
