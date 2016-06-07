@@ -73,13 +73,25 @@ namespace Cube.Note.Azuki
         /// 再構築します。
         /// </summary>
         /// 
+        /* ----------------------------------------------------------------- */
+        public static void Recover(this PageCollection pages, int maxLength)
+            => Recover(pages, pages.Directory, maxLength);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Recover
+        ///
+        /// <summary>
+        /// データが格納されているフォルダから PageCollection オブジェクトを
+        /// 再構築します。
+        /// </summary>
+        /// 
         /// <remarks>
         /// NOTE: 現在の方法ではタグ情報を復旧することはできない。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Recover(this PageCollection pages,
-            string direcotry, int maxLength)
+        public static void Recover(this PageCollection pages, string direcotry, int maxLength)
         {
             if (!IoEx.Directory.Exists(direcotry)) return;
             foreach (var path in IoEx.Directory.GetFiles(direcotry))
