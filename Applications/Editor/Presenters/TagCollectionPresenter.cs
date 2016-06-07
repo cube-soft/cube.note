@@ -202,7 +202,10 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
-            => Settings.User.Tag = e.NewValue?.Name ?? string.Empty;
+        {
+            Settings.User.Tag = e.NewValue?.Name ?? string.Empty;
+            ResetView(e.NewValue);
+        }
 
         #endregion
 

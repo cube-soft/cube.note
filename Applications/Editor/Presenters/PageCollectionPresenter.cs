@@ -83,7 +83,11 @@ namespace Cube.Note.App.Editor
             Events.RemoveTag.Handle += RemoveTag_Handle;
 
             View.SelectedIndexChanged += View_SelectedIndexChanged;
-            ResetView(Settings.Current.Tag ?? Model.Tags.Nothing);
+
+            var tag = Settings.Current.Tag ?? Model.Tags.Nothing;
+            if (tag.Count <= 0) tag = Model.Tags.Everyone;
+            Settings.Current.Tag = tag;
+            ResetView(tag);
 
             Model.CollectionChanged += Model_CollectionChanged;
 
