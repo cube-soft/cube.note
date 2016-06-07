@@ -183,6 +183,9 @@ namespace Cube.Note.App.Editor
 
             View.ShowPages = Model.Results.Count > 0 && tag != null;
             View.Message   = GetMessage(Model.Results.Count, tag);
+
+            // 最初の一致項目をハイライト
+            if (Model.Results.Count > 0) Model.Forward();
         }
 
         /* ----------------------------------------------------------------- */
