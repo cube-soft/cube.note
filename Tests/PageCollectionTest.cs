@@ -184,6 +184,26 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Import_Directory
+        ///
+        /// <summary>
+        /// ディレクトリをインポートするテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Import", 3)]
+        public void Import_Directory_Count(string directory, int expected)
+        {
+            var count = Pages.Count;
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, directory), 100);
+            Assert.That(
+                Pages.Count - count,
+                Is.EqualTo(expected)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Duplicate
         ///
         /// <summary>
