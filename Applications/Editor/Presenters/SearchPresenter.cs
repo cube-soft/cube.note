@@ -186,6 +186,7 @@ namespace Cube.Note.App.Editor
 
             // 最初の一致項目をハイライト
             if (Model.Results.Count > 0) Model.Forward();
+            if (View.ShowPages) View.Pages.EnsureVisible(0);
         }
 
         /* ----------------------------------------------------------------- */
