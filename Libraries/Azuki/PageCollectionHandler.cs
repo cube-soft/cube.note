@@ -44,12 +44,23 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         public static void Import(this PageCollection pages,
             Tag tag, int index, string path, int maxLength)
-            => pages.NewPage(tag, index, (page) =>
         {
-            var document = DocumentHandler.Create(path);
-            document.Save(IoEx.Path.Combine(pages.Directory, page.FileName));
-            page.Document = document;
-            page.UpdateAbstract(maxLength);
-        });
+            if (IoEx.Directory.Exists(path))
+            {
+                foreach (var file in IoEx.Directory.GetFiles(path))
+                {
+                    Import(pages, tag, index, file, maxLength);
+                }
+                return;
+            }
+
+            pages.NewPage(tag, index, (page) =>
+            {
+                var document = DocumentHandler.Create(path);
+                document.Save(IoEx.Path.Combine(pages.Directory, page.FileName));
+                page.Document = document;
+                page.UpdateAbstract(maxLength);
+            });
+        }
     }
 }
