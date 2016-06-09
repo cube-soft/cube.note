@@ -71,24 +71,28 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Model_Loaded(object sender, EventArgs e)
+        private void Model_Loaded(object sender, EventArgs e)
         {
-            Events.NewPage.Handle += NewPage_Handled;
+            Events.NewPage.Handle   += NewPage_Handle;
             Events.Duplicate.Handle += Duplicate_Handle;
-            Events.Import.Handle += Import_Handle;
-            Events.Export.Handle += Export_Handle;
-            Events.Edit.Handle += Edit_Handled;
-            Events.Move.Handle += Move_Handle;
-            Events.Remove.Handle += Remove_Handled;
+            Events.Import.Handle    += Import_Handle;
+            Events.Export.Handle    += Export_Handle;
+            Events.Edit.Handle      += Edit_Handle;
+            Events.Move.Handle      += Move_Handle;
+            Events.Remove.Handle    += Remove_Handle;
             Events.RemoveTag.Handle += RemoveTag_Handle;
 
-            SyncWait(() => View.SelectedIndexChanged += View_SelectedIndexChanged);
-            await Async(() => ViewReset(Settings.Current.Tag ?? Model.Tags.Nothing));
+            View.SelectedIndexChanged += View_SelectedIndexChanged;
+
+            var tag = Settings.Current.Tag ?? Model.Tags.Nothing;
+            if (tag.Count <= 0) tag = Model.Tags.Everyone;
+            Settings.Current.Tag = tag;
+            ResetView(tag);
 
             Model.CollectionChanged += Model_CollectionChanged;
 
             Settings.Current.PageChanged += Settings_PageChanged;
-            Settings.Current.TagChanged += Settings_TagChanged;
+            Settings.Current.TagChanged  += Settings_TagChanged;
 
             this.LogDebug($"Count:{Model.Count}");
         }
@@ -110,7 +114,7 @@ namespace Cube.Note.App.Editor
                     Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    if (Model.Count <= 0) NewPage_Handled(sender, ValueEventArgs.Create(0));
+                    if (Model.Count <= 0) NewPage_Handle(sender, ValueEventArgs.Create(0));
                     break;
             }
         }
@@ -132,7 +136,7 @@ namespace Cube.Note.App.Editor
             SyncWait(() =>
             {
                 var pages = View.DataSource;
-                if (pages == null || !ViewContains(page)) return;
+                if (pages == null || !ContainsInView(page)) return;
 
                 var newindex = Math.Min(index, pages.Count);
                 pages.Insert(newindex, page);
@@ -145,14 +149,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// NewPage_Handled
+        /// NewPage_Handle
         /// 
         /// <summary>
         /// 新しいページの作成要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void NewPage_Handled(object sender, ValueEventArgs<int> e)
+        private void NewPage_Handle(object sender, ValueEventArgs<int> e)
         {
             var index = GetInsertIndex(e.Value);
             Model.NewPage(Settings.Current.Tag, index);
@@ -189,13 +193,13 @@ namespace Cube.Note.App.Editor
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Import_Handle(object sender, KeyValueEventArgs<int, string> e)
+        private async void Import_Handle(object sender, KeyValueEventArgs<int, string> e)
         {
             var path = !string.IsNullOrEmpty(e.Value) ? e.Value : GetImportFile();
             if (string.IsNullOrEmpty(path)) return;
 
             var index = GetInsertIndex(e.Key);
-            Async(() => Model.Import(
+            await Async(() => Model.Import(
                 Settings.Current.Tag,
                 index,
                 path,
@@ -212,21 +216,16 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Export_Handle(object sender, ValueEventArgs<int> e)
-            => Sync(() =>
+        private async void Export_Handle(object sender, ValueEventArgs<int> e)
         {
             if (Settings.Current.Page == null) return;
 
             var page = Settings.Current.Page;
-            var filename = page.GetAbstract();
-            var dialog = new SaveFileDialog();
-            dialog.FileName = filename.Length <= 30 ? filename : filename.Substring(0, 30);
-            dialog.Filter = Properties.Resources.TextFilter;
-            dialog.OverwritePrompt = true;
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+            var path = GetExportFile(page);
+            if (string.IsNullOrEmpty(path)) return;
 
-            Async(() => page.CreateDocument(Model.Directory)?.Save(dialog.FileName));
-        });
+            await Async(() => page.CreateDocument(Model.Directory)?.Save(path));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -237,13 +236,13 @@ namespace Cube.Note.App.Editor
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Edit_Handled(object sender, ValueEventArgs<Page> e)
+        private void Edit_Handle(object sender, ValueEventArgs<Page> e)
             => Sync(() =>
         {
             var page = e.Value;
             if (page == null) return;
 
-            if (ViewContains(page)) View.Update(View.DataSource?.IndexOf(page) ?? -1);
+            if (ContainsInView(page)) View.Update(View.DataSource?.IndexOf(page) ?? -1);
             else
             {
                 var source = View.DataSource;
@@ -264,10 +263,9 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Move_Handle(object sender, ValueEventArgs<int> e)
-            => Sync(() =>
+            => Sync(async () =>
         {
-            if (View.DataSource == null ||
-                View.SelectedIndices.Count <= 0) return;
+            if (View.DataSource == null || View.SelectedIndices.Count <= 0) return;
 
             // View
             var count = View.DataSource.Count;
@@ -279,21 +277,21 @@ namespace Cube.Note.App.Editor
             var mold = Model.IndexOf(View.DataSource[vold]);
             var mnew = Model.IndexOf(View.DataSource[vnew]);
             if (mold  < 0 || mnew < 0) return;
-            Async(() => Model.Move(mold, mnew));
+            await Async(() => Model.Move(mold, mnew));
             
             View.DataSource.Move(vold, vnew);
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Remove_Handled
+        /// Remove_Handle
         /// 
         /// <summary>
         /// ページの削除要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Remove_Handled(object sender, ValueEventArgs<int> e)
+        private void Remove_Handle(object sender, ValueEventArgs<int> e)
             => Sync(() =>
         {
             var pages = View.DataSource;
@@ -328,7 +326,7 @@ namespace Cube.Note.App.Editor
             foreach (var page in Model.Search(e.Value))
             {
                 page.Tags.Remove(e.Value.Name);
-                if (!ViewContains(page)) continue;
+                if (!ContainsInView(page)) continue;
                 View.Update(View.DataSource?.IndexOf(page) ?? -1);
             }
         });
@@ -392,7 +390,7 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
-            => ViewReset(e.NewValue);
+            => ResetView(e.NewValue);
 
         #endregion
 
@@ -410,18 +408,9 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private int GetIndex(int index)
-        {
-            var dest = index;
-            if (dest == -1)
-            {
-                SyncWait(() =>
-                    dest = View.AnyItemsSelected ?
-                           View.SelectedIndices[0] :
-                           -1
-                );
-            }
-            return dest;
-        }
+            => index != -1 ?
+               index :
+               SyncWait(() => View.AnyItemsSelected ? View.SelectedIndices[0] : -1);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -433,18 +422,14 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private int GetInsertIndex(int index)
+            => SyncWait(() =>
         {
-            var dest = index;
-            if (dest == -1)
-            {
-                SyncWait(() =>
-                    dest = View.AnyItemsSelected ?
-                           View.SelectedIndices[0] + 1 :
-                           0
-                );
-            }
-            return Math.Max(Math.Min(dest, View.DataSource?.Count ?? 0), 0);
-        }
+            var dest  = index != -1 ? index :
+                        View.AnyItemsSelected ? View.SelectedIndices[0] + 1 :
+                        0;
+            var count = View.DataSource?.Count ?? 0;
+            return Math.Max(Math.Min(dest, count), 0);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -456,20 +441,32 @@ namespace Cube.Note.App.Editor
         /// 
         /* ----------------------------------------------------------------- */
         private string GetImportFile()
+            => SyncWait(() =>
         {
-            var dest = string.Empty;
-            SyncWait(() =>
-            {
-                var dialog = new OpenFileDialog();
-                dialog.Title = Properties.Resources.ImportTitle;
-                dialog.Filter = Properties.Resources.TextFilter;
-                dialog.CheckFileExists = true;
-                dialog.Multiselect = false;
-                var result = dialog.ShowDialog();
-                if (result != DialogResult.Cancel) dest = dialog.FileName;
-            });
-            return dest;
-        }
+            var dialog = Dialogs.Import();
+            return dialog.ShowDialog() != DialogResult.Cancel ?
+                   dialog.FileName :
+                   string.Empty;
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetExportFile
+        /// 
+        /// <summary>
+        /// エクスポートしたファイルの保存先を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private string GetExportFile(Page page)
+            => SyncWait(() =>
+        {
+            if (page == null) return string.Empty;
+            var dialog = Dialogs.Export(page.GetAbstract(), 30);
+            return dialog.ShowDialog() != DialogResult.Cancel ?
+                   dialog.FileName :
+                   string.Empty;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -484,35 +481,19 @@ namespace Cube.Note.App.Editor
         {
             if (page == null) return true;
             if (!Settings.User.RemoveWarning) return false;
-
-            var message = new System.Text.StringBuilder();
-            message.AppendLine(Properties.Resources.WarnRemove);
-            message.AppendLine();
-            message.AppendLine(page.GetAbstract());
-            message.AppendLine(page.Creation.ToString(Properties.Resources.CreationFormat));
-            message.AppendLine(page.LastUpdate.ToString(Properties.Resources.LastUpdateFormat));
-
-            var result = DialogResult.Yes;
-            SyncWait(() => result = MessageBox.Show(
-                message.ToString(),
-                Properties.Resources.WarnRemoveTitle,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button1
-            ));
-            return result == DialogResult.No;
+            return SyncWait(() => Dialogs.Remove(page) == DialogResult.No);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewContains
+        /// ContainsInView
         /// 
         /// <summary>
         /// View にページが含まれている（または含まれるべき）かどうかを判別します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private bool ViewContains(Page page)
+        private bool ContainsInView(Page page)
         {
             if (View.DataSource == null) return false;
 
@@ -524,14 +505,14 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewReset
+        /// ResetView
         /// 
         /// <summary>
         /// View の状態をリセットします。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void ViewReset(Tag tag)
+        private void ResetView(Tag tag)
         {
             if (tag == null) return;
 

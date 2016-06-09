@@ -71,6 +71,9 @@
     <Reference Include="Cube.Net">
       <HintPath>..\..\..\lib\net35\Cube.Net.dll</HintPath>
     </Reference>
+    <Reference Include="Cube.News">
+      <HintPath>..\..\..\lib\net35\Cube.News.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -84,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presenters\UpdatePresenter.cs" />
+    <Compile Include="Views\Dialogs.cs" />
     <Compile Include="Views\PageMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>

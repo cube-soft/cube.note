@@ -62,7 +62,7 @@ namespace Cube.Note.App.Editor
             Model.EndPoint = new Uri(Properties.Resources.UrlUpdate);
             Model.Version = Settings.Version;
 
-            Update(activator != null && activator.Required);
+            UpdateModel(activator != null && activator.Required);
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace Cube.Note.App.Editor
         private void Settings_UserChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(Settings.User.ShowUpdate)) return;
-            Update();
+            UpdateModel();
         }
 
         #endregion
@@ -160,14 +160,15 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// UpdateModel
         ///
         /// <summary>
         /// Model の駆動状態を更新します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Update(bool activate = false) => this.LogException(() =>
+        private void UpdateModel(bool activate = false)
+            => this.LogException(() =>
         {
             if (Settings.User.ShowUpdate)
             {

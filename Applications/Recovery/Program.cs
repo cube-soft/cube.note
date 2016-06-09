@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageCollectionControl.cs
+/// Program.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,130 +17,134 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Windows.Forms;
+using System;
+using System.Reflection;
+using Cube.Note.Azuki;
+using IoEx = System.IO;
 
-namespace Cube.Note.App.Editor
+namespace Cube.Note.App.Recovery
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageCollectionControl
+    /// Program
     /// 
     /// <summary>
-    /// ページ一覧を表示するためのクラスです。
+    /// メインプログラムを表すクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class PageCollectionControl : Cube.Forms.UserControl
+    class Program
     {
-        #region Constructors
-
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemListControl
+        /// Main
         /// 
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// プログラムのエントリーポイントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollectionControl()
-        {
-            InitializeComponent();
-
-            NewPageButton.Click += (s, e)
-                => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
-
-            Pages.AllowDrop = true;
-            Pages.KeyDown += (s, e) => OnKeyDown(e);
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Pages
-        /// 
-        /// <summary>
-        /// ページ一覧を表示する ListView オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PageListView Pages => PageListView;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Tags
-        /// 
-        /// <summary>
-        /// タグ一覧を表示する ComboBox オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ComboBox Tags => TagComboBox;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Aggregator
-        ///
-        /// <summary>
-        /// イベントを集約するオブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EventAggregator Aggregator
-        {
-            get { return Pages.Aggregator; }
-            set { Pages.Aggregator = value; }
-        }
-
-        #endregion
-
-        #region Override methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCreateControl
-        ///
-        /// <summary>
-        /// コントロール生成時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-            ActiveControl = Pages;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnKeyDown
-        ///
-        /// <summary>
-        /// キーが押下された時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnKeyDown(KeyEventArgs e)
+        static void Main(string[] args)
         {
             try
             {
-                var result = true;
-                switch (e.KeyCode)
-                {
-                    case Keys.Delete:
-                        Aggregator?.Remove.Raise(EventAggregator.Selected);
-                        break;
-                    default:
-                        result = false;
-                        break;
-                }
-                e.Handled = result;
+                var settings = LoadSettings(Assembly.GetExecutingAssembly());
+                var pages = LoadIndices(settings);
+                ExecRecovery(pages, settings);
+                Launch(settings);
             }
-            finally { base.OnKeyDown(e); }
+            catch (Exception err)
+            {
+                Puts(Properties.Resources.ErrorUnknown);
+                Puts(err.ToString());
+            }
         }
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LoadSettings
+        /// 
+        /// <summary>
+        /// 設定情報をロードします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static SettingsFolder LoadSettings(Assembly assembly)
+        {
+            Puts(Properties.Resources.LoadSettings);
+            var dest = new SettingsFolder(assembly);
+            Puts($"Path ... {dest.Root}");
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LoadIndices
+        /// 
+        /// <summary>
+        /// インデックス情報をロードします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static PageCollection LoadIndices(SettingsFolder settings)
+        {
+            Puts(Properties.Resources.LoadIndices);
+            var dest = new PageCollection(settings.Root);
+            try { dest.Load(); }
+            catch (Exception err)
+            {
+                Puts(Properties.Resources.ErrorIndex);
+                Puts(err.ToString());
+            }
+            Puts($"Count ... {dest.Count}");
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExecRecovery
+        /// 
+        /// <summary>
+        /// 復旧処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static void ExecRecovery(PageCollection pages, SettingsFolder settings)
+        {
+            Puts(Properties.Resources.ExecRecovery);
+            pages.Recover(settings.MaxAbstractLength);
+            pages.Save();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Launch
+        /// 
+        /// <summary>
+        /// CubeNote を起動します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static void Launch(SettingsFolder settings)
+        {
+            Puts(Properties.Resources.LaunchCubeNote);
+            var dir = IoEx.Path.GetDirectoryName(settings.Assembly.Location);
+            var exe = IoEx.Path.Combine(dir, "CubeNote.exe");
+            System.Diagnostics.Process.Start(exe);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Puts
+        /// 
+        /// <summary>
+        /// 情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static void Puts(string message) => Console.WriteLine(message);
 
         #endregion
     }

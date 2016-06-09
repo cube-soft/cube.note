@@ -184,6 +184,26 @@ namespace Cube.Note.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Import_Directory
+        ///
+        /// <summary>
+        /// ディレクトリをインポートするテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Import", 3)]
+        public void Import_Directory_Count(string directory, int expected)
+        {
+            var count = Pages.Count;
+            Pages.Import(null, 0, IoEx.Path.Combine(Examples, directory), 100);
+            Assert.That(
+                Pages.Count - count,
+                Is.EqualTo(expected)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Duplicate
         ///
         /// <summary>
@@ -255,6 +275,26 @@ namespace Cube.Note.Tests
             Assert.That(
                 IoEx.File.Exists(IoEx.Path.Combine(Pages.Directory, filename)),
                 Is.True
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Recover
+        ///
+        /// <summary>
+        /// Recover (Extend) のテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Recover()
+        {
+            Pages.Clear();
+            Pages.Recover(Examples, 100);
+            Assert.That(
+                Pages.Count,
+                Is.EqualTo(3)
             );
         }
 

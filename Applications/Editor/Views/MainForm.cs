@@ -418,14 +418,14 @@ namespace Cube.Note.App.Editor
             switch (e.KeyCode)
             {
                 case Keys.C:
-                    if (e.Shift) Aggregator.Duplicate.Raise(EventAggregator.SelectedPage);
+                    if (e.Shift) Aggregator.Duplicate.Raise(EventAggregator.Selected);
                     else result = false;
                     break;
                 case Keys.D:
-                    Aggregator.Remove.Raise(EventAggregator.SelectedPage);
+                    Aggregator.Remove.Raise(EventAggregator.Selected);
                     break;
                 case Keys.E:
-                    Aggregator.Export.Raise(EventAggregator.SelectedPage);
+                    Aggregator.Export.Raise(EventAggregator.Selected);
                     break;
                 case Keys.F:
                     RaiseSearch();
@@ -446,8 +446,8 @@ namespace Cube.Note.App.Editor
                     break;
                 case Keys.N:
                     Aggregator.NewPage.Raise(e.Shift ?
-                        EventAggregator.SelectedPage :
-                        EventAggregator.TopPage
+                        EventAggregator.Selected :
+                        EventAggregator.Top
                     );
                     break;
                 case Keys.O:
@@ -458,10 +458,10 @@ namespace Cube.Note.App.Editor
                     break;
                 case Keys.R:
                     if (e.Shift) Aggregator.TagSettings.Raise();
-                    else Aggregator.Property.Raise(EventAggregator.SelectedPage);
+                    else Aggregator.Property.Raise(EventAggregator.Selected);
                     break;
                 case Keys.S:
-                    if (e.Shift) Aggregator.Export.Raise(EventAggregator.SelectedPage);
+                    if (e.Shift) Aggregator.Export.Raise(EventAggregator.Selected);
                     else Aggregator.Save.Raise();
                     break;
                 case Keys.T:

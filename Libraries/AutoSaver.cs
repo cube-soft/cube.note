@@ -262,7 +262,7 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeTarget
+        /// InitializePages
         ///
         /// <summary>
         /// 対象とする PageCollection オブジェクトを初期化します。
@@ -276,13 +276,17 @@ namespace Cube.Note
                 this.LogInfo($"DataFolder:\"{Settings.Root}\"");
 
                 if (Pages == null) return;
-                Pages.Load();
+                try { Pages.Load(); }
+                catch (Exception err)
+                {
+                    this.LogError(err.Message, err);
+                    this.LogError($"Recover:{Pages.Directory}");
+                    Pages.Recover(Settings.MaxAbstractLength);
+                }
 
                 if (!string.IsNullOrEmpty(Settings.User.Page))
                 {
-                    var page = Pages.FirstOrDefault(x =>
-                        x.FileName == Settings.User.Page
-                    );
+                    var page = Pages.FirstOrDefault(x => x.FileName == Settings.User.Page);
                     if (page != null) Settings.Current.Page = page;
                 }
                 if (Pages.Count <= 0) Pages.NewPage(0);
