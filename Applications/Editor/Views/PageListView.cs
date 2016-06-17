@@ -186,6 +186,32 @@ namespace Cube.Note.App.Editor
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FontPixel
+        /// 
+        /// <summary>
+        /// フォントサイズをピクセル単位で取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public float FontPixel
+        {
+            get
+            {
+                if (Font.Unit == GraphicsUnit.Pixel) return Font.Size;
+
+                using (var gs = CreateGraphics())
+                {
+                    var points = Font.SizeInPoints;
+                    var pixels = points * gs.DpiX / 72.0f;
+                    return pixels;
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -563,7 +589,7 @@ namespace Cube.Note.App.Editor
             format.Trimming = StringTrimming.EllipsisCharacter;
 
             bounds.Width -= (_left + _space);
-            bounds.Height = (int)(Font.Size * LineHeight);
+            bounds.Height = (int)(FontPixel * LineHeight);
             bounds.X += (_left + _space);
             bounds.Y += ShowRemoveButton ? bounds.Height : _space;
 
@@ -792,7 +818,7 @@ namespace Cube.Note.App.Editor
             if (ShowRemoveButton)   ++count;
             if (ShowPropertyButton) ++count;
 
-            var height = (int)Math.Max(Font.Size * LineHeight * count + 8, 1);
+            var height = (int)Math.Max(FontPixel * LineHeight * count + 8, 1);
             var width  = Height < height * Count ?
                          Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1) :
                          Math.Max(Width, 1);

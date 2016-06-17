@@ -97,7 +97,7 @@
             this.PageCollectionControl.Aggregator = null;
             this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
             this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(128)));
+            this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
@@ -151,7 +151,7 @@
             this.TextControl.Status = null;
             this.TextControl.TabIndex = 1;
             this.TextControl.TopMargin = 6;
-            this.TextControl.ViewWidth = 104;
+            this.TextControl.ViewWidth = 129;
             this.TextControl.WordWrapCount = -1;
             // 
             // VerticalSeparator
@@ -169,7 +169,9 @@
             // 
             this.MenuControl.BackColor = System.Drawing.SystemColors.Control;
             this.MenuControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MenuControl.Font = new System.Drawing.Font("Meiryo UI", 9F);
             this.MenuControl.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.MenuControl.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MenuControl.Location = new System.Drawing.Point(0, 0);
             this.MenuControl.Name = "MenuControl";
             this.MenuControl.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
@@ -195,6 +197,7 @@
             this.FooterStatusControl.Count = 0;
             this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.FooterStatusControl.GripMargin = new System.Windows.Forms.Padding(0);
+            this.FooterStatusControl.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.FooterStatusControl.LineCount = 0;
             this.FooterStatusControl.LineNumber = 0;
             this.FooterStatusControl.Location = new System.Drawing.Point(0, 376);
@@ -213,6 +216,7 @@
             // MainForm
             // 
             this.AllowDrop = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(700, 400);
             this.Controls.Add(this.LayoutPanel);
