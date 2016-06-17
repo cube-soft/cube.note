@@ -91,6 +91,7 @@
             this.ContentsPanel.SplitterDistance = 270;
             this.ContentsPanel.SplitterWidth = 1;
             this.ContentsPanel.TabIndex = 3;
+            this.ContentsPanel.TabStop = false;
             // 
             // PageCollectionControl
             // 
