@@ -113,6 +113,8 @@ namespace Cube.Note.App.Editor
                      Settings.User.Height :
                      (int)(area.Height * 0.7);
 
+            if (Dpi == 96.0f) return;
+
             LayoutPanel.RowStyles[0].Height        = (int)( 30 * Ratio);
             LayoutPanel.RowStyles[2].Height        = (int)( 22 * Ratio);
             RightContentsPanel.RowStyles[0].Height = (int)( 32 * Ratio);

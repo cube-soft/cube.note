@@ -234,7 +234,7 @@
             this.NewTagTextBox.Location = new System.Drawing.Point(0, 0);
             this.NewTagTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.NewTagTextBox.Name = "NewTagTextBox";
-            this.NewTagTextBox.Size = new System.Drawing.Size(287, 16);
+            this.NewTagTextBox.Size = new System.Drawing.Size(287, 20);
             this.NewTagTextBox.TabIndex = 3;
             // 
             // TagsWrapper
@@ -262,10 +262,12 @@
             // 
             // PropertyForm
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.CancelButton = this.ExitButton;
             this.ClientSize = new System.Drawing.Size(450, 330);
             this.Controls.Add(this.LayoutPanel);
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximumSize = new System.Drawing.Size(1600, 860);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 270);

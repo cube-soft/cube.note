@@ -129,6 +129,18 @@ namespace Cube.Note.App.Editor
                 TagsPanel.Controls.Add(button);
             }
             TagsPanel.ResumeLayout();
+
+            if (Dpi == 96.0f) return;
+
+            LayoutPanel.RowStyles[0].Height = (int)(30 * Ratio);
+            LayoutPanel.RowStyles[1].Height = (int)(50 * Ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(20 * Ratio);
+            LayoutPanel.RowStyles[3].Height = (int)(28 * Ratio);
+            LayoutPanel.RowStyles[5].Height = (int)(40 * Ratio);
+            LayoutPanel.RowStyles[6].Height = (int)(60 * Ratio);
+            LayoutPanel.ColumnStyles[1].Width = (int)(140 * Ratio);
+            NewTagWrapper.Height = (int)(25 * Ratio);
+            NewTagButton.Height = (int)(25 * Ratio);
         }
 
         #endregion
