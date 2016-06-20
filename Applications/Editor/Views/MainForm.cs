@@ -112,6 +112,11 @@ namespace Cube.Note.App.Editor
             Height = Settings.User.Height >= 0 ?
                      Settings.User.Height :
                      (int)(area.Height * 0.7);
+
+            LayoutPanel.RowStyles[0].Height        = (int)( 30 * Ratio);
+            LayoutPanel.RowStyles[2].Height        = (int)( 22 * Ratio);
+            RightContentsPanel.RowStyles[0].Height = (int)( 32 * Ratio);
+            ContentsPanel.SplitterDistance         = (int)(270 * Ratio);
         }
 
         /* ----------------------------------------------------------------- */

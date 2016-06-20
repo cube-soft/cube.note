@@ -93,7 +93,7 @@
             this.TagComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 0);
             this.TagComboBox.MaxDropDownItems = 20;
             this.TagComboBox.Name = "TagComboBox";
-            this.TagComboBox.Size = new System.Drawing.Size(292, 23);
+            this.TagComboBox.Size = new System.Drawing.Size(292, 27);
             this.TagComboBox.TabIndex = 3;
             // 
             // Separator1
@@ -120,10 +120,8 @@
             // 
             // PageListView
             // 
-            this.PageListView.Aggregator = null;
             this.PageListView.AllowNoSelect = false;
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.DataSource = null;
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -135,14 +133,15 @@
             this.PageListView.Size = new System.Drawing.Size(300, 238);
             this.PageListView.TabIndex = 7;
             this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(300, 40);
+            this.PageListView.TileSize = new System.Drawing.Size(300, 48);
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;
             // 
             // PageCollectionControl
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.Controls.Add(this.LayoutPanel);
-            this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(128)));
+            this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PageCollectionControl";
             this.Size = new System.Drawing.Size(300, 300);

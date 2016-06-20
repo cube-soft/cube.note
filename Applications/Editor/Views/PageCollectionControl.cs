@@ -46,6 +46,7 @@ namespace Cube.Note.App.Editor
         public PageCollectionControl()
         {
             InitializeComponent();
+            InitializeLayout();
 
             NewPageButton.Click += (s, e)
                 => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
@@ -93,6 +94,20 @@ namespace Cube.Note.App.Editor
         {
             get { return Pages.Aggregator; }
             set { Pages.Aggregator = value; }
+        }
+
+        #endregion
+
+        #region Initialize methods
+
+        private void InitializeLayout()
+        {
+            using (var gs = CreateGraphics())
+            {
+                var ratio = gs.DpiX / 96.0;
+                LayoutPanel.RowStyles[0].Height = (int)(32 * ratio);
+                LayoutPanel.RowStyles[4].Height = (int)(28 * ratio);
+            }
         }
 
         #endregion

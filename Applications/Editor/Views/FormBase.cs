@@ -47,10 +47,38 @@ namespace Cube.Note.App.Editor
         public FormBase()
         {
             InitializeComponent();
+
+            using (var gs = CreateGraphics()) { Dpi = gs.DpiY; }
             
             Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
             Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dpi
+        ///
+        /// <summary>
+        /// 現在の DPI 値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public float Dpi { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Ratio
+        ///
+        /// <summary>
+        /// 96dpi を基準とした時の倍率を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public float Ratio => Dpi / 96.0f;
 
         #endregion
 

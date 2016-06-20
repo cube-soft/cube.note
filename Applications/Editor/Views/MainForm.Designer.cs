@@ -196,7 +196,7 @@
             // 
             this.FooterStatusControl.ColumnNumber = 0;
             this.FooterStatusControl.Count = 0;
-            this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 9F);
             this.FooterStatusControl.GripMargin = new System.Windows.Forms.Padding(0);
             this.FooterStatusControl.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.FooterStatusControl.LineCount = 0;
