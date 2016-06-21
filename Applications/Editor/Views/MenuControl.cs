@@ -191,21 +191,26 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeMenu()
         {
-            Items.AddRange(new ToolStripItem[]
+            using (var gs = CreateGraphics())
             {
-                VisibleMenu,
-                CreateSeparator(),
-                SearchMenu,
-                CreateSeparator(),
-                UndoMenu,
-                RedoMenu,
-                CreateSeparator(),
-                ExportMenu,
-                PrintMenu,
-                CreateSeparator(),
-                SettingsMenu,
-                LogoMenu,
-            });
+                var ratio = gs.DpiY / 96.0f;
+
+                Items.AddRange(new ToolStripItem[]
+                {
+                    VisibleMenu,
+                    CreateSeparator(ratio),
+                    SearchMenu,
+                    CreateSeparator(ratio),
+                    UndoMenu,
+                    RedoMenu,
+                    CreateSeparator(ratio),
+                    ExportMenu,
+                    PrintMenu,
+                    CreateSeparator(ratio),
+                    SettingsMenu,
+                    LogoMenu,
+                });
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -244,7 +249,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ToolStripButton CreateSeparator()
+        private ToolStripButton CreateSeparator(float ratio)
         {
             var dest = new ToolStripButton();
 
@@ -255,7 +260,7 @@ namespace Cube.Note.App.Editor
             dest.Enabled      = false;
             dest.Margin       = new Padding(6, 0, 6, 0);
             dest.Padding      = new Padding(0);
-            dest.Size         = new Size(1, 30);
+            dest.Size         = new Size(1, (int)(30 * ratio));
 
             return dest;
         }
