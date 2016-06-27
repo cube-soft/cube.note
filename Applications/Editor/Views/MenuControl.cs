@@ -46,14 +46,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MenuControl() : base()
         {
-            VisibleMenu  = CreateMenuButton(Properties.Resources.Left, Properties.Resources.ToolMenuHide);
-            SearchMenu   = CreateMenuButton(Properties.Resources.Search, Properties.Resources.ToolMenuSearch);
-            UndoMenu     = CreateMenuButton(Properties.Resources.Undo, Properties.Resources.ToolMenuUndo);
-            RedoMenu     = CreateMenuButton(Properties.Resources.Redo, Properties.Resources.ToolMenuRedo);
-            ExportMenu   = CreateMenuButton(Properties.Resources.Export, Properties.Resources.ToolMenuExport);
-            PrintMenu    = CreateMenuButton(Properties.Resources.Print, Properties.Resources.ToolMenuPrint);
-            SettingsMenu = CreateMenuButton(Properties.Resources.Settings, Properties.Resources.ToolMenuSettings, false);
-            LogoMenu     = CreateMenuButton(Properties.Resources.Logo, Properties.Resources.ToolMenuLogo, false);
+            VisibleMenu  = CreateMenuButton("left",     Properties.Resources.ToolMenuHide);
+            SearchMenu   = CreateMenuButton("search",   Properties.Resources.ToolMenuSearch);
+            UndoMenu     = CreateMenuButton("undo",     Properties.Resources.ToolMenuUndo);
+            RedoMenu     = CreateMenuButton("redo",     Properties.Resources.ToolMenuRedo);
+            ExportMenu   = CreateMenuButton("export",   Properties.Resources.ToolMenuExport);
+            PrintMenu    = CreateMenuButton("print",    Properties.Resources.ToolMenuPrint);
+            SettingsMenu = CreateMenuButton("settings", Properties.Resources.ToolMenuSettings, false);
+            LogoMenu     = CreateMenuButton("logo",     Properties.Resources.ToolMenuLogo, false);
 
             InitializeMenu();
         }
@@ -243,14 +243,15 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ToolStripButton CreateMenuButton(Image image, string text, bool left = true)
+        private ToolStripButton CreateMenuButton(string name, string text, bool left = true)
         {
             var dest  = new ToolStripButton();
             var align = left ? ToolStripItemAlignment.Left : ToolStripItemAlignment.Right;
 
+            dest.Name         = name;
             dest.Alignment    = align;
             dest.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            dest.Image        = image;
+            dest.Image        = Images.Get(name, 1.0);
             dest.ImageScaling = ToolStripItemImageScaling.None;
             dest.Margin       = new Padding(1);
             dest.Padding      = new Padding(12, 0, 12, 0);
@@ -276,6 +277,7 @@ namespace Cube.Note.App.Editor
             var width   = (int)(44 * ratio);
             var height  = (int)(30 * ratio);
 
+            src.Image   = Images.Get(src.Name, ratio);
             src.Padding = new Padding(padding, 0, padding, 0);
             src.Size    = new Size(width, height);
         }
