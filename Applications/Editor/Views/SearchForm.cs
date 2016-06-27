@@ -562,8 +562,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void EnableOptionalButtons(bool enabled)
         {
-            OptionalShadow1.Enabled = enabled;
-            OptionalShadow2.Enabled = enabled;
+            OptionalButton1.Enabled = enabled;
+            OptionalButton2.Enabled = enabled;
         }
 
         /* ----------------------------------------------------------------- */
