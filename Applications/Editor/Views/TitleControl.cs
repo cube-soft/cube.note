@@ -103,7 +103,10 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public void UpdateLayout(double ratio)
         {
-
+            TitlePictureBox.Image = Images.Get("title",    ratio);
+            MaximizeButton.Image  = Images.Get("maximize", ratio);
+            MinimizeButton.Image  = Images.Get("minimize", ratio);
+            ExitButton.Image      = Images.Get("close",    ratio);
         }
 
         #endregion
