@@ -73,6 +73,7 @@
     <Compile Include="Presenters\UpdatePresenter.cs" />
     <Compile Include="Views\Dialogs.cs" />
     <Compile Include="Views\IDpiAwarable.cs" />
+    <Compile Include="Views\Images.cs" />
     <Compile Include="Views\PageMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -210,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\192\Normalize192.png" />
     <None Include="Resources\240\Undo240.png" />
     <None Include="Resources\240\Title240.png" />
     <None Include="Resources\240\Settings240.png" />
@@ -235,7 +237,6 @@
     <None Include="Resources\192\Redo192.png" />
     <None Include="Resources\192\Property192.png" />
     <None Include="Resources\192\Print192.png" />
-    <None Include="Resources\192\Normalize.png" />
     <None Include="Resources\192\Minimize192.png" />
     <None Include="Resources\192\Maximize192.png" />
     <None Include="Resources\192\Logo192.png" />

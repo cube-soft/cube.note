@@ -717,16 +717,6 @@ namespace Cube.Note.App.Editor.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Normalize1 {
-            get {
-                object obj = ResourceManager.GetObject("Normalize1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
         internal static System.Drawing.Bitmap Normalize120 {
             get {
                 object obj = ResourceManager.GetObject("Normalize120", resourceCulture);
@@ -740,6 +730,16 @@ namespace Cube.Note.App.Editor.Properties {
         internal static System.Drawing.Bitmap Normalize144 {
             get {
                 object obj = ResourceManager.GetObject("Normalize144", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Normalize192 {
+            get {
+                object obj = ResourceManager.GetObject("Normalize192", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
