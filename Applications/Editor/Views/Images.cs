@@ -216,9 +216,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public static Image Get(string name, double ratio)
         {
-            if (_resources.ContainsKey(name.ToLower())) return null;
+            List<Image> dest = null;
+            if (!_resources.TryGetValue(name.ToLower(), out dest)) return null;
 
-            var dest  = _resources[name.ToLower()];
             var index = ratio < 1.25 ? 0 :
                         ratio < 1.50 ? 1 :
                         ratio < 2.00 ? 2 :
