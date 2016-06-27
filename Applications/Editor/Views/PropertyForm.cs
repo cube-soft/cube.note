@@ -157,6 +157,9 @@ namespace Cube.Note.App.Editor
             LayoutPanel.RowStyles[5].Height = (int)(40 * ratio);
             LayoutPanel.RowStyles[6].Height = (int)(60 * ratio);
 
+            var caption = Caption as IDpiAwarable;
+            caption?.UpdateLayout(ratio);
+
             ButtonsPanel.Padding = new Padding(0, (int)(10 * ratio), 0, 0);
             ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
             ExitButton.Size  = new Size((int)(110 * ratio), (int)(35 * ratio));

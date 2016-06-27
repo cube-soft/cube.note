@@ -229,6 +229,9 @@ namespace Cube.Note.App.Editor
             RightContentsPanel.RowStyles[0].Height = (int)(32 * ratio);
             ContentsPanel.SplitterDistance = (int)(270 * ratio);
 
+            var caption = Caption as IDpiAwarable;
+            caption?.UpdateLayout(ratio);
+
             MenuControl.UpdateLayout(ratio);
             PageCollectionControl.UpdateLayout(ratio);
         }
