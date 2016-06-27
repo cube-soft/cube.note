@@ -31,7 +31,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class TitleControl : Cube.Forms.UserControl
+    public partial class TitleControl : Cube.Forms.UserControl, IDpiAwarable
     {
         #region Constructors
 
@@ -86,6 +86,24 @@ namespace Cube.Note.App.Editor
         {
             get { return MinimizeButton.Visible; }
             set { MinimizeButton.Visible = value; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+
         }
 
         #endregion
