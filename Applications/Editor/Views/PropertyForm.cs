@@ -32,7 +32,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class PropertyForm : FormBase
+    public partial class PropertyForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -130,17 +130,34 @@ namespace Cube.Note.App.Editor
             }
             TagsPanel.ResumeLayout();
 
-            if (Dpi == 96.0f) return;
+            UpdateLayout(Dpi / BaseDpi);
+        }
 
-            LayoutPanel.RowStyles[0].Height = (int)(30 * Ratio);
-            LayoutPanel.RowStyles[1].Height = (int)(50 * Ratio);
-            LayoutPanel.RowStyles[2].Height = (int)(20 * Ratio);
-            LayoutPanel.RowStyles[3].Height = (int)(28 * Ratio);
-            LayoutPanel.RowStyles[5].Height = (int)(40 * Ratio);
-            LayoutPanel.RowStyles[6].Height = (int)(60 * Ratio);
-            LayoutPanel.ColumnStyles[1].Width = (int)(140 * Ratio);
-            NewTagWrapper.Height = (int)(25 * Ratio);
-            NewTagButton.Height = (int)(25 * Ratio);
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[1].Height = (int)(50 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(20 * ratio);
+            LayoutPanel.RowStyles[3].Height = (int)(28 * ratio);
+            LayoutPanel.RowStyles[5].Height = (int)(40 * ratio);
+            LayoutPanel.RowStyles[6].Height = (int)(60 * ratio);
+            LayoutPanel.ColumnStyles[1].Width = (int)(140 * ratio);
+
+            NewTagWrapper.Height = (int)(25 * ratio);
+            NewTagButton.Height  = (int)(25 * ratio);
         }
 
         #endregion

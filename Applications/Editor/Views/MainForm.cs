@@ -35,7 +35,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : FormBase
+    public partial class MainForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -113,12 +113,7 @@ namespace Cube.Note.App.Editor
                      Settings.User.Height :
                      (int)(area.Height * 0.7);
 
-            if (Dpi == 96.0f) return;
-
-            LayoutPanel.RowStyles[0].Height        = (int)( 30 * Ratio);
-            LayoutPanel.RowStyles[2].Height        = (int)( 22 * Ratio);
-            RightContentsPanel.RowStyles[0].Height = (int)( 32 * Ratio);
-            ContentsPanel.SplitterDistance         = (int)(270 * Ratio);
+            UpdateLayout(Dpi / BaseDpi);
         }
 
         /* ----------------------------------------------------------------- */
@@ -217,6 +212,26 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(22 * ratio);
+            RightContentsPanel.RowStyles[0].Height = (int)(32 * ratio);
+            ContentsPanel.SplitterDistance = (int)(270 * ratio);
+
+            MenuControl.UpdateLayout(ratio);
+            PageCollectionControl.UpdateLayout(ratio);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

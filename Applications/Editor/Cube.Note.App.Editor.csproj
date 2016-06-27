@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Presenters\UpdatePresenter.cs" />
     <Compile Include="Views\Dialogs.cs" />
+    <Compile Include="Views\IDpiAwarable.cs" />
     <Compile Include="Views\PageMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>

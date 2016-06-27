@@ -31,7 +31,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class MenuControl : ToolStrip
+    public class MenuControl : ToolStrip, IDpiAwarable
     {
         #region Constructors
 
@@ -152,6 +152,32 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            foreach (var item in Items)
+            {
+                var control = item as ToolStripButton;
+                if (control == null) continue;
+
+                var separator = (control.DisplayStyle == ToolStripItemDisplayStyle.None);
+                if (separator) UpdateSeparator(control, ratio);
+                else UpdateMenuButton(control, ratio);
+            }
+        }
+
+        #endregion
+
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -191,26 +217,21 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void InitializeMenu()
         {
-            using (var gs = CreateGraphics())
+            Items.AddRange(new ToolStripItem[]
             {
-                var ratio = gs.DpiY / 96.0f;
-
-                Items.AddRange(new ToolStripItem[]
-                {
-                    VisibleMenu,
-                    CreateSeparator(ratio),
-                    SearchMenu,
-                    CreateSeparator(ratio),
-                    UndoMenu,
-                    RedoMenu,
-                    CreateSeparator(ratio),
-                    ExportMenu,
-                    PrintMenu,
-                    CreateSeparator(ratio),
-                    SettingsMenu,
-                    LogoMenu,
-                });
-            }
+                VisibleMenu,
+                CreateSeparator(),
+                SearchMenu,
+                CreateSeparator(),
+                UndoMenu,
+                RedoMenu,
+                CreateSeparator(),
+                ExportMenu,
+                PrintMenu,
+                CreateSeparator(),
+                SettingsMenu,
+                LogoMenu,
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -242,6 +263,26 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// UpdateMenuButton
+        /// 
+        /// <summary>
+        /// メニューボタンのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateMenuButton(ToolStripButton src, double ratio)
+        {
+            var padding = (int)(12 * ratio);
+            var width   = (int)(44 * ratio);
+            var height  = (int)(30 * ratio);
+
+            src.Padding = new Padding(padding, 0, padding, 0);
+            src.Size    = new Size(width, height);
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// CreateSeparator
         /// 
         /// <summary>
@@ -249,7 +290,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ToolStripButton CreateSeparator(float ratio)
+        private ToolStripButton CreateSeparator()
         {
             var dest = new ToolStripButton();
 
@@ -260,9 +301,28 @@ namespace Cube.Note.App.Editor
             dest.Enabled      = false;
             dest.Margin       = new Padding(6, 0, 6, 0);
             dest.Padding      = new Padding(0);
-            dest.Size         = new Size(1, (int)(30 * ratio));
+            dest.Size         = new Size(1, 30);
 
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateSeparator
+        /// 
+        /// <summary>
+        /// 区切り線のレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateSeparator(ToolStripButton src, double ratio)
+        {
+            var padding = (int)(6 * ratio);
+            var width   = 1;
+            var height  = (int)(30 * ratio);
+
+            src.Margin = new Padding(padding, 0, padding, 0);
+            src.Size   = new Size(width, height);
         }
 
         #endregion

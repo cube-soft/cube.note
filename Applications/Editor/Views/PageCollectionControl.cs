@@ -30,7 +30,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class PageCollectionControl : Cube.Forms.UserControl
+    public partial class PageCollectionControl : Cube.Forms.UserControl, IDpiAwarable
     {
         #region Constructors
 
@@ -46,7 +46,6 @@ namespace Cube.Note.App.Editor
         public PageCollectionControl()
         {
             InitializeComponent();
-            InitializeLayout();
 
             NewPageButton.Click += (s, e)
                 => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
@@ -98,16 +97,21 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Initialize methods
+        #region Methods
 
-        private void InitializeLayout()
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
         {
-            using (var gs = CreateGraphics())
-            {
-                var ratio = gs.DpiX / 96.0;
-                LayoutPanel.RowStyles[0].Height = (int)(32 * ratio);
-                LayoutPanel.RowStyles[4].Height = (int)(28 * ratio);
-            }
+            LayoutPanel.RowStyles[0].Height = (int)(32 * ratio);
+            LayoutPanel.RowStyles[4].Height = (int)(28 * ratio);
         }
 
         #endregion
