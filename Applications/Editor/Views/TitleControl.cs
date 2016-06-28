@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Cube.Note.App.Editor
 {
@@ -103,10 +104,20 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public void UpdateLayout(double ratio)
         {
-            TitlePictureBox.Image = Images.Get("title",    ratio);
-            MaximizeButton.Image  = Images.Get("maximize", ratio);
-            MinimizeButton.Image  = Images.Get("minimize", ratio);
-            ExitButton.Image      = Images.Get("close",    ratio);
+            LayoutPanel.ColumnStyles[0].Width = (int)(120 * ratio);
+
+            var size = new Size((int)(45 * ratio), (int)(30 * ratio));
+
+            TitlePictureBox.Image = Images.Get("title", ratio);
+
+            MaximizeButton.Image = Images.Get("maximize", ratio);
+            MaximizeButton.Size  = size;
+
+            MinimizeButton.Image = Images.Get("minimize", ratio);
+            MinimizeButton.Size  = size;
+
+            ExitButton.Image = Images.Get("close", ratio);
+            ExitButton.Size  = size;
         }
 
         #endregion

@@ -120,6 +120,7 @@
             // 
             // TitleControl
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.Controls.Add(this.LayoutPanel);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "TitleControl";
