@@ -110,8 +110,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public void UpdateLayout(double ratio)
         {
-            LayoutPanel.RowStyles[0].Height = (int)(32 * ratio);
-            LayoutPanel.RowStyles[4].Height = (int)(28 * ratio);
+            var top    = (int)(32 * ratio);
+            var bottom = (int)(28 * ratio);
+            var margin = (top - TagComboBox.Height) / 2;
+
+            LayoutPanel.RowStyles[0].Height = top;
+            LayoutPanel.RowStyles[4].Height = bottom;
+            TagComboBox.Margin = new Padding(4, margin, 4, 0);
+            NewPageButton.Image = Images.Get("add", ratio);
         }
 
         #endregion

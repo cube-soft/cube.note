@@ -71,15 +71,15 @@
             this.NewPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewPageButton.ForeColor = System.Drawing.SystemColors.GrayText;
             this.NewPageButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
-            this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.NewPageButton.Location = new System.Drawing.Point(0, 272);
             this.NewPageButton.Margin = new System.Windows.Forms.Padding(0);
             this.NewPageButton.Name = "NewPageButton";
-            this.NewPageButton.Padding = new System.Windows.Forms.Padding(4, 0, 0, 2);
+            this.NewPageButton.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.NewPageButton.Size = new System.Drawing.Size(300, 28);
             this.NewPageButton.TabIndex = 5;
             this.NewPageButton.Text = " 新しいノート";
-            this.NewPageButton.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.NewPageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.NewPageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewPageButton.UseVisualStyleBackColor = false;
             // 
