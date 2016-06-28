@@ -191,6 +191,12 @@ namespace Cube.Note.App.Editor
             ResetButton.Size = new Size((int)(120 * ratio), (int)(25 * ratio));
             ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
             ExitButton.Size = new Size((int)(110 * ratio), (int)(35 * ratio));
+
+            UpdateTitleLabelLayout(ratio);
+            UpdateColorLabel(ratio);
+            UpdateButtonLayout(ratio);
+            UpdateOthersLayout(ratio);
+            UpdateTopMargin(ratio);
         }
 
         #endregion
@@ -505,6 +511,95 @@ namespace Cube.Note.App.Editor
                 return true;
             }
             catch { return false; }
+        }
+
+        private void UpdateTitleLabelLayout(double ratio)
+        {
+            FontTitleLabel.Size                =
+            BackColorTitleLabel.Size           =
+            ForeColorTitleLabel.Size           =
+            UriColorTitleLabel.Size            =
+            HighlightBackColorTitleLabel.Size  =
+            HighlightForeColorTitleLabel.Size  =
+            SearchBackColorTitleLabel.Size     =
+            SearchForeColorTitleLabel.Size     =
+            TabWidthTitleLabel.Size            =
+            PrintMarginTitleLabel.Size         =
+            PrintDummyTitleLabel.Size          =
+            SearchQueryTitleLabel.Size         =
+            AutoSaveTimeTitleLabel.Size        =
+            DataFolderTitleLabel.Size          =
+            new Size((int)(100 * ratio), (int)(23 * ratio));
+
+            WordWrapTitleLabel.Size            =
+            LineNumberBackColorTitleLabel.Size =
+            LineNumberForeColorTitleLabel.Size =
+            CurrentLineColorTitleLabel.Size    =
+            SpecialCharsColorTitleLabel.Size   =
+            new Size((int)(85 * ratio), (int)(23 * ratio));
+        }
+
+        private void UpdateColorLabel(double ratio)
+        {
+            FontLabel.Size                =
+            BackColorLabel.Size           =
+            ForeColorLabel.Size           =
+            UriColorLabel.Size            =
+            HighlightBackColorLabel.Size  =
+            HighlightForeColorLabel.Size  =
+            SearchBackColorLabel.Size     =
+            SearchForeColorLabel.Size     =
+            LineNumberBackColorLabel.Size =
+            LineNumberForeColorLabel.Size =
+            CurrentLineColorLabel.Size    =
+            SpecialCharsColorLabel.Size   =
+            new Size((int)(190 * ratio), (int)(23 * ratio));
+        }
+
+        private void UpdateButtonLayout(double ratio)
+        {
+            FontFontButton.Image = Images.Get("font", ratio);
+            DataFolderButton.Size = new Size((int)(50 * ratio), (int)(25 * ratio));
+
+            FontFontButton.Size                 =
+            BackColorColorButton.Size           =
+            ForeColorColorButton.Size           =
+            UriColorColorButton.Size            =
+            HighlightBackColorColorButton.Size  =
+            HighlightForeColorColorButton.Size  =
+            SearchBackColorColorButton.Size     =
+            SearchForeColorColorButton.Size     =
+            LineNumberBackColorColorButton.Size =
+            LineNumberForeColorColorButton.Size =
+            CurrentLineColorColorButton.Size    =
+            SpecialCharsColorColorButton.Size   =
+            new Size((int)(50 * ratio), (int)(23 * ratio));
+        }
+
+        private void UpdateOthersLayout(double ratio)
+        {
+            RestartCheckBox.Margin = new Padding((int)(109 * ratio), 3, 3, 3);
+
+            PrintLeftMarginTitleLabel.Size =
+            PrintRightMarginTitleLabel.Size =
+            PrintTopMarginTitleLabel.Size =
+            PrintBottomMarginTitleLabel.Size =
+            new Size((int)(23 * ratio), (int)(23 * ratio));
+
+            PrintLeftMarginUnitLabel.Size =
+            PrintRightMarginUnitLabel.Size =
+            PrintTopMarginUnitLabel.Size =
+            PrintBottomMarginUnitLabel.Size =
+            AutoSaveTimeUnitLabel.Size =
+            new Size((int)(50 * ratio), (int)(23 * ratio));
+        }
+
+        private void UpdateTopMargin(double ratio)
+        {
+            FontTitleLabel.Margin =
+            FontFontButton.Margin =
+            FontLabel.Margin =
+            new Padding(3, (int)(20 * ratio), 3, 3);
         }
 
         #endregion
