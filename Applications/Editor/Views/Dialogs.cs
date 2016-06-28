@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Cube.Note.App.Editor
 {
@@ -104,10 +105,11 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static PropertyForm Property(Page page, IEnumerable<Tag> tags)
+        public static PropertyForm Property(Form owner, Page page, IEnumerable<Tag> tags)
         {
             var dest = new PropertyForm(page, tags);
-            dest.StartPosition = FormStartPosition.CenterParent;
+            dest.StartPosition = FormStartPosition.Manual;
+            dest.Location = CreateLocation(owner);
             return dest;
         }
 
@@ -120,7 +122,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static SettingsForm Settings(SettingsFolder model)
+        public static SettingsForm Settings(Form owner, SettingsFolder model)
         {
             var dest = new SettingsForm(model.User);
 
@@ -128,7 +130,8 @@ namespace Cube.Note.App.Editor
             dest.Assembly       = model.Assembly;
             dest.Version.Digit  = model.Version.Digit;
             dest.Version.Suffix = model.Version.Suffix;
-            dest.StartPosition  = FormStartPosition.CenterParent;
+            dest.StartPosition = FormStartPosition.Manual;
+            dest.Location = CreateLocation(owner);
 
             return dest;
         }
@@ -142,11 +145,12 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static TagForm TagSettings(TagCollection model, SettingsValue settings)
+        public static TagForm TagSettings(Form owner, TagCollection model, SettingsValue settings)
         {
             var dest = new TagForm(model);
 
-            dest.StartPosition = FormStartPosition.CenterParent;
+            dest.StartPosition = FormStartPosition.Manual;
+            dest.Location = CreateLocation(owner);
             dest.FormClosing += (s, e) =>
             {
                 e.Cancel = CancelTagRemoving(s, settings.TagRemoveWarning);
@@ -189,6 +193,23 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateLocation
+        /// 
+        /// <summary>
+        /// 表示位置を表すオブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Point CreateLocation(Form owner)
+        {
+            var offset = 20;
+            return owner != null ?
+                   new Point(owner.Left + offset, owner.Top + offset) :
+                   new Point(offset, offset);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

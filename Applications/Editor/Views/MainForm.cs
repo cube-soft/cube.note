@@ -113,6 +113,9 @@ namespace Cube.Note.App.Editor
                      Settings.User.Height :
                      (int)(area.Height * 0.7);
 
+            SearchControl.StartPosition = FormStartPosition.Manual;
+            SearchControl.Location = new Point(Left + 20, Top + 20);
+
             UpdateLayout(Dpi / BaseDpi);
         }
 

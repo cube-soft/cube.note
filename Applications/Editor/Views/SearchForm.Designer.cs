@@ -350,7 +350,7 @@
             // 
             // FooterStatusStrip
             // 
-            this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 9F);
             this.FooterStatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.FooterStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MessageLabel});
@@ -358,7 +358,6 @@
             this.FooterStatusStrip.Name = "FooterStatusStrip";
             this.FooterStatusStrip.Size = new System.Drawing.Size(448, 22);
             this.FooterStatusStrip.TabIndex = 2;
-            this.FooterStatusStrip.Text = "statusStrip1";
             // 
             // MessageLabel
             // 

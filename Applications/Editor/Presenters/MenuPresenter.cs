@@ -131,7 +131,7 @@ namespace Cube.Note.App.Editor
         private void Settings_Handle(object sender, EventArgs e)
             => Sync(() =>
         {
-            var dialog = Dialogs.Settings(Settings);
+            var dialog = Dialogs.Settings(View.FindForm(), Settings);
             using (var ps = new SettingsPresenter(dialog, Settings, Events))
             {
                 var result = dialog.ShowDialog();
@@ -157,7 +157,7 @@ namespace Cube.Note.App.Editor
         {
             var tags = SyncWait(() =>
             {
-                var dialog = Dialogs.TagSettings(Model.Tags, Settings.User);
+                var dialog = Dialogs.TagSettings(View.FindForm(), Model.Tags, Settings.User);
                 dialog.ShowDialog();
                 return dialog.DialogResult == DialogResult.Cancel ?
                        new KeyValuePair<Tag[], Tag[]>(null, null) :
