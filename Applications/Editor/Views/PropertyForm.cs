@@ -147,6 +147,7 @@ namespace Cube.Note.App.Editor
         public void UpdateLayout(double ratio)
         {
             MinimumSize = new Size((int)(300 * ratio), (int)(270 * ratio));
+            Size = new Size((int)(450 * ratio), (int)(330 * ratio));
 
             LayoutPanel.ColumnStyles[1].Width = (int)(140 * ratio);
 
