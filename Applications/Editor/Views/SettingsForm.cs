@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Drawing;
 using IoEx = System.IO;
 
 namespace Cube.Note.App.Editor
@@ -34,7 +35,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class SettingsForm : FormBase
+    public partial class SettingsForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -61,6 +62,7 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings, int index = 0)
         {
             InitializeComponent();
+            UpdateLayout(Dpi / BaseDpi);
             Update(settings);
             InitializeEvents();
 
@@ -164,6 +166,31 @@ namespace Cube.Note.App.Editor
         {
             if (settings == null) return;
             SettingsControl.Update(settings);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            MinimumSize = new Size((int)(480 * ratio), (int)(320 * ratio));
+            Size = new Size((int)(500 * ratio), (int)(560 * ratio));
+
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(27 * ratio);
+            LayoutPanel.RowStyles[3].Height = (int)(55 * ratio);
+
+            TitleControl.UpdateLayout(ratio);
+
+            ResetButton.Size = new Size((int)(120 * ratio), (int)(25 * ratio));
+            ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
+            ExitButton.Size = new Size((int)(110 * ratio), (int)(35 * ratio));
         }
 
         #endregion
