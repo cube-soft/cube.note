@@ -33,11 +33,8 @@
             // 
             // FormBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.ClientSize = new System.Drawing.Size(300, 300);
-            this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(1920, 1150);
             this.Name = "FormBase";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Text = "CubeNote";

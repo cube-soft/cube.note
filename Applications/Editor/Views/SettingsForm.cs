@@ -192,11 +192,14 @@ namespace Cube.Note.App.Editor
             ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
             ExitButton.Size = new Size((int)(110 * ratio), (int)(35 * ratio));
 
+            ResetMargin(GeneralSettingsPanel, ratio);
+            ResetMargin(VisibleSettinsPanel, ratio);
+            ResetMargin(BehaviorSettingsPanel, ratio);
+
             UpdateTitleLabelLayout(ratio);
-            UpdateColorLabel(ratio);
+            UpdateColorLabelLayout(ratio);
             UpdateButtonLayout(ratio);
             UpdateOthersLayout(ratio);
-            UpdateTopMargin(ratio);
         }
 
         #endregion
@@ -513,6 +516,34 @@ namespace Cube.Note.App.Editor
             catch { return false; }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetMargin
+        ///
+        /// <summary>
+        /// 余白の値をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetMargin(Control src, double ratio)
+        {
+            foreach (var obj in src.Controls)
+            {
+                var control = obj as Control;
+                if (control == null) continue;
+                control.Margin = new Padding((int)(3 * ratio));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateTitleLabelLayout
+        ///
+        /// <summary>
+        /// タイトル用ラベルのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private void UpdateTitleLabelLayout(double ratio)
         {
             FontTitleLabel.Size                =
@@ -525,7 +556,7 @@ namespace Cube.Note.App.Editor
             SearchForeColorTitleLabel.Size     =
             TabWidthTitleLabel.Size            =
             PrintMarginTitleLabel.Size         =
-            PrintDummyTitleLabel.Size          =
+            label5.Size          =
             SearchQueryTitleLabel.Size         =
             AutoSaveTimeTitleLabel.Size        =
             DataFolderTitleLabel.Size          =
@@ -539,7 +570,16 @@ namespace Cube.Note.App.Editor
             new Size((int)(85 * ratio), (int)(23 * ratio));
         }
 
-        private void UpdateColorLabel(double ratio)
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateColorLabelLayout
+        ///
+        /// <summary>
+        /// 色情報用ラベルのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateColorLabelLayout(double ratio)
         {
             FontLabel.Size                =
             BackColorLabel.Size           =
@@ -556,10 +596,19 @@ namespace Cube.Note.App.Editor
             new Size((int)(190 * ratio), (int)(23 * ratio));
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateButtonLayout
+        ///
+        /// <summary>
+        /// 各種ボタンのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private void UpdateButtonLayout(double ratio)
         {
             FontFontButton.Image = Images.Get("font", ratio);
-            DataFolderButton.Size = new Size((int)(50 * ratio), (int)(25 * ratio));
+            DataFolderButton.Size = new Size((int)(50 * ratio), DataFolderTextBox.Height);
 
             FontFontButton.Size                 =
             BackColorColorButton.Size           =
@@ -576,6 +625,15 @@ namespace Cube.Note.App.Editor
             new Size((int)(50 * ratio), (int)(23 * ratio));
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateOthersLayout
+        ///
+        /// <summary>
+        /// その他のレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private void UpdateOthersLayout(double ratio)
         {
             RestartCheckBox.Margin = new Padding((int)(109 * ratio), 3, 3, 3);
@@ -591,15 +649,7 @@ namespace Cube.Note.App.Editor
             PrintTopMarginUnitLabel.Size =
             PrintBottomMarginUnitLabel.Size =
             AutoSaveTimeUnitLabel.Size =
-            new Size((int)(50 * ratio), (int)(23 * ratio));
-        }
-
-        private void UpdateTopMargin(double ratio)
-        {
-            FontTitleLabel.Margin =
-            FontFontButton.Margin =
-            FontLabel.Margin =
-            new Padding(3, (int)(20 * ratio), 3, 3);
+            new Size((int)(35 * ratio), (int)(23 * ratio));
         }
 
         #endregion

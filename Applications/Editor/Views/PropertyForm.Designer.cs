@@ -32,8 +32,6 @@
             this.NewTagButton = new Cube.Forms.Button();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.ButtonsPanel = new Cube.Forms.FlowLayoutPanel();
-            this.ExitButton = new Cube.Forms.Button();
-            this.ApplyButton = new Cube.Forms.Button();
             this.AbstractLabel = new System.Windows.Forms.Label();
             this.CreationLabel = new System.Windows.Forms.Label();
             this.LastUpdateLabel = new System.Windows.Forms.Label();
@@ -41,6 +39,8 @@
             this.NewTagTextBox = new System.Windows.Forms.TextBox();
             this.TagsWrapper = new System.Windows.Forms.Panel();
             this.TagsPanel = new Cube.Forms.FlowLayoutPanel();
+            this.ExitButton = new Cube.Forms.Button();
+            this.ApplyButton = new Cube.Forms.Button();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.NewTagWrapper.SuspendLayout();
@@ -120,6 +120,91 @@
             this.ButtonsPanel.Size = new System.Drawing.Size(448, 60);
             this.ButtonsPanel.TabIndex = 3;
             // 
+            // AbstractLabel
+            // 
+            this.AbstractLabel.AutoEllipsis = true;
+            this.LayoutPanel.SetColumnSpan(this.AbstractLabel, 2);
+            this.AbstractLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AbstractLabel.Location = new System.Drawing.Point(0, 30);
+            this.AbstractLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.AbstractLabel.Name = "AbstractLabel";
+            this.AbstractLabel.Padding = new System.Windows.Forms.Padding(16, 12, 16, 4);
+            this.AbstractLabel.Size = new System.Drawing.Size(448, 50);
+            this.AbstractLabel.TabIndex = 4;
+            this.AbstractLabel.Text = "ノートの概要を表示します";
+            this.AbstractLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // CreationLabel
+            // 
+            this.LayoutPanel.SetColumnSpan(this.CreationLabel, 2);
+            this.CreationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CreationLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.CreationLabel.Location = new System.Drawing.Point(0, 80);
+            this.CreationLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.CreationLabel.Name = "CreationLabel";
+            this.CreationLabel.Padding = new System.Windows.Forms.Padding(16, 0, 16, 0);
+            this.CreationLabel.Size = new System.Drawing.Size(448, 20);
+            this.CreationLabel.TabIndex = 5;
+            this.CreationLabel.Text = "2016/01/01 23:59 作成";
+            this.CreationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // LastUpdateLabel
+            // 
+            this.LayoutPanel.SetColumnSpan(this.LastUpdateLabel, 2);
+            this.LastUpdateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LastUpdateLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.LastUpdateLabel.Location = new System.Drawing.Point(0, 100);
+            this.LastUpdateLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.LastUpdateLabel.Name = "LastUpdateLabel";
+            this.LastUpdateLabel.Padding = new System.Windows.Forms.Padding(16, 0, 16, 0);
+            this.LastUpdateLabel.Size = new System.Drawing.Size(448, 28);
+            this.LastUpdateLabel.TabIndex = 6;
+            this.LastUpdateLabel.Text = "2016/02/15 12:29 更新";
+            // 
+            // NewTagWrapper
+            // 
+            this.NewTagWrapper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NewTagWrapper.Controls.Add(this.NewTagTextBox);
+            this.NewTagWrapper.Dock = System.Windows.Forms.DockStyle.Top;
+            this.NewTagWrapper.Location = new System.Drawing.Point(16, 236);
+            this.NewTagWrapper.Margin = new System.Windows.Forms.Padding(16, 8, 3, 3);
+            this.NewTagWrapper.Name = "NewTagWrapper";
+            this.NewTagWrapper.Size = new System.Drawing.Size(289, 25);
+            this.NewTagWrapper.TabIndex = 9;
+            // 
+            // NewTagTextBox
+            // 
+            this.NewTagTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.NewTagTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NewTagTextBox.Location = new System.Drawing.Point(0, 0);
+            this.NewTagTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.NewTagTextBox.Name = "NewTagTextBox";
+            this.NewTagTextBox.Size = new System.Drawing.Size(287, 12);
+            this.NewTagTextBox.TabIndex = 3;
+            // 
+            // TagsWrapper
+            // 
+            this.TagsWrapper.AutoScroll = true;
+            this.LayoutPanel.SetColumnSpan(this.TagsWrapper, 2);
+            this.TagsWrapper.Controls.Add(this.TagsPanel);
+            this.TagsWrapper.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TagsWrapper.Location = new System.Drawing.Point(0, 128);
+            this.TagsWrapper.Margin = new System.Windows.Forms.Padding(0);
+            this.TagsWrapper.Name = "TagsWrapper";
+            this.TagsWrapper.Padding = new System.Windows.Forms.Padding(12, 12, 12, 0);
+            this.TagsWrapper.Size = new System.Drawing.Size(448, 100);
+            this.TagsWrapper.TabIndex = 11;
+            // 
+            // TagsPanel
+            // 
+            this.TagsPanel.AutoSize = true;
+            this.TagsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TagsPanel.Location = new System.Drawing.Point(12, 12);
+            this.TagsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.TagsPanel.Name = "TagsPanel";
+            this.TagsPanel.Size = new System.Drawing.Size(424, 0);
+            this.TagsPanel.TabIndex = 3;
+            // 
             // ExitButton
             // 
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
@@ -151,94 +236,9 @@
             this.ApplyButton.Text = "OK";
             this.ApplyButton.UseVisualStyleBackColor = false;
             // 
-            // AbstractLabel
-            // 
-            this.AbstractLabel.AutoEllipsis = true;
-            this.LayoutPanel.SetColumnSpan(this.AbstractLabel, 2);
-            this.AbstractLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AbstractLabel.Location = new System.Drawing.Point(0, 30);
-            this.AbstractLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.AbstractLabel.Name = "AbstractLabel";
-            this.AbstractLabel.Padding = new System.Windows.Forms.Padding(12, 12, 16, 4);
-            this.AbstractLabel.Size = new System.Drawing.Size(448, 50);
-            this.AbstractLabel.TabIndex = 4;
-            this.AbstractLabel.Text = "ノートの概要を表示します";
-            this.AbstractLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // CreationLabel
-            // 
-            this.LayoutPanel.SetColumnSpan(this.CreationLabel, 2);
-            this.CreationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CreationLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.CreationLabel.Location = new System.Drawing.Point(0, 80);
-            this.CreationLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.CreationLabel.Name = "CreationLabel";
-            this.CreationLabel.Padding = new System.Windows.Forms.Padding(12, 0, 16, 0);
-            this.CreationLabel.Size = new System.Drawing.Size(448, 20);
-            this.CreationLabel.TabIndex = 5;
-            this.CreationLabel.Text = "2016/01/01 23:59 作成";
-            this.CreationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // LastUpdateLabel
-            // 
-            this.LayoutPanel.SetColumnSpan(this.LastUpdateLabel, 2);
-            this.LastUpdateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LastUpdateLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.LastUpdateLabel.Location = new System.Drawing.Point(0, 100);
-            this.LastUpdateLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.LastUpdateLabel.Name = "LastUpdateLabel";
-            this.LastUpdateLabel.Padding = new System.Windows.Forms.Padding(12, 0, 16, 0);
-            this.LastUpdateLabel.Size = new System.Drawing.Size(448, 28);
-            this.LastUpdateLabel.TabIndex = 6;
-            this.LastUpdateLabel.Text = "2016/02/15 12:29 更新";
-            // 
-            // NewTagWrapper
-            // 
-            this.NewTagWrapper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.NewTagWrapper.Controls.Add(this.NewTagTextBox);
-            this.NewTagWrapper.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NewTagWrapper.Location = new System.Drawing.Point(16, 236);
-            this.NewTagWrapper.Margin = new System.Windows.Forms.Padding(16, 8, 3, 3);
-            this.NewTagWrapper.Name = "NewTagWrapper";
-            this.NewTagWrapper.Size = new System.Drawing.Size(289, 25);
-            this.NewTagWrapper.TabIndex = 9;
-            // 
-            // NewTagTextBox
-            // 
-            this.NewTagTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.NewTagTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NewTagTextBox.Location = new System.Drawing.Point(0, 0);
-            this.NewTagTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.NewTagTextBox.Name = "NewTagTextBox";
-            this.NewTagTextBox.Size = new System.Drawing.Size(287, 20);
-            this.NewTagTextBox.TabIndex = 3;
-            // 
-            // TagsWrapper
-            // 
-            this.TagsWrapper.AutoScroll = true;
-            this.LayoutPanel.SetColumnSpan(this.TagsWrapper, 2);
-            this.TagsWrapper.Controls.Add(this.TagsPanel);
-            this.TagsWrapper.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TagsWrapper.Location = new System.Drawing.Point(0, 128);
-            this.TagsWrapper.Margin = new System.Windows.Forms.Padding(0);
-            this.TagsWrapper.Name = "TagsWrapper";
-            this.TagsWrapper.Padding = new System.Windows.Forms.Padding(12, 12, 12, 0);
-            this.TagsWrapper.Size = new System.Drawing.Size(448, 100);
-            this.TagsWrapper.TabIndex = 11;
-            // 
-            // TagsPanel
-            // 
-            this.TagsPanel.AutoSize = true;
-            this.TagsPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TagsPanel.Location = new System.Drawing.Point(12, 12);
-            this.TagsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.TagsPanel.Name = "TagsPanel";
-            this.TagsPanel.Size = new System.Drawing.Size(424, 0);
-            this.TagsPanel.TabIndex = 3;
-            // 
             // PropertyForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(450, 330);
             this.Controls.Add(this.LayoutPanel);

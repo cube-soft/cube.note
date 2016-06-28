@@ -169,7 +169,7 @@
             this.NewTagTextBox.Location = new System.Drawing.Point(0, 0);
             this.NewTagTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.NewTagTextBox.Name = "NewTagTextBox";
-            this.NewTagTextBox.Size = new System.Drawing.Size(177, 20);
+            this.NewTagTextBox.Size = new System.Drawing.Size(177, 16);
             this.NewTagTextBox.TabIndex = 3;
             // 
             // TitleControl

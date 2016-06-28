@@ -53,6 +53,8 @@ namespace Cube.Note.App.Editor
             MaximizeButton.Click += (s, e) => OnMaximizeExecuted(e);
             MinimizeButton.Click += (s, e) => OnMinimizeExecuted(e);
             ButtonsPanel.Resize += ButtonsPanel_Resize;
+
+            if (DesignMode) UpdateLayout(1.0);
         }
 
         #endregion

@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
+            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.NewPageButton = new System.Windows.Forms.Button();
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator1 = new System.Windows.Forms.PictureBox();
             this.Separator2 = new System.Windows.Forms.PictureBox();
-            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Separator2)).BeginInit();
@@ -62,6 +62,25 @@
             this.LayoutPanel.Size = new System.Drawing.Size(300, 300);
             this.LayoutPanel.TabIndex = 0;
             // 
+            // PageListView
+            // 
+            this.PageListView.AllowNoSelect = false;
+            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageListView.FullRowSelect = true;
+            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.PageListView.LabelWrap = false;
+            this.PageListView.Location = new System.Drawing.Point(0, 33);
+            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
+            this.PageListView.MultiSelect = false;
+            this.PageListView.Name = "PageListView";
+            this.PageListView.Size = new System.Drawing.Size(300, 238);
+            this.PageListView.TabIndex = 7;
+            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
+            this.PageListView.TileSize = new System.Drawing.Size(300, 32);
+            this.PageListView.UseCompatibleStateImageBehavior = false;
+            this.PageListView.View = System.Windows.Forms.View.Tile;
+            // 
             // NewPageButton
             // 
             this.NewPageButton.BackColor = System.Drawing.SystemColors.Control;
@@ -71,15 +90,15 @@
             this.NewPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewPageButton.ForeColor = System.Drawing.SystemColors.GrayText;
             this.NewPageButton.Image = global::Cube.Note.App.Editor.Properties.Resources.Add;
-            this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NewPageButton.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.NewPageButton.Location = new System.Drawing.Point(0, 272);
             this.NewPageButton.Margin = new System.Windows.Forms.Padding(0);
             this.NewPageButton.Name = "NewPageButton";
-            this.NewPageButton.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.NewPageButton.Padding = new System.Windows.Forms.Padding(4, 0, 0, 2);
             this.NewPageButton.Size = new System.Drawing.Size(300, 28);
             this.NewPageButton.TabIndex = 5;
             this.NewPageButton.Text = " 新しいノート";
-            this.NewPageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NewPageButton.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.NewPageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewPageButton.UseVisualStyleBackColor = false;
             // 
@@ -93,7 +112,7 @@
             this.TagComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 0);
             this.TagComboBox.MaxDropDownItems = 20;
             this.TagComboBox.Name = "TagComboBox";
-            this.TagComboBox.Size = new System.Drawing.Size(292, 27);
+            this.TagComboBox.Size = new System.Drawing.Size(292, 23);
             this.TagComboBox.TabIndex = 3;
             // 
             // Separator1
@@ -118,28 +137,9 @@
             this.Separator2.TabIndex = 6;
             this.Separator2.TabStop = false;
             // 
-            // PageListView
-            // 
-            this.PageListView.AllowNoSelect = false;
-            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageListView.FullRowSelect = true;
-            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.PageListView.LabelWrap = false;
-            this.PageListView.Location = new System.Drawing.Point(0, 33);
-            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
-            this.PageListView.MultiSelect = false;
-            this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(300, 238);
-            this.PageListView.TabIndex = 7;
-            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(300, 48);
-            this.PageListView.UseCompatibleStateImageBehavior = false;
-            this.PageListView.View = System.Windows.Forms.View.Tile;
-            // 
             // PageCollectionControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.Controls.Add(this.LayoutPanel);
             this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.Margin = new System.Windows.Forms.Padding(0);
