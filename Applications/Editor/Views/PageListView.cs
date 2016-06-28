@@ -98,15 +98,16 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// LineHeight
+        /// BaseDpi
         /// 
         /// <summary>
-        /// 行間を示す値を取得します。
+        /// 基準となる DPI 値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public double LineHeight => 1.35;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public double BaseDpi { get; set; } = 96.0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -183,32 +184,6 @@ namespace Cube.Note.App.Editor
                     }
                     _source.CollectionChanged += DS_CollectionChanged;
                 });
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FontPixel
-        /// 
-        /// <summary>
-        /// フォントサイズをピクセル単位で取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public float FontPixel
-        {
-            get
-            {
-                if (Font.Unit == GraphicsUnit.Pixel) return Font.Size;
-
-                using (var gs = CreateGraphics())
-                {
-                    var points = Font.SizeInPoints;
-                    var pixels = points * gs.DpiX / 72.0f;
-                    return pixels;
-                }
             }
         }
 
@@ -589,7 +564,7 @@ namespace Cube.Note.App.Editor
             format.Trimming = StringTrimming.EllipsisCharacter;
 
             bounds.Width -= (_left + _space);
-            bounds.Height = (int)(FontPixel * LineHeight);
+            bounds.Height = Font.Height;
             bounds.X += (_left + _space);
             bounds.Y += ShowRemoveButton ? bounds.Height : _space;
 
@@ -613,7 +588,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawRemoveButton(Graphics gs, Rectangle bounds)
         {
-            var image = Properties.Resources.Remove;
+            var ratio = gs.DpiX / BaseDpi;
+            var image = Images.Get("remove", ratio);
             var x = bounds.Right - image.Width - _space;
             var y = bounds.Top + _space;
             gs.DrawImage(image, x, y);
@@ -630,10 +606,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void DrawPropertyButton(Graphics gs, Rectangle bounds)
         {
-            var font = new Font(Font.FontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
+            var font = new Font(Font.FontFamily, 8, FontStyle.Regular);
             var size = GetPropertySize(gs, font);
             var height = size.Height;
-            var image = Properties.Resources.Property;
+            var ratio = gs.DpiX / BaseDpi;
+            var image = Images.Get("property", ratio);
 
             var x0 = bounds.Left + _left + _space;
             var y0 = bounds.Bottom - (height + _space) + (height - image.Height) / 2.0 - 1.0;
@@ -818,7 +795,7 @@ namespace Cube.Note.App.Editor
             if (ShowRemoveButton)   ++count;
             if (ShowPropertyButton) ++count;
 
-            var height = (int)Math.Max(FontPixel * LineHeight * count + 8, 1);
+            var height = Math.Max(Font.Height * count + 8, 1);
             var width  = Height < height * Count ?
                          Math.Max(Width - SystemInformation.VerticalScrollBarWidth, 1) :
                          Math.Max(Width, 1);
