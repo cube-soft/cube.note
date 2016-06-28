@@ -241,8 +241,8 @@
             // 
             this.CaseSensitiveCheckBox.AutoSize = true;
             this.SearchPanel.SetFlowBreak(this.CaseSensitiveCheckBox, true);
-            this.CaseSensitiveCheckBox.Location = new System.Drawing.Point(12, 108);
-            this.CaseSensitiveCheckBox.Margin = new System.Windows.Forms.Padding(0, 6, 0, 6);
+            this.CaseSensitiveCheckBox.Location = new System.Drawing.Point(15, 108);
+            this.CaseSensitiveCheckBox.Margin = new System.Windows.Forms.Padding(3, 6, 0, 6);
             this.CaseSensitiveCheckBox.Name = "CaseSensitiveCheckBox";
             this.CaseSensitiveCheckBox.Size = new System.Drawing.Size(195, 23);
             this.CaseSensitiveCheckBox.TabIndex = 5;
@@ -350,6 +350,7 @@
             // 
             // FooterStatusStrip
             // 
+            this.FooterStatusStrip.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 9F);
             this.FooterStatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.FooterStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {

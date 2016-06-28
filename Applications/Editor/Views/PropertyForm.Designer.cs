@@ -159,7 +159,7 @@
             this.AbstractLabel.Location = new System.Drawing.Point(0, 30);
             this.AbstractLabel.Margin = new System.Windows.Forms.Padding(0);
             this.AbstractLabel.Name = "AbstractLabel";
-            this.AbstractLabel.Padding = new System.Windows.Forms.Padding(16, 12, 16, 4);
+            this.AbstractLabel.Padding = new System.Windows.Forms.Padding(12, 12, 16, 4);
             this.AbstractLabel.Size = new System.Drawing.Size(448, 50);
             this.AbstractLabel.TabIndex = 4;
             this.AbstractLabel.Text = "ノートの概要を表示します";
@@ -173,7 +173,7 @@
             this.CreationLabel.Location = new System.Drawing.Point(0, 80);
             this.CreationLabel.Margin = new System.Windows.Forms.Padding(0);
             this.CreationLabel.Name = "CreationLabel";
-            this.CreationLabel.Padding = new System.Windows.Forms.Padding(16, 0, 16, 0);
+            this.CreationLabel.Padding = new System.Windows.Forms.Padding(12, 0, 16, 0);
             this.CreationLabel.Size = new System.Drawing.Size(448, 20);
             this.CreationLabel.TabIndex = 5;
             this.CreationLabel.Text = "2016/01/01 23:59 作成";
@@ -187,7 +187,7 @@
             this.LastUpdateLabel.Location = new System.Drawing.Point(0, 100);
             this.LastUpdateLabel.Margin = new System.Windows.Forms.Padding(0);
             this.LastUpdateLabel.Name = "LastUpdateLabel";
-            this.LastUpdateLabel.Padding = new System.Windows.Forms.Padding(16, 0, 16, 0);
+            this.LastUpdateLabel.Padding = new System.Windows.Forms.Padding(12, 0, 16, 0);
             this.LastUpdateLabel.Size = new System.Drawing.Size(448, 28);
             this.LastUpdateLabel.TabIndex = 6;
             this.LastUpdateLabel.Text = "2016/02/15 12:29 更新";
