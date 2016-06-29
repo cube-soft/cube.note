@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Cube.Note.App.Editor
 {
@@ -32,7 +33,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class SearchForm : FormBase
+    public partial class SearchForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -48,6 +49,7 @@ namespace Cube.Note.App.Editor
         public SearchForm()
         {
             InitializeComponent();
+            UpdateLayout(Dpi / BaseDpi);
 
             TabControl.Selecting += TabControl_Selecting;
             SearchPanel.Resize += SearchPanel_Resize;
@@ -213,6 +215,35 @@ namespace Cube.Note.App.Editor
         {
             get { return Pages.Aggregator; }
             set { Pages.Aggregator = value; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void UpdateLayout(double ratio)
+        {
+            MinimumSize = new Size((int)(370 * ratio), (int)(270 * ratio));
+            Size = new Size((int)(450 * ratio), (int)(450 * ratio));
+
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(22 * ratio);
+
+            TitleControl.UpdateLayout(ratio);
+
+            ContentsPanel.SplitterDistance = (int)(210 * ratio);
+
+            ConditionPanel.Size = new Size((int)(400 * ratio), (int)(90 * ratio));
+            ConditionPanel.ColumnStyles[0].Width = (int)(100 * ratio);
+            ConditionPanel.RowStyles[0].Height = (int)(30 * ratio);
+            ConditionPanel.RowStyles[2].Height = (int)(30 * ratio);
+
+            ButtonsPanel.Size = new Size((int)(400 * ratio), (int)(32 * ratio));
+            SearchButton.Size = new Size((int)(100 * ratio), (int)(30 * ratio));
+            OptionalButton1.Size = new Size((int)(100 * ratio), (int)(30 * ratio));
+            OptionalButton2.Size = new Size((int)(100 * ratio), (int)(30 * ratio));
+
+            //FooterStatusStrip.Size = new Size((int)(448 * ratio), (int)(22 * ratio));
         }
 
         #endregion
@@ -562,8 +593,8 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void EnableOptionalButtons(bool enabled)
         {
-            OptionalShadow1.Enabled = enabled;
-            OptionalShadow2.Enabled = enabled;
+            OptionalButton1.Enabled = enabled;
+            OptionalButton2.Enabled = enabled;
         }
 
         /* ----------------------------------------------------------------- */
@@ -582,12 +613,13 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void EnableReplaceControls(bool enabled)
         {
-            var space = 30;
+            var ratio = Dpi / BaseDpi;
+            var unit  = 30;
 
             ReplaceLabel.Visible   = enabled;
             ReplaceTextBox.Visible = enabled;
-            ConditionPanel.Height  = enabled ? 60 + space : 60;
-            ButtonsPanel.Margin    = new Padding(0, enabled ? 0 : space, 0, 0);
+            ConditionPanel.Height  = enabled ? (int)(unit * 3 * ratio) : (int)(unit * 2 * ratio);
+            ButtonsPanel.Margin    = new Padding(0, enabled ? 0 : (int)(unit * ratio), 0, 0);
         }
 
         #endregion

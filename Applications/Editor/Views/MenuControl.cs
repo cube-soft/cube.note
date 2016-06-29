@@ -31,7 +31,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class MenuControl : ToolStrip
+    public class MenuControl : ToolStrip, IDpiAwarable
     {
         #region Constructors
 
@@ -46,14 +46,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public MenuControl() : base()
         {
-            VisibleMenu  = CreateMenuButton(Properties.Resources.Left, Properties.Resources.ToolMenuHide);
-            SearchMenu   = CreateMenuButton(Properties.Resources.Search, Properties.Resources.ToolMenuSearch);
-            UndoMenu     = CreateMenuButton(Properties.Resources.Undo, Properties.Resources.ToolMenuUndo);
-            RedoMenu     = CreateMenuButton(Properties.Resources.Redo, Properties.Resources.ToolMenuRedo);
-            ExportMenu   = CreateMenuButton(Properties.Resources.Export, Properties.Resources.ToolMenuExport);
-            PrintMenu    = CreateMenuButton(Properties.Resources.Print, Properties.Resources.ToolMenuPrint);
-            SettingsMenu = CreateMenuButton(Properties.Resources.Settings, Properties.Resources.ToolMenuSettings, false);
-            LogoMenu     = CreateMenuButton(Properties.Resources.Logo, Properties.Resources.ToolMenuLogo, false);
+            VisibleMenu  = CreateMenuButton("left",     Properties.Resources.ToolMenuHide);
+            SearchMenu   = CreateMenuButton("search",   Properties.Resources.ToolMenuSearch);
+            UndoMenu     = CreateMenuButton("undo",     Properties.Resources.ToolMenuUndo);
+            RedoMenu     = CreateMenuButton("redo",     Properties.Resources.ToolMenuRedo);
+            ExportMenu   = CreateMenuButton("export",   Properties.Resources.ToolMenuExport);
+            PrintMenu    = CreateMenuButton("print",    Properties.Resources.ToolMenuPrint);
+            SettingsMenu = CreateMenuButton("settings", Properties.Resources.ToolMenuSettings, false);
+            LogoMenu     = CreateMenuButton("logo",     Properties.Resources.ToolMenuLogo, false);
 
             InitializeMenu();
         }
@@ -152,6 +152,32 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            foreach (var item in Items)
+            {
+                var control = item as ToolStripButton;
+                if (control == null) continue;
+
+                var separator = (control.DisplayStyle == ToolStripItemDisplayStyle.None);
+                if (separator) UpdateSeparator(control, ratio);
+                else UpdateMenuButton(control, ratio);
+            }
+        }
+
+        #endregion
+
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -217,14 +243,15 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ToolStripButton CreateMenuButton(Image image, string text, bool left = true)
+        private ToolStripButton CreateMenuButton(string name, string text, bool left = true)
         {
             var dest  = new ToolStripButton();
             var align = left ? ToolStripItemAlignment.Left : ToolStripItemAlignment.Right;
 
+            dest.Name         = name;
             dest.Alignment    = align;
             dest.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            dest.Image        = image;
+            dest.Image        = Images.Get(name, 1.0);
             dest.ImageScaling = ToolStripItemImageScaling.None;
             dest.Margin       = new Padding(1);
             dest.Padding      = new Padding(12, 0, 12, 0);
@@ -234,6 +261,27 @@ namespace Cube.Note.App.Editor
 
             return dest;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateMenuButton
+        /// 
+        /// <summary>
+        /// メニューボタンのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateMenuButton(ToolStripButton src, double ratio)
+        {
+            var padding = (int)(12 * ratio);
+            var width   = (int)(44 * ratio);
+            var height  = (int)(30 * ratio);
+
+            src.Image   = Images.Get(src.Name, ratio);
+            src.Padding = new Padding(padding, 0, padding, 0);
+            src.Size    = new Size(width, height);
+        }
+
 
         /* ----------------------------------------------------------------- */
         ///
@@ -258,6 +306,25 @@ namespace Cube.Note.App.Editor
             dest.Size         = new Size(1, 30);
 
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateSeparator
+        /// 
+        /// <summary>
+        /// 区切り線のレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateSeparator(ToolStripButton src, double ratio)
+        {
+            var padding = (int)(6 * ratio);
+            var width   = 1;
+            var height  = (int)(30 * ratio);
+
+            src.Margin = new Padding(padding, 0, padding, 0);
+            src.Size   = new Size(width, height);
         }
 
         #endregion

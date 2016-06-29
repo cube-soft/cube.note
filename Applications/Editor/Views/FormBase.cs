@@ -47,10 +47,25 @@ namespace Cube.Note.App.Editor
         public FormBase()
         {
             InitializeComponent();
-            
+
             Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
             Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BaseDpi
+        ///
+        /// <summary>
+        /// 基準となる DPI 値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public double BaseDpi => 96.0;
 
         #endregion
 

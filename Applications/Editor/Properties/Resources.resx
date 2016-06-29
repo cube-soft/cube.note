@@ -121,8 +121,32 @@
   <data name="Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Add120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Add120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Add144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Add144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Add192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Add192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Add240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Add240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Close120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Close144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Close192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Close240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CountFormat" xml:space="preserve">
     <value>全 {0:#,0} 文字（{1:#,0} 行）</value>
@@ -148,8 +172,32 @@
   <data name="Export" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Export120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Export120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Export144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Export144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Export192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Export192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Export240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Export240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Font" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Font.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Font120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Font120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Font144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Font144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Font192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Font192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Font240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Font240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ImportTitle" xml:space="preserve">
     <value>CubeNote に取り込むファイルを選択</value>
@@ -160,14 +208,50 @@
   <data name="Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Left120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Left120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Left144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Left144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Left192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Left192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Left240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Left240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Logo120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Logo144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Logo192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Logo240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LogoLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LogoLarge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Maximize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Maximize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Maximize120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Maximize120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Maximize144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Maximize144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Maximize192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Maximize192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Maximize240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Maximize240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MenuCopy" xml:space="preserve">
     <value>コピー</value>
@@ -220,11 +304,35 @@
   <data name="Minimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Minimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Minimize120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Minimize120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Minimize144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Minimize144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Minimize192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Minimize192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Minimize240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Minimize240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="NewsFormat" xml:space="preserve">
     <value>ニュース： {0}</value>
   </data>
   <data name="Normalize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Normalize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Normalize120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Normalize120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Normalize144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Normalize144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Normalize192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Normalize192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Normalize240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Normalize240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NothingTag" xml:space="preserve">
     <value>未整理</value>
@@ -235,14 +343,62 @@
   <data name="Print" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Print.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Print120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Print120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Print144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Print144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Print192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Print192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Print240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Print240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Property" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Property120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Property120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Property144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Property144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Property192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Property192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Property240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Property240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Redo120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Redo120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Redo144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Redo144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Redo192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Redo192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Redo240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Redo240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Remove120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Remove120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Remove144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Remove144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Remove192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Remove192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Remove240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Remove240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ReplaceAll" xml:space="preserve">
     <value>すべてを置換</value>
@@ -256,8 +412,17 @@
   <data name="Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SearchEnd" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SearchEnd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Search120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Search120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Search144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Search144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Search192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Search192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Search240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Search240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SearchNext" xml:space="preserve">
     <value>次を検索</value>
@@ -268,9 +433,6 @@
   <data name="SearchOver" xml:space="preserve">
     <value>最後の検索結果まで到達しました。</value>
   </data>
-  <data name="SearchPale" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SearchPale.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SearchPrev" xml:space="preserve">
     <value>前を検索</value>
   </data>
@@ -280,6 +442,18 @@
   <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Settings120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Settings120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Settings144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Settings144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Settings192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Settings192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Settings240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Settings240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ShowProperty" xml:space="preserve">
     <value>タグを設定</value>
   </data>
@@ -288,6 +462,18 @@
   </data>
   <data name="Title" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Title120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Title120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Title144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Title144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Title192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Title192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Title240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Title240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ToolMenuExport" xml:space="preserve">
     <value>エクスポート (E)</value>
@@ -318,6 +504,18 @@
   </data>
   <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Undo120" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120\Undo120.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Undo144" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\144\Undo144.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Undo192" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\192\Undo192.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Undo240" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\240\Undo240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UrlUpdate" xml:space="preserve">
     <value>http://www.cube-soft.jp/cubenote/update.php</value>

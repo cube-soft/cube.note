@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
+            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.NewPageButton = new System.Windows.Forms.Button();
             this.TagComboBox = new System.Windows.Forms.ComboBox();
             this.Separator1 = new System.Windows.Forms.PictureBox();
             this.Separator2 = new System.Windows.Forms.PictureBox();
-            this.PageListView = new Cube.Note.App.Editor.PageListView();
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Separator2)).BeginInit();
@@ -61,6 +61,25 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.LayoutPanel.Size = new System.Drawing.Size(300, 300);
             this.LayoutPanel.TabIndex = 0;
+            // 
+            // PageListView
+            // 
+            this.PageListView.AllowNoSelect = false;
+            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageListView.FullRowSelect = true;
+            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.PageListView.LabelWrap = false;
+            this.PageListView.Location = new System.Drawing.Point(0, 33);
+            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
+            this.PageListView.MultiSelect = false;
+            this.PageListView.Name = "PageListView";
+            this.PageListView.Size = new System.Drawing.Size(300, 238);
+            this.PageListView.TabIndex = 7;
+            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
+            this.PageListView.TileSize = new System.Drawing.Size(300, 32);
+            this.PageListView.UseCompatibleStateImageBehavior = false;
+            this.PageListView.View = System.Windows.Forms.View.Tile;
             // 
             // NewPageButton
             // 
@@ -118,31 +137,11 @@
             this.Separator2.TabIndex = 6;
             this.Separator2.TabStop = false;
             // 
-            // PageListView
-            // 
-            this.PageListView.Aggregator = null;
-            this.PageListView.AllowNoSelect = false;
-            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.DataSource = null;
-            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageListView.FullRowSelect = true;
-            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.PageListView.LabelWrap = false;
-            this.PageListView.Location = new System.Drawing.Point(0, 33);
-            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
-            this.PageListView.MultiSelect = false;
-            this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(300, 238);
-            this.PageListView.TabIndex = 7;
-            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.TileSize = new System.Drawing.Size(300, 40);
-            this.PageListView.UseCompatibleStateImageBehavior = false;
-            this.PageListView.View = System.Windows.Forms.View.Tile;
-            // 
             // PageCollectionControl
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.Controls.Add(this.LayoutPanel);
-            this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(128)));
+            this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PageCollectionControl";
             this.Size = new System.Drawing.Size(300, 300);

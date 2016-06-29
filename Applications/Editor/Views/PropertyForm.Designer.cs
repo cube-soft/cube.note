@@ -28,14 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ExitButton = new Cube.Forms.Button();
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.NewTagButton = new Cube.Forms.Button();
             this.TitleControl = new Cube.Note.App.Editor.TitleControl();
             this.ButtonsPanel = new Cube.Forms.FlowLayoutPanel();
-            this.ExitButtonShadow = new System.Windows.Forms.Panel();
-            this.ApplyButtonShadow = new System.Windows.Forms.Panel();
-            this.ApplyButton = new Cube.Forms.Button();
             this.AbstractLabel = new System.Windows.Forms.Label();
             this.CreationLabel = new System.Windows.Forms.Label();
             this.LastUpdateLabel = new System.Windows.Forms.Label();
@@ -43,29 +39,13 @@
             this.NewTagTextBox = new System.Windows.Forms.TextBox();
             this.TagsWrapper = new System.Windows.Forms.Panel();
             this.TagsPanel = new Cube.Forms.FlowLayoutPanel();
+            this.ExitButton = new Cube.Forms.Button();
+            this.ApplyButton = new Cube.Forms.Button();
             this.LayoutPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
-            this.ExitButtonShadow.SuspendLayout();
-            this.ApplyButtonShadow.SuspendLayout();
             this.NewTagWrapper.SuspendLayout();
             this.TagsWrapper.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ExitButton
-            // 
-            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ExitButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ExitButton.ForeColor = System.Drawing.Color.White;
-            this.ExitButton.Location = new System.Drawing.Point(0, 0);
-            this.ExitButton.Margin = new System.Windows.Forms.Padding(0);
-            this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(110, 35);
-            this.ExitButton.TabIndex = 2;
-            this.ExitButton.Text = "キャンセル";
-            this.ExitButton.UseVisualStyleBackColor = false;
             // 
             // LayoutPanel
             // 
@@ -129,8 +109,8 @@
             // 
             this.ButtonsPanel.BackColor = System.Drawing.SystemColors.Control;
             this.LayoutPanel.SetColumnSpan(this.ButtonsPanel, 2);
-            this.ButtonsPanel.Controls.Add(this.ExitButtonShadow);
-            this.ButtonsPanel.Controls.Add(this.ApplyButtonShadow);
+            this.ButtonsPanel.Controls.Add(this.ExitButton);
+            this.ButtonsPanel.Controls.Add(this.ApplyButton);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.ButtonsPanel.Location = new System.Drawing.Point(0, 268);
@@ -139,41 +119,6 @@
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.ButtonsPanel.Size = new System.Drawing.Size(448, 60);
             this.ButtonsPanel.TabIndex = 3;
-            // 
-            // ExitButtonShadow
-            // 
-            this.ExitButtonShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.ExitButtonShadow.Controls.Add(this.ExitButton);
-            this.ExitButtonShadow.Location = new System.Drawing.Point(322, 13);
-            this.ExitButtonShadow.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
-            this.ExitButtonShadow.Name = "ExitButtonShadow";
-            this.ExitButtonShadow.Size = new System.Drawing.Size(110, 37);
-            this.ExitButtonShadow.TabIndex = 4;
-            // 
-            // ApplyButtonShadow
-            // 
-            this.ApplyButtonShadow.BackColor = System.Drawing.Color.Gainsboro;
-            this.ApplyButtonShadow.Controls.Add(this.ApplyButton);
-            this.ApplyButtonShadow.Location = new System.Drawing.Point(186, 13);
-            this.ApplyButtonShadow.Name = "ApplyButtonShadow";
-            this.ApplyButtonShadow.Size = new System.Drawing.Size(130, 37);
-            this.ApplyButtonShadow.TabIndex = 5;
-            // 
-            // ApplyButton
-            // 
-            this.ApplyButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ApplyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.ApplyButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ApplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ApplyButton.ForeColor = System.Drawing.Color.White;
-            this.ApplyButton.Location = new System.Drawing.Point(0, 0);
-            this.ApplyButton.Margin = new System.Windows.Forms.Padding(0);
-            this.ApplyButton.Name = "ApplyButton";
-            this.ApplyButton.Size = new System.Drawing.Size(130, 35);
-            this.ApplyButton.TabIndex = 1;
-            this.ApplyButton.Text = "OK";
-            this.ApplyButton.UseVisualStyleBackColor = false;
             // 
             // AbstractLabel
             // 
@@ -234,7 +179,7 @@
             this.NewTagTextBox.Location = new System.Drawing.Point(0, 0);
             this.NewTagTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.NewTagTextBox.Name = "NewTagTextBox";
-            this.NewTagTextBox.Size = new System.Drawing.Size(287, 16);
+            this.NewTagTextBox.Size = new System.Drawing.Size(287, 12);
             this.NewTagTextBox.TabIndex = 3;
             // 
             // TagsWrapper
@@ -260,12 +205,44 @@
             this.TagsPanel.Size = new System.Drawing.Size(424, 0);
             this.TagsPanel.TabIndex = 3;
             // 
+            // ExitButton
+            // 
+            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.ExitButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExitButton.ForeColor = System.Drawing.Color.White;
+            this.ExitButton.Location = new System.Drawing.Point(322, 13);
+            this.ExitButton.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(110, 35);
+            this.ExitButton.TabIndex = 4;
+            this.ExitButton.Text = "キャンセル";
+            this.ExitButton.UseVisualStyleBackColor = false;
+            // 
+            // ApplyButton
+            // 
+            this.ApplyButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ApplyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.ApplyButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ApplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ApplyButton.ForeColor = System.Drawing.Color.White;
+            this.ApplyButton.Location = new System.Drawing.Point(186, 13);
+            this.ApplyButton.Name = "ApplyButton";
+            this.ApplyButton.Size = new System.Drawing.Size(130, 35);
+            this.ApplyButton.TabIndex = 3;
+            this.ApplyButton.Text = "OK";
+            this.ApplyButton.UseVisualStyleBackColor = false;
+            // 
             // PropertyForm
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
-            this.CancelButton = this.ExitButton;
             this.ClientSize = new System.Drawing.Size(450, 330);
             this.Controls.Add(this.LayoutPanel);
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximumSize = new System.Drawing.Size(1600, 860);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 270);
@@ -274,8 +251,6 @@
             this.Text = "ノートにタグを設定";
             this.LayoutPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
-            this.ExitButtonShadow.ResumeLayout(false);
-            this.ApplyButtonShadow.ResumeLayout(false);
             this.NewTagWrapper.ResumeLayout(false);
             this.NewTagWrapper.PerformLayout();
             this.TagsWrapper.ResumeLayout(false);
@@ -289,10 +264,6 @@
         private Cube.Forms.TableLayoutPanel LayoutPanel;
         private TitleControl TitleControl;
         private Cube.Forms.FlowLayoutPanel ButtonsPanel;
-        private System.Windows.Forms.Panel ExitButtonShadow;
-        private Cube.Forms.Button ExitButton;
-        private System.Windows.Forms.Panel ApplyButtonShadow;
-        private Cube.Forms.Button ApplyButton;
         private System.Windows.Forms.Label AbstractLabel;
         private System.Windows.Forms.Label CreationLabel;
         private System.Windows.Forms.Label LastUpdateLabel;
@@ -301,5 +272,7 @@
         private System.Windows.Forms.Panel TagsWrapper;
         private Forms.FlowLayoutPanel TagsPanel;
         private Forms.Button NewTagButton;
+        private Forms.Button ExitButton;
+        private Forms.Button ApplyButton;
     }
 }

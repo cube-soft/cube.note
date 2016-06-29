@@ -30,7 +30,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class PageCollectionControl : Cube.Forms.UserControl
+    public partial class PageCollectionControl : Cube.Forms.UserControl, IDpiAwarable
     {
         #region Constructors
 
@@ -49,6 +49,7 @@ namespace Cube.Note.App.Editor
 
             NewPageButton.Click += (s, e)
                 => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
+            TagComboBox.MouseWheel += TagComboBox_MouseWheel;
 
             Pages.AllowDrop = true;
             Pages.KeyDown += (s, e) => OnKeyDown(e);
@@ -97,6 +98,31 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            var top    = (int)(32 * ratio);
+            var bottom = (int)(28 * ratio);
+            var margin = (top - TagComboBox.Height) / 2;
+
+            LayoutPanel.RowStyles[0].Height = top;
+            LayoutPanel.RowStyles[4].Height = bottom;
+            TagComboBox.Margin = new Padding(4, margin, 4, 0);
+            NewPageButton.Image = Images.Get("add", ratio);
+        }
+
+        #endregion
+
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -140,6 +166,28 @@ namespace Cube.Note.App.Editor
                 e.Handled = result;
             }
             finally { base.OnKeyDown(e); }
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TagComboBox_MouseWheel
+        /// 
+        /// <summary>
+        /// マウスのホイール時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void TagComboBox_MouseWheel(object sender, MouseEventArgs e)
+        {
+            var args = e as HandledMouseEventArgs;
+            if (args == null) return;
+
+            var lastitem = TagComboBox.SelectedIndex == TagComboBox.Items.Count - 2;
+            args.Handled = lastitem && e.Delta < 0;
         }
 
         #endregion

@@ -43,11 +43,8 @@
             this.RangeComboBox = new System.Windows.Forms.ComboBox();
             this.CaseSensitiveCheckBox = new System.Windows.Forms.CheckBox();
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.OptionalShadow2 = new System.Windows.Forms.Panel();
             this.OptionalButton2 = new Cube.Forms.Button();
-            this.OptionalShadow1 = new System.Windows.Forms.Panel();
             this.OptionalButton1 = new Cube.Forms.Button();
-            this.SearchShadow = new System.Windows.Forms.Panel();
             this.SearchButton = new Cube.Forms.Button();
             this.ReplaceTabPage = new System.Windows.Forms.TabPage();
             this.ResultListView = new Cube.Note.App.Editor.PageListView();
@@ -64,9 +61,6 @@
             this.SearchPanel.SuspendLayout();
             this.ConditionPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
-            this.OptionalShadow2.SuspendLayout();
-            this.OptionalShadow1.SuspendLayout();
-            this.SearchShadow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Separator)).BeginInit();
             this.FooterStatusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -186,6 +180,7 @@
             // 
             // RangeLabel
             // 
+            this.RangeLabel.AutoSize = true;
             this.RangeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RangeLabel.Location = new System.Drawing.Point(3, 63);
             this.RangeLabel.Margin = new System.Windows.Forms.Padding(3);
@@ -197,6 +192,7 @@
             // 
             // SearchLabel
             // 
+            this.SearchLabel.AutoSize = true;
             this.SearchLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SearchLabel.Location = new System.Drawing.Point(3, 3);
             this.SearchLabel.Margin = new System.Windows.Forms.Padding(3);
@@ -216,6 +212,7 @@
             // 
             // ReplaceLabel
             // 
+            this.ReplaceLabel.AutoSize = true;
             this.ReplaceLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ReplaceLabel.Location = new System.Drawing.Point(3, 33);
             this.ReplaceLabel.Margin = new System.Windows.Forms.Padding(3);
@@ -257,9 +254,9 @@
             // 
             // ButtonsPanel
             // 
-            this.ButtonsPanel.Controls.Add(this.OptionalShadow2);
-            this.ButtonsPanel.Controls.Add(this.OptionalShadow1);
-            this.ButtonsPanel.Controls.Add(this.SearchShadow);
+            this.ButtonsPanel.Controls.Add(this.OptionalButton2);
+            this.ButtonsPanel.Controls.Add(this.OptionalButton1);
+            this.ButtonsPanel.Controls.Add(this.SearchButton);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.ButtonsPanel.Location = new System.Drawing.Point(12, 133);
@@ -268,16 +265,6 @@
             this.ButtonsPanel.Size = new System.Drawing.Size(401, 32);
             this.ButtonsPanel.TabIndex = 6;
             // 
-            // OptionalShadow2
-            // 
-            this.OptionalShadow2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.OptionalShadow2.Controls.Add(this.OptionalButton2);
-            this.OptionalShadow2.Location = new System.Drawing.Point(301, 0);
-            this.OptionalShadow2.Margin = new System.Windows.Forms.Padding(0);
-            this.OptionalShadow2.Name = "OptionalShadow2";
-            this.OptionalShadow2.Size = new System.Drawing.Size(100, 32);
-            this.OptionalShadow2.TabIndex = 7;
-            // 
             // OptionalButton2
             // 
             this.OptionalButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
@@ -285,23 +272,13 @@
             this.OptionalButton2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
             this.OptionalButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OptionalButton2.ForeColor = System.Drawing.Color.White;
-            this.OptionalButton2.Location = new System.Drawing.Point(0, 0);
+            this.OptionalButton2.Location = new System.Drawing.Point(301, 0);
             this.OptionalButton2.Margin = new System.Windows.Forms.Padding(0);
             this.OptionalButton2.Name = "OptionalButton2";
             this.OptionalButton2.Size = new System.Drawing.Size(100, 30);
-            this.OptionalButton2.TabIndex = 0;
+            this.OptionalButton2.TabIndex = 1;
             this.OptionalButton2.Text = "次を検索";
             this.OptionalButton2.UseVisualStyleBackColor = false;
-            // 
-            // OptionalShadow1
-            // 
-            this.OptionalShadow1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.OptionalShadow1.Controls.Add(this.OptionalButton1);
-            this.OptionalShadow1.Location = new System.Drawing.Point(197, 0);
-            this.OptionalShadow1.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.OptionalShadow1.Name = "OptionalShadow1";
-            this.OptionalShadow1.Size = new System.Drawing.Size(100, 32);
-            this.OptionalShadow1.TabIndex = 8;
             // 
             // OptionalButton1
             // 
@@ -310,23 +287,13 @@
             this.OptionalButton1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
             this.OptionalButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OptionalButton1.ForeColor = System.Drawing.Color.White;
-            this.OptionalButton1.Location = new System.Drawing.Point(0, 0);
-            this.OptionalButton1.Margin = new System.Windows.Forms.Padding(0);
+            this.OptionalButton1.Location = new System.Drawing.Point(197, 0);
+            this.OptionalButton1.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.OptionalButton1.Name = "OptionalButton1";
             this.OptionalButton1.Size = new System.Drawing.Size(100, 30);
-            this.OptionalButton1.TabIndex = 0;
+            this.OptionalButton1.TabIndex = 2;
             this.OptionalButton1.Text = "前を検索";
             this.OptionalButton1.UseVisualStyleBackColor = false;
-            // 
-            // SearchShadow
-            // 
-            this.SearchShadow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.SearchShadow.Controls.Add(this.SearchButton);
-            this.SearchShadow.Location = new System.Drawing.Point(93, 0);
-            this.SearchShadow.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.SearchShadow.Name = "SearchShadow";
-            this.SearchShadow.Size = new System.Drawing.Size(100, 32);
-            this.SearchShadow.TabIndex = 9;
             // 
             // SearchButton
             // 
@@ -335,29 +302,27 @@
             this.SearchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SearchButton.ForeColor = System.Drawing.Color.White;
-            this.SearchButton.Location = new System.Drawing.Point(0, 0);
-            this.SearchButton.Margin = new System.Windows.Forms.Padding(0);
+            this.SearchButton.Location = new System.Drawing.Point(93, 0);
+            this.SearchButton.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(100, 30);
-            this.SearchButton.TabIndex = 0;
+            this.SearchButton.TabIndex = 3;
             this.SearchButton.Text = "検索";
             this.SearchButton.UseVisualStyleBackColor = false;
             // 
             // ReplaceTabPage
             // 
-            this.ReplaceTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ReplaceTabPage.Location = new System.Drawing.Point(4, 24);
             this.ReplaceTabPage.Name = "ReplaceTabPage";
             this.ReplaceTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ReplaceTabPage.Size = new System.Drawing.Size(434, 178);
+            this.ReplaceTabPage.Size = new System.Drawing.Size(434, 176);
             this.ReplaceTabPage.TabIndex = 1;
             this.ReplaceTabPage.Text = "置 換";
             this.ReplaceTabPage.UseVisualStyleBackColor = true;
             // 
             // ResultListView
             // 
-            this.ResultListView.Aggregator = null;
             this.ResultListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ResultListView.DataSource = null;
             this.ResultListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ResultListView.FullRowSelect = true;
             this.ResultListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -388,7 +353,8 @@
             // 
             // FooterStatusStrip
             // 
-            this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FooterStatusStrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FooterStatusStrip.Font = new System.Drawing.Font("Meiryo UI", 9F);
             this.FooterStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MessageLabel});
             this.FooterStatusStrip.Location = new System.Drawing.Point(0, 426);
@@ -401,16 +367,17 @@
             // 
             this.MessageLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(433, 17);
+            this.MessageLabel.Size = new System.Drawing.Size(402, 17);
             this.MessageLabel.Spring = true;
             this.MessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SearchForm
             // 
-            this.AcceptButton = this.SearchButton;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.ClientSize = new System.Drawing.Size(450, 450);
             this.Controls.Add(this.LayoutPanel);
             this.KeyPreview = true;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximumSize = new System.Drawing.Size(1600, 860);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(370, 270);
@@ -431,9 +398,6 @@
             this.ConditionPanel.ResumeLayout(false);
             this.ConditionPanel.PerformLayout();
             this.ButtonsPanel.ResumeLayout(false);
-            this.OptionalShadow2.ResumeLayout(false);
-            this.OptionalShadow1.ResumeLayout(false);
-            this.SearchShadow.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Separator)).EndInit();
             this.FooterStatusStrip.ResumeLayout(false);
             this.FooterStatusStrip.PerformLayout();
@@ -454,12 +418,6 @@
         private System.Windows.Forms.FlowLayoutPanel SearchPanel;
         private System.Windows.Forms.CheckBox CaseSensitiveCheckBox;
         private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
-        private System.Windows.Forms.Panel OptionalShadow2;
-        private Forms.Button OptionalButton2;
-        private System.Windows.Forms.Panel OptionalShadow1;
-        private Forms.Button OptionalButton1;
-        private System.Windows.Forms.Panel SearchShadow;
-        private Forms.Button SearchButton;
         private System.Windows.Forms.ToolStripStatusLabel MessageLabel;
         private System.Windows.Forms.TableLayoutPanel ConditionPanel;
         private System.Windows.Forms.Label RangeLabel;
@@ -469,5 +427,8 @@
         private System.Windows.Forms.TextBox ReplaceTextBox;
         private System.Windows.Forms.ComboBox RangeComboBox;
         private PageListView ResultListView;
+        private Forms.Button OptionalButton2;
+        private Forms.Button OptionalButton1;
+        private Forms.Button SearchButton;
     }
 }

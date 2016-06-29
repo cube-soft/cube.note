@@ -35,7 +35,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : FormBase
+    public partial class MainForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -112,6 +112,11 @@ namespace Cube.Note.App.Editor
             Height = Settings.User.Height >= 0 ?
                      Settings.User.Height :
                      (int)(area.Height * 0.7);
+
+            SearchControl.StartPosition = FormStartPosition.Manual;
+            SearchControl.Location = new Point(Left + 20, Top + 20);
+
+            UpdateLayout(Dpi / BaseDpi);
         }
 
         /* ----------------------------------------------------------------- */
@@ -210,6 +215,29 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(22 * ratio);
+            RightContentsPanel.RowStyles[0].Height = (int)(32 * ratio);
+            ContentsPanel.SplitterDistance = (int)(270 * ratio);
+
+            var caption = Caption as IDpiAwarable;
+            caption?.UpdateLayout(ratio);
+
+            MenuControl.UpdateLayout(ratio);
+            PageCollectionControl.UpdateLayout(ratio);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

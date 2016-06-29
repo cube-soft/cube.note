@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Drawing;
 using IoEx = System.IO;
 
 namespace Cube.Note.App.Editor
@@ -34,7 +35,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class SettingsForm : FormBase
+    public partial class SettingsForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -61,6 +62,7 @@ namespace Cube.Note.App.Editor
         public SettingsForm(SettingsValue settings, int index = 0)
         {
             InitializeComponent();
+            UpdateLayout(Dpi / BaseDpi);
             Update(settings);
             InitializeEvents();
 
@@ -164,6 +166,37 @@ namespace Cube.Note.App.Editor
         {
             if (settings == null) return;
             SettingsControl.Update(settings);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            MinimumSize = new Size((int)(480 * ratio), (int)(320 * ratio));
+            Size = new Size((int)(500 * ratio), (int)(560 * ratio));
+
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(27 * ratio);
+            LayoutPanel.RowStyles[3].Height = (int)(55 * ratio);
+
+            TitleControl.UpdateLayout(ratio);
+
+            ResetButton.Size = new Size((int)(120 * ratio), (int)(25 * ratio));
+            ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
+            ExitButton.Size = new Size((int)(110 * ratio), (int)(35 * ratio));
+
+            UpdateMarginLayout(ratio);
+            UpdateTitleLabelLayout(ratio);
+            UpdateColorLabelLayout(ratio);
+            UpdateButtonLayout(ratio);
+            UpdateOthersLayout(ratio);
         }
 
         #endregion
@@ -478,6 +511,177 @@ namespace Cube.Note.App.Editor
                 return true;
             }
             catch { return false; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetMargin
+        ///
+        /// <summary>
+        /// 余白の値をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetMargin(Control src, int value)
+        {
+            foreach (var obj in src.Controls)
+            {
+                var control = obj as Control;
+                if (control == null) continue;
+                control.Margin = new Padding(value);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateMarginLayout
+        ///
+        /// <summary>
+        /// 余白を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateMarginLayout(double ratio)
+        {
+            var margin = (int)(3 * ratio);
+
+            ResetMargin(GeneralSettingsPanel, margin);
+            ResetMargin(VisibleSettinsPanel, margin);
+            ResetMargin(BehaviorSettingsPanel, margin);
+
+            FontTitleLabel.Margin        =
+            FontFontButton.Margin        =
+            FontLabel.Margin             =
+            TabWidthTitleLabel.Margin    =
+            TabWidthNumericUpDown.Margin =
+            TabToSpaceCheckBox.Margin    =
+            RemoveWarningCheckBox.Margin =
+            new Padding(margin, margin + 20, margin, margin);
+
+            WordWrapTitleLabel.Margin            =
+            LineNumberBackColorTitleLabel.Margin =
+            LineNumberForeColorTitleLabel.Margin =
+            CurrentLineColorTitleLabel.Margin    =
+            EolVisibleCheckBox.Margin            =
+            SpecialCharsColorTitleLabel.Margin   =
+            new Padding(margin + 15, margin, margin, margin);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateTitleLabelLayout
+        ///
+        /// <summary>
+        /// タイトル用ラベルのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateTitleLabelLayout(double ratio)
+        {
+            FontTitleLabel.Size                =
+            BackColorTitleLabel.Size           =
+            ForeColorTitleLabel.Size           =
+            UriColorTitleLabel.Size            =
+            HighlightBackColorTitleLabel.Size  =
+            HighlightForeColorTitleLabel.Size  =
+            SearchBackColorTitleLabel.Size     =
+            SearchForeColorTitleLabel.Size     =
+            TabWidthTitleLabel.Size            =
+            PrintMarginTitleLabel.Size         =
+            label5.Size          =
+            SearchQueryTitleLabel.Size         =
+            AutoSaveTimeTitleLabel.Size        =
+            DataFolderTitleLabel.Size          =
+            new Size((int)(100 * ratio), (int)(23 * ratio));
+
+            WordWrapTitleLabel.Size            =
+            LineNumberBackColorTitleLabel.Size =
+            LineNumberForeColorTitleLabel.Size =
+            CurrentLineColorTitleLabel.Size    =
+            SpecialCharsColorTitleLabel.Size   =
+            new Size((int)(85 * ratio), (int)(23 * ratio));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateColorLabelLayout
+        ///
+        /// <summary>
+        /// 色情報用ラベルのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateColorLabelLayout(double ratio)
+        {
+            FontLabel.Size                =
+            BackColorLabel.Size           =
+            ForeColorLabel.Size           =
+            UriColorLabel.Size            =
+            HighlightBackColorLabel.Size  =
+            HighlightForeColorLabel.Size  =
+            SearchBackColorLabel.Size     =
+            SearchForeColorLabel.Size     =
+            LineNumberBackColorLabel.Size =
+            LineNumberForeColorLabel.Size =
+            CurrentLineColorLabel.Size    =
+            SpecialCharsColorLabel.Size   =
+            new Size((int)(190 * ratio), (int)(23 * ratio));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateButtonLayout
+        ///
+        /// <summary>
+        /// 各種ボタンのレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateButtonLayout(double ratio)
+        {
+            FontFontButton.Image = Images.Get("font", ratio);
+            DataFolderButton.Size = new Size((int)(50 * ratio), DataFolderTextBox.Height);
+
+            FontFontButton.Size                 =
+            BackColorColorButton.Size           =
+            ForeColorColorButton.Size           =
+            UriColorColorButton.Size            =
+            HighlightBackColorColorButton.Size  =
+            HighlightForeColorColorButton.Size  =
+            SearchBackColorColorButton.Size     =
+            SearchForeColorColorButton.Size     =
+            LineNumberBackColorColorButton.Size =
+            LineNumberForeColorColorButton.Size =
+            CurrentLineColorColorButton.Size    =
+            SpecialCharsColorColorButton.Size   =
+            new Size((int)(50 * ratio), (int)(23 * ratio));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateOthersLayout
+        ///
+        /// <summary>
+        /// その他のレイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateOthersLayout(double ratio)
+        {
+            RestartCheckBox.Margin = new Padding((int)(109 * ratio), 3, 3, 3);
+
+            PrintLeftMarginTitleLabel.Size   =
+            PrintRightMarginTitleLabel.Size  =
+            PrintTopMarginTitleLabel.Size    =
+            PrintBottomMarginTitleLabel.Size =
+            new Size((int)(23 * ratio), (int)(23 * ratio));
+
+            PrintLeftMarginUnitLabel.Size    =
+            PrintRightMarginUnitLabel.Size   =
+            PrintTopMarginUnitLabel.Size     =
+            PrintBottomMarginUnitLabel.Size  =
+            AutoSaveTimeUnitLabel.Size       =
+            new Size((int)(35 * ratio), (int)(23 * ratio));
         }
 
         #endregion

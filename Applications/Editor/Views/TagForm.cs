@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Cube.Note.App.Editor
 {
@@ -34,7 +35,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class TagForm : FormBase
+    public partial class TagForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -61,7 +62,7 @@ namespace Cube.Note.App.Editor
         public TagForm(IEnumerable<Tag> tags)
         {
             InitializeComponent();
-            InitializeLayout();
+            UpdateLayout(Dpi / BaseDpi);
             InitializeTags(tags);
 
             Caption = TitleControl;
@@ -118,6 +119,46 @@ namespace Cube.Note.App.Editor
                 _count = Math.Max(value, 0);
                 RemoveTagButton.Enabled = value > 0;
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            MinimumSize = new Size((int)(350 * ratio), (int)(180 * ratio));
+            Size = new Size((int)(450 * ratio), (int)(300 * ratio));
+
+            LayoutPanel.ColumnStyles[1].Width = (int)(130 * ratio);
+            LayoutPanel.ColumnStyles[2].Width = (int)(120 * ratio);
+
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[1].Height = (int)(12 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(25 * ratio);
+            LayoutPanel.RowStyles[4].Height = (int)(40 * ratio);
+            LayoutPanel.RowStyles[5].Height = (int)(60 * ratio);
+
+            TitleControl.UpdateLayout(ratio);
+
+            ButtonsPanel.Padding = new Padding(0, (int)(10 * ratio), 0, 0);
+            ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
+            ExitButton.Size = new Size((int)(110 * ratio), (int)(35 * ratio));
+
+            RemoveTagButton.Height = (int)(25 * ratio);
+            NewTagButton.Height = (int)(25 * ratio);
+            NewTagWrapper.Height = (int)(25 * ratio);
+            var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
+            NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
         }
 
         #endregion
@@ -225,21 +266,6 @@ namespace Cube.Note.App.Editor
         #endregion
 
         #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeLayout
-        ///
-        /// <summary>
-        /// レイアウトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeLayout()
-        {
-            var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
-            NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
-        }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Note.App.Editor
@@ -32,7 +33,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class PropertyForm : FormBase
+    public partial class PropertyForm : FormBase, IDpiAwarable
     {
         #region Constructors
 
@@ -117,9 +118,6 @@ namespace Cube.Note.App.Editor
             CreationLabel.Text = src.Creation.ToString(Properties.Resources.CreationFormat);
             LastUpdateLabel.Text = src.LastUpdate.ToString(Properties.Resources.LastUpdateFormat);
 
-            var margin = Math.Max((NewTagWrapper.Height - NewTagTextBox.Height) / 2 - 1, 0);
-            NewTagWrapper.Padding = new Padding(4, margin, 0, 0);
-
             TagsPanel.SuspendLayout();
             foreach (var tag in tags)
             {
@@ -129,6 +127,48 @@ namespace Cube.Note.App.Editor
                 TagsPanel.Controls.Add(button);
             }
             TagsPanel.ResumeLayout();
+
+            UpdateLayout(Dpi / BaseDpi);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            MinimumSize = new Size((int)(300 * ratio), (int)(270 * ratio));
+            Size = new Size((int)(450 * ratio), (int)(330 * ratio));
+
+            LayoutPanel.ColumnStyles[1].Width = (int)(140 * ratio);
+
+            LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
+            LayoutPanel.RowStyles[1].Height = (int)(50 * ratio);
+            LayoutPanel.RowStyles[2].Height = (int)(20 * ratio);
+            LayoutPanel.RowStyles[3].Height = (int)(28 * ratio);
+            LayoutPanel.RowStyles[5].Height = (int)(40 * ratio);
+            LayoutPanel.RowStyles[6].Height = (int)(60 * ratio);
+
+            TitleControl.UpdateLayout(ratio);
+
+            ButtonsPanel.Padding = new Padding(0, (int)(10 * ratio), 0, 0);
+            ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
+            ExitButton.Size  = new Size((int)(110 * ratio), (int)(35 * ratio));
+
+            NewTagWrapper.Height = (int)(25 * ratio);
+            NewTagButton.Height  = (int)(25 * ratio);
+
+            var margin = (NewTagWrapper.Height - Font.Height) / 2.0;
+            NewTagWrapper.Padding = new Padding(4, (int)margin, 4, 0);
         }
 
         #endregion

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Sgry.Azuki.FontInfo fontInfo1 = new Sgry.Azuki.FontInfo();
+            Sgry.Azuki.FontInfo fontInfo2 = new Sgry.Azuki.FontInfo();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new Cube.Forms.TableLayoutPanel();
             this.ContentsPanel = new System.Windows.Forms.SplitContainer();
@@ -97,7 +97,6 @@
             this.PageCollectionControl.Aggregator = null;
             this.PageCollectionControl.BackColor = System.Drawing.SystemColors.Window;
             this.PageCollectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageCollectionControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(128)));
             this.PageCollectionControl.Location = new System.Drawing.Point(0, 0);
             this.PageCollectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.PageCollectionControl.Name = "PageCollectionControl";
@@ -136,10 +135,10 @@
             | Sgry.Azuki.DrawingOption.HighlightsMatchedBracket)));
             this.TextControl.FirstVisibleLine = 0;
             this.TextControl.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-            fontInfo1.Name = "MS UI Gothic";
-            fontInfo1.Size = 9;
-            fontInfo1.Style = System.Drawing.FontStyle.Regular;
-            this.TextControl.FontInfo = fontInfo1;
+            fontInfo2.Name = "MS UI Gothic";
+            fontInfo2.Size = 9;
+            fontInfo2.Style = System.Drawing.FontStyle.Regular;
+            this.TextControl.FontInfo = fontInfo2;
             this.TextControl.ForeColor = System.Drawing.SystemColors.WindowText;
             this.TextControl.IncludeLineCount = false;
             this.TextControl.LeftMargin = 8;
@@ -193,7 +192,8 @@
             // 
             this.FooterStatusControl.ColumnNumber = 0;
             this.FooterStatusControl.Count = 0;
-            this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.FooterStatusControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FooterStatusControl.Font = new System.Drawing.Font("Meiryo UI", 9F);
             this.FooterStatusControl.GripMargin = new System.Windows.Forms.Padding(0);
             this.FooterStatusControl.LineCount = 0;
             this.FooterStatusControl.LineNumber = 0;
@@ -213,11 +213,13 @@
             // MainForm
             // 
             this.AllowDrop = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(157)))));
             this.ClientSize = new System.Drawing.Size(700, 400);
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximumSize = new System.Drawing.Size(1920, 1160);
             this.MinimumSize = new System.Drawing.Size(600, 210);
             this.Name = "MainForm";

@@ -307,7 +307,7 @@ namespace Cube.Note.App.Editor
         private string[] GetTags(Page page)
             => SyncWait(() =>
         {
-            var dialog = Dialogs.Property(page, Model);
+            var dialog = Dialogs.Property(View.FindForm(), page, Model);
             return dialog.ShowDialog() != DialogResult.Cancel ?
                    dialog.Tags.ToArray() :
                    null;

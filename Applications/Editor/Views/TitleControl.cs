@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Cube.Note.App.Editor
 {
@@ -31,7 +32,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class TitleControl : Cube.Forms.UserControl
+    public partial class TitleControl : Cube.Forms.UserControl, IDpiAwarable
     {
         #region Constructors
 
@@ -52,6 +53,8 @@ namespace Cube.Note.App.Editor
             MaximizeButton.Click += (s, e) => OnMaximizeExecuted(e);
             MinimizeButton.Click += (s, e) => OnMinimizeExecuted(e);
             ButtonsPanel.Resize += ButtonsPanel_Resize;
+
+            if (DesignMode) UpdateLayout(1.0);
         }
 
         #endregion
@@ -86,6 +89,40 @@ namespace Cube.Note.App.Editor
         {
             get { return MinimizeButton.Visible; }
             set { MinimizeButton.Visible = value; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateLayout(double ratio)
+        {
+            _maximize  = Images.Get("maximize", ratio);
+            _normalize = Images.Get("normalize", ratio);
+
+            LayoutPanel.ColumnStyles[0].Width = (int)(120 * ratio);
+
+            var size = new Size((int)(45 * ratio), (int)(30 * ratio));
+
+            TitlePictureBox.Image = Images.Get("title", ratio);
+
+            MaximizeButton.Image = _maximize;
+            MaximizeButton.Size  = size;
+
+            MinimizeButton.Image = Images.Get("minimize", ratio);
+            MinimizeButton.Size  = size;
+
+            ExitButton.Image = Images.Get("close", ratio);
+            ExitButton.Size  = size;
         }
 
         #endregion
@@ -236,8 +273,8 @@ namespace Cube.Note.App.Editor
             if (form == null) return;
 
             MaximizeButton.Image = form.WindowState == FormWindowState.Maximized ?
-                                   Properties.Resources.Normalize :
-                                   Properties.Resources.Maximize;
+                                   _normalize :
+                                   _maximize;
         }
 
         /* ----------------------------------------------------------------- */
@@ -282,6 +319,11 @@ namespace Cube.Note.App.Editor
             form.Resize += Form_Resize;
         }
 
+        #endregion
+
+        #region Fields
+        private Image _maximize  = null;
+        private Image _normalize = null;
         #endregion
     }
 }
