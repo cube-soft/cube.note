@@ -192,10 +192,7 @@ namespace Cube.Note.App.Editor
             ApplyButton.Size = new Size((int)(130 * ratio), (int)(35 * ratio));
             ExitButton.Size = new Size((int)(110 * ratio), (int)(35 * ratio));
 
-            ResetMargin(GeneralSettingsPanel, ratio);
-            ResetMargin(VisibleSettinsPanel, ratio);
-            ResetMargin(BehaviorSettingsPanel, ratio);
-
+            UpdateMarginLayout(ratio);
             UpdateTitleLabelLayout(ratio);
             UpdateColorLabelLayout(ratio);
             UpdateButtonLayout(ratio);
@@ -525,14 +522,49 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResetMargin(Control src, double ratio)
+        private void ResetMargin(Control src, int value)
         {
             foreach (var obj in src.Controls)
             {
                 var control = obj as Control;
                 if (control == null) continue;
-                control.Margin = new Padding((int)(3 * ratio));
+                control.Margin = new Padding(value);
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateMarginLayout
+        ///
+        /// <summary>
+        /// 余白を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateMarginLayout(double ratio)
+        {
+            var margin = (int)(3 * ratio);
+
+            ResetMargin(GeneralSettingsPanel, margin);
+            ResetMargin(VisibleSettinsPanel, margin);
+            ResetMargin(BehaviorSettingsPanel, margin);
+
+            FontTitleLabel.Margin        =
+            FontFontButton.Margin        =
+            FontLabel.Margin             =
+            TabWidthTitleLabel.Margin    =
+            TabWidthNumericUpDown.Margin =
+            TabToSpaceCheckBox.Margin    =
+            RemoveWarningCheckBox.Margin =
+            new Padding(margin, margin + 20, margin, margin);
+
+            WordWrapTitleLabel.Margin            =
+            LineNumberBackColorTitleLabel.Margin =
+            LineNumberForeColorTitleLabel.Margin =
+            CurrentLineColorTitleLabel.Margin    =
+            EolVisibleCheckBox.Margin            =
+            SpecialCharsColorTitleLabel.Margin   =
+            new Padding(margin + 15, margin, margin, margin);
         }
 
         /* ----------------------------------------------------------------- */
@@ -638,17 +670,17 @@ namespace Cube.Note.App.Editor
         {
             RestartCheckBox.Margin = new Padding((int)(109 * ratio), 3, 3, 3);
 
-            PrintLeftMarginTitleLabel.Size =
-            PrintRightMarginTitleLabel.Size =
-            PrintTopMarginTitleLabel.Size =
+            PrintLeftMarginTitleLabel.Size   =
+            PrintRightMarginTitleLabel.Size  =
+            PrintTopMarginTitleLabel.Size    =
             PrintBottomMarginTitleLabel.Size =
             new Size((int)(23 * ratio), (int)(23 * ratio));
 
-            PrintLeftMarginUnitLabel.Size =
-            PrintRightMarginUnitLabel.Size =
-            PrintTopMarginUnitLabel.Size =
-            PrintBottomMarginUnitLabel.Size =
-            AutoSaveTimeUnitLabel.Size =
+            PrintLeftMarginUnitLabel.Size    =
+            PrintRightMarginUnitLabel.Size   =
+            PrintTopMarginUnitLabel.Size     =
+            PrintBottomMarginUnitLabel.Size  =
+            AutoSaveTimeUnitLabel.Size       =
             new Size((int)(35 * ratio), (int)(23 * ratio));
         }
 
