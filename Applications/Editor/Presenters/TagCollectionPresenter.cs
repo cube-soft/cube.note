@@ -57,6 +57,7 @@ namespace Cube.Note.App.Editor
         {
             View.DrawMode = DrawMode.OwnerDrawFixed;
             View.DrawItem += View_DrawItem;
+            View.MouseWheel += View_MouseWheel;
             Model.Loaded += Model_Loaded;
         }
 
@@ -228,6 +229,25 @@ namespace Cube.Note.App.Editor
                 Events.TagSettings.Raise();
             }
             else Settings.Current.Tag = View.SelectedItem as Tag;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_MouseWheel
+        ///
+        /// <summary>
+        /// マウスのホイール操作時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_MouseWheel(object sender, MouseEventArgs e)
+        {
+            var control = sender as ComboBox;
+            var args = e as HandledMouseEventArgs;
+            if (control == null || args == null) return;
+
+            var offset = -args.Delta / 120;
+            args.Handled = control.SelectedIndex + offset >= control.Items.Count - 1;
         }
 
         /* ----------------------------------------------------------------- */
