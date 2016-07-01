@@ -49,7 +49,6 @@ namespace Cube.Note.App.Editor
 
             NewPageButton.Click += (s, e)
                 => Aggregator?.NewPage.Raise(ValueEventArgs.Create(0));
-            TagComboBox.MouseWheel += TagComboBox_MouseWheel;
 
             Pages.AllowDrop = true;
             Pages.KeyDown += (s, e) => OnKeyDown(e);
@@ -166,28 +165,6 @@ namespace Cube.Note.App.Editor
                 e.Handled = result;
             }
             finally { base.OnKeyDown(e); }
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TagComboBox_MouseWheel
-        /// 
-        /// <summary>
-        /// マウスのホイール時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void TagComboBox_MouseWheel(object sender, MouseEventArgs e)
-        {
-            var args = e as HandledMouseEventArgs;
-            if (args == null) return;
-
-            var lastitem = TagComboBox.SelectedIndex == TagComboBox.Items.Count - 2;
-            args.Handled = lastitem && e.Delta < 0;
         }
 
         #endregion
