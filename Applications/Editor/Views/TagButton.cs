@@ -71,19 +71,19 @@ namespace Cube.Note.App.Editor
             Size = new Size(75, 25);
             AutoSize = true;
             TextAlign = ContentAlignment.MiddleCenter;
-            if (!string.IsNullOrEmpty(tag)) Text = tag;
+            if (!string.IsNullOrEmpty(tag)) Content = tag;
 
             Cursor = Cursors.Hand;
 
-            Surface.BackColor = SystemColors.Control;
-            Surface.BorderColor = SystemColors.ControlDark;
-            Surface.TextColor = SystemColors.GrayText;
-            Surface.BorderSize = 1;
+            Styles.Normal.BackColor = SystemColors.Control;
+            Styles.Normal.BorderColor = SystemColors.ControlDark;
+            Styles.Normal.ContentColor = SystemColors.GrayText;
+            Styles.Normal.BorderSize = 1;
 
-            CheckedSurface.BackColor = SystemColors.Highlight;
-            CheckedSurface.BorderColor = SystemColors.HotTrack;
-            CheckedSurface.TextColor = SystemColors.HighlightText;
-            CheckedSurface.BorderSize = 1;
+            Styles.Checked.BackColor = SystemColors.Highlight;
+            Styles.Checked.BorderColor = SystemColors.HotTrack;
+            Styles.Checked.ContentColor = SystemColors.HighlightText;
+            Styles.Checked.BorderSize = 1;
         }
 
         #endregion

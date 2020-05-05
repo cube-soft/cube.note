@@ -32,7 +32,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class TitleControl : Cube.Forms.UserControl, IDpiAwarable
+    public partial class TitleControl : Cube.Forms.CaptionControl, IDpiAwarable
     {
         #region Constructors
 
@@ -55,40 +55,6 @@ namespace Cube.Note.App.Editor
             ButtonsPanel.Resize += ButtonsPanel_Resize;
 
             if (DesignMode) UpdateLayout(1.0);
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MaximizeBox
-        ///
-        /// <summary>
-        /// 最大化ボタンを表示するかどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool MaximizeBox
-        {
-            get { return MaximizeButton.Visible; }
-            set { MaximizeButton.Visible = value; }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MinimizeBox
-        ///
-        /// <summary>
-        /// 最小化ボタンを表示するかどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool MinimizeBox
-        {
-            get { return MinimizeButton.Visible; }
-            set { MinimizeButton.Visible = value; }
         }
 
         #endregion
