@@ -54,7 +54,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private SettingsFolder()
         {
-            Assembly = Assembly.GetExecutingAssembly();
+            Assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
             InitializeNetworkOptions();
             InitialzieUriQuery();
         }

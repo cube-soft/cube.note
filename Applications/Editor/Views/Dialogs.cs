@@ -125,8 +125,9 @@ namespace Cube.Note.App.Editor
             var dest = new SettingsForm(model.User);
 
             dest.DataFolder     = model.Root;
+            dest.Product        = new AssemblyReader(model.Assembly).Product;
             dest.Version        = model.Version.ToString(true);
-            dest.StartPosition = FormStartPosition.Manual;
+            dest.StartPosition  = FormStartPosition.Manual;
             dest.Location = CreateLocation(owner);
 
             return dest;
