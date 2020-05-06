@@ -591,6 +591,8 @@ namespace Cube.Note.App.Editor
             var x = bounds.Right - image.Width - _space;
             var y = bounds.Top + _space;
             gs.DrawImage(image, x, y);
+
+            _cacheRemove = new SizeF(image.Width, image.Height);
         }
 
         /* ----------------------------------------------------------------- */
@@ -655,12 +657,10 @@ namespace Cube.Note.App.Editor
         {
             if (!ShowRemoveButton || !IsSelectedArea(point)) return false;
 
-            var image = Properties.Resources.Remove;
-
             var x1 = bounds.Right - _space;
-            var x0 = x1 - image.Width;
+            var x0 = x1 - _cacheRemove.Width;
             var y0 = bounds.Top + _space;
-            var y1 = y0 + image.Height;
+            var y1 = y0 + _cacheRemove.Height;
 
             return point.X >= x0 && point.X <= x1 &&
                    point.Y >= y0 && point.Y <= y1;
@@ -703,7 +703,8 @@ namespace Cube.Note.App.Editor
         {
             if (_cacheProperty != SizeF.Empty) return _cacheProperty;
 
-            var image  = Properties.Resources.Property;
+            var ratio = gs.DpiX / BaseDpi;
+            var image  = Images.Get("property", ratio);
             var text   = Properties.Resources.ShowProperty;
             var size   = gs.MeasureString(text, font);
             var height = Math.Max(image.Height, size.Height);
@@ -863,6 +864,7 @@ namespace Cube.Note.App.Editor
         #region Fields
         private ObservableCollection<Page> _source;
         private SizeF _cacheProperty = SizeF.Empty;
+        private SizeF _cacheRemove = SizeF.Empty;
         private static readonly int _left = 4;
         private static readonly int _space = 3;
         #endregion
