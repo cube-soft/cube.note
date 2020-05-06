@@ -42,7 +42,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagButton() : this(string.Empty) { }
+        public TagButton() : this(string.Empty, 1.0) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -53,7 +53,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagButton(Tag tag) : this(tag?.Name) { }
+        public TagButton(Tag tag, double ratio) : this(tag?.Name, ratio) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,10 +64,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TagButton(string tag) : base()
+        public TagButton(string tag, double ratio) : base()
         {
-            Size = new Size(75, 25);
-            AutoSize = true;
+            var font   = new Font("Meiryo UI", (float)(12.0 * ratio), FontStyle.Regular, GraphicsUnit.Pixel, 128);
+            var size   = TextRenderer.MeasureText(tag, font);
+            var margin = (int)(4 * ratio);
+
+            Font = font;
+            Size = new Size(size.Width + margin, size.Height + margin);
             TextAlign = ContentAlignment.MiddleCenter;
             if (!string.IsNullOrEmpty(tag)) Content = tag;
 

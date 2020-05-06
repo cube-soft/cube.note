@@ -65,7 +65,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         public virtual void UpdateLayout(double ratio)
         {
-            Font = new Font("Meiryo UI", (float)(12.0 * ratio), FontStyle.Regular, GraphicsUnit.Pixel, ((byte)(128)));
+            Font = new Font("Meiryo UI", (float)(12.0 * ratio), FontStyle.Regular, GraphicsUnit.Pixel, 128);
         }
 
         #endregion

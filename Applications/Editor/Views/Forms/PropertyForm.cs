@@ -120,7 +120,7 @@ namespace Cube.Note.App.Editor
             TagsPanel.SuspendLayout();
             foreach (var tag in tags)
             {
-                var button = new TagButton(tag);
+                var button = new TagButton(tag, Dpi / BaseDpi);
                 button.Name = tag.Name;
                 if (src.Tags.Contains(tag.Name)) button.Checked = true;
                 TagsPanel.Controls.Add(button);
@@ -216,7 +216,7 @@ namespace Cube.Note.App.Editor
                 var contains = TagsPanel.Controls.ContainsKey(tag);
                 var button   = contains ?
                                TagsPanel.Controls[tag] as TagButton :
-                               new TagButton(tag);
+                               new TagButton(tag, Dpi / BaseDpi);
                 button.Name = tag;
                 button.Checked = true;
 
