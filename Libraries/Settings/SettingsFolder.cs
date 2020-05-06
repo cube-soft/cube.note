@@ -297,7 +297,7 @@ namespace Cube.Note
 
             var asm  = new AssemblyReader(Assembly);
             var name = "cubenote-checker";
-            var exe  = IoEx.Path.Combine(asm.Location, "CubeChecker.exe");
+            var exe  = IoEx.Path.Combine(asm.DirectoryName, "CubeChecker.exe");
             var args = "CubeNote";
 
             new Cube.FileSystem.Startup(name)
@@ -305,7 +305,6 @@ namespace Cube.Note
                 Command = $"\"{exe}\" {args}",
                 Enabled = User.ShowUpdate && IoEx.File.Exists(exe),
             }.Save();
-
         }
 
         /* ----------------------------------------------------------------- */
