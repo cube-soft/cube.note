@@ -190,7 +190,7 @@ namespace Cube.Note.App.Editor
             Tags.Clear();
             foreach (TagButton button in TagsPanel.Controls)
             {
-                if (button.Checked) Tags.Add(button.Text);
+                if (button.Checked) Tags.Add(button.Content);
             }
             Close();
         }
