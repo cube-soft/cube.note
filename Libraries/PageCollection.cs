@@ -1,26 +1,25 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// PageCollection.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Cube.DataContract;
 using IoEx = System.IO;
 
 namespace Cube.Note
@@ -99,7 +98,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Settings.FileType FileType => Settings.FileType.Json;
+        public static DataContract.Format FileType => DataContract.Format.Json;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -165,7 +164,27 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public void NewPage(int index = 0) => NewPage(Tags.Everyone, index, null);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewPage
+        ///
+        /// <summary>
+        /// 新しいページを指定されたインデックスの位置に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public void NewPage(Tag tag, int index) => NewPage(tag, index, null);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewPage
+        ///
+        /// <summary>
+        /// 新しいページを指定されたインデックスの位置に追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public void NewPage(Tag tag, int index, Action<Page> initialize)
         {
             var page = new Page();
@@ -237,6 +256,16 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public void Load() => Load(DefaultFileName);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Load
+        ///
+        /// <summary>
+        /// 定義ファイルを読み込みます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public void Load(string filename)
         {
             try
@@ -246,7 +275,7 @@ namespace Cube.Note
                 var order = ToPath(filename);
                 if (!IoEx.File.Exists(order)) return;
 
-                foreach (var page in Settings.Load<List<Page>>(order, FileType))
+                foreach (var page in FileType.Deserialize<List<Page>>(order))
                 {
                     if (!IoEx.File.Exists(ToPath(page))) continue;
                     Add(page);
@@ -268,11 +297,21 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public void Save() => Save(DefaultFileName);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// 定義ファイルを保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public void Save(string filename)
         {
             Tags.Save();
             CreateDirectory(Directory);
-            Settings.Save(Items, ToPath(filename), FileType);
+            FileType.Serialize(ToPath(filename), Items);
         }
 
         #endregion

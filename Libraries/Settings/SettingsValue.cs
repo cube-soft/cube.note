@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// SettingsValue.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Runtime.Serialization;
@@ -34,7 +32,7 @@ namespace Cube.Note
     /// 
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class SettingsValue : ObservableSettingsValue
+    public class SettingsValue : Cube.ObservableProperty
     {
         #region Constructors
 
@@ -1081,7 +1079,7 @@ namespace Cube.Note
             AutoSaveTime        = TimeSpan.FromSeconds(30);
             LastUpdate          = new DateTime(2016, 1, 1, 0, 0, 0, DateTimeKind.Local);
             PrintMargin         = new Margins(25, 25, 25, 25);
-            SearchQuery         = "http://s.cube-soft.jp/search/?q=";
+            SearchQuery         = "https://s.cube-soft.jp/search/?q=";
             TabWidth            = 8;
             WordWrapCount       = 80;
 

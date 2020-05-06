@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// MenuPresenter.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -57,17 +55,17 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
-            Events.Print.Handle += Print_Handle;
-            Events.Settings.Handle += Settings_Handle;
-            Events.TagSettings.Handle += TagSettings_Handle;
-            Events.Web.Handle += Web_Handle;
-            Events.Google.Handle += Google_Handle;
+            Events.Print.Subscribe(Print_Handle);
+            Events.Settings.Subscribe(Settings_Handle);
+            Events.TagSettings.Subscribe(TagSettings_Handle);
+            Events.Web.Subscribe(Web_Handle);
+            Events.Google.Subscribe(Google_Handle);
 
-            View.UndoMenu.Click += (s, e) => Events.Undo.Raise();
-            View.RedoMenu.Click += (s, e) => Events.Redo.Raise();
-            View.ExportMenu.Click += (s, e) => Events.Export.Raise(EventAggregator.Selected);
-            View.PrintMenu.Click += (s, e) => Events.Print.Raise();
-            View.SettingsMenu.Click += (s, e) => Events.Settings.Raise();
+            View.UndoMenu.Click += (s, e) => Events.Undo.Publish();
+            View.RedoMenu.Click += (s, e) => Events.Redo.Publish();
+            View.ExportMenu.Click += (s, e) => Events.Export.Publish(EventAggregator.Selected);
+            View.PrintMenu.Click += (s, e) => Events.Print.Publish();
+            View.SettingsMenu.Click += (s, e) => Events.Settings.Publish();
             View.LogoMenu.Click += View_LogoMenu;
 
             Settings.Current.PropertyChanged += Settings_CurrentChanged;
@@ -88,7 +86,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Print_Handle(object sender, EventArgs e)
+        private void Print_Handle()
             => SyncWait(() =>
         {
             var dialog = Dialogs.Print();
@@ -128,14 +126,14 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Settings_Handle(object sender, EventArgs e)
+        private void Settings_Handle()
             => Sync(() =>
         {
             var dialog = Dialogs.Settings(View.FindForm(), Settings);
             using (var ps = new SettingsPresenter(dialog, Settings, Events))
             {
                 var result = dialog.ShowDialog();
-                Events.Refresh.Raise();
+                Events.Refresh.Publish();
                 if (result == DialogResult.Cancel) return;
             }
 
@@ -153,7 +151,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void TagSettings_Handle(object sender, EventArgs e)
+        private async void TagSettings_Handle()
         {
             var tags = SyncWait(() =>
             {
@@ -171,8 +169,8 @@ namespace Cube.Note.App.Editor
 
             await Async(() =>
             {
-                foreach (var tag in tags.Key) Events.NewTag.Raise(ValueEventArgs.Create(tag));
-                foreach (var tag in tags.Value) Events.RemoveTag.Raise(ValueEventArgs.Create(tag));
+                foreach (var tag in tags.Key) Events.NewTag.Publish(ValueEventArgs.Create(tag));
+                foreach (var tag in tags.Value) Events.RemoveTag.Publish(ValueEventArgs.Create(tag));
             });
         }
 
@@ -185,8 +183,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Web_Handle(object sender, ValueEventArgs<string> e)
-            => this.LogException(() =>
+        private void Web_Handle(ValueEventArgs<string> e)
+            => this.LogWarn(() =>
         {
             if (string.IsNullOrEmpty(e.Value)) return;
             var uri = new Uri(e.Value).With(Settings.UriQuery);
@@ -202,10 +200,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Google_Handle(object sender, ValueEventArgs<string> e)
+        private void Google_Handle(ValueEventArgs<string> e)
         {
             if (string.IsNullOrEmpty(e.Value)) return;
-            Events.Web.Raise(ValueEventArgs.Create(Settings.User.SearchQuery + e.Value));
+            Events.Web.Publish(ValueEventArgs.Create(Settings.User.SearchQuery + e.Value));
         }
 
         #endregion
@@ -222,7 +220,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_LogoMenu(object sender, EventArgs e)
-            => Events.Web.Raise(ValueEventArgs.Create(Properties.Resources.UrlWeb));
+            => Events.Web.Publish(ValueEventArgs.Create(Properties.Resources.UrlWeb));
 
         #endregion
 

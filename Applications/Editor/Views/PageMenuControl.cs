@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// PageMenuControl.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System.Windows.Forms;
 
@@ -72,7 +70,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventAggregator Aggregator { get; set; }
+        public IAggregator Aggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -199,21 +197,21 @@ namespace Cube.Note.App.Editor
         private void InitializeEvents()
         {
             NewPageMenu.Click += (s, e)
-                => Aggregator?.NewPage.Raise(EventAggregator.Selected);
+                => Aggregator.Get()?.NewPage.Publish(EventAggregator.Selected);
             ImportMenu.Click += (s, e)
-                => Aggregator?.Import.Raise(KeyValueEventArgs.Create(-1, ""));
+                => Aggregator.Get()?.Import.Publish(KeyValueEventArgs.Create(-1, ""));
             ExportMenu.Click += (s, e)
-                => Aggregator?.Export.Raise(EventAggregator.Selected);
+                => Aggregator.Get()?.Export.Publish(EventAggregator.Selected);
             DuplicateMenu.Click += (s, e)
-                => Aggregator?.Duplicate.Raise(EventAggregator.Selected);
+                => Aggregator.Get()?.Duplicate.Publish(EventAggregator.Selected);
             RemoveMenu.Click += (s, e)
-                => Aggregator?.Remove.Raise(EventAggregator.Selected);
+                => Aggregator.Get()?.Remove.Publish(EventAggregator.Selected);
             UpMenu.Click += (s, e)
-                => Aggregator?.Move.Raise(ValueEventArgs.Create(-1));
+                => Aggregator.Get()?.Move.Publish(ValueEventArgs.Create(-1));
             DownMenu.Click += (s, e)
-                => Aggregator?.Move.Raise(ValueEventArgs.Create(1));
+                => Aggregator.Get()?.Move.Publish(ValueEventArgs.Create(1));
             PropertyMenu.Click += (s, e)
-                => Aggregator?.Property.Raise(EventAggregator.Selected);
+                => Aggregator.Get()?.Property.Publish(EventAggregator.Selected);
         }
 
         /* ----------------------------------------------------------------- */

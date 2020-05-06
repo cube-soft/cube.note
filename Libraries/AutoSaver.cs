@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// AutoSaver.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -62,7 +60,7 @@ namespace Cube.Note
 
             Settings.Current.PageChanged += Settings_PageChanged;
             Settings.User.PropertyChanged += Settings_PropertyChanged;
-            Events.Save.Handle += Save_Handle;
+            Events.Save.Subscribe(Save_Handle);
             _timer.Elapsed += Timer_Elapsed;
 
             Task.Run(() => InitializePages());
@@ -168,7 +166,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
             => await Task.Run(()
-            => this.LogException(() =>
+            => this.LogWarn(() =>
         {
             SaveDocument(Settings.Current.Page);
             SaveOrderFile();
@@ -186,7 +184,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private async void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
             => await Task.Run(()
-            => this.LogException(() =>
+            => this.LogWarn(() =>
         {
             Settings.User.Page = e.NewValue?.FileName ?? string.Empty;
             SaveDocument(e.OldValue);
@@ -201,10 +199,10 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Save_Handle(object sender, EventArgs e)
+        private async void Save_Handle()
         {
             if (Settings.Current.Page == null) return;
-            await Task.Run(() => this.LogException(() =>
+            await Task.Run(() => this.LogWarn(() =>
             {
                 SaveDocument(Settings.Current.Page);
                 SaveOrderFile();
@@ -240,7 +238,7 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
-            => this.LogException(() =>
+            => this.LogWarn(() =>
         {
             if (_disposed) return;
             _disposed = true;
@@ -279,7 +277,7 @@ namespace Cube.Note
                 try { Pages.Load(); }
                 catch (Exception err)
                 {
-                    this.LogError(err.Message, err);
+                    this.LogError(err);
                     this.LogError($"Recover:{Pages.Directory}");
                     Pages.Recover(Settings.MaxAbstractLength);
                 }
@@ -291,7 +289,7 @@ namespace Cube.Note
                 }
                 if (Pages.Count <= 0) Pages.NewPage(0);
             }
-            catch (Exception err) { this.LogError(err.Message, err); }
+            catch (Exception err) { this.LogError(err); }
             finally { _timer.Start(); }
         }
 

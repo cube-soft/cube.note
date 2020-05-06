@@ -76,7 +76,6 @@
             this.PageListView.Name = "PageListView";
             this.PageListView.Size = new System.Drawing.Size(300, 238);
             this.PageListView.TabIndex = 7;
-            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.PageListView.TileSize = new System.Drawing.Size(300, 32);
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Tile;

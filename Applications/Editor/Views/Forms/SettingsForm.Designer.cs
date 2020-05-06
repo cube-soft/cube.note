@@ -34,7 +34,7 @@
             this.ButtonsPanel = new Cube.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Button();
             this.ApplyButton = new Cube.Forms.Button();
-            this.SettingsControl = new Cube.Note.App.Editor.SettingsControl();
+            this.SettingsControl = new DynamicSettingsControl();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralSettingsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -187,8 +187,6 @@
             this.TitleControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TitleControl.Location = new System.Drawing.Point(0, 0);
             this.TitleControl.Margin = new System.Windows.Forms.Padding(0);
-            this.TitleControl.MaximizeBox = true;
-            this.TitleControl.MinimizeBox = true;
             this.TitleControl.Name = "TitleControl";
             this.TitleControl.Size = new System.Drawing.Size(498, 30);
             this.TitleControl.TabIndex = 0;
@@ -1390,7 +1388,7 @@
         private TitleControl TitleControl;
         private Cube.Forms.FlowLayoutPanel ButtonsPanel;
         private Cube.Forms.Button ResetButton;
-        private SettingsControl SettingsControl;
+        private DynamicSettingsControl SettingsControl;
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
         private System.Windows.Forms.FlowLayoutPanel GeneralSettingsPanel;

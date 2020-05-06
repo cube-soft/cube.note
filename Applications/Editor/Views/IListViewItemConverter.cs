@@ -15,42 +15,30 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System.Runtime.Serialization;
+using System.Windows.Forms;
 
-namespace Cube.Note
+namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RegistryValue
+    /// IListViewItemConverter
     /// 
     /// <summary>
-    /// レジストリに保存されている値を表すクラスです。
+    /// ListViewItem オブジェクトへ変換するためのインターフェースです。
     /// </summary>
-    /// 
-    /// <remarks>
-    /// CubeNote では、一部の値以外は JSON ファイルで管理しています。
-    /// 新しくユーザ設定を追加したい場合は、SettingsValue にプロパティを追加して
-    /// 下さい。
-    /// </remarks>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    [DataContract]
-    internal class RegistryValue
+    public interface IListViewItemConverter
     {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
+        /* --------------------------------------------------------------------- */
         ///
-        /// Data
-        ///
+        /// Convert
+        /// 
         /// <summary>
-        /// データフォルダのパスを取得または設定します。
+        /// 特定の型のオブジェクトを ListViewItem オブジェクトに変換します。
         /// </summary>
         ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public string Data { get; set; }
-
-        #endregion
+        /* --------------------------------------------------------------------- */
+        ListViewItem Convert<T>(T src);
     }
 }

@@ -1,315 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9274EC3-94BC-47DD-AA63-9925A6F142B5}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Note.App.Editor</RootNamespace>
-    <AssemblyName>CubeNote</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>App.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>App.ico</ApplicationIcon>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Azuki">
-      <HintPath>..\..\..\lib\Azuki.dll</HintPath>
-    </Reference>
-    <Reference Include="Cube.Core">
-      <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Cube.Net">
-      <HintPath>..\..\..\lib\net45\Cube.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Cube.News">
-      <HintPath>..\..\..\lib\net45\Cube.News.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Presenters\UpdatePresenter.cs" />
-    <Compile Include="Views\Dialogs.cs" />
-    <Compile Include="Views\IDpiAwarable.cs" />
-    <Compile Include="Views\Images.cs" />
-    <Compile Include="Views\PageMenuControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presenters\NewsPresenter.cs" />
-    <Compile Include="Views\TagForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\TagForm.Designer.cs">
-      <DependentUpon>TagForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TextMenuControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\FormBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\FormBase.Designer.cs">
-      <DependentUpon>FormBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MenuControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Models\MenuRenderer.cs" />
-    <Compile Include="Models\PageConverter.cs" />
-    <Compile Include="Models\PageHandler.cs" />
-    <Compile Include="Views\PageCollectionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\PageCollectionControl.Designer.cs">
-      <DependentUpon>PageCollectionControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PageListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presenters\MenuPresenter.cs" />
-    <Compile Include="Presenters\PageCollectionPresenter.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
-    <Compile Include="Presenters\SearchPresenter.cs" />
-    <Compile Include="Presenters\SettingsPresenter.cs" />
-    <Compile Include="Presenters\TagCollectionPresenter.cs" />
-    <Compile Include="Presenters\TextPresenter.cs" />
-    <Compile Include="Presenters\TextVisualPresenter.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\PropertyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\PropertyForm.Designer.cs">
-      <DependentUpon>PropertyForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SearchForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\SearchForm.Designer.cs">
-      <DependentUpon>SearchForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\SettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\SettingsForm.Designer.cs">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TagButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\TextControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\StatusControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\TitleControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\TitleControl.Designer.cs">
-      <DependentUpon>TitleControl.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Views\FormBase.resx">
-      <DependentUpon>FormBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PageCollectionControl.resx">
-      <DependentUpon>PageCollectionControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="Views\PropertyForm.resx">
-      <DependentUpon>PropertyForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SearchForm.resx">
-      <DependentUpon>SearchForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SettingsForm.resx">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\TagForm.resx">
-      <DependentUpon>TagForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\TitleControl.resx">
-      <DependentUpon>TitleControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="App.manifest" />
-    <None Include="Packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.ico" />
-    <None Include="Resources\192\Normalize192.png" />
-    <None Include="Resources\240\Undo240.png" />
-    <None Include="Resources\240\Title240.png" />
-    <None Include="Resources\240\Settings240.png" />
-    <None Include="Resources\240\Search240.png" />
-    <None Include="Resources\240\Remove240.png" />
-    <None Include="Resources\240\Redo240.png" />
-    <None Include="Resources\240\Property240.png" />
-    <None Include="Resources\240\Print240.png" />
-    <None Include="Resources\240\Normalize240.png" />
-    <None Include="Resources\240\Minimize240.png" />
-    <None Include="Resources\240\Maximize240.png" />
-    <None Include="Resources\240\Logo240.png" />
-    <None Include="Resources\240\Left240.png" />
-    <None Include="Resources\240\Font240.png" />
-    <None Include="Resources\240\Export240.png" />
-    <None Include="Resources\240\Close240.png" />
-    <None Include="Resources\240\Add240.png" />
-    <None Include="Resources\192\Undo192.png" />
-    <None Include="Resources\192\Title192.png" />
-    <None Include="Resources\192\Settings192.png" />
-    <None Include="Resources\192\Search192.png" />
-    <None Include="Resources\192\Remove192.png" />
-    <None Include="Resources\192\Redo192.png" />
-    <None Include="Resources\192\Property192.png" />
-    <None Include="Resources\192\Print192.png" />
-    <None Include="Resources\192\Minimize192.png" />
-    <None Include="Resources\192\Maximize192.png" />
-    <None Include="Resources\192\Logo192.png" />
-    <None Include="Resources\192\Left192.png" />
-    <None Include="Resources\192\Font192.png" />
-    <None Include="Resources\192\Export192.png" />
-    <None Include="Resources\192\Close192.png" />
-    <None Include="Resources\192\Add192.png" />
-    <None Include="Resources\144\Undo144.png" />
-    <None Include="Resources\144\Title144.png" />
-    <None Include="Resources\144\Settings144.png" />
-    <None Include="Resources\144\Search144.png" />
-    <None Include="Resources\144\Remove144.png" />
-    <None Include="Resources\144\Redo144.png" />
-    <None Include="Resources\144\Property144.png" />
-    <None Include="Resources\144\Print144.png" />
-    <None Include="Resources\144\Normalize144.png" />
-    <None Include="Resources\144\Minimize144.png" />
-    <None Include="Resources\144\Maximize144.png" />
-    <None Include="Resources\144\Logo144.png" />
-    <None Include="Resources\144\Left144.png" />
-    <None Include="Resources\144\Font144.png" />
-    <None Include="Resources\144\Export144.png" />
-    <None Include="Resources\144\Close144.png" />
-    <None Include="Resources\144\Add144.png" />
-    <None Include="Resources\120\Undo120.png" />
-    <None Include="Resources\120\Title120.png" />
-    <None Include="Resources\120\Settings120.png" />
-    <None Include="Resources\120\Search120.png" />
-    <None Include="Resources\120\Remove120.png" />
-    <None Include="Resources\120\Redo120.png" />
-    <None Include="Resources\120\Property120.png" />
-    <None Include="Resources\120\Print120.png" />
-    <None Include="Resources\120\Normalize120.png" />
-    <None Include="Resources\120\Minimize120.png" />
-    <None Include="Resources\120\Maximize120.png" />
-    <None Include="Resources\120\Logo120.png" />
-    <None Include="Resources\120\Left120.png" />
-    <None Include="Resources\120\Font120.png" />
-    <None Include="Resources\120\Export120.png" />
-    <None Include="Resources\120\Close120.png" />
-    <None Include="Resources\120\Add120.png" />
-    <None Include="Resources\Print.png" />
-    <None Include="Resources\Export.png" />
-    <None Include="Resources\Undo.png" />
-    <None Include="Resources\Redo.png" />
-    <None Include="Resources\Property.png" />
-    <None Include="Resources\Font.png" />
-    <None Include="Resources\Normalize.png" />
-    <None Include="Resources\LogoLarge.png" />
-    <None Include="Resources\Title.png" />
-    <None Include="Resources\Minimize.png" />
-    <None Include="Resources\Maximize.png" />
-    <None Include="Resources\Close.png" />
-    <None Include="Resources\Settings.png" />
-    <None Include="Resources\Logo.png" />
-    <None Include="Resources\Left.png" />
-    <None Include="Resources\Search.png" />
-    <None Include="Resources\Remove.png" />
-    <None Include="Resources\Add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Cube.Note.csproj">
-      <Project>{9f978a54-6ea5-465d-bd06-58d1b720f804}</Project>
-      <Name>Cube.Note</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Version>0.1.4</Version>
+        <Authors>clown;cube-soft</Authors>
+        <Company>CubeSoft</Company>
+        <Product>CubeNote</Product>
+        <Description>Auto file management editor.</Description>
+        <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+        <AssemblyName>CubeNote</AssemblyName>
+        <AssemblyTitle>CubeNote</AssemblyTitle>
+        <RootNamespace>Cube.Note.App.Editor</RootNamespace>
+        <OutputType>WinExe</OutputType>
+        <LangVersion>latest</LangVersion>
+        <TargetFramework>net45</TargetFramework>
+        <Platforms>AnyCPU;x86;x64</Platforms>
+        <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
+        <IsPackable>false</IsPackable>
+        <Optimize>true</Optimize>
+        <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
+        <ApplicationIcon>App.ico</ApplicationIcon>
+        <ApplicationManifest>App.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
+        <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Libraries\Cube.Note.csproj" />
+        <PackageReference Include="Cube.Forms" Version="1.15.1" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="../../../resources/net35/Azuki.dll" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
+        <Compile Update="Views\Controls\*Control.cs" SubType="Form" />
+        <Compile Update="Views\Forms\*Form.cs" SubType="Form" />
+        <Compile Update="Views\Forms\FormBase.cs" SubType="Form" />
+        <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+        <EmbeddedResource Update="Views\Controls\*Control.resx" DependentUpon="%(FIlename).cs" />
+        <EmbeddedResource Update="Views\Forms\*Forms.resx" DependentUpon="%(FIlename).cs" />
+        <EmbeddedResource Update="Views\Forms\FormBase.resx" DependentUpon="%(FIlename).cs" />
+        <None Include="Resources\**\*" />
+        <None Include="App.config" />
+        <None Include="App.ico" />
+        <None Include="App.manifest" />
+    </ItemGroup>
 </Project>

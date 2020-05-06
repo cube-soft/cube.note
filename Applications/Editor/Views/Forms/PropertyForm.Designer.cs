@@ -99,8 +99,6 @@
             this.TitleControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TitleControl.Location = new System.Drawing.Point(0, 0);
             this.TitleControl.Margin = new System.Windows.Forms.Padding(0);
-            this.TitleControl.MaximizeBox = true;
-            this.TitleControl.MinimizeBox = true;
             this.TitleControl.Name = "TitleControl";
             this.TitleControl.Size = new System.Drawing.Size(448, 30);
             this.TitleControl.TabIndex = 0;

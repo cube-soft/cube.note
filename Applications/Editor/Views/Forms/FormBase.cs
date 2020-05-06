@@ -15,41 +15,40 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System.Runtime.Serialization;
+using System;
+using System.Drawing;
 
-namespace Cube.Note
+namespace Cube.Note.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RegistryValue
+    /// FormBase
     /// 
     /// <summary>
-    /// レジストリに保存されている値を表すクラスです。
+    /// フォーム外観の共通部分を定義したクラスです。
     /// </summary>
     /// 
-    /// <remarks>
-    /// CubeNote では、一部の値以外は JSON ファイルで管理しています。
-    /// 新しくユーザ設定を追加したい場合は、SettingsValue にプロパティを追加して
-    /// 下さい。
-    /// </remarks>
-    /// 
     /* --------------------------------------------------------------------- */
-    [DataContract]
-    internal class RegistryValue
+    public partial class FormBase : Cube.Forms.BorderlessForm
     {
-        #region Properties
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// FormBase
         ///
         /// <summary>
-        /// データフォルダのパスを取得または設定します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember]
-        public string Data { get; set; }
+        public FormBase()
+        {
+            InitializeComponent();
+
+            Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
+            Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
+        }
 
         #endregion
     }

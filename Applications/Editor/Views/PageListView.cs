@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// PageListView.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -36,7 +34,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class PageListView : Cube.Forms.ListView
+    public class PageListView : ListViewBase
     {
         #region Constructors
 
@@ -304,8 +302,8 @@ namespace Cube.Note.App.Editor
             var item = GetItemAt(e.Location.X, e.Location.Y);
             if (item == null) return;
 
-            if (IsRemoveButton(e.Location, item.Bounds)) Aggregator?.Remove.Raise(EventAggregator.Selected);
-            else if (IsPropertyButton(e.Location, item.Bounds)) Aggregator?.Property.Raise(EventAggregator.Selected);
+            if (IsRemoveButton(e.Location, item.Bounds)) Aggregator?.Remove.Publish(EventAggregator.Selected);
+            else if (IsPropertyButton(e.Location, item.Bounds)) Aggregator?.Property.Publish(EventAggregator.Selected);
         }
 
         /* ----------------------------------------------------------------- */
@@ -394,7 +392,7 @@ namespace Cube.Note.App.Editor
             int dest = Items.IndexOf(GetItemAt(point.X, point.Y));
             if (dest == -1) dest = Items.Count - 1;
 
-            Aggregator?.Move.Raise(ValueEventArgs.Create(dest - src));
+            Aggregator?.Move.Publish(ValueEventArgs.Create(dest - src));
         }
 
         /* ----------------------------------------------------------------- */

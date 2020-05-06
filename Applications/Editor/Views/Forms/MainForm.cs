@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// MainForm.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -53,6 +51,7 @@ namespace Cube.Note.App.Editor
             InitializeComponent();
             InitializeModels();
 
+            Aggregator = new EventAggregator();
             Caption = TitleControl;
             PageCollectionControl.Pages.ContextMenuStrip = PageMenuControl;
             TextControl.ContextMenuStrip = TextMenuControl;
@@ -137,7 +136,7 @@ namespace Cube.Note.App.Editor
             Pages = new PageCollection(Settings.Root);
             Pages.Tags.Everyone.Name = Properties.Resources.EveryoneTag;
             Pages.Tags.Nothing.Name  = Properties.Resources.NothingTag;
-            this.LogException(() => Settings.Load());
+            Settings.Load();
         }
 
         /* ----------------------------------------------------------------- */
@@ -154,50 +153,17 @@ namespace Cube.Note.App.Editor
             PageCollectionControl.Aggregator = Aggregator;
             PageMenuControl.Aggregator = Aggregator;
 
-            new MenuPresenter(MenuControl, Pages, Settings, Aggregator);
-            new TextPresenter(TextControl, Pages, Settings, Aggregator);
-            new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator);
-            new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator);
-            new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator);
-            new SearchPresenter(SearchControl, Pages, Settings, Aggregator);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeNetworkPresenters
-        ///
-        /// <summary>
-        /// ネットワーク通信が発生する Presenter を初期化します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 通信が発生する事によって起動時間が遅れる事を防ぐため、初期化を
-        /// 遅延させます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeNetworkPresenters()
-        {
-            new UpdatePresenter(NotifyIcon, Activator, Settings, Aggregator);
-            new NewsPresenter(FooterStatusControl, Settings, Aggregator);
+            new MenuPresenter(MenuControl, Pages, Settings, Aggregator.Get());
+            new TextPresenter(TextControl, Pages, Settings, Aggregator.Get());
+            new TextVisualPresenter(TextControl, /* User, */ Settings, Aggregator.Get());
+            new PageCollectionPresenter(PageCollectionControl.Pages, Pages, Settings, Aggregator.Get());
+            new TagCollectionPresenter(PageCollectionControl.Tags, Pages, Settings, Aggregator.Get());
+            new SearchPresenter(SearchControl, Pages, Settings, Aggregator.Get());
         }
 
         #endregion
 
         #region Properties
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Activator
-        /// 
-        /// <summary>
-        /// ソフトウェアのアクティブ化を行うためのオブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Cube.Net.Update.SoftwareActivator Activator { get; set; }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -282,8 +248,7 @@ namespace Cube.Note.App.Editor
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            Saver = new AutoSaver(Pages, Settings, Aggregator);
-            InitializeNetworkPresenters();
+            Saver = new AutoSaver(Pages, Settings, Aggregator.Get());
             this.LogDebug($"Location:{Location}\tSize:{Size}");
         }
 
@@ -324,9 +289,9 @@ namespace Cube.Note.App.Editor
         {
             try
             {
-                if (e.Control) ShortcutKeysWithCtrl(e);
+                if (e.Control) RunShortcutKeysWithCtrl(e);
                 else if (e.Alt) return;
-                else ShortcutKeys(e);
+                else RunShortcutKeys(e);
             }
             finally { base.OnKeyDown(e); }
         }
@@ -368,7 +333,7 @@ namespace Cube.Note.App.Editor
             foreach (var path in files)
             {
                 var args = KeyValueEventArgs.Create(0, path);
-                Aggregator.Import.Raise(args);
+                Aggregator.Get().Import.Publish(args);
             }
         }
 
@@ -408,21 +373,21 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ShortcutKeys
+        /// RunShortcutKeys
         ///
         /// <summary>
         /// ショートカットキーを処理します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ShortcutKeys(KeyEventArgs e)
+        private void RunShortcutKeys(KeyEventArgs e)
         {
             var result = true;
             switch (e.KeyCode)
             {
                 case Keys.F3:
-                    if (e.Shift) Aggregator.SearchPrev.Raise();
-                    else Aggregator.SearchNext.Raise();
+                    if (e.Shift) Aggregator.Get().SearchPrev.Publish();
+                    else Aggregator.Get().SearchNext.Publish();
                     break;
                 default:
                     result = false;
@@ -433,70 +398,70 @@ namespace Cube.Note.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ShortcutKeysWithCtrl
+        /// RunShortcutKeysWithCtrl
         ///
         /// <summary>
         /// Ctrl+Keys のショートカットキーを処理します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ShortcutKeysWithCtrl(KeyEventArgs e)
+        private void RunShortcutKeysWithCtrl(KeyEventArgs e)
         {
             var result = true;
             switch (e.KeyCode)
             {
                 case Keys.C:
-                    if (e.Shift) Aggregator.Duplicate.Raise(EventAggregator.Selected);
+                    if (e.Shift) Aggregator.Get().Duplicate.Publish(EventAggregator.Selected);
                     else result = false;
                     break;
                 case Keys.D:
-                    Aggregator.Remove.Raise(EventAggregator.Selected);
+                    Aggregator.Get().Remove.Publish(EventAggregator.Selected);
                     break;
                 case Keys.E:
-                    Aggregator.Export.Raise(EventAggregator.Selected);
+                    Aggregator.Get().Export.Publish(EventAggregator.Selected);
                     break;
                 case Keys.F:
                     RaiseSearch();
                     break;
                 case Keys.G:
-                    Aggregator.Google.Raise(ValueEventArgs.Create(SelectedText));
+                    Aggregator.Get().Google.Publish(ValueEventArgs.Create(SelectedText));
                     break;
                 case Keys.H:
                     SwitchMenu();
                     break;
                 case Keys.J:
                 case Keys.Down:
-                    Aggregator.Move.Raise(ValueEventArgs.Create(1));
+                    Aggregator.Get().Move.Publish(ValueEventArgs.Create(1));
                     break;
                 case Keys.K:
                 case Keys.Up:
-                    Aggregator.Move.Raise(ValueEventArgs.Create(-1));
+                    Aggregator.Get().Move.Publish(ValueEventArgs.Create(-1));
                     break;
                 case Keys.N:
-                    Aggregator.NewPage.Raise(e.Shift ?
+                    Aggregator.Get().NewPage.Publish(e.Shift ?
                         EventAggregator.Selected :
                         EventAggregator.Top
                     );
                     break;
                 case Keys.O:
-                    Aggregator.Import.Raise(KeyValueEventArgs.Create(0, ""));
+                    Aggregator.Get().Import.Publish(KeyValueEventArgs.Create(0, ""));
                     break;
                 case Keys.P:
-                    Aggregator.Print.Raise();
+                    Aggregator.Get().Print.Publish();
                     break;
                 case Keys.R:
-                    if (e.Shift) Aggregator.TagSettings.Raise();
-                    else Aggregator.Property.Raise(EventAggregator.Selected);
+                    if (e.Shift) Aggregator.Get().TagSettings.Publish();
+                    else Aggregator.Get().Property.Publish(EventAggregator.Selected);
                     break;
                 case Keys.S:
-                    if (e.Shift) Aggregator.Export.Raise(EventAggregator.Selected);
-                    else Aggregator.Save.Raise();
+                    if (e.Shift) Aggregator.Get().Export.Publish(EventAggregator.Selected);
+                    else Aggregator.Get().Save.Publish();
                     break;
                 case Keys.T:
-                    Aggregator.Settings.Raise();
+                    Aggregator.Get().Settings.Publish();
                     break;
                 case Keys.U:
-                    Aggregator.TagSettings.Raise();
+                    Aggregator.Get().TagSettings.Publish();
                     break;
                 default:
                     result = false;
@@ -548,22 +513,21 @@ namespace Cube.Note.App.Editor
         private void RaiseSearch()
         {
             var index = TextControlIsActive() ? 0 : 1;
-            Aggregator.Search.Raise(KeyValueEventArgs.Create(index, SelectedText));
+            Aggregator.Get().Search.Publish(KeyValueEventArgs.Create(index, SelectedText));
         }
 
         #endregion
 
         #region Models
-        private EventAggregator Aggregator = new EventAggregator();
-        private SettingsFolder Settings = new SettingsFolder(Assembly.GetExecutingAssembly());
+        private readonly SettingsFolder Settings = new SettingsFolder(Assembly.GetExecutingAssembly());
         private PageCollection Pages = null;
         private AutoSaver Saver = null;
         #endregion
 
         #region Views
-        private SearchForm SearchControl = new SearchForm();
-        private PageMenuControl PageMenuControl = new PageMenuControl();
-        private TextMenuControl TextMenuControl = new TextMenuControl();
+        private readonly SearchForm SearchControl = new SearchForm();
+        private readonly PageMenuControl PageMenuControl = new PageMenuControl();
+        private readonly TextMenuControl TextMenuControl = new TextMenuControl();
         #endregion
     }
 }

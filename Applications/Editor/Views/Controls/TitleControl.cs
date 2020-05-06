@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// TitleControl.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Windows.Forms;
@@ -49,9 +47,9 @@ namespace Cube.Note.App.Editor
         {
             InitializeComponent();
 
-            ExitButton.Click += (s, e) => OnCloseExecuted(e);
-            MaximizeButton.Click += (s, e) => OnMaximizeExecuted(e);
-            MinimizeButton.Click += (s, e) => OnMinimizeExecuted(e);
+            MaximizeControl = MaximizeButton;
+            MinimizeControl = MinimizeButton;
+            CloseControl    = ExitButton;
             ButtonsPanel.Resize += ButtonsPanel_Resize;
 
             if (DesignMode) UpdateLayout(1.0);
@@ -93,83 +91,6 @@ namespace Cube.Note.App.Editor
 
         #endregion
 
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CloseExecuted
-        ///
-        /// <summary>
-        /// 終了の要求時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler CloseExecuted;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MaximizeExecuted
-        ///
-        /// <summary>
-        /// 最大化の要求時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler MaximizeExecuted;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MinimizeExecuted
-        ///
-        /// <summary>
-        /// 最小化の要求時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler MinimizeExecuted;
-
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCloseExecuted
-        ///
-        /// <summary>
-        /// CloseExecuted イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnCloseExecuted(EventArgs e)
-            => CloseExecuted?.Invoke(this, e);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnMaximizeExecuted
-        ///
-        /// <summary>
-        /// MaximizeExecuted イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnMaximizeExecuted(EventArgs e)
-            => MaximizeExecuted?.Invoke(this, e);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnMinimizeExecuted
-        ///
-        /// <summary>
-        /// MinimizeExecuted イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnMinimizeExecuted(EventArgs e)
-            => MinimizeExecuted?.Invoke(this, e);
-
-        #endregion
-
         #region Override methods
 
         /* ----------------------------------------------------------------- */
@@ -200,24 +121,6 @@ namespace Cube.Note.App.Editor
         {
             base.OnParentChanged(e);
             ResetEvents();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnBackColorChanged
-        ///
-        /// <summary>
-        /// 背景色が変更された時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnBackColorChanged(EventArgs e)
-        {
-            base.OnBackColorChanged(e);
-
-            ExitButton.ForeColor     = BackColor;
-            MaximizeButton.ForeColor = BackColor;
-            MinimizeButton.ForeColor = BackColor;
         }
 
         #endregion
