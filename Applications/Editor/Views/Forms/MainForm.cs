@@ -98,20 +98,20 @@ namespace Cube.Note.App.Editor
         {            
             var area = Screen.FromControl(this).WorkingArea.Size;
 
-            var x = Settings.User.X >= 0 ?
-                    Math.Max(Math.Min(Settings.User.X, area.Width), 0) :
-                    (int)(area.Width * 0.05);
-            var y = Settings.User.Y >= 0 ?
-                    Math.Max(Math.Min(Settings.User.Y, area.Height), 0) :
-                    (int)(area.Height * 0.05);
-            Location = new Point(x, y);
-
             Width  = Settings.User.Width >= 0 ?
                      Settings.User.Width :
                      (int)(area.Width * 0.7);
             Height = Settings.User.Height >= 0 ?
                      Settings.User.Height :
                      (int)(area.Height * 0.7);
+
+            var x = Settings.User.X >= 0 ?
+                    Math.Max(Math.Min(Settings.User.X, area.Width - Width), 0) :
+                    (int)(area.Width * 0.05);
+            var y = Settings.User.Y >= 0 ?
+                    Math.Max(Math.Min(Settings.User.Y, area.Height - Height), 0) :
+                    (int)(area.Height * 0.05);
+            Location = new Point(x, y);
 
             SearchControl.StartPosition = FormStartPosition.Manual;
             SearchControl.Location = new Point(Left + 20, Top + 20);
