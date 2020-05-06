@@ -64,6 +64,7 @@ namespace Cube.Note.App.Editor
             InitializeEvents();
 
             Caption = TitleControl;
+            Caption.MinimizeControl.Visible = false;
             SettingsControl.OKButton = ApplyButton;
             SettingsControl.CancelButton = ExitButton;
             TabControl.SelectTab(index);

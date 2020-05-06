@@ -63,6 +63,7 @@ namespace Cube.Note.App.Editor
             CaseSensitiveCheckBox.CheckedChanged += (s, e) => EnableOptionalButtons(false);
 
             Caption = TitleControl;
+            Caption.MinimizeControl.Visible = false;
 
             EnableReplaceControls(false);
             EnableOptionalButtons(false);

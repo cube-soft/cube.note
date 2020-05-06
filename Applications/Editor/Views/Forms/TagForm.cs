@@ -64,6 +64,7 @@ namespace Cube.Note.App.Editor
             InitializeTags(tags);
 
             Caption = TitleControl;
+            Caption.MinimizeControl.Visible = false;
             Count = 0;
             ActiveControl = NewTagTextBox;
 

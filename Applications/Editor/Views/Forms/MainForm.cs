@@ -53,6 +53,7 @@ namespace Cube.Note.App.Editor
 
             Aggregator = new EventAggregator();
             Caption = TitleControl;
+            PageCollectionControl.Pages.Aggregator = Aggregator.Get();
             PageCollectionControl.Pages.ContextMenuStrip = PageMenuControl;
             TextControl.ContextMenuStrip = TextMenuControl;
             TextControl.Status = FooterStatusControl;

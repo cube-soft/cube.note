@@ -50,6 +50,7 @@ namespace Cube.Note.App.Editor
             InitializeEvents();
 
             Caption = TitleControl;
+            Caption.MinimizeControl.Visible = false;
             ActiveControl = NewTagTextBox;
         }
 

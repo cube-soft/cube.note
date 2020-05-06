@@ -39,7 +39,7 @@
         <Compile Update="Views\Forms\FormBase.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <EmbeddedResource Update="Views\Controls\*Control.resx" DependentUpon="%(FIlename).cs" />
-        <EmbeddedResource Update="Views\Forms\*Forms.resx" DependentUpon="%(FIlename).cs" />
+        <EmbeddedResource Update="Views\Forms\*Form.resx" DependentUpon="%(FIlename).cs" />
         <EmbeddedResource Update="Views\Forms\FormBase.resx" DependentUpon="%(FIlename).cs" />
         <None Include="Resources\**\*" />
         <None Include="App.config" />

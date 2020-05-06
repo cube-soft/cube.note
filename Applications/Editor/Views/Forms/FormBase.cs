@@ -51,5 +51,25 @@ namespace Cube.Note.App.Editor
         }
 
         #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnBackColorChanged
+        ///
+        /// <summary>
+        /// 背景色が変更された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            if (Caption == null) return;
+            Caption.BackColor = BackColor;
+        }
+
+        #endregion
     }
 }
