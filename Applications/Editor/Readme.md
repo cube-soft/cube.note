@@ -209,26 +209,33 @@ CubeNote は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
 * Azuki テキストエディタエンジン
-  URL: http://sgry.b.osdn.me/
-  zlib license ( http://sgry.b.osdn.me/introduction/license/ )
-* Apache log4net
-  URL: https://logging.apache.org/log4net/
-  Apache License, Version 2.0 ( https://logging.apache.org/log4net/license.html )
+    - Zlib License
+    - https://ja.osdn.net/projects/azuki/
+* log4net
+    - Apache License, Version 2.0
+    - http://logging.apache.org/log4net/
+    - https://www.nuget.org/packages/log4net/
+* AsyncBridge (.NET Framework 3.5 のみ)
+    - MIT License
+    - http://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge.Net35/
 
 ## バージョン履歴
 
+* 2020/05/11 version 0.2.0β
+  - 設定ファイルの読み込みおよび保存処理に関する不都合を修正
+  - 起動時にメインウィンドウの表示位置が画面外に設定されないように修正
+  - Cube ニュースの表示機能を削除
+  - アップデート確認プログラムを別アプリケーションに分離
 * 2016/07/01 version 0.1.3β
   - 高 DPI 環境に対応
   - マウスのホイール操作で「タグの追加と削除」画面が表示されないように修正
-
 * 2016/06/15 version 0.1.2β
   - 一部の環境でサブディスプレイからウィンドウが移動できなくなる不都合を修正
-
 * 2016/06/10 version 0.1.1β
   - ウィンドウの最大化に関する不都合を修正
   - フォルダをドラッグ&ドロップしてインポートする時に発生する不都合を修正
   - データのロード失敗時にリカバリ機能を実行するように修正
   - 検索実行時の挙動を修正
-
 * 2016/03/28 version 0.1.0β
   - 最初の公開バージョン
