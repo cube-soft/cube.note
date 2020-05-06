@@ -22,6 +22,7 @@ using System.Net;
 using Microsoft.Win32;
 using IoEx = System.IO;
 using Cube.DataContract;
+using Cube.Log;
 
 namespace Cube.Note
 {
@@ -135,7 +136,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static DataContract.Format FileType => DataContract.Format.Json;
+        public static Format FileType => Format.Json;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -292,8 +293,19 @@ namespace Cube.Note
             var directory = IoEx.Path.GetDirectoryName(path);
             if (string.IsNullOrEmpty(directory)) return;
             if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
-
             FileType.Serialize(path, User);
+
+            var asm  = new AssemblyReader(Assembly);
+            var name = "cubenote-checker";
+            var exe  = IoEx.Path.Combine(asm.Location, "CubeChecker.exe");
+            var args = "CubeNote";
+
+            new Cube.FileSystem.Startup(name)
+            {
+                Command = $"\"{exe}\" {args}",
+                Enabled = User.ShowUpdate && IoEx.File.Exists(exe),
+            }.Save();
+
         }
 
         /* ----------------------------------------------------------------- */
@@ -305,19 +317,15 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SaveRoot(string path)
+        public void SaveRoot(string path) => this.LogWarn(() =>
         {
-            try
+            using (var subkey = CreateSubKey())
             {
-                using (var subkey = CreateSubKey())
-                {
-                    if (subkey == null) return;
-                    var value = new RegistryValue { Data = path };
-                    subkey.Serialize(value);
-                }
+                if (subkey == null) return;
+                var value = new RegistryValue { Data = path };
+                subkey.Serialize(value);
             }
-            catch (Exception /* err */) { /* ignore errors */ }
-        }
+        });
 
         #endregion
 
