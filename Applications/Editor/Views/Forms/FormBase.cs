@@ -29,7 +29,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class FormBase : Cube.Forms.BorderlessForm
+    public partial class FormBase : Cube.Forms.BorderlessForm, IDpiAwarable
     {
         #region Constructors
 
@@ -48,6 +48,24 @@ namespace Cube.Note.App.Editor
 
             Activated  += (s, e) => BackColor = Color.FromArgb(0, 169, 157);
             Deactivate += (s, e) => BackColor = Color.FromArgb(186, 224, 215);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateLayout
+        ///
+        /// <summary>
+        /// レイアウトを更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public virtual void UpdateLayout(double ratio)
+        {
+            Font = new Font("Meiryo UI", (float)(12.0 * ratio), FontStyle.Regular, GraphicsUnit.Pixel, ((byte)(128)));
         }
 
         #endregion

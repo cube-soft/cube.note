@@ -31,7 +31,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class SearchForm : FormBase, IDpiAwarable
+    public partial class SearchForm : FormBase
     {
         #region Constructors
 
@@ -213,8 +213,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateLayout(double ratio)
+        public override void UpdateLayout(double ratio)
         {
+            base.UpdateLayout(ratio);
+
             MinimumSize = new Size((int)(370 * ratio), (int)(270 * ratio));
             Size = new Size((int)(450 * ratio), (int)(450 * ratio));
 

@@ -33,7 +33,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : FormBase, IDpiAwarable
+    public partial class MainForm : FormBase
     {
         #region Constructors
 
@@ -192,8 +192,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateLayout(double ratio)
+        public override void UpdateLayout(double ratio)
         {
+            base.UpdateLayout(ratio);
+
             LayoutPanel.RowStyles[0].Height = (int)(30 * ratio);
             LayoutPanel.RowStyles[2].Height = (int)(22 * ratio);
             RightContentsPanel.RowStyles[0].Height = (int)(32 * ratio);
