@@ -2,8 +2,8 @@
 
 Copyright (c) 2016 CubeSoft, Inc.
 
-* Mail: support@cube-soft.jp
-* Web: http://www.cube-soft.jp/cubenote/
+* support@cube-soft.jp
+* https://www.cube-soft.jp/cubenote/
 
 ## What's this ?
 
@@ -213,20 +213,22 @@ CubeNote は、以下のライブラリを利用しています。
     - https://ja.osdn.net/projects/azuki/
 * log4net
     - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
+    - https://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
 * AsyncBridge (.NET Framework 3.5 のみ)
     - MIT License
-    - http://omermor.github.io/AsyncBridge/
+    - https://omermor.github.io/AsyncBridge/
     - https://www.nuget.org/packages/AsyncBridge.Net35/
 
 ## バージョン履歴
 
-* 2020/05/11 version 0.2.0β
+* 2020/05/08 version 0.2.0β
   - 設定ファイルの読み込みおよび保存処理に関する不都合を修正
   - 起動時にメインウィンドウの表示位置が画面外に設定されないように修正
   - Cube ニュースの表示機能を削除
   - アップデート確認プログラムを別アプリケーションに分離
+  - .NET Framework 3.5 と 4.5 以降でインストールするアプリケーションを分離
+  - CubeNote ユーザーマニュアルを設置
 * 2016/07/01 version 0.1.3β
   - 高 DPI 環境に対応
   - マウスのホイール操作で「タグの追加と削除」画面が表示されないように修正
