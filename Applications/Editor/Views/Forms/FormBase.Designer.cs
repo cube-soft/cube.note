@@ -39,7 +39,6 @@
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Text = "CubeNote";
             this.ResumeLayout(false);
-
         }
 
         #endregion

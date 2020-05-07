@@ -482,7 +482,7 @@
     <value>ノート一覧を非表示 (H)</value>
   </data>
   <data name="ToolMenuLogo" xml:space="preserve">
-    <value>Web ページへ移動</value>
+    <value>ユーザーマニュアルを開く</value>
   </data>
   <data name="ToolMenuPrint" xml:space="preserve">
     <value>印刷 (P)</value>
@@ -521,7 +521,7 @@
     <value>http://www.cube-soft.jp/cubenote/update.php</value>
   </data>
   <data name="UrlWeb" xml:space="preserve">
-    <value>http://www.cube-soft.jp/</value>
+    <value>http://docs.cube-soft.jp/entry/cubenote</value>
   </data>
   <data name="WarnRemove" xml:space="preserve">
     <value>このノートを削除しますか？</value>

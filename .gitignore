@@ -48,6 +48,7 @@ _ReSharper*/
 
 #Subversion files
 .svn
+.vs
 
 # Office Temp Files
 ~$*

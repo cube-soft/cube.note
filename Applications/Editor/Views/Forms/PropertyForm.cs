@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// PropertyForm.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
@@ -33,7 +31,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class PropertyForm : FormBase, IDpiAwarable
+    public partial class PropertyForm : FormBase
     {
         #region Constructors
 
@@ -52,6 +50,7 @@ namespace Cube.Note.App.Editor
             InitializeEvents();
 
             Caption = TitleControl;
+            Caption.MinimizeControl.Visible = false;
             ActiveControl = NewTagTextBox;
         }
 
@@ -121,7 +120,7 @@ namespace Cube.Note.App.Editor
             TagsPanel.SuspendLayout();
             foreach (var tag in tags)
             {
-                var button = new TagButton(tag);
+                var button = new TagButton(tag, Dpi / BaseDpi);
                 button.Name = tag.Name;
                 if (src.Tags.Contains(tag.Name)) button.Checked = true;
                 TagsPanel.Controls.Add(button);
@@ -144,8 +143,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateLayout(double ratio)
+        public override void UpdateLayout(double ratio)
         {
+            base.UpdateLayout(ratio);
+
             MinimumSize = new Size((int)(300 * ratio), (int)(270 * ratio));
             Size = new Size((int)(450 * ratio), (int)(330 * ratio));
 
@@ -189,7 +190,7 @@ namespace Cube.Note.App.Editor
             Tags.Clear();
             foreach (TagButton button in TagsPanel.Controls)
             {
-                if (button.Checked) Tags.Add(button.Text);
+                if (button.Checked) Tags.Add(button.Content);
             }
             Close();
         }
@@ -215,7 +216,7 @@ namespace Cube.Note.App.Editor
                 var contains = TagsPanel.Controls.ContainsKey(tag);
                 var button   = contains ?
                                TagsPanel.Controls[tag] as TagButton :
-                               new TagButton(tag);
+                               new TagButton(tag, Dpi / BaseDpi);
                 button.Name = tag;
                 button.Checked = true;
 

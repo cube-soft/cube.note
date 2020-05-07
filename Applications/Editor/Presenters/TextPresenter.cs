@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// TextPresenter.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -52,9 +50,9 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, model, settings, events)
         {
-            Events.Refresh.Handle += Refresh_Handle;
-            Events.Undo.Handle += Undo_Handle;
-            Events.Redo.Handle += Redo_Handle;
+            Events.Refresh.Subscribe(Refresh_Handle);
+            Events.Undo.Subscribe(Undo_Handle);
+            Events.Redo.Subscribe(Redo_Handle);
 
             View.DoubleClick += View_DoubleClick;
             View.Visible = (Settings.Current.Page != null);
@@ -95,7 +93,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Refresh_Handle(object sender, EventArgs e)
+        private void Refresh_Handle()
             => Sync(() => View.Refresh());
 
         /* ----------------------------------------------------------------- */
@@ -107,7 +105,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Undo_Handle(object sender, EventArgs e)
+        private void Undo_Handle()
         {
             var document = Settings.Current?.Page?.Document as Document;
             if (document == null || !document.CanUndo) return;
@@ -123,7 +121,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Redo_Handle(object sender, EventArgs e)
+        private void Redo_Handle()
         {
             var document = Settings.Current?.Page?.Document as Document;
             if (document == null || !document.CanRedo) return;
@@ -144,7 +142,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void View_DoubleClick(object sender, EventArgs e)
-            => this.LogException(() =>
+            => this.LogWarn(() =>
         {
             var ev = e as IMouseEventArgs;
             if (ev == null || !Settings.User.OpenUri) return;
@@ -233,7 +231,7 @@ namespace Cube.Note.App.Editor
                     Settings.Current.CanRedo = document.CanRedo;
                 });
             }
-            catch (Exception err) { this.LogError(err.Message, err); }
+            catch (Exception err) { this.LogError(err); }
             finally { UpdateModel(e.NewValue, e.OldValue); }
         }
 
@@ -297,17 +295,17 @@ namespace Cube.Note.App.Editor
 
             var enabled = View.GetSelectedTextLength() > 0;
             menu.SearchMenu.Click += (s, e) => 
-                Events.Search.Raise(KeyValueEventArgs.Create(0, View.GetSelectedText()));
+                Events.Search.Publish(KeyValueEventArgs.Create(0, View.GetSelectedText()));
 
             menu.GoogleMenu.Enabled = enabled;
             menu.GoogleMenu.Click += (s, e)
-                => Events.Google.Raise(ValueEventArgs.Create(View.GetSelectedText()));
+                => Events.Google.Publish(ValueEventArgs.Create(View.GetSelectedText()));
 
             menu.UndoMenu.Enabled = View.CanUndo;
-            menu.UndoMenu.Click += (s, e) => Events.Undo.Raise();
+            menu.UndoMenu.Click += (s, e) => Events.Undo.Publish();
 
             menu.RedoMenu.Enabled = View.CanRedo;
-            menu.RedoMenu.Click += (s, e) => Events.Redo.Raise();
+            menu.RedoMenu.Click += (s, e) => Events.Redo.Publish();
 
             menu.CutMenu.Enabled = enabled;
             menu.CutMenu.Click += (s, e) => View.Cut();

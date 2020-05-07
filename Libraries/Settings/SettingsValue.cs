@@ -1,40 +1,38 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// SettingsValue.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Runtime.Serialization;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Runtime.Serialization;
 
 namespace Cube.Note
 {
     /* --------------------------------------------------------------------- */
     ///
     /// SettingsValue
-    /// 
+    ///
     /// <summary>
     /// 各種設定を保持するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class SettingsValue : ObservableSettingsValue
+    public class SettingsValue : Cube.ObservableProperty
     {
         #region Constructors
 
@@ -518,7 +516,7 @@ namespace Cube.Note
         /// <summary>
         /// 印刷時の余白を mm 単位で取得または設定します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Margins オブジェクトの各種プロパティは 1/100 インチ単位である事が
         /// 想定されています。したがって、印刷時には変換された値が使用されます。
@@ -966,28 +964,6 @@ namespace Cube.Note
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ShowNews
-        ///
-        /// <summary>
-        /// ステータスバーに新着ニュースを表示するかどうかを示す値を取得または
-        /// 設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public bool ShowNews
-        {
-            get { return _showNews; }
-            set
-            {
-                if (_showNews == value) return;
-                _showNews = value;
-                RaisePropertyChanged(nameof(ShowNews));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// ShowUpdate
         ///
         /// <summary>
@@ -1081,7 +1057,7 @@ namespace Cube.Note
             AutoSaveTime        = TimeSpan.FromSeconds(30);
             LastUpdate          = new DateTime(2016, 1, 1, 0, 0, 0, DateTimeKind.Local);
             PrintMargin         = new Margins(25, 25, 25, 25);
-            SearchQuery         = "http://s.cube-soft.jp/search/?q=";
+            SearchQuery         = "https://s.cube-soft.jp/search/?q=";
             TabWidth            = 8;
             WordWrapCount       = 80;
 
@@ -1102,7 +1078,6 @@ namespace Cube.Note
             TagRemoveWarning    = true;
             OpenUri             = true;
             IncludeLineCode     = false;
-            ShowNews            = true;
             ShowUpdate          = true;
         }
 
@@ -1151,7 +1126,6 @@ namespace Cube.Note
         private bool _tagRemoveWarning;
         private bool _openUri;
         private bool _includeLineCode;
-        private bool _showNews;
         private bool _showUpdate;
         private DateTime _lastUpdate;
         #endregion

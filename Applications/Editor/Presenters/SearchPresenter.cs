@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// SearchPresenter.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -51,16 +49,16 @@ namespace Cube.Note.App.Editor
             SettingsFolder settings, EventAggregator events)
             : base(view, new SearchReplace(parent), settings, events)
         {
-            Events.Search.Handle     += Search_Handle;
-            Events.SearchNext.Handle += SearchNext_Handle;
-            Events.SearchPrev.Handle += SearchPrev_Handle;
+            Events.Search.Subscribe(Search_Handle);
+            Events.SearchNext.Subscribe(SearchNext_Handle);
+            Events.SearchPrev.Subscribe(SearchPrev_Handle);
 
             Settings.Current.PageChanged += Settings_PageChanged;
 
-            View.Hiding      += View_Hiding;
+            View.VisibleChanging += View_Hiding;
             View.Search      += View_Search;
-            View.SearchNext  += SearchNext_Handle;
-            View.SearchPrev  += SearchPrev_Handle;
+            View.SearchNext  += (s, e) => SearchNext_Handle();
+            View.SearchPrev  += (s, e) => SearchPrev_Handle();
             View.ReplaceNext += (s, e) => Model.Replace(View.Replace);
             View.ReplaceAll  += View_ReplaceAll;
             View.Pages.SelectedIndexChanged += View_SelectedIndexChanged;
@@ -87,7 +85,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Search_Handle(object sender, KeyValueEventArgs<int, string> e)
+        private void Search_Handle(KeyValueEventArgs<int, string> e)
             => Sync(() =>
         {
             ResetSearchRange();
@@ -112,7 +110,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SearchNext_Handle(object sender, EventArgs e)
+        private void SearchNext_Handle()
         {
             if (Model.Results.Count <= 0) return;
             Model.Forward();
@@ -127,7 +125,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SearchPrev_Handle(object sender, EventArgs e)
+        private void SearchPrev_Handle()
         {
             if (Model.Results.Count <= 0) return;
             Model.Back();
@@ -217,13 +215,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private async void View_Hiding(object sender, CancelEventArgs e)
         {
+            if (!View.Visible) return;
             View.Message = string.Empty;
             View.ShowPages = false;
 
             await Async(() =>
             {
                 Model.Reset();
-                Events.Refresh.Raise();
+                Events.Refresh.Publish();
             });
         }
 
@@ -308,7 +307,7 @@ namespace Cube.Note.App.Editor
 
             var page = Model.Results[index];
             if (page != Settings.Current.Page) Settings.Current.Page = page;
-            else Events.Refresh.Raise();
+            else Events.Refresh.Publish();
 
             Sync(() =>
             {

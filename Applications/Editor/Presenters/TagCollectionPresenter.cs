@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// TagCollectionPresenter.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -93,9 +91,9 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_Loaded(object sender, EventArgs e)
         {
-            Events.NewTag.Handle += NewTag_Handle;
-            Events.RemoveTag.Handle += RemoveTag_Handle;
-            Events.Property.Handle += Property_Handled;
+            Events.NewTag.Subscribe(NewTag_Handle);
+            Events.RemoveTag.Subscribe(RemoveTag_Handle);
+            Events.Property.Subscribe(Property_Handled);
             Settings.Current.TagChanged += Settings_TagChanged;
             ResetView(Model.Get(Settings.User.Tag));
             Model.CollectionChanged += Model_CollectionChanged;
@@ -142,8 +140,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void NewTag_Handle(object sender, ValueEventArgs<Tag> e)
-            => this.LogException(() => Model.Add(e.Value));
+        private void NewTag_Handle(ValueEventArgs<Tag> e)
+            => this.LogWarn(() => Model.Add(e.Value));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -154,8 +152,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RemoveTag_Handle(object sender, ValueEventArgs<Tag> e)
-            => this.LogException(() => Model.Remove(e.Value));
+        private void RemoveTag_Handle(ValueEventArgs<Tag> e)
+            => this.LogWarn(() => Model.Remove(e.Value));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -166,8 +164,8 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Property_Handled(object sender, EventArgs e)
-            => this.LogException(() =>
+        private void Property_Handled(ValueEventArgs<int> e)
+            => this.LogWarn(() =>
         {
             var page = Settings.Current.Page;
             if (page == null) return;
@@ -186,7 +184,7 @@ namespace Cube.Note.App.Editor
                 page.Tags.Add(name);
             }
 
-            Events.Edit.Raise(ValueEventArgs.Create(page));
+            Events.Edit.Publish(ValueEventArgs.Create(page));
         });
 
         #endregion
@@ -226,7 +224,7 @@ namespace Cube.Note.App.Editor
             if (View.SelectedItem.ToString() == Properties.Resources.EditTag)
             {
                 View.SelectedItem = Settings.Current.Tag;
-                Events.TagSettings.Raise();
+                Events.TagSettings.Publish();
             }
             else Settings.Current.Tag = View.SelectedItem as Tag;
         }

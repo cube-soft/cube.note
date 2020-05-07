@@ -1,25 +1,22 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// SettingsForm.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Windows.Forms;
 using System.Drawing;
 using IoEx = System.IO;
@@ -35,7 +32,7 @@ namespace Cube.Note.App.Editor
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public partial class SettingsForm : FormBase, IDpiAwarable
+    public partial class SettingsForm : FormBase
     {
         #region Constructors
 
@@ -67,6 +64,7 @@ namespace Cube.Note.App.Editor
             InitializeEvents();
 
             Caption = TitleControl;
+            Caption.MinimizeControl.Visible = false;
             SettingsControl.OKButton = ApplyButton;
             SettingsControl.CancelButton = ExitButton;
             TabControl.SelectTab(index);
@@ -80,6 +78,22 @@ namespace Cube.Note.App.Editor
 
         /* --------------------------------------------------------------------- */
         ///
+        /// Product
+        /// 
+        /// <summary>
+        /// アプリケーション名を取得または設定します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        [Browsable(false)]
+        public string Product
+        {
+            get => _version.Product;
+            set => _version.Product = value;
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
         /// Version
         /// 
         /// <summary>
@@ -88,26 +102,10 @@ namespace Cube.Note.App.Editor
         ///
         /* --------------------------------------------------------------------- */
         [Browsable(false)]
-        public SoftwareVersion Version
+        public string Version
         {
             get { return _version.Version; }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Assembly
-        ///
-        /// <summary>
-        /// バージョン情報等を保持する Assembly オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Assembly Assembly
-        {
-            get { return _version.Assembly; }
-            set { _version.Assembly = value; }
+            set { _version.Version = value; }
         }
 
         /* --------------------------------------------------------------------- */
@@ -177,8 +175,10 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateLayout(double ratio)
+        public override void UpdateLayout(double ratio)
         {
+            base.UpdateLayout(ratio);
+
             MinimumSize = new Size((int)(480 * ratio), (int)(320 * ratio));
             Size = new Size((int)(500 * ratio), (int)(560 * ratio));
 
@@ -215,8 +215,8 @@ namespace Cube.Note.App.Editor
         protected override void OnShown(EventArgs e)
         {
             _version.Description = string.Empty;
-            _version.Logo        = Properties.Resources.LogoLarge;
-            _version.Url         = Properties.Resources.UrlWeb;
+            _version.Image       = Properties.Resources.LogoLarge;
+            _version.Uri         = new Uri(Properties.Resources.UrlWeb);
             _version.Dock        = DockStyle.Fill;
             _version.Padding     = new Padding(40, 40, 0, 0);
 

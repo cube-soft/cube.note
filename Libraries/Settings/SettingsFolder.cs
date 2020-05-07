@@ -1,21 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// SettingsFolder.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
@@ -23,6 +21,8 @@ using System.Reflection;
 using System.Net;
 using Microsoft.Win32;
 using IoEx = System.IO;
+using Cube.DataContract;
+using Cube.Log;
 
 namespace Cube.Note
 {
@@ -54,7 +54,7 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         private SettingsFolder()
         {
-            Assembly = Assembly.GetExecutingAssembly();
+            Assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
             InitializeNetworkOptions();
             InitialzieUriQuery();
         }
@@ -136,7 +136,7 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Settings.FileType FileType => Settings.FileType.Json;
+        public static Format FileType => Format.Json;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -257,9 +257,13 @@ namespace Cube.Note
         /* ----------------------------------------------------------------- */
         public void Load()
         {
-            User = !string.IsNullOrEmpty(Path) && IoEx.File.Exists(Path) ?
-                   Settings.Load<SettingsValue>(Path, Settings.FileType.Json) :
-                   new SettingsValue();
+            try
+            {
+                User = !string.IsNullOrEmpty(Path) && IoEx.File.Exists(Path) ?
+                       Format.Json.Deserialize<SettingsValue>(Path) :
+                       new SettingsValue();
+            }
+            catch { User = new SettingsValue(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -272,6 +276,16 @@ namespace Cube.Note
         ///
         /* ----------------------------------------------------------------- */
         public void Save() => Save(Path);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// 設定を保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public void Save(string path)
         {
             if (string.IsNullOrEmpty(path)) return;
@@ -279,8 +293,18 @@ namespace Cube.Note
             var directory = IoEx.Path.GetDirectoryName(path);
             if (string.IsNullOrEmpty(directory)) return;
             if (!IoEx.Directory.Exists(directory)) IoEx.Directory.CreateDirectory(directory);
+            FileType.Serialize(path, User);
 
-            Settings.Save(User, path, FileType);
+            var asm  = new AssemblyReader(Assembly);
+            var name = "cubenote-checker";
+            var exe  = IoEx.Path.Combine(asm.DirectoryName, "CubeChecker.exe");
+            var args = "CubeNote";
+
+            new Cube.FileSystem.Startup(name)
+            {
+                Command = $"\"{exe}\" {args}",
+                Enabled = User.ShowUpdate && IoEx.File.Exists(exe),
+            }.Save();
         }
 
         /* ----------------------------------------------------------------- */
@@ -292,19 +316,15 @@ namespace Cube.Note
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SaveRoot(string path)
+        public void SaveRoot(string path) => this.LogWarn(() =>
         {
-            try
+            using (var subkey = CreateSubKey())
             {
-                using (var subkey = CreateSubKey())
-                {
-                    if (subkey == null) return;
-                    var value = new RegistryValue { Data = path };
-                    Cube.Settings.Save(value, subkey);
-                }
+                if (subkey == null) return;
+                var value = new RegistryValue { Data = path };
+                subkey.Serialize(value);
             }
-            catch (Exception /* err */) { /* ignore errors */ }
-        }
+        });
 
         #endregion
 
@@ -360,7 +380,7 @@ namespace Cube.Note
                 {
                     if (subkey != null)
                     {
-                        var values = Settings.Load<RegistryValue>(subkey);
+                        var values = subkey.Deserialize<RegistryValue>();
                         root = values?.Data;
                     }
                 }

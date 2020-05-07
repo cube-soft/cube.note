@@ -89,8 +89,6 @@
             this.TitleControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TitleControl.Location = new System.Drawing.Point(0, 0);
             this.TitleControl.Margin = new System.Windows.Forms.Padding(0);
-            this.TitleControl.MaximizeBox = true;
-            this.TitleControl.MinimizeBox = true;
             this.TitleControl.Name = "TitleControl";
             this.TitleControl.Size = new System.Drawing.Size(448, 30);
             this.TitleControl.TabIndex = 0;
@@ -335,7 +333,6 @@
             this.ResultListView.ShowRemoveButton = false;
             this.ResultListView.Size = new System.Drawing.Size(448, 184);
             this.ResultListView.TabIndex = 2;
-            this.ResultListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.ResultListView.TileSize = new System.Drawing.Size(448, 8);
             this.ResultListView.UseCompatibleStateImageBehavior = false;
             this.ResultListView.View = System.Windows.Forms.View.Tile;

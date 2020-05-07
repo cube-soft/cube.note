@@ -1,26 +1,24 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// PageCollectionPresenter.cs
-/// 
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+// 
+// Copyright (c) 2010 CubeSoft, Inc.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Forms;
-using Cube.Collections;
 using Cube.Log;
 using Cube.Note.Azuki;
 
@@ -73,14 +71,14 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         private void Model_Loaded(object sender, EventArgs e)
         {
-            Events.NewPage.Handle   += NewPage_Handle;
-            Events.Duplicate.Handle += Duplicate_Handle;
-            Events.Import.Handle    += Import_Handle;
-            Events.Export.Handle    += Export_Handle;
-            Events.Edit.Handle      += Edit_Handle;
-            Events.Move.Handle      += Move_Handle;
-            Events.Remove.Handle    += Remove_Handle;
-            Events.RemoveTag.Handle += RemoveTag_Handle;
+            Events.NewPage.Subscribe(NewPage_Handle);
+            Events.Duplicate.Subscribe(Duplicate_Handle);
+            Events.Import.Subscribe(Import_Handle);
+            Events.Export.Subscribe(Export_Handle);
+            Events.Edit.Subscribe(Edit_Handle);
+            Events.Move.Subscribe(Move_Handle);
+            Events.Remove.Subscribe(Remove_Handle);
+            Events.RemoveTag.Subscribe(RemoveTag_Handle);
 
             View.SelectedIndexChanged += View_SelectedIndexChanged;
 
@@ -114,7 +112,7 @@ namespace Cube.Note.App.Editor
                     Model_Added(sender, e);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    if (Model.Count <= 0) NewPage_Handle(sender, ValueEventArgs.Create(0));
+                    if (Model.Count <= 0) NewPage_Handle(ValueEventArgs.Create(0));
                     break;
             }
         }
@@ -156,7 +154,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void NewPage_Handle(object sender, ValueEventArgs<int> e)
+        private void NewPage_Handle(ValueEventArgs<int> e)
         {
             var index = GetInsertIndex(e.Value);
             Model.NewPage(Settings.Current.Tag, index);
@@ -172,7 +170,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Duplicate_Handle(object sender, ValueEventArgs<int> e)
+        private void Duplicate_Handle(ValueEventArgs<int> e)
             => Sync(() =>
         {
             if (View.DataSource == null) return;
@@ -193,7 +191,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private async void Import_Handle(object sender, KeyValueEventArgs<int, string> e)
+        private async void Import_Handle(KeyValueEventArgs<int, string> e)
         {
             var path = !string.IsNullOrEmpty(e.Value) ? e.Value : GetImportFile();
             if (string.IsNullOrEmpty(path)) return;
@@ -216,7 +214,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void Export_Handle(object sender, ValueEventArgs<int> e)
+        private async void Export_Handle(ValueEventArgs<int> e)
         {
             if (Settings.Current.Page == null) return;
 
@@ -236,7 +234,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Edit_Handle(object sender, ValueEventArgs<Page> e)
+        private void Edit_Handle(ValueEventArgs<Page> e)
             => Sync(() =>
         {
             var page = e.Value;
@@ -262,7 +260,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Move_Handle(object sender, ValueEventArgs<int> e)
+        private void Move_Handle(ValueEventArgs<int> e)
             => Sync(async () =>
         {
             if (View.DataSource == null || View.SelectedIndices.Count <= 0) return;
@@ -291,7 +289,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Remove_Handle(object sender, ValueEventArgs<int> e)
+        private void Remove_Handle(ValueEventArgs<int> e)
             => Sync(() =>
         {
             var pages = View.DataSource;
@@ -318,7 +316,7 @@ namespace Cube.Note.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RemoveTag_Handle(object sender, ValueEventArgs<Tag> e)
+        private void RemoveTag_Handle(ValueEventArgs<Tag> e)
             => Sync(() =>
         {
             if (e.Value == null) return;
@@ -516,14 +514,15 @@ namespace Cube.Note.App.Editor
         {
             if (tag == null) return;
 
-            var result = Model.Search(tag)?.ToObservable();
+            var result = Model.Search(tag);
+            var cvt    = result != null ? new ObservableCollection<Page>(result) : null;
 
             Sync(() =>
             {
-                View.DataSource = result;
+                View.DataSource = cvt;
                 if (View.DataSource?.Count > 0)
                 {
-                    var index = result.IndexOf(Settings.Current.Page);
+                    var index = cvt.IndexOf(Settings.Current.Page);
                     View.Select(Math.Max(index, 0));
                 }
                 else Settings.Current.Page = null;
