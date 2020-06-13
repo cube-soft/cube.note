@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -26,11 +26,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// SettingsForm
-    /// 
+    ///
     /// <summary>
     /// 設定画面を表示するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public partial class SettingsForm : FormBase
     {
@@ -79,7 +79,7 @@ namespace Cube.Note.App.Editor
         /* --------------------------------------------------------------------- */
         ///
         /// Product
-        /// 
+        ///
         /// <summary>
         /// アプリケーション名を取得または設定します。
         /// </summary>
@@ -95,7 +95,7 @@ namespace Cube.Note.App.Editor
         /* --------------------------------------------------------------------- */
         ///
         /// Version
-        /// 
+        ///
         /// <summary>
         /// バージョン情報を取得または設定します。
         /// </summary>
@@ -111,7 +111,7 @@ namespace Cube.Note.App.Editor
         /* --------------------------------------------------------------------- */
         ///
         /// DataFolder
-        /// 
+        ///
         /// <summary>
         /// データフォルダを取得または設定します。
         /// </summary>
@@ -132,7 +132,7 @@ namespace Cube.Note.App.Editor
         /* --------------------------------------------------------------------- */
         ///
         /// RestartRequired
-        /// 
+        ///
         /// <summary>
         /// データフォルダ変更後にアプリケーションを再起動するかどうかを示す値を取得
         /// または設定します。
@@ -326,7 +326,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset(EventArgs e)
             => Reset?.Invoke(this, e);
-        
+
         #endregion
 
         #region Override methods

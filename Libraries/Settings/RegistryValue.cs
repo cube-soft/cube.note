@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -22,17 +22,17 @@ namespace Cube.Note
     /* --------------------------------------------------------------------- */
     ///
     /// RegistryValue
-    /// 
+    ///
     /// <summary>
     /// レジストリに保存されている値を表すクラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// CubeNote では、一部の値以外は JSON ファイルで管理しています。
     /// 新しくユーザ設定を追加したい場合は、SettingsValue にプロパティを追加して
     /// 下さい。
     /// </remarks>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     [DataContract]
     internal class RegistryValue

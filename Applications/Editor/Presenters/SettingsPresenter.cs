@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,11 +25,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// SettingsPresenter
-    /// 
+    ///
     /// <summary>
     /// SettingsForm とモデルを関連付けるためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class SettingsPresenter
         : PresenterBase<SettingsForm, SettingsValue>
@@ -39,7 +39,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SettingsPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -64,7 +64,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを破棄する際に必要な終了処理を実行します。
         /// </summary>
@@ -89,7 +89,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_Apply
-        /// 
+        ///
         /// <summary>
         /// 適用ボタンが押下された時に実行されるハンドラです。
         /// </summary>
@@ -105,7 +105,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_Cancel
-        /// 
+        ///
         /// <summary>
         /// キャンセルボタンが押下された時に実行されるハンドラです。
         /// </summary>
@@ -117,11 +117,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_Reset
-        /// 
+        ///
         /// <summary>
         /// リセットボタンが押下された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// LastUpdate の項目のみリセット前の状態を受け継ぎます。
         /// </remarks>
@@ -139,7 +139,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_PropertyChanged
-        /// 
+        ///
         /// <summary>
         /// View の内容が変化した時に実行されるハンドラです。
         /// </summary>
@@ -186,7 +186,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SetValue
-        /// 
+        ///
         /// <summary>
         /// 値を設定します。
         /// </summary>

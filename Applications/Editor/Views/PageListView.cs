@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -28,11 +28,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// PageListView
-    /// 
+    ///
     /// <summary>
     /// ページ一覧を表示するための ListView クラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class PageListView : ListViewBase
     {
@@ -41,7 +41,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// PageListView
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -56,7 +56,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// AllowNoSelect
-        /// 
+        ///
         /// <summary>
         /// 選択項目がゼロの状態を許可するかどうかを示す値を取得または
         /// 設定します。
@@ -70,7 +70,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ShowRemoveButton
-        /// 
+        ///
         /// <summary>
         /// 項目の削除ボタンを表示するかどうかを示す値を取得または設定します。
         /// </summary>
@@ -83,7 +83,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ShowPropertyButton
-        /// 
+        ///
         /// <summary>
         /// プロパティ情報の編集用（タグ付け等）ボタンを表示するかどうかを
         /// 示す値を取得または設定します。
@@ -97,7 +97,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// BaseDpi
-        /// 
+        ///
         /// <summary>
         /// 基準となる DPI 値を取得または設定します。
         /// </summary>
@@ -110,7 +110,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SelectedBackColor
-        /// 
+        ///
         /// <summary>
         /// 選択項目の背景色を取得します。
         /// </summary>
@@ -122,7 +122,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SelectedBorderColor
-        /// 
+        ///
         /// <summary>
         /// 選択項目の枠色を取得します。
         /// </summary>
@@ -134,7 +134,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Aggregator
-        /// 
+        ///
         /// <summary>
         /// イベントを集約したオブジェクトを取得または設定します。
         /// </summary>
@@ -147,7 +147,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DataSource
-        /// 
+        ///
         /// <summary>
         /// 同期するデータを取得または設定します。
         /// </summary>
@@ -192,7 +192,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Update
-        /// 
+        ///
         /// <summary>
         /// 指定された項目を更新します。
         /// </summary>
@@ -222,7 +222,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnAdded
-        /// 
+        ///
         /// <summary>
         /// 項目が追加された時に実行されます。
         /// </summary>
@@ -237,11 +237,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnCreateControl
-        /// 
+        ///
         /// <summary>
         /// コントロールが生成された時に実行されます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected override void OnCreateControl()
         {
@@ -266,7 +266,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnDrawItem
-        /// 
+        ///
         /// <summary>
         /// 項目を描画する際に実行されます。
         /// </summary>
@@ -288,7 +288,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnMouseDown
-        /// 
+        ///
         /// <summary>
         /// マウスがクリックされた時に実行されます。
         /// </summary>
@@ -309,7 +309,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnMouseUp
-        /// 
+        ///
         /// <summary>
         /// マウスのボタンから離れた時に実行されます。
         /// </summary>
@@ -326,7 +326,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnMouseMove
-        /// 
+        ///
         /// <summary>
         /// マウスが移動した時に実行されます。
         /// </summary>
@@ -352,7 +352,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnDragEnter
-        /// 
+        ///
         /// <summary>
         /// 項目がドラッグ移動された時に実行されます。
         /// </summary>
@@ -372,7 +372,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnDragDrop
-        /// 
+        ///
         /// <summary>
         /// 項目がドロップされた時に実行されます。
         /// </summary>
@@ -381,7 +381,7 @@ namespace Cube.Note.App.Editor
         protected override void OnDragDrop(DragEventArgs e)
         {
             base.OnDragDrop(e);
-            
+
             var item = e.Data.GetData(typeof(ListViewItem)) as ListViewItem;
             if (item == null) return;
 
@@ -398,11 +398,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnRemoved
-        /// 
+        ///
         /// <summary>
         /// 項目が削除された時に実行されます。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// 追加時（スクロールバーが新たに表示されたタイミング）に関しては
         /// 必要に応じて Resize イベントが発生するようなので、OnResize で
@@ -419,7 +419,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnResize
-        /// 
+        ///
         /// <summary>
         /// リサイズ時に実行されます。
         /// </summary>
@@ -434,7 +434,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnSelectedIndexChanged
-        /// 
+        ///
         /// <summary>
         /// 選択項目が変更された時に実行されます。
         /// </summary>
@@ -453,11 +453,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DS_CollectionChanged
-        /// 
+        ///
         /// <summary>
         /// コレクションの内容が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void DS_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -492,11 +492,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DS_CollectionChanged
-        /// 
+        ///
         /// <summary>
         /// コレクションの内容が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void DS_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -522,11 +522,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DrawBackground
-        /// 
+        ///
         /// <summary>
         /// 各項目の背景を描画します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void DrawBackground(ListViewItem item, Graphics gs, Rectangle bounds)
         {
@@ -550,11 +550,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DrawText
-        /// 
+        ///
         /// <summary>
         /// 各項目のテキストを描画します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void DrawText(ListViewItem item, Graphics gs, Rectangle bounds)
         {
@@ -578,11 +578,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DrawRemoveButton
-        /// 
+        ///
         /// <summary>
         /// 削除ボタンを描画します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void DrawRemoveButton(Graphics gs, Rectangle bounds)
         {
@@ -598,11 +598,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DrawPropertyButton
-        /// 
+        ///
         /// <summary>
         /// プロパティ情報編ボタンを描画します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void DrawPropertyButton(Graphics gs, Rectangle bounds)
         {
@@ -631,11 +631,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// IsSelectedArea
-        /// 
+        ///
         /// <summary>
         /// 指定された座標が選択項目上にあるかどうかを判別します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private bool IsSelectedArea(Point point)
         {
@@ -647,11 +647,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// IsRemoveButton
-        /// 
+        ///
         /// <summary>
         /// 削除ボタン上かどうかを判別します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private bool IsRemoveButton(Point point, Rectangle bounds)
         {
@@ -669,11 +669,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// IsPropertyButton
-        /// 
+        ///
         /// <summary>
         /// プロパティ情報編集ボタンおよびテキスト上かどうかを判別します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private bool IsPropertyButton(Point point, Rectangle bounds)
         {
@@ -693,11 +693,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GetPropertySize
-        /// 
+        ///
         /// <summary>
         /// プロパティボタンの描画領域を取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private SizeF GetPropertySize(Graphics gs, Font font)
         {
@@ -720,11 +720,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Update
-        /// 
+        ///
         /// <summary>
         /// 更新処理を実行します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Update(Action action)
         {
@@ -739,16 +739,16 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// MoveItem
-        /// 
+        ///
         /// <summary>
         /// 項目を移動します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// TODO: 無条件で Selected, Focused の設定、EnsureVisible(int) を
         /// 実行しても良いか要検討。
         /// </remarks>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void MoveItem(int src, int dest)
         {
@@ -761,11 +761,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SetColumns
-        /// 
+        ///
         /// <summary>
         /// カラムを設定します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void SetColumns()
         {
@@ -780,11 +780,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SetTileSize
-        /// 
+        ///
         /// <summary>
         /// タイルサイズを設定します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void SetTileSize()
         {
@@ -807,7 +807,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DoDragMove
-        /// 
+        ///
         /// <summary>
         /// ドラッグ移動を実行します。
         /// </summary>
@@ -823,11 +823,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Attach
-        /// 
+        ///
         /// <summary>
         /// イベントハンドラを関連付けます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Attach(IList pages)
         {
@@ -843,11 +843,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Detach
-        /// 
+        ///
         /// <summary>
         /// イベントハンドラの関連付けを解除します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Detach(IList pages)
         {

@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Linq;
 using NUnit.Framework;
 using Cube.Note.Azuki;
 
@@ -23,59 +23,69 @@ namespace Cube.Note.Tests.Azuki
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentTest
-    /// 
+    /// SearchReplaceTest
+    ///
     /// <summary>
-    /// DocumentHandler のテスト用クラスです。
+    /// SearchReplace のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [Parallelizable]
     [TestFixture]
-    class DocumentHandlerTest : PageCollectionResource
+    class SearchReplaceTest : PageCollectionResource
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateDocument_Last
+        /// Search_Count
         ///
         /// <summary>
-        /// Document オブジェクトを生成するテストを行います。
+        /// 検索のテストを行います。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("LastPage")]
-        public void CreateDocument_Last(string expected)
+        [TestCase("Hello", true,  1)]
+        [TestCase("Hello", false, 2)]
+        public void Search_Count(string keyword, bool sensitive, int expected)
         {
-            Assert.That(
-                Pages[Pages.Count - 1].CreateDocument(Pages.Directory).Text,
-                Is.EqualTo(expected)
-            );
+            var src = Create();
+            src.Search(keyword, sensitive, Pages.Tags.Everyone);
+            Assert.That(src.Results.Count(), Is.EqualTo(expected));
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveDocument_Last
+        /// Reset
         ///
         /// <summary>
-        /// 内容をファイルに保存するテストを行います。
+        /// リセットのテストを行います。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void SaveDocument_Last()
+        [TestCase("Hello", false)]
+        public void Reset(string keyword, bool sensitive)
         {
-            var page = Pages[Pages.Count - 1];
-            var document = page.CreateDocument(Pages.Directory);
-            document.Replace("Replaced", 0, document.Length);
-            page.SaveDocument(Pages.Directory);
-
-            Assert.That(
-                page.LastUpdate,
-                Is.EqualTo(DateTime.Now).Within(TimeSpan.FromSeconds(1))
-            );
+            var src = Create();
+            src.Search(keyword, sensitive, Pages.Tags.Everyone);
+            src.Reset();
+            Assert.That(src.Results.Count(), Is.EqualTo(0));
         }
+
+        #endregion
+
+        #region Helper methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// SearchReplace オブエジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SearchReplace Create() => new SearchReplace(Pages);
 
         #endregion
     }

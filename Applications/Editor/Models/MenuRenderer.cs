@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -23,11 +23,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// FlatColorTable
-    /// 
+    ///
     /// <summary>
     /// グラデーション描画を無効にするためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class FlatColorTable : ProfessionalColorTable
     {
@@ -36,7 +36,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// FlatColorTable
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -54,7 +54,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Color
-        /// 
+        ///
         /// <summary>
         /// メイン色を取得します。
         /// </summary>
@@ -69,7 +69,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ToolStripGradientBegin
-        /// 
+        ///
         /// <summary>
         /// グラデーションの開始色を取得します。
         /// </summary>
@@ -80,7 +80,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ToolStripGradientMiddle
-        /// 
+        ///
         /// <summary>
         /// グラデーションの中間色を取得します。
         /// </summary>
@@ -91,7 +91,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ToolStripGradientEnd
-        /// 
+        ///
         /// <summary>
         /// グラデーションの終了色を取得します。
         /// </summary>
@@ -105,18 +105,18 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// MenuRenderer
-    /// 
+    ///
     /// <summary>
     /// ToolStripMenu を描画するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class MenuRenderer : ToolStripProfessionalRenderer
     {
         /* ----------------------------------------------------------------- */
         ///
         /// MenuRenderer
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>

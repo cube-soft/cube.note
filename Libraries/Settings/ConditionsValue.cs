@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -24,17 +24,17 @@ namespace Cube.Note
     /* --------------------------------------------------------------------- */
     ///
     /// ConditionsValue
-    /// 
+    ///
     /// <summary>
     /// アプリケーションの状態を表す値を保持するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// このクラスが保持する値は、アプリケーション終了時に破棄されます。
     /// アプリケーションの次回起動時にも必要な値に関しては SettingsValue に
     /// 定義して下さい。
     /// </remarks>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class ConditionsValue : INotifyPropertyChanged
     {

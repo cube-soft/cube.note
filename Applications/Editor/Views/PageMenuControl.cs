@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -22,11 +22,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// PageMenuControl
-    /// 
+    ///
     /// <summary>
     /// ページリスト上で表示されるコンテキストメニューを表すクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class PageMenuControl : ContextMenuStrip
     {
@@ -35,7 +35,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// PageMenuControl
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -75,7 +75,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// NewPageMenu
-        /// 
+        ///
         /// <summary>
         /// 新規作成メニューを取得します。
         /// </summary>
@@ -86,7 +86,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ImportMenu
-        /// 
+        ///
         /// <summary>
         /// インポートメニューを取得します。
         /// </summary>
@@ -97,7 +97,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ExportMenu
-        /// 
+        ///
         /// <summary>
         /// エクスポートメニューを取得します。
         /// </summary>
@@ -108,7 +108,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DuplicateMenu
-        /// 
+        ///
         /// <summary>
         /// 複製メニューを取得します。
         /// </summary>
@@ -119,7 +119,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// RemoveMenu
-        /// 
+        ///
         /// <summary>
         /// 削除メニューを取得します。
         /// </summary>
@@ -130,7 +130,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// UpMenu
-        /// 
+        ///
         /// <summary>
         /// 上へメニューを取得します。
         /// </summary>
@@ -141,7 +141,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// DownMenu
-        /// 
+        ///
         /// <summary>
         /// 下へメニューを取得します。
         /// </summary>
@@ -152,7 +152,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// PropertyMenu
-        /// 
+        ///
         /// <summary>
         /// プロパティメニューを取得します。
         /// </summary>
@@ -167,7 +167,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// InitialzieShortcutKeys
-        /// 
+        ///
         /// <summary>
         /// ショートカットキーを初期化します。
         /// </summary>
@@ -188,7 +188,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeEvents
-        /// 
+        ///
         /// <summary>
         /// 項目のイベントを初期化します。
         /// </summary>
@@ -217,7 +217,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeMenu
-        /// 
+        ///
         /// <summary>
         /// メニューを初期化します。
         /// </summary>
@@ -245,7 +245,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Menu
-        /// 
+        ///
         /// <summary>
         /// ToolStripMenuItem にキャストします。
         /// </summary>

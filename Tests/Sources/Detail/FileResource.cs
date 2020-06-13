@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -23,11 +23,11 @@ namespace Cube.Note.Tests
     /* --------------------------------------------------------------------- */
     ///
     /// FileResource
-    /// 
+    ///
     /// <summary>
     /// テストでファイルを使用するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     class FileResource
     {
@@ -69,7 +69,7 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         ///
         /// Examples
-        /// 
+        ///
         /// <summary>
         /// テスト用ファイルの存在するフォルダへのパスを取得します。
         /// </summary>
@@ -80,7 +80,7 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         ///
         /// Results
-        /// 
+        ///
         /// <summary>
         /// テスト結果を格納するためのフォルダへのパスを取得します。
         /// </summary>
@@ -95,7 +95,7 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         ///
         /// Initialize
-        /// 
+        ///
         /// <summary>
         /// リソースファイルを初期化します。
         /// </summary>
@@ -110,7 +110,7 @@ namespace Cube.Note.Tests
         /* ----------------------------------------------------------------- */
         ///
         /// Clean
-        /// 
+        ///
         /// <summary>
         /// 指定されたフォルダ内に存在する全てのファイルを削除します。
         /// </summary>

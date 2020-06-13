@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,13 +25,13 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// SearchPresenter
-    /// 
+    ///
     /// <summary>
     /// SearchControl とモデルを関連付けるためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class SearchPresenter : 
+    public class SearchPresenter :
         PresenterBase<SearchForm, SearchReplace>
     {
         #region Constructors
@@ -39,7 +39,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SearchPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -79,7 +79,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Search_Handle
-        /// 
+        ///
         /// <summary>
         /// 検索画面を表示します。
         /// </summary>
@@ -104,7 +104,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SearchNext_Handle
-        /// 
+        ///
         /// <summary>
         /// 次を検索します。
         /// </summary>
@@ -119,7 +119,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SearchPrev_Handle
-        /// 
+        ///
         /// <summary>
         /// 前を検索します。
         /// </summary>
@@ -138,7 +138,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Settings_PageChanged
-        /// 
+        ///
         /// <summary>
         /// 現在のページが変化した時に実行されるハンドラです。
         /// </summary>
@@ -157,7 +157,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_Search
-        /// 
+        ///
         /// <summary>
         /// 検索を実行します。
         /// </summary>
@@ -190,7 +190,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_ReplaceAll
-        /// 
+        ///
         /// <summary>
         /// すべてを置換時に実行されるハンドラです。
         /// </summary>
@@ -207,7 +207,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_Hiding
-        /// 
+        ///
         /// <summary>
         /// 非表示時に実行されるハンドラです。
         /// </summary>
@@ -229,7 +229,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_SelectedIndexChanged
-        /// 
+        ///
         /// <summary>
         /// 選択項目が変更された時に実行されるハンドラです。
         /// </summary>
@@ -248,7 +248,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Model_PropertyChanged
-        /// 
+        ///
         /// <summary>
         /// プロパティの内容が変化した時に実行されるハンドラです。
         /// </summary>
@@ -276,7 +276,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ResetSearchRange
-        /// 
+        ///
         /// <summary>
         /// 検索範囲用の項目を設定します。
         /// </summary>
@@ -295,7 +295,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SetPage
-        /// 
+        ///
         /// <summary>
         /// 指定されたインデックスに対応するページを設定します。
         /// </summary>
@@ -319,7 +319,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GetMessage
-        /// 
+        ///
         /// <summary>
         /// メッセージを取得します。
         /// </summary>

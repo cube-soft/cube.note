@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -31,11 +31,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// MenuPresenter
-    /// 
+    ///
     /// <summary>
     /// MenuControl とモデルを関連付けるためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class MenuPresenter
         : PresenterBase<MenuControl, PageCollection>
@@ -45,7 +45,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// MenuPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -80,7 +80,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Print_Handle
-        /// 
+        ///
         /// <summary>
         /// 印刷時に実行されるハンドラです。
         /// </summary>
@@ -120,7 +120,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Settings_Handle
-        /// 
+        ///
         /// <summary>
         /// 設定画面を表示する時に実行されるハンドラです。
         /// </summary>
@@ -145,7 +145,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// TagSettings_Handle
-        /// 
+        ///
         /// <summary>
         /// タグ設定画面を表示する時に実行されるハンドラです。
         /// </summary>
@@ -177,7 +177,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Web_Handle
-        /// 
+        ///
         /// <summary>
         /// 既定のブラウザで URL を開く時に実行されるハンドラです。
         /// </summary>
@@ -194,7 +194,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Google_Handle
-        /// 
+        ///
         /// <summary>
         /// インターネットで検索時に実行されるハンドラです。
         /// </summary>
@@ -213,7 +213,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_LogoMenu
-        /// 
+        ///
         /// <summary>
         /// ロゴメニューがクリックされた時に実行されるハンドラです。
         /// </summary>
@@ -229,7 +229,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Settings_CurrentChanged
-        /// 
+        ///
         /// <summary>
         /// プロパティの内容が変化した時に実行されるハンドラです。
         /// </summary>
@@ -260,7 +260,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GetText
-        /// 
+        ///
         /// <summary>
         /// テキストを取得します。
         /// </summary>
@@ -280,11 +280,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// CreateMargins
-        /// 
+        ///
         /// <summary>
         /// Margins オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// GUI 等の都合で Settings.User.PrintMargin は mm 単位で値を保持して
         /// います。そこで、実際に値を適用する時に 1/100 インチ単位に変換します。

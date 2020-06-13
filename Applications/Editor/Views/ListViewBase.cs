@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -26,11 +26,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// ListView
-    /// 
+    ///
     /// <summary>
     /// リストビューを表示するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class ListViewBase : System.Windows.Forms.ListView
     {
@@ -400,7 +400,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 項目を移動します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// offset が正の数の場合は後ろに、負の数の場合は前に移動します。
         /// </remarks>
@@ -446,7 +446,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 選択されている項目を移動します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public void MoveItems(int offset) => MoveItems(SelectedIndices.Cast<int>(), offset);
 
@@ -461,7 +461,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Adding イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnAdding(ValueCancelEventArgs<int> e)
             => Adding?.Invoke(this, e);
@@ -473,7 +473,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Added イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnAdded(ValueEventArgs<int> e)
             => Added?.Invoke(this, e);
@@ -485,7 +485,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Replacing イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnReplacing(ValueCancelEventArgs<int> e)
             => Replacing?.Invoke(this, e);
@@ -497,7 +497,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Replaced イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnReplaced(ValueEventArgs<int> e)
             => Replaced?.Invoke(this, e);
@@ -509,7 +509,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Removing イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnRemoving(ValueCancelEventArgs<int[]> e)
             => Removing?.Invoke(this, e);
@@ -521,7 +521,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Removed イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnRemoved(ValueEventArgs<int[]> e)
             => Removed?.Invoke(this, e);
@@ -533,7 +533,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Clearing イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnClearing(CancelEventArgs e)
             => Clearing?.Invoke(this, e);
@@ -545,7 +545,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Cleared イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnCleared(EventArgs e)
             => Cleared?.Invoke(this, e);
@@ -557,7 +557,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Moving イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnMoving(MoveCancelEventArgs e)
             => Moving?.Invoke(this, e);
@@ -569,7 +569,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Moved イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnMoved(MoveEventArgs e)
             => Moved?.Invoke(this, e);

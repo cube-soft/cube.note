@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -26,7 +26,7 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// DynamicSettingsControlBase
-    /// 
+    ///
     /// <summary>
     /// 設定フォームを補助するためのコントロールクラスです。
     /// </summary>
@@ -247,7 +247,7 @@ namespace Cube.Note.App.Editor
         /// Update(object) メソッドを通じてコントロールの内容が更新された
         /// 時に発生するイベントです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Cancel を true に設定した場合、SettingsControl 側で行われる
         /// UpdateControl の処理をスキップします。
@@ -376,7 +376,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// チェックボックスの状態が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Value には CheckBox.Checked が設定されます。
         /// </remarks>
@@ -396,7 +396,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// コンボボックスの状態が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Value には ComboBox.SelectedIndex が設定されます。
         /// </remarks>
@@ -416,7 +416,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// NumericUpDown の状態が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Value には NumericUpDown.Value が設定されます。
         /// </remarks>
@@ -436,7 +436,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// ラジオボタンの状態が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Value には RadioButton.Checked が設定されます。
         /// </remarks>
@@ -456,7 +456,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// テキストボックスの状態が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Value には TextBox.Text が設定されます。
         /// </remarks>
@@ -476,7 +476,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 色選択用ボタンの状態が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Value には TextBox.BackColor が設定されます。
         /// </remarks>
@@ -496,7 +496,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// フォント選択用ボタンの状態が変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Value には TextBox.Font が設定されます。
         /// </remarks>

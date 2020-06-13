@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -23,19 +23,19 @@ namespace Cube.Note.Azuki
     /* --------------------------------------------------------------------- */
     ///
     /// PageCollectionHandler
-    /// 
+    ///
     /// <summary>
     /// Azuki.Document オブジェクトを扱うためのクラスです。
     /// PageCollection クラスに対する拡張メソッドとして実装されます。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public static class PageCollectionHandler
     {
         /* ----------------------------------------------------------------- */
         ///
         /// Import
-        /// 
+        ///
         /// <summary>
         /// ファイルをインポートします。
         /// </summary>
@@ -70,7 +70,7 @@ namespace Cube.Note.Azuki
         /// データが格納されているフォルダから PageCollection オブジェクトを
         /// 再構築します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static void Recover(this PageCollection pages, int maxLength)
             => Recover(pages, pages.Directory, maxLength);
@@ -83,7 +83,7 @@ namespace Cube.Note.Azuki
         /// データが格納されているフォルダから PageCollection オブジェクトを
         /// 再構築します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// NOTE: 現在の方法ではタグ情報を復旧することはできない。
         /// </remarks>

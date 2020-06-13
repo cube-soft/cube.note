@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -26,11 +26,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// StatusControl
-    /// 
+    ///
     /// <summary>
     /// 現在のステータスを表示するためのコントロールクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class StatusControl : Cube.Forms.StatusStrip
     {
@@ -264,7 +264,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// ヒットテストの発生時に実行されます。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// TODO: ライブラリ側の不都合を回避するための処理。ライブラリ側を要修正。
         /// </remarks>
