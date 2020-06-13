@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,11 +25,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// SearchForm
-    /// 
+    ///
     /// <summary>
     /// 検索画面を表示するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public partial class SearchForm : FormBase
     {
@@ -80,7 +80,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 検索キーワードを取得または設定します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// 複数行に渡る文字列の場合、最初の 1 行だけを対象とします。
         /// </remarks>
@@ -155,7 +155,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// ページ一覧を表示するかどうかを判別する値を取得または設定します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Pages 表示時に最低限の表示領域を確保できるように Height を
         /// 調整します。
@@ -598,7 +598,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 置換用コントロールの状態を更新します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// ConditionPanel の項目数（行数）が増えた場合、60 の部分を調整する
         /// 必要があります。

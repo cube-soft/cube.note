@@ -106,7 +106,7 @@ namespace Sgry
 		public static Encoding Analyze( string filePath, out bool withBom, out bool maybeBinary )
 		{
 			FileStream file;
-			
+
 			if( filePath == null )
 				throw new ArgumentNullException( "filePath" );
 
@@ -167,7 +167,7 @@ namespace Sgry
 
 			// prepare buffer to receive bytes
 			buf = new byte[ stream.Length ];
-			
+
 			// read some bytes from the file
 			stream.Read( buf, 0, buf.Length );
 
@@ -812,7 +812,7 @@ namespace Sgry
 				return Encoding.Unicode;
 			if( index == UniBigIndex )
 				return Encoding.BigEndianUnicode;
-			
+
 			return Encoding.Default;
 		}
 
@@ -849,10 +849,10 @@ namespace Sgry
 				{
 					return true;
 				}
-				
+
 				return false;
 			}
-			
+
 			/// <summary>
 			/// Shift_JIS 漢字の２バイト目である可能性があるか判定します。
 			/// </summary>
@@ -866,7 +866,7 @@ namespace Sgry
 				{
 					return true;
 				}
-				
+
 				return false;
 			}
 
@@ -879,7 +879,7 @@ namespace Sgry
 				{
 					return true;
 				}
-				
+
 				return false;
 			}
 

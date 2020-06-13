@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -26,11 +26,11 @@ namespace Cube.Note.Azuki
     /* --------------------------------------------------------------------- */
     ///
     /// DocumentHandler
-    /// 
+    ///
     /// <summary>
     /// Azuki.Document オブジェクトを扱うためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public static class DocumentHandler
     {
@@ -39,11 +39,11 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         ///
         /// Create
-        /// 
+        ///
         /// <summary>
         /// ファイルから内容を読み込だ Document オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// ファイルの文字コードは Sgry.EncodingAnalyzer を用いて判別します。
         /// </remarks>
@@ -55,7 +55,7 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         ///
         /// Create
-        /// 
+        ///
         /// <summary>
         /// ファイルから内容を読み込だ Document オブジェクトを生成します。
         /// </summary>
@@ -94,7 +94,7 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         ///
         /// Save
-        /// 
+        ///
         /// <summary>
         /// Document の内容をファイルに保存します。
         /// </summary>

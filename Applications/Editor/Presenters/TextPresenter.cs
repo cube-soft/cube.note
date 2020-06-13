@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -26,11 +26,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// TextPresenter
-    /// 
+    ///
     /// <summary>
     /// TextControl とモデルを関連付けるためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class TextPresenter
         : PresenterBase<TextControl, PageCollection>
@@ -58,7 +58,7 @@ namespace Cube.Note.App.Editor
             View.Visible = (Settings.Current.Page != null);
 
             Settings.Current.PageChanged += Settings_PageChanged;
-            
+
             InitializeTextMenu();
         }
 
@@ -210,7 +210,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 編集対象となる Page オブジェクトが変更された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Settings_PageChanged(object sender, ValueChangedEventArgs<Page> e)
         {
@@ -242,7 +242,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Current のプロパティが変更された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Settings_CurrentChanged(object sender, PropertyChangedEventArgs e)
             => Sync(() =>
@@ -294,7 +294,7 @@ namespace Cube.Note.App.Editor
             Settings.Current.PropertyChanged += Settings_CurrentChanged;
 
             var enabled = View.GetSelectedTextLength() > 0;
-            menu.SearchMenu.Click += (s, e) => 
+            menu.SearchMenu.Click += (s, e) =>
                 Events.Search.Publish(KeyValueEventArgs.Create(0, View.GetSelectedText()));
 
             menu.GoogleMenu.Enabled = enabled;

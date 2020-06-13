@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -23,11 +23,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// MenuControl
-    /// 
+    ///
     /// <summary>
     /// アプリケーションの上部メニューを表すクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class MenuControl : ToolStrip, IDpiAwarable
     {
@@ -36,7 +36,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// MenuControl
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -63,7 +63,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// VisibleMenu
-        /// 
+        ///
         /// <summary>
         /// 表示方法を制御するメニューを取得します。
         /// </summary>
@@ -74,7 +74,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SearchMenu
-        /// 
+        ///
         /// <summary>
         /// 検索メニューを取得します。
         /// </summary>
@@ -85,7 +85,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// UndoMenu
-        /// 
+        ///
         /// <summary>
         /// 元に戻すメニューを取得します。
         /// </summary>
@@ -96,7 +96,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// RedoMenu
-        /// 
+        ///
         /// <summary>
         /// やり直しメニューを取得します。
         /// </summary>
@@ -107,7 +107,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ExportMenu
-        /// 
+        ///
         /// <summary>
         /// エクスポートメニューを取得します。
         /// </summary>
@@ -118,7 +118,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// PrintMenu
-        /// 
+        ///
         /// <summary>
         /// 印刷メニューを取得します。
         /// </summary>
@@ -129,7 +129,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SettingsMenu
-        /// 
+        ///
         /// <summary>
         /// 設定メニューを取得します。
         /// </summary>
@@ -140,7 +140,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// LogoMenu
-        /// 
+        ///
         /// <summary>
         /// ロゴボタンを取得します。
         /// </summary>
@@ -181,7 +181,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// OnCreateControl
-        /// 
+        ///
         /// <summary>
         /// コントロールの生成時に実行されます。
         /// </summary>
@@ -207,7 +207,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeMenu
-        /// 
+        ///
         /// <summary>
         /// メニューを初期化します。
         /// </summary>
@@ -235,7 +235,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// CreateMenuButton
-        /// 
+        ///
         /// <summary>
         /// メニューボタンを生成します。
         /// </summary>
@@ -263,7 +263,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// UpdateMenuButton
-        /// 
+        ///
         /// <summary>
         /// メニューボタンのレイアウトを更新します。
         /// </summary>
@@ -284,7 +284,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// CreateSeparator
-        /// 
+        ///
         /// <summary>
         /// 仕切り線を生成します。
         /// </summary>
@@ -309,7 +309,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// UpdateSeparator
-        /// 
+        ///
         /// <summary>
         /// 区切り線のレイアウトを更新します。
         /// </summary>

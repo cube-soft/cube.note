@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,19 +25,19 @@ namespace Cube.Note.Azuki
     /* --------------------------------------------------------------------- */
     ///
     /// PageHandler
-    /// 
+    ///
     /// <summary>
     /// Azuki.Document オブジェクトを扱うためのクラスです。
     /// Page クラスに対する拡張メソッドとして実装されます。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public static class PageHandler
     {
         /* ----------------------------------------------------------------- */
         ///
         /// CreateDocument
-        /// 
+        ///
         /// <summary>
         /// 新しい Document オブジェクトを生成します。
         /// </summary>
@@ -57,7 +57,7 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         ///
         /// SaveDocument
-        /// 
+        ///
         /// <summary>
         /// 内容を保存します。
         /// </summary>
@@ -76,7 +76,7 @@ namespace Cube.Note.Azuki
         /* ----------------------------------------------------------------- */
         ///
         /// UpdateAbstract
-        /// 
+        ///
         /// <summary>
         /// Abstract プロパティの内容を更新します。
         /// </summary>

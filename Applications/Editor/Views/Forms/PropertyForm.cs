@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,11 +25,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// PropertyForm
-    /// 
+    ///
     /// <summary>
     /// ページのプロパティを表示するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public partial class PropertyForm : FormBase
     {

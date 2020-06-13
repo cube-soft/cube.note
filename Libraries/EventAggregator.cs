@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -20,11 +20,11 @@ namespace Cube.Note
     /* --------------------------------------------------------------------- */
     ///
     /// EventAggregator
-    /// 
+    ///
     /// <summary>
     /// CubeNote で発生するイベントを集約するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class EventAggregator : IAggregator
     {
@@ -176,7 +176,7 @@ namespace Cube.Note
         /// <summary>
         /// ページを移動するイベントです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Move イベントの Value に設定される値はインデックスではなく移動量に
         /// なります。
@@ -193,7 +193,7 @@ namespace Cube.Note
         /// <summary>
         /// 保存処理を実行するイベントです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// CubeNote では AutoSaver によって自動保存を行っていますが、
         /// Save イベントが発生した時には即座に保存処理を実行します。
@@ -345,11 +345,11 @@ namespace Cube.Note
     /* --------------------------------------------------------------------- */
     ///
     /// EventAggregatorExtension
-    /// 
+    ///
     /// <summary>
     /// Provides extended methods of the IAggregator interface.
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public static class EventAggregatorExtension
     {

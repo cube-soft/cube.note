@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>0.2.0</Version>
+        <Version>0.3.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>Core library for CubeNote.</Description>
@@ -19,8 +19,8 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.FileSystem" Version="1.15.0" />
+        <PackageReference Include="Cube.FileSystem" Version="1.15.10" />
         <Reference Include="WindowsBase" />
-        <Reference Include="../../resources/net35/Azuki.dll" />
+        <Reference Include="..\..\resources\net35\Azuki.dll" />
     </ItemGroup>
 </Project>

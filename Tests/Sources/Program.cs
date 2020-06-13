@@ -15,30 +15,31 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System.Windows.Forms;
+using System;
 
-namespace Cube.Note.App.Editor
+namespace Cube.Note.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IListViewItemConverter
+    /// Program
     ///
     /// <summary>
-    /// ListViewItem オブジェクトへ変換するためのインターフェースです。
+    /// Represetns the main program.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IListViewItemConverter
+    static class Program
     {
-        /* --------------------------------------------------------------------- */
+        /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// Main
         ///
         /// <summary>
-        /// 特定の型のオブジェクトを ListViewItem オブジェクトに変換します。
+        /// Represents the main method.
         /// </summary>
         ///
-        /* --------------------------------------------------------------------- */
-        ListViewItem Convert<T>(T src);
+        /* ----------------------------------------------------------------- */
+        [STAThread]
+        static void Main(string[] args) { }
     }
 }

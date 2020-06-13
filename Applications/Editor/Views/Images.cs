@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -24,11 +24,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// Images
-    /// 
+    ///
     /// <summary>
     /// アプリケーションで使用する画像リソースを管理するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class Images
     {
@@ -37,7 +37,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Images
-        /// 
+        ///
         /// <summary>
         /// 静的な要素を初期化します。
         /// </summary>
@@ -206,7 +206,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Get
-        /// 
+        ///
         /// <summary>
         /// 対応する Image オブジェクトを取得します。
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -22,11 +22,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// PageCollectionControl
-    /// 
+    ///
     /// <summary>
     /// ページ一覧を表示するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public partial class PageCollectionControl : Cube.Forms.ControlBase, IDpiAwarable
     {
@@ -35,7 +35,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ItemListControl
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -59,7 +59,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Pages
-        /// 
+        ///
         /// <summary>
         /// ページ一覧を表示する ListView オブジェクトを取得します。
         /// </summary>
@@ -70,7 +70,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Tags
-        /// 
+        ///
         /// <summary>
         /// タグ一覧を表示する ComboBox オブジェクトを取得します。
         /// </summary>
@@ -85,7 +85,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// UpdateLayout
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>

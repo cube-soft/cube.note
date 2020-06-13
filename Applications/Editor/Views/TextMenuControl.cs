@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -22,11 +22,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// TextMenuControl
-    /// 
+    ///
     /// <summary>
     /// テキストエディタ上で表示されるコンテキストメニューを表すクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class TextMenuControl : ContextMenuStrip
     {
@@ -35,7 +35,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// TextMenuControl
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -63,7 +63,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// CutMenu
-        /// 
+        ///
         /// <summary>
         /// 切り取りメニューを取得します。
         /// </summary>
@@ -74,7 +74,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// CopyMenu
-        /// 
+        ///
         /// <summary>
         /// コピーメニューを取得します。
         /// </summary>
@@ -85,7 +85,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// PasteMenu
-        /// 
+        ///
         /// <summary>
         /// 貼り付けメニューを取得します。
         /// </summary>
@@ -96,7 +96,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SearchMenu
-        /// 
+        ///
         /// <summary>
         /// 検索メニューを取得します。
         /// </summary>
@@ -107,7 +107,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GoogleMenu
-        /// 
+        ///
         /// <summary>
         /// インターネットで検索メニューを取得します。
         /// </summary>
@@ -118,7 +118,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// UndoMenu
-        /// 
+        ///
         /// <summary>
         /// 元に戻すメニューを取得します。
         /// </summary>
@@ -129,7 +129,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// RedoMenu
-        /// 
+        ///
         /// <summary>
         /// やり直しメニューを取得します。
         /// </summary>
@@ -140,7 +140,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// SelectAllMenu
-        /// 
+        ///
         /// <summary>
         /// すべて選択メニューを取得します。
         /// </summary>
@@ -155,7 +155,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeShortCutKeys
-        /// 
+        ///
         /// <summary>
         /// ショートカットキーを初期化します。
         /// </summary>
@@ -176,7 +176,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeMenu
-        /// 
+        ///
         /// <summary>
         /// メニューを初期化します。
         /// </summary>
@@ -203,7 +203,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Menu
-        /// 
+        ///
         /// <summary>
         /// ToolStripMenuItem にキャストします。
         /// </summary>

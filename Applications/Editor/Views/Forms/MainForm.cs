@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -27,11 +27,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// MainForm
-    /// 
+    ///
     /// <summary>
     /// メイン画面を表示するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public partial class MainForm : FormBase
     {
@@ -95,7 +95,7 @@ namespace Cube.Note.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
-        {            
+        {
             var area = Screen.FromControl(this).WorkingArea.Size;
 
             Width  = Settings.User.Width >= 0 ?
@@ -126,7 +126,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// 各種モデルの初期化を行います。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// MainForm にはモデルに関する初期化処理は最低限に留めます。
         /// </remarks>
@@ -169,7 +169,7 @@ namespace Cube.Note.App.Editor
         /* --------------------------------------------------------------------- */
         ///
         /// SelectedText
-        /// 
+        ///
         /// <summary>
         /// 選択中のテキストを取得します。
         /// </summary>
@@ -351,7 +351,7 @@ namespace Cube.Note.App.Editor
         /// <summary>
         /// Panel2 のサイズが変更された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// ContentsPanel.Panel1Collapsed の変更を通知するイベントが
         /// 存在しないため Panel2 側のサイズ変更イベントで代替します。

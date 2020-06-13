@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -27,11 +27,11 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// PageCollectionPresenter
-    /// 
+    ///
     /// <summary>
     /// PageCollectionControl とモデルを関連付けるためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class PageCollectionPresenter :
         PresenterBase<PageListView, PageCollection>
@@ -41,7 +41,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// PageCollectionPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -63,7 +63,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Model_Loaded
-        /// 
+        ///
         /// <summary>
         /// ページ情報の読み込みが完了した時に実行されるハンドラです。
         /// </summary>
@@ -98,7 +98,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Model_CollectionChanged
-        /// 
+        ///
         /// <summary>
         /// コレクションの内容に変更があった時に実行されるハンドラです。
         /// </summary>
@@ -120,7 +120,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Model_Added
-        /// 
+        ///
         /// <summary>
         /// コレクションに要素が追加された時に実行されるハンドラです。
         /// </summary>
@@ -148,7 +148,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// NewPage_Handle
-        /// 
+        ///
         /// <summary>
         /// 新しいページの作成要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -164,7 +164,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Duplicate_Handle
-        /// 
+        ///
         /// <summary>
         /// ページの複製要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -185,11 +185,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Import_Handle
-        /// 
+        ///
         /// <summary>
         /// ページのインポート時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private async void Import_Handle(KeyValueEventArgs<int, string> e)
         {
@@ -208,7 +208,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Export_Handle
-        /// 
+        ///
         /// <summary>
         /// ページのエクスポート時に実行されるハンドラです。
         /// </summary>
@@ -228,11 +228,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Edit_Handled
-        /// 
+        ///
         /// <summary>
         /// ページの情報が編集された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Edit_Handle(ValueEventArgs<Page> e)
             => Sync(() =>
@@ -254,7 +254,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Move_Handle
-        /// 
+        ///
         /// <summary>
         /// 選択ページの移動要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -276,14 +276,14 @@ namespace Cube.Note.App.Editor
             var mnew = Model.IndexOf(View.DataSource[vnew]);
             if (mold  < 0 || mnew < 0) return;
             await Async(() => Model.Move(mold, mnew));
-            
+
             View.DataSource.Move(vold, vnew);
         });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Remove_Handle
-        /// 
+        ///
         /// <summary>
         /// ページの削除要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -310,7 +310,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// RemoveTag_Handle
-        /// 
+        ///
         /// <summary>
         /// タグの削除要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -336,7 +336,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// View_SelectedIndexChanged
-        /// 
+        ///
         /// <summary>
         /// 選択項目が変更された時に実行されるハンドラです。
         /// </summary>
@@ -358,7 +358,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Settings_PageChanged
-        /// 
+        ///
         /// <summary>
         /// アクティブな Page が変更された時に実行されるハンドラです。
         /// </summary>
@@ -381,11 +381,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// Settings_TagChanged
-        /// 
+        ///
         /// <summary>
         /// タグが変化した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Settings_TagChanged(object sender, ValueChangedEventArgs<Tag> e)
             => ResetView(e.NewValue);
@@ -399,11 +399,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GetIndex
-        /// 
+        ///
         /// <summary>
         /// インデックスを取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private int GetIndex(int index)
             => index != -1 ?
@@ -413,11 +413,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GetInsertIndex
-        /// 
+        ///
         /// <summary>
         /// 挿入先インデックスを取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private int GetInsertIndex(int index)
             => SyncWait(() =>
@@ -432,11 +432,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GetImportFile
-        /// 
+        ///
         /// <summary>
         /// インポートするファイルを取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private string GetImportFile()
             => SyncWait(() =>
@@ -450,11 +450,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// GetExportFile
-        /// 
+        ///
         /// <summary>
         /// エクスポートしたファイルの保存先を取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private string GetExportFile(Page page)
             => SyncWait(() =>
@@ -469,11 +469,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// IsRemoveCanceled
-        /// 
+        ///
         /// <summary>
         /// キャンセルされたかどうか判別します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private bool IsRemoveCanceled(Page page)
         {
@@ -485,11 +485,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ContainsInView
-        /// 
+        ///
         /// <summary>
         /// View にページが含まれている（または含まれるべき）かどうかを判別します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private bool ContainsInView(Page page)
         {
@@ -504,11 +504,11 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// ResetView
-        /// 
+        ///
         /// <summary>
         /// View の状態をリセットします。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void ResetView(Tag tag)
         {

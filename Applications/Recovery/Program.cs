@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,18 +25,18 @@ namespace Cube.Note.App.Recovery
     /* --------------------------------------------------------------------- */
     ///
     /// Program
-    /// 
+    ///
     /// <summary>
     /// メインプログラムを表すクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     class Program
     {
         /* ----------------------------------------------------------------- */
         ///
         /// Main
-        /// 
+        ///
         /// <summary>
         /// プログラムのエントリーポイントです。
         /// </summary>
@@ -63,7 +63,7 @@ namespace Cube.Note.App.Recovery
         /* ----------------------------------------------------------------- */
         ///
         /// LoadSettings
-        /// 
+        ///
         /// <summary>
         /// 設定情報をロードします。
         /// </summary>
@@ -80,7 +80,7 @@ namespace Cube.Note.App.Recovery
         /* ----------------------------------------------------------------- */
         ///
         /// LoadIndices
-        /// 
+        ///
         /// <summary>
         /// インデックス情報をロードします。
         /// </summary>
@@ -103,7 +103,7 @@ namespace Cube.Note.App.Recovery
         /* ----------------------------------------------------------------- */
         ///
         /// ExecRecovery
-        /// 
+        ///
         /// <summary>
         /// 復旧処理を実行します。
         /// </summary>
@@ -119,7 +119,7 @@ namespace Cube.Note.App.Recovery
         /* ----------------------------------------------------------------- */
         ///
         /// Launch
-        /// 
+        ///
         /// <summary>
         /// CubeNote を起動します。
         /// </summary>
@@ -136,7 +136,7 @@ namespace Cube.Note.App.Recovery
         /* ----------------------------------------------------------------- */
         ///
         /// Puts
-        /// 
+        ///
         /// <summary>
         /// 情報を取得します。
         /// </summary>

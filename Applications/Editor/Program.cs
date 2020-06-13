@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
-// 
+//
 // Copyright (c) 2010 CubeSoft, Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,18 +25,18 @@ namespace Cube.Note.App.Editor
     /* --------------------------------------------------------------------- */
     ///
     /// Program
-    /// 
+    ///
     /// <summary>
     /// メインプログラムを表すクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     static class Program
     {
         /* ----------------------------------------------------------------- */
         ///
         /// Main
-        /// 
+        ///
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
@@ -67,7 +67,7 @@ namespace Cube.Note.App.Editor
         /* ----------------------------------------------------------------- */
         ///
         /// InitLog
-        /// 
+        ///
         /// <summary>
         /// ログを出力します。
         /// </summary>
@@ -79,7 +79,6 @@ namespace Cube.Note.App.Editor
             var edition = (IntPtr.Size == 4) ? "x86" : "x64";
             var type = typeof(Program);
 
-            Logger.Configure();
             Logger.Info(type, $"{reader.Product} {reader.Version} ({edition})");
             Logger.Info(type, $"{Environment.OSVersion}");
             Logger.Info(type, $"{Environment.Version}");
