@@ -1,9 +1,9 @@
 # CubeNote
 
-Copyright (c) 2016 CubeSoft, Inc.
-
-* support@cube-soft.jp
-* https://www.cube-soft.jp/cubenote/
+Copyright © 2010 CubeSoft, Inc.  
+Apache License, Version 2.0 (Apache 2.0)  
+support@cube-soft.jp  
+https://www.cube-soft.jp/cubenote/
 
 ## What's this ?
 
@@ -211,10 +211,10 @@ CubeNote は、以下のライブラリを利用しています。
 * Azuki テキストエディタエンジン
     - Zlib License
     - https://ja.osdn.net/projects/azuki/
-* log4net
-    - Apache License, Version 2.0
-    - https://logging.apache.org/log4net/
-    - https://www.nuget.org/packages/log4net/
+* NLog
+    - 3-clause BSD License
+    - https://nlog-project.org/
+    - https://www.nuget.org/packages/NLog/
 * AsyncBridge (.NET Framework 3.5 のみ)
     - MIT License
     - https://omermor.github.io/AsyncBridge/
@@ -222,22 +222,25 @@ CubeNote は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2020/06/23 version 0.3.0β
+    - ログ出力用ライブラリを log4net から NLog に変更
+    - ライセンスを Apache 2.0 に統一
 * 2020/05/08 version 0.2.0β
-  - 設定ファイルの読み込みおよび保存処理に関する不都合を修正
-  - 起動時にメインウィンドウの表示位置が画面外に設定されないように修正
-  - Cube ニュースの表示機能を削除
-  - アップデート確認プログラムを別アプリケーションに分離
-  - .NET Framework 3.5 と 4.5 以降でインストールするアプリケーションを分離
-  - CubeNote ユーザーマニュアルを設置
+    - 設定ファイルの読み込みおよび保存処理に関する不都合を修正
+    - 起動時にメインウィンドウの表示位置が画面外に設定されないように修正
+    - Cube ニュースの表示機能を削除
+    - アップデート確認プログラムを別アプリケーションに分離
+    - .NET Framework 3.5 と 4.5 以降でインストールするアプリケーションを分離
+    - CubeNote ユーザーマニュアルを設置
 * 2016/07/01 version 0.1.3β
-  - 高 DPI 環境に対応
-  - マウスのホイール操作で「タグの追加と削除」画面が表示されないように修正
+    - 高 DPI 環境に対応
+    - マウスのホイール操作で「タグの追加と削除」画面が表示されないように修正
 * 2016/06/15 version 0.1.2β
-  - 一部の環境でサブディスプレイからウィンドウが移動できなくなる不都合を修正
+    - 一部の環境でサブディスプレイからウィンドウが移動できなくなる不都合を修正
 * 2016/06/10 version 0.1.1β
-  - ウィンドウの最大化に関する不都合を修正
-  - フォルダをドラッグ&ドロップしてインポートする時に発生する不都合を修正
-  - データのロード失敗時にリカバリ機能を実行するように修正
-  - 検索実行時の挙動を修正
+    - ウィンドウの最大化に関する不都合を修正
+    - フォルダをドラッグ&ドロップしてインポートする時に発生する不都合を修正
+    - データのロード失敗時にリカバリ機能を実行するように修正
+    - 検索実行時の挙動を修正
 * 2016/03/28 version 0.1.0β
-  - 最初の公開バージョン
+    - 最初の公開バージョン
